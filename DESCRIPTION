@@ -1,17 +1,17 @@
-Package: compendium
+Package: ceacws
 Type: Package
-Title: The Title of the Project
+Title: Threats to seabird in the Northwest Atlantic
 Version: 0.0.0.9000
 Authors@R: c(
-    person(given   = "David",
-           family  = "Beauchesne",
-           role    = c("aut", "cre", "cph"),
-           email   = "david.beauchesne@hotmail.com",
+    person("David", "Beauchesne", email = "david.beauchesne@insileco.io", role = c("aut","cre"),
+           comment = c(ORCID = "0000-0001-6619-9874")),
+    person("Steve", "Vissault", email = "steve.vissault@insileco.io", role = c("aut"),
+           comment = c(ORCID = "0000-0002-0866-4376")),
+    person("Kevin", "Cazelles", email = "kevin.cazelles@insileco.io", role = c("aut"),
            comment = c(ORCID = "0000-0002-3590-8161")))
-Description: A paragraph providing a full description of the project (on 
-    several lines...)
-URL: https://github.com/Ecosystem-Assessments/compendium
-BugReports: https://github.com/Ecosystem-Assessments/compendium/issues
+Description: Research compendium for the contract on characterizing the intensity and distribution of threats to seabirds in the Northwest Atlantic for the Canadian Wildlife Service in the Maritimes region. 
+URL: https://github.com/inSilecoInc/ceacws
+BugReports: https://github.com/inSilecoInc/ceacws/issues
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -19,17 +19,29 @@ RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)
 Imports: 
-    data.table,
+data.table,
     dplyr,
+    eaMethods,
     exactextractr,
+    fasterize,
     fs,
     glue,
     graphicsutils,
-    pipedat,
+    here,
+    iEat,
     mapview,
+    randomForest,
+    raster,
     sf,
     stars,
     stringr,
     units,
+    vroom,
     whisker,
-    yaml
+    yaml,
+    xaringan,
+    xaringanExtra
+Remotes:
+    Ecosystem-Assessments/pipedat,
+    Ecosystem-Assessments/rcea,
+    mitchelloharawild/icons

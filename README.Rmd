@@ -6,15 +6,17 @@ output: github_document
 
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse  = TRUE,
-                      comment   = "#>",
-                      fig.path  = "man/figures/",
-                      out.width = "100%")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/",
+  out.width = "100%"
+)
 ```
 
 
 
-# compendium <a href=''><img src='man/figures/logo.png' align="right" height="175" /></a>
+# CEACWS <a href=''><img src='man/figures/logo.png' align="right" height="175" /></a>
 
 
 <!-- badges: start -->
@@ -24,7 +26,7 @@ knitr::opts_chunk$set(collapse  = TRUE,
 ![](https://img.shields.io/badge/status-preliminary-blue.svg)
 <!-- badges: end -->
 
-This repository contains the *research compendium* for the project *"PROJECT TITLE"*. It contains all the code required to import, format, and integrate the data needed for this project, as well as the code used to perform the analyses, figures, and the project report. 
+This repository contains the *research compendium* for the project *"Characterizing the intensity and distribution of threats to seabirds in the Northwest Atlantic"*. It contains all the code required to import, format, and integrate the data needed for this project, as well as the code used to perform the analyses, figures, and the project report. 
 
 
 ### How to cite
