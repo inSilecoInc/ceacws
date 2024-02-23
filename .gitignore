@@ -1,0 +1,39 @@
+# macOS files ----
+.DS_Store
+
+# History files ----
+.Rhistory
+.Rapp.history
+
+# Session Data files ----
+.RData
+.Ruserdata
+
+# RStudio files ----
+*.Rproj
+.Rproj.user/
+
+# R Environment Variables ----
+.Renviron
+
+# User-specific files ----
+README.html
+inst/doc
+
+# Data ----
+*.geojson
+*.tif
+*.csv
+*.pdf
+*.xlsx
+*.zip
+raw/
+*.RData
+*.gpkg
+*.rds
+
+# Specific files & folders
+figures/*
+!figures/atlas/
+!figures/webinar/
+frontpage.svg
