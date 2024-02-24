@@ -1,5 +1,5 @@
 project: compendium
-crs: 32198
+crs: 4326
 figures: 
   resolution: 400
   width: 200
@@ -19,7 +19,7 @@ col:
     - "#f2ea8b"
 bbox:
   base:
-    xmin: -400000
-    xmax: 130000
-    ymin: 170000
-    ymax: 590000
+    xmin: -76
+    xmax: -33
+    ymin: 35
+    ymax: 65

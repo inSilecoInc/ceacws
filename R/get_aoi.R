@@ -2,28 +2,19 @@
 #'
 #' @export
 get_aoi <- function() {
-  # Get federal marine bioregions
-  pipedat::pipedat("f635934a")
+  global_parameters()
+  bbox <- unlist(param$bbox$base)[c("xmin", "xmax", "ymin", "ymax")] |>
+    pipedat::bbox_poly(param$crs)
 
-  # Load federal bioregions
-  dat <- sf::st_read(
-    "data/data-raw/federal_marine_bioregions-f635934a/federal_marine_bioregions-f635934a.geojson",
-    quiet = TRUE
-  )
+  # Land
+  land <- sf::st_read("data/basemap/usa.gpkg", quiet = TRUE) |>
+    sf::st_union(sf::st_read("data/basemap/canada_full.gpkg", quiet = TRUE)) |>
+    sf::st_union(sf::st_read("data/basemap/greenland.gpkg", quiet = TRUE)) |>
+    sf::st_transform(param$crs)
 
-  # Select Scotian Shelf bioregion
-  uid <- c("Scotian Shelf")
-  aoi <- dat[dat$NAME_E %in% uid, ] |>
-    sf::st_transform(crs = param$crs)
+  # Remove land
+  aoi <- sf::st_difference(bbox, land)
 
-
-  # Export data
-  out <- here::here("data","aoi")
-  chk_create(out)
-  sf::st_write(
-    obj = aoi,
-    dsn = here::here(out, "aoi.gpkg"),
-    delete_dsn = TRUE,
-    quiet = TRUE
-  )
+  # Make grid & export
+  pipedat::pipegrid(aoi, cellsize = 0.01, crs = param$crs)
 }
