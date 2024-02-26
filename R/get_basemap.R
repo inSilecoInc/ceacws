@@ -2,7 +2,7 @@
 #'
 #' @export
 get_basemap <- function() {
-  out <- here::here("data", "basemap")
+  out <- here::here("project-data", "basemap")
   chk_create(out)
 
   # CANADA EAST

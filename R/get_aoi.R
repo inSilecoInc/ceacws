@@ -7,9 +7,9 @@ get_aoi <- function() {
     pipedat::bbox_poly(param$crs)
 
   # Land
-  land <- sf::st_read("data/basemap/usa.gpkg", quiet = TRUE) |>
-    sf::st_union(sf::st_read("data/basemap/canada_full.gpkg", quiet = TRUE)) |>
-    sf::st_union(sf::st_read("data/basemap/greenland.gpkg", quiet = TRUE)) |>
+  land <- sf::st_read("project-data/basemap/usa.gpkg", quiet = TRUE) |>
+    sf::st_union(sf::st_read("project-data/basemap/canada_full.gpkg", quiet = TRUE)) |>
+    sf::st_union(sf::st_read("project-data/basemap/greenland.gpkg", quiet = TRUE)) |>
     sf::st_transform(param$crs)
 
   # Remove land
