@@ -15,10 +15,10 @@ pipeline <- function() {
   pipeflow()
 
   # Figures
-  fig_aoi()
+  # fig_aoi()
 
   # Report and publications
-  render_frontpate()
-  render_report()
+  # render_frontpate()
+  # render_report()
   # render_webinar()
 }
