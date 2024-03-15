@@ -1,0 +1,46 @@
+pipeline:
+  pipeline_id: 48ea8a05
+  pipeline_type: data
+  creators:
+  - contact_id: 1
+    first_name: David
+    last_name: Beauchesne
+    organization: Universite Laval
+    department: Department of Biology
+    role: Postdoctoral researcher
+    email: david.beauchesne@hotmail.com
+    phone: 1-514-553-4974
+  date_created: '2024-03-14'
+  url: https://github.com/Ecosystem-Assessments/pipedat/blob/main/inst/pipelines/istop_cws-48ea8a05.R
+  pipeline_bbox:
+  - -76
+  - -33
+  - 35
+  - 65
+description:
+  name: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) program
+  description: To assist with the environmental monitoring of our coastal waters,
+    the Canadian Ice Service has a team of experts trained in satellite imagery analysis
+    to detect oil spills. Since 2006, satellite imagery are analysed daily to detect,
+    then report on illegal and accidental oil pollution in our marine environment.
+    The reports of potential oil pollution are used by Government of Canada enforcement
+    and clean up agencies in dealing with identified spills. The analyses are also
+    used for monitoring on-going spill events and for monitoring grounded ships (ships
+    stuck in shallow water) that are at risk of causing pollution.
+  access_date: '2024-03-15'
+  contacts:
+  - contact_id: 76
+    first_name: Robert
+    last_name: Ronconi
+    organization: Environment and Climate Change Canada
+    department: ''
+    role: ''
+    email: Robert.Ronconi@ec.gc.ca
+    phone: ''
+  citekey: eccc2024
+  url: https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html
+  uuid: .na.character
+  availability: on demand
+format:
+  timestamp: '2024-03-15'
+  filenames: /Users/davidbeauchesne/DB/inSilecoInc/ceacws/project-data/pipedat/istop_cws-48ea8a05/format/istop_cws-48ea8a05

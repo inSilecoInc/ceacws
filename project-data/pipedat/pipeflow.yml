@@ -16,7 +16,10 @@ pipedat:
   # ==========================================================================
   # UID of pipelines to eexecute
   pipelines:
-    - "98916b4a"
+    - "98916b4a" # DFO Shipping intensity 
+    - "77f8d683" # NEEC 
+    - "376f0891" # NASP
+    - "48ea8a05" # ISTOP
   # ==========================================================================
   # Additional parameters parsed to species pipelines 
   # params:

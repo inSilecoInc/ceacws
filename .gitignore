@@ -32,6 +32,7 @@ raw/
 *.gpkg
 *.rds
 *.tar.xz
+pof-stac-insileco*
 
 # Specific files & folders
 figures/*
