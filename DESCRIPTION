@@ -44,4 +44,7 @@ Imports:
 Remotes:
     Ecosystem-Assessments/pipedat,
     Ecosystem-Assessments/rcea,
+    Ecosystem-Assessments/eaMethods,
+    david-beauchesne/iEat,
+    inSileco/graphicsutils,
     mitchelloharawild/icons
