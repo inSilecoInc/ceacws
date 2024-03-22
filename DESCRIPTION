@@ -19,6 +19,7 @@ RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)
 Imports: 
+    archive,
     data.table,
     dplyr,
     eaMethods,
