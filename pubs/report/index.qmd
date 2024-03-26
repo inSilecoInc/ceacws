@@ -6,10 +6,10 @@ date: "`r Sys.Date()`"
 # bibliography: [pipedat.bib, nceadfo.bib] # Add .bib files
 # biblio-style: apalike
 csl: frontiers.csl
-link-citations: yes
-colorlinks: yes
-lot: yes
-lof: yes
+link-citations: true
+colorlinks: true
+lot: true
+lof: true
 fontsize: 12pt
 monofont: "Courier"
 monofontoptions: "Scale=0.7"
@@ -19,18 +19,18 @@ always_allow_html: true
 
 ```{r setup, include = FALSE, purl = FALSE}
 knitr::opts_chunk$set(
-  comment = "#>",
-  collapse = TRUE,
-  warning = FALSE,
-  echo = FALSE,
-  message = FALSE,
-  dev = "png",
-  dpi = 108,
-  fig.width = 8,
-  fig.height = 6,
-  fig.align = "center",
-  width = 120 # ,
-  # table.attr = 'class="flat-table"'
+    comment = "#>",
+    collapse = TRUE,
+    warning = FALSE,
+    echo = FALSE,
+    message = FALSE,
+    dev = "png",
+    dpi = 108,
+    fig.width = 8,
+    fig.height = 6,
+    fig.align = "center",
+    width = 120 # ,
+    # table.attr = 'class="flat-table"'
 )
 
 
@@ -94,15 +94,12 @@ To move forward with conservation and management of marine birds in Atlantic Can
 
 The followins is the list of specific tasks, as described in the Statement of Work: 
 
-> 1. Source and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.
+1. Source and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.
+2.	Generate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.
+3.	Source data required to generate threat layers for Task 4. The proponent will assess and acquire the following datasets required for the analyses in Task 4, documenting reproducible workflows whenever possible. Work must be completed by 31 July 2024*.
+4.	Generate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.
 
-> 2.	Generate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.
-
-> 3.	Source data required to generate threat layers for Task 4. The proponent will assess and acquire the following datasets required for the analyses in Task 4, documenting reproducible workflows whenever possible. Work must be completed by 31 July 2024*.
-
-> 4.	Generate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.
-
-> * The proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.
+* The proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.
    
 ## Progress report 
 
