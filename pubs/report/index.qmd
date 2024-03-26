@@ -1,59 +1,6 @@
 ---
-title: "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada"
-subtitle: "Progress report"
-author: "David Beauchesne, Kevin Cazelles, Steve Vissault"
-date: "`r Sys.Date()`"
-# bibliography: [pipedat.bib, nceadfo.bib] # Add .bib files
-# biblio-style: apalike
-csl: frontiers.csl
-link-citations: true
-colorlinks: true
-lot: true
-lof: true
-fontsize: 12pt
-monofont: "Courier"
-monofontoptions: "Scale=0.7"
-site: bookdown::bookdown_site
-always_allow_html: true
+title: "Introduction"
 ---
-
-```{r setup, include = FALSE, purl = FALSE}
-knitr::opts_chunk$set(
-    comment = "#>",
-    collapse = TRUE,
-    warning = FALSE,
-    echo = FALSE,
-    message = FALSE,
-    dev = "png",
-    dpi = 108,
-    fig.width = 8,
-    fig.height = 6,
-    fig.align = "center",
-    width = 120 # ,
-    # table.attr = 'class="flat-table"'
-)
-
-
-
-# Load project package
-# library(compendium)
-```
-
-#### inSileco {-}
-
-David Beauchesne, Ph.D. <br/>
-david.beauchesne@insileco.io<br/>
-
-<br/>
-
-Kevin Cazelles, Ph.D. <br/>
-kevin.cazelles@insileco.io<br/>
-
-<br/>
-
-Steve Vissault, M.Sc.<br/>
-steve.vissault@insileco.io<br/>
-
 
 #### Canadian Wildlife Service {-}
 
@@ -64,8 +11,6 @@ Katharine.Studholme@ec.gc.ca<br/>
 
 Robert Ronconi<br/>
 Robert.Ronconi@ec.gc.ca<br/>
-
-<br/>
 
 <br/>
 
@@ -105,16 +50,6 @@ The followins is the list of specific tasks, as described in the Statement of Wo
 
 The current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished. 
 
-# Area of interest 
-
-
-# Shipping-based pollution
-
-
-# Petroleum pollution based on past incidents
-
-
-# Research compendium
 
 
 
