@@ -1,0 +1,123 @@
+---
+title: "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada"
+subtitle: "Progress report"
+author: "David Beauchesne, Kevin Cazelles, Steve Vissault"
+date: "`r Sys.Date()`"
+# bibliography: [pipedat.bib, nceadfo.bib] # Add .bib files
+# biblio-style: apalike
+csl: frontiers.csl
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+fontsize: 12pt
+monofont: "Courier"
+monofontoptions: "Scale=0.7"
+site: bookdown::bookdown_site
+always_allow_html: true
+---
+
+```{r setup, include = FALSE, purl = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE,
+  echo = FALSE,
+  message = FALSE,
+  dev = "png",
+  dpi = 108,
+  fig.width = 8,
+  fig.height = 6,
+  fig.align = "center",
+  width = 120 # ,
+  # table.attr = 'class="flat-table"'
+)
+
+
+
+# Load project package
+# library(compendium)
+```
+
+#### inSileco {-}
+
+David Beauchesne, Ph.D. <br/>
+david.beauchesne@insileco.io<br/>
+
+<br/>
+
+Kevin Cazelles, Ph.D. <br/>
+kevin.cazelles@insileco.io<br/>
+
+<br/>
+
+Steve Vissault, M.Sc.<br/>
+steve.vissault@insileco.io<br/>
+
+
+#### Canadian Wildlife Service {-}
+
+Katharine Studholme<br/>
+Katharine.Studholme@ec.gc.ca<br/>
+
+<br/>
+
+Robert Ronconi<br/>
+Robert.Ronconi@ec.gc.ca<br/>
+
+<br/>
+
+<br/>
+
+Sarah Wong<br/>
+sarah.wong2@canada.ca<br/>
+
+<br/>
+
+# Background 
+
+The Migratory Birds Regulations, under the Migratory Birds Convention Act, 1994, strictly prohibit the harming of migratory birds; however coastal and marine birds are subject to injury and death in Canada due to multiple threats in the marine environment. Under the Ocean Protection Plan (OPP) and the Marine Spatial Planning (MSP) initiatives, ECCC is coordinating efforts to improve information on the spatiotemporal distribution and overlap of coastal and marine birds with threats at sea, such as potential oil spills from industrial infrastructure and marine traffic. The OPP initiative specifically supports the collation and generation of scientific data and knowledge products for integration into marine response plans, the effectiveness of which will be greatly increased if cumulative effects of all known stressors are considered. 
+
+Of the wide range of coastal and marine bird species which breed and forage in the waters around the Atlantic Provinces, many migrate long distances to their overwintering areas so are exposed to additional threats beyond Canada’s jurisdiction, adding to the complexity of understanding cumulative effects on species for which Canada has conservation and stewardship responsibility. For example, Canada hosts >90% of the Atlantic-basin breeding population of the globally threatened Leach’s Storm-Petrel (listed as threatened by Committee on the Status of Endangered Wildlife in Canada) which regularly forage beyond the Exclusive Economic Zone and migrate as far as the waters off southern Africa. With foresight to the development of a Recovery Strategy for this species and in support of OPP and MSP initiatives, ECCC is currently leading a study to better understand habitat use and overlap with anthropogenic threats for this species throughout the annual cycle.
+
+Of particular interest is improving understanding of the nature (if, when, how) and consequences of seabird interactions with offshore vessel traffic and the offshore oil and gas industry. Seabird interactions with offshore oil and gas platforms is a long-standing issue in the Newfoundland and Labrador and Nova Scotia offshore. In a 2012 Auditor General report (Commissioner of the Environment and Sustainable Development (CESD) 2012) it was noted “Exhibit 1.5. The effects of offshore projects on seabirds need to be better understood”. Within the OPP, ECCC is responsible for informing preparedness, planning and response with respect to migratory birds which requires an understanding of the where and when marine birds are most at risk to threats like oil pollution, vessel traffic, and light pollution.  
+
+This contract will develop spatial-temporal risk layers relevant to seabird conservation within Canada’s EEZ and abroad. Specifically, this work will develop threats layers related to oil pollution, oil and gas infrastructure, vessel traffic, and light pollution.
+
+# Objective & scope
+
+The general objective of this contract is to generate geospatial data layers quantifying threats to marine birds at sea throughout the annual cycle to inform conservation and management in Atlantic Canada.
+
+To move forward with conservation and management of marine birds in Atlantic Canada in the face of increasing industrial and shipping activity at sea, we were tasked to acquire and format spatiotemporal datasets and conduct analyses to generate geospatial data products quantifying threats at sea throughout the annual cycle of migratory marine birds. We are be responsible for the data management, quantitative analyses, and reporting – including reproducible workflows (which details methods/approach and includes R code).
+
+## Specific tasks
+
+The followins is the list of specific tasks, as described in the Statement of Work: 
+
+> 1. Source and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.
+
+> 2.	Generate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.
+
+> 3.	Source data required to generate threat layers for Task 4. The proponent will assess and acquire the following datasets required for the analyses in Task 4, documenting reproducible workflows whenever possible. Work must be completed by 31 July 2024*.
+
+> 4.	Generate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.
+
+> * The proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.
+   
+## Progress report 
+
+The current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished. 
+
+# Area of interest 
+
+
+# Shipping-based pollution
+
+
+# Petroleum pollution based on past incidents
+
+
+# Research compendium
+
+
+

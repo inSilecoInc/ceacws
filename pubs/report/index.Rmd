@@ -1,7 +1,7 @@
 ---
-title: "Project title"
-subtitle: "Exploratory report"
-author: "David Beauchesne"
+title: "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada"
+subtitle: "Progress report"
+author: "David Beauchesne, Kevin Cazelles, Steve Vissault"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
 documentclass: scrbook
@@ -46,8 +46,8 @@ knitr::opts_chunk$set(
   dpi = 108,
   fig.width = 8,
   fig.height = 6,
-  fig.align = 'center',
-  width = 120#,
+  fig.align = "center",
+  width = 120 # ,
   # table.attr = 'class="flat-table"'
 )
 
@@ -57,13 +57,37 @@ knitr::opts_chunk$set(
 # library(compendium)
 ```
 
-# {-}
+#### inSileco {-}
 
 David Beauchesne, Ph.D. <br/>
-Postdoctoral researcher<br/>
-david.beauchesne@hotmail.com<br/>
+david.beauchesne@insileco.io<br/>
+
+<br/>
+
+Kevin Cazelles, Ph.D. <br/>
+kevin.cazelles@insileco.io<br/>
+
+<br/>
+
+Steve Vissault, M.Sc.<br/>
+steve.vissault@insileco.io<br/>
 
 
-#### Citation {-}
+#### Canadian Wildlife Service {-}
 
-Beauchesne D (YEAR) PROJECT TITLE. url: [...]
+Katharine Studholme<br/>
+Katharine.Studholme@ec.gc.ca<br/>
+
+<br/>
+
+Robert Ronconi<br/>
+Robert.Ronconi@ec.gc.ca<br/>
+
+<br/>
+
+<br/>
+
+Sarah Wong<br/>
+sarah.wong2@canada.ca<br/>
+
+<br/>
