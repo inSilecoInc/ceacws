@@ -24,9 +24,9 @@ rep_hyperlien <- function(texte, url) {
   nl <- length(texte)
   hyperlien <- character(nl)
 
-  for(i in 1:nl) {
-    if(!is.null(url[i])) {
-      hyperlien[i] <- paste0("[",texte[i],"](",url[i],")")
+  for (i in 1:nl) {
+    if (!is.null(url[i])) {
+      hyperlien[i] <- paste0("[", texte[i], "](", url[i], ")")
     } else {
       hyperlien[i] <- texte[i]
     }
@@ -48,4 +48,17 @@ clean <- function() {
 #' Check if folder exists and create if not
 chk_create <- function(path) {
   if (!file.exists(path)) dir.create(path, recursive = TRUE)
+}
+
+# ------------------------------------------------------------------------------
+# Function to mask on area of interest
+mask_aoi <- function(dat) {
+  # Area of interest
+  aoi <- sf::st_read("project-data/aoi/aoi.gpkg", quiet = TRUE)
+  tmp <- dat
+  tmp[[1]][] <- NA
+  aoi$val_ras <- 1
+  aoi_mask <- stars::st_rasterize(aoi["val_ras"], template = tmp)
+  stars::st_dimensions(aoi_mask) <- stars::st_dimensions(dat)
+  dat * aoi_mask
 }
