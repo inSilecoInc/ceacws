@@ -1,3 +1,98 @@
 ---
 title: "Petroleum pollution based on past incidents"
 ---
+
+## Tasks 
+
+1. Receive and format data on petroleum pollution based on past accidental spills for nearshore Canadian waters
+   1. National Environmental Emergencies Centre (NEEC)
+   2. National Aerial Surveillance Program (NASP)
+   3. Integrated Satellite Tracking of Pollution (ISTOP)
+2. Prepare petroleum pollution based on past incidents threat layers for specified annual periods
+
+## Data & processing
+
+The data used to generate this threat layers were requested by the CWS and transferred to inSileco. They are stored on a secure Google Cloud Storage bucket to ensure the reproducibility of this project, although this arrangement will need to be revisited at the end of the contract with the CWS. There are three different datasets used, which are detailed below. 
+
+### NEEC
+
+```{r neec}
+neec <- pipedat::importdat("77f8d683", "format")[["neec_cws-77f8d683.csv"]]
+neec2 <- sf::st_read("../../project-data/partials/neec.gpkg", quiet = TRUE)
+na_vol <- neec2 |>
+  dplyr::filter(is.na(quantity) | is.na(unit))
+na_vol <- round(((nrow(na_vol) / nrow(neec2)) * 100), 0)
+vol_kg <- neec2 |>
+  dplyr::filter(!is.na(unit) & unit == "Kilogram(s)") |>
+  nrow()
+```
+
+The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) is a program led by Environment and Climate Change Canada that provides an inventory of environmental emergencies incidents in Canada. The data requested by the CWS covers notifications impacting or potentially impacting a waterbody for the Atlantic region (including Québec) for the period of 2016 to 2023 [@neec2024]. The data provided inventories `r nrow(neec)` incidents. 
+
+The following filtering procedures were applied to the data in order to use it to produce a threat layer: 
+
+  - Remove empty coordinates
+  - Use data from "Notification Date Time" when not available from "Incident Local Date Time" field
+  - Remove records containing "covid", "istop", "sipps"
+  - Select greatest quantity for individual spills with multiple substances
+  - Remove Incident Name containing "mvi" or "furnace oil" to remove a few dozen incidents that generally won't impact marine birds
+  - Keep all incidents within 1 $km$ of the coastline
+
+This filtering process yields a total of `r nrow(neec2)` usable observations to characterize this pollution threat layer. 
+
+<!-- ```{R neecmap}
+mapview::mapview(neec2)
+``` -->
+
+
+### NASP
+
+```{R nasp} 
+nasp <- pipedat::importdat("376f0891", "format")[["nasp_cws-376f0891.gpkg"]]
+nasp2 <- sf::st_read("../../project-data/partials/nasp.gpkg", quiet = TRUE)
+```
+
+The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) is a surveillance program led by Transport Canada that operates across the country to detect pollution through aerial surveys. Its goals are to prevent pollution in our waters, protect our marine environment and endangered marine life, and ensure a safe and efficient transportation industry along our massive and varied coastlines. The data requested by the CWS covers oil pollution detections from visual or aided by instruments (*e.g.* radar) for the Atlantic region between April 2012 and March 2023 [@tc2024]. The data provided inventories `r nrow(nasp)` incidents. Data were cleaned and formatted, with missing spill volumes removed from the dataset, resulting in `r nrow(nasp2)` usable observations to characterize this pollution threat layer.
+
+
+### ISTOP
+
+```{R istop} 
+istop <- pipedat::importdat("48ea8a05", "format")[["istop_cws-48ea8a05.gpkg"]]
+istop2 <- sf::st_read("../../project-data/partials/istop.gpkg", quiet = TRUE)
+```
+
+The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html) program assists environmental monitoring of coastal waters through satellite imagery analysis to detect oil spills. Since 2006, satellite imagery is analyzed daily to detect and report illegal and accidental oil pollution in marine environments. The analyses performed identify sea-surface anomalies identified as pollution from satellite imagery that are then transformed as vectorized polygons representing the surface affected by the pollution. The data requested by the CWS spanned the period of 2006 to 2023 and includes `r nrow(istop)` incidents [@eccc2024]. Only data of categories 1A (*i.e.* possible oil with a target clearly associated), 1B (*i.e.* possible oil with a target within 50-km), and 2 (*i.e.* possible oil but without an identifiable source) were retained to characterize this pollution threat layer, resulting in `r nrow(istop2)` usable observations.
+
+
+
+## Method
+
+Since accidental spills have an effect that goes beyond the immediate location of the incidents due to the diffusion of the spill in the environment, the first step in characterizing the intensity of spills was to establish a potential zone of influence for each incident. To characterize this, we explored weighted kernel density estimates with a Gaussian distribution. However, kernels have the drawback of considering the density around a constant radius surrounding individual points, whereas each spill may have a different spatial footprint as a function of the total volume spilled. For this first iteration of the threat layers, we therefore chose a passive diffusive model to establish the zone of influence and relative intensity of accidental spills in the study area [see @halpern2008a]. 
+
+The diffusion model establishes the zone of influence of the spills by creating concentric rings centred on each incident. An initial value equal to the volume of the incident is assigned to the centre ring and represents the relative intensity of the incident on the environment. A value is then successively assigned to the adjacent rings according to a decay function of a percent value of the previous ring until a minimum threshold is reached. This approach assumes a linear decrease in the influence of the incidents on the environment.
+
+Since the data used are not directly comparable, we decided to create a single threat layer for each dataset. Furthermore, the range of volumes reported in the NEEC ([]) and NASP ([]) datasets were too great to use directly without completely masking the effects of smaller spill events. As such, we log-transformed the reported volumes to give less weight to very high volumes. The ISTOP dataset, meanwhile, has no reported volume. We therefore used the area in $km^2$ of individual incidents as a proxy of spill volumes. As with the other datasets, we log-transformed these values to decrease the influence of very large spills. Finally, in order to make intensity of threats related to past incidents more comparable, we normalized volumes/areas between 0 and 1 before running the diffusive plume models. The intensity and spatial distribution of accidental spills in the study area were then evaluated as the sum of the values of all concentric rings intersecting with cells of our study grid. 
+
+The parameters that are currently used for the diffusive plume model are the following: 
+
+- Concentric rings radius: 100 $m$
+- Decay function percent: 2%
+- Minimum threshold: 0.05% of the global minimum, *i.e.* the lowest spill volume recorded
+- Initial values: log-transformed and normalized volumes/areas
+
+All reported parameters and analytical decisions made could be further explored and modified in future iterations until we agree on the final threat layers desired. For us, these serve as a basis for further discussion towards producing the final threat layers generated through this project. Also, if requested, these parameters could also be included as parameters in the *research compendium*. The code used to perform this assessment is available [here](https://github.com/inSilecoInc/ceacws/blob/main/R/threat_pollution.R).
+
+## Outstanding questions
+
+The following are some outstanding questions that were not presented in the previous sections. 
+
+### NEEC 
+
+So far, we set all NA quantities to 1 to perform the analysis. This should be discussed, as entries without volume makeup `r na_vol`% of the NEEC dataset. Furthermore, certain volumes are reported in litres and others in kilograms. At the moment we are considering that the units are the same, but this is not necessarily the case. There are `r vol_kg` incidents reports in kilograms in the NEEC dataset. 
+
+### ISTOP
+
+There are many duplicates in the data. For now, we only kept unique rows, but we are wondering whether there is a reason we are unaware of for these duplicates to exist and be used in combination.
+
+## Notes & references

@@ -4,29 +4,179 @@
     "href": "index.html",
     "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
     "section": "",
-    "text": "Canadian Wildlife Service\nKatharine Studholme Katharine.Studholme@ec.gc.ca\nRobert Ronconi Robert.Ronconi@ec.gc.ca\nSarah Wong sarah.wong2@canada.ca",
+    "text": "Canadian Wildlife Service\nKatharine Studholme\nRobert Ronconi\nSarah Wong",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
-    "objectID": "index.html#specific-tasks",
-    "href": "index.html#specific-tasks",
+    "objectID": "index.html#background",
+    "href": "index.html#background",
     "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
-    "section": "2.1 Specific tasks",
-    "text": "2.1 Specific tasks\nThe followins is the list of specific tasks, as described in the Statement of Work:\n\nSource and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.\nGenerate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.\nSource data required to generate threat layers for Task 4. The proponent will assess and acquire the following datasets required for the analyses in Task 4, documenting reproducible workflows whenever possible. Work must be completed by 31 July 2024*.\nGenerate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.\n\n\nThe proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.",
+    "section": "1.1 Background",
+    "text": "1.1 Background\nThe Migratory Birds Regulations, under the Migratory Birds Convention Act, 1994, strictly prohibit the harming of migratory birds; however coastal and marine birds are subject to injury and death in Canada due to multiple threats in the marine environment. Under the Ocean Protection Plan (OPP) and the Marine Spatial Planning (MSP) initiatives, ECCC is coordinating efforts to improve information on the spatiotemporal distribution and overlap of coastal and marine birds with threats at sea, such as potential oil spills from industrial infrastructure and marine traffic. The OPP initiative specifically supports the collation and generation of scientific data and knowledge products for integration into marine response plans, the effectiveness of which will be greatly increased if cumulative effects of all known stressors are considered.\nOf the wide range of coastal and marine bird species which breed and forage in the waters around the Atlantic Provinces, many migrate long distances to their overwintering areas so are exposed to additional threats beyond Canada’s jurisdiction, adding to the complexity of understanding cumulative effects on species for which Canada has conservation and stewardship responsibility. For example, Canada hosts &gt;90% of the Atlantic-basin breeding population of the globally threatened Leach’s Storm-Petrel (listed as threatened by Committee on the Status of Endangered Wildlife in Canada) which regularly forage beyond the Exclusive Economic Zone and migrate as far as the waters off southern Africa. With foresight to the development of a Recovery Strategy for this species and in support of OPP and MSP initiatives, ECCC is currently leading a study to better understand habitat use and overlap with anthropogenic threats for this species throughout the annual cycle.\nOf particular interest is improving understanding of the nature (if, when, how) and consequences of seabird interactions with offshore vessel traffic and the offshore oil and gas industry. Seabird interactions with offshore oil and gas platforms is a long-standing issue in the Newfoundland and Labrador and Nova Scotia offshore. In a 2012 Auditor General report (Commissioner of the Environment and Sustainable Development (CESD) 2012) it was noted “Exhibit 1.5. The effects of offshore projects on seabirds need to be better understood”. Within the OPP, ECCC is responsible for informing preparedness, planning and response with respect to migratory birds which requires an understanding of the where and when marine birds are most at risk to threats like oil pollution, vessel traffic, and light pollution.\nThis contract will develop spatial-temporal risk layers relevant to seabird conservation within Canada’s EEZ and abroad. Specifically, this work will develop threats layers related to oil pollution, oil and gas infrastructure, vessel traffic, and light pollution.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
-    "objectID": "index.html#progress-report",
-    "href": "index.html#progress-report",
+    "objectID": "index.html#objective-scope",
+    "href": "index.html#objective-scope",
     "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
-    "section": "2.2 Progress report",
-    "text": "2.2 Progress report\nThe current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished.",
+    "section": "1.2 Objective & scope",
+    "text": "1.2 Objective & scope\nThe general objective of this contract is to generate geospatial data layers quantifying threats to marine birds at sea throughout the annual cycle to inform conservation and management in Atlantic Canada.\nTo move forward with conservation and management of marine birds in Atlantic Canada in the face of increasing industrial and shipping activity at sea, we were tasked to acquire and format spatiotemporal datasets and conduct analyses to generate geospatial data products quantifying threats at sea throughout the annual cycle of migratory marine birds. We are responsible for the data management, quantitative analyses, and reporting – including reproducible workflows (which details methods/approach and includes R code).\n\n1.2.1 Specific tasks\nThe following is the list of specific tasks, as described in the Statement of Work:\n\nSource and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.\nGenerate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.\nSource data required to generate threat layers for Task 4. The proponent will assess and acquire the following datasets required for the analyses in Task 4, documenting reproducible workflows whenever possible. Work must be completed by 31 July 2024*.\nGenerate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.\n\n\nThe proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in a timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.\n\n\n\n1.2.2 Progress report\nThe current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#area-of-interest",
+    "href": "index.html#area-of-interest",
+    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
+    "section": "1.3 Area of interest",
+    "text": "1.3 Area of interest\nThe project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers 7293008 \\(km^2\\) (Figure 1.1). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 \\(km^2\\), although this decision can be revisited at any time throughout the project.\n\n\n\n\n\n\n\n\nFigure 1.1: Limits of the study area for the project on mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#data-management-and-reproducibility",
+    "href": "index.html#data-management-and-reproducibility",
+    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
+    "section": "1.4 Data management and reproducibility",
+    "text": "1.4 Data management and reproducibility\nThe aim of database management is to ensure the transparency and reproducibility of the project. Our approach is based on the FAIR (Findable, Accessible, Interoperable, Reusable) data principles, which seek to ensure that the data used are discoverable, accessible, interoperable and reusable. We therefore use programming tools, in particular the language R1. There are a number of advantages to using programming tools such as ArcGIS2. They offer great flexibility, enabling us to very quickly integrate changes or new considerations without having to redo a number of steps in a complex process. This flexibility is not limited to analysis, since all steps of a project, from the integration of raw data to the production of reports, can be integrated and easily modified. It is then an easy matter to integrate comments or new recommendations arising from engagement processes, for example.\nWe also use GitHub3, a version control tool for the documentation, quality control, and development/change history of programming elements relevant to the entire project. We created a publicly available research compendium called ceacws that provides the collection of all parts of our research project including text, figures, data, and code that ensures reproducibility of the study.\nWhile not including the data directly, the research compendium contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains – or will contain – the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.\nThe research compendium relies on another R package called pipedat, which provides analytical pipelines to access, load, and format a variety of data from multiple sources programmatically. The goal of pipedat is to enhance the capacity scientists, planners and the wider public to prepare and perform complex and reproducible ecosystem-scale assessments requiring the integration of multiple spatial datasets such as cumulative effects assessments in the context of ecosystem-based management, and Marxan analyses for the establishment of individual and networks of MPAs. While the analytical pipelines used to fetch and format the data for this project are available in this research compendium, their latest version and execution are performed with pipedat.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#notes-references",
+    "href": "index.html#notes-references",
+    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
+    "section": "1.5 Notes & references",
+    "text": "1.5 Notes & references",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
+    "section": "",
+    "text": "R is a free software environment for statistics, data science and graphics (https://www.r-project.org/)↩︎\nArcGIS is a geographic information software (GIS) suite developed by the US company Esri (https://www.arcgis.com/index.html)↩︎\nGitHub is a web-based software development hosting and management service with over 40 million users worldwide (https://github.com/).↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "1_shipping.html",
+    "href": "1_shipping.html",
+    "title": "2  Shipping-based pollution",
+    "section": "",
+    "text": "2.1 Tasks",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+    ]
+  },
+  {
+    "objectID": "1_shipping.html#tasks",
+    "href": "1_shipping.html#tasks",
+    "title": "2  Shipping-based pollution",
+    "section": "",
+    "text": "Access to shipping AIS data through Global Fishing Watch\nPrepare monthly petroleum pollution and disturbance due to vessel traffic threat layers in the Atlantic Ocean\n\nAll vessels\nCargo/bulk vessels\nFishing vessels",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+    ]
+  },
+  {
+    "objectID": "1_shipping.html#global-fishing-watch",
+    "href": "1_shipping.html#global-fishing-watch",
+    "title": "2  Shipping-based pollution",
+    "section": "2.2 Global Fishing Watch",
+    "text": "2.2 Global Fishing Watch\nThe purpose of Global Fishing Watch is to create and publicly share knowledge about human activity at sea to enable fair and sustainable use of our ocean. They use cutting-edge technology to turn big data into actionable information. They believe human activity at sea should be common knowledge in order to safeguard the global ocean for the good of all. Global Fishing Watch’s open-access technology products, datasets, and code accelerate research and innovation and support sustainable ocean management. They offer a variety of products related to human activity at sea, including shipping and fisheries, but also data on ocean conditions and biology. Access to their data can be achieved through their API, which is also accessible through an R Package called gfwr.\nThe gfwr R package offers wrapper functions to access data through the GFW APIs. It provides convenient functions to freely pull GFW data directly into R in tidy formats. The package currently works with the following APIs:\n\nVessels API: vessel search and identity based on AIS self-reported data\nEvents API: encounters, loitering, port visits and fishing events based on AIS data\nMap Visualization (4Wings API: apparent fishing effort based on AIS data\n\nThe incentive of fetching data from such an API is that the current project could have been built so that continuous integration of new data could be performed, ensuring an updated assessment of this particular threat layer through time. However, after exploring the APIs and contacting representatives of GFW, we had to come to the conclusion that the data needed for this project were not and would likely not be available through their API. They stated that other products that might be useful are planned to be released in the future, such as vessel presence raster resources. However, the release dates for these resources extends beyond the timelines of the current project. We therefore had to pivot to an alternative data source to complete this part of the contract.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+    ]
+  },
+  {
+    "objectID": "1_shipping.html#vessel-density-mapping",
+    "href": "1_shipping.html#vessel-density-mapping",
+    "title": "2  Shipping-based pollution",
+    "section": "2.3 Vessel Density Mapping",
+    "text": "2.3 Vessel Density Mapping\nDuring the same timeframe of this project, Veinot et al. (2023) published a Technical Report detailing a project seeking to map vessel density in the Northwest Atlantic in 2019 using Automatic Identification System (AIS) data. Their work covers our study area, but was not available publicly yet. Since, their work has been extended to include vessel density mapping for the years 2013 through 2022 and has been made public on the Open Government data platform as a series entitled Vessel Density Mapping Series in the Northwest Atlantic. These data provide vessel density raster layers monthly for all vessel types combined, and yearly for different vessel types. This does not match perfectly with the requirements for this project. Namely, we would need to differentiate between daytime and nighttime vessel traffic, and use monthly data for each vessel type. In light of this, we agreed on a strategy to address this issue.\nFirst, we built the code necessary to access the openly available data and integrate it in our study grid.; this data serves as an acceptable backup plan in case we cannot access more detailed data. The code that fetches the data from the Open Government platform and integrates it in our study grid has therefore been developed and is available in the research compendium.\nSecond, the team from the CWS contacted the authors of Veinot et al. (2023) to discuss the possibility of either accessing the raw AIS data that they used to generate their own vessel density mapping, collaborating on a refined version of their work that addresses the needs of the CWS, or a combination of both. After discussing with their team, it was agreed that we would meet with a representative from their team to discuss the approach that they used to prepare their vessel density layers and potentially collaborate on updating their code to generate the layers that are required for this project. It was also agreed that the Northwest Atlantic region track lines and AIS data points, with MMSI data and times could be shared with us, under condition of a signed agreement and the transfer of anonymized MMSI numbers to ensure confidentiality. The data were transferred to the CWS on March 20th and we are currently waiting to have access to continue with our work. The threat layers using shipping data will therefore be completed during the second part of this project.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+    ]
+  },
+  {
+    "objectID": "1_shipping.html#notes-references",
+    "href": "1_shipping.html#notes-references",
+    "title": "2  Shipping-based pollution",
+    "section": "2.4 Notes & references",
+    "text": "2.4 Notes & references\n\n\n\n\nVeinot, T., Nicoll, A., Rozalska, K., and Coffen-Smout, S. (2023). Vessel Density Mapping of 2019 Automatic Identification System (AIS) Data in the Northwest Atlantic. Can. Tech. Rep. Fish. Aquat. Sci. 3520: Vi + 29 p. Department of Fisheries and Oceans.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html",
+    "href": "2_petroleum.html",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "",
+    "text": "3.1 Tasks",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html#tasks",
+    "href": "2_petroleum.html#tasks",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "",
+    "text": "Receive and format data on petroleum pollution based on past accidental spills for nearshore Canadian waters\n\nNational Environmental Emergencies Centre (NEEC)\nNational Aerial Surveillance Program (NASP)\nIntegrated Satellite Tracking of Pollution (ISTOP)\n\nPrepare petroleum pollution based on past incidents threat layers for specified annual periods",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html#data-processing",
+    "href": "2_petroleum.html#data-processing",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "3.2 Data & processing",
+    "text": "3.2 Data & processing\nThe data used to generate this threat layers were requested by the CWS and transferred to inSileco. They are stored on a secure Google Cloud Storage bucket to ensure the reproducibility of this project, although this arrangement will need to be revisited at the end of the contract with the CWS. There are three different datasets used, which are detailed below.\n\n3.2.1 NEEC\nThe National Environmental Emergency Centre (NEEC) is a program led by Environment and Climate Change Canada that provides an inventory of environmental emergencies incidents in Canada. The data requested by the CWS covers notifications impacting or potentially impacting a waterbody for the Atlantic region (including Québec) for the period of 2016 to 2023 (Centre, 2024). The data provided inventories 9570 incidents.\nThe following filtering procedures were applied to the data in order to use it to produce a threat layer:\n\nRemove empty coordinates\nUse data from “Notification Date Time” when not available from “Incident Local Date Time” field\nRemove records containing “covid”, “istop”, “sipps”\nSelect greatest quantity for individual spills with multiple substances\nRemove Incident Name containing “mvi” or “furnace oil” to remove a few dozen incidents that generally won’t impact marine birds\nKeep all incidents within 1 \\(km\\) of the coastline\n\nThis filtering process yields a total of 1677 usable observations to characterize this pollution threat layer.\n\n\n\n3.2.2 NASP\nThe National Aerial Surveillance Program (NASP) is a surveillance program led by Transport Canada that operates across the country to detect pollution through aerial surveys. Its goals are to prevent pollution in our waters, protect our marine environment and endangered marine life, and ensure a safe and efficient transportation industry along our massive and varied coastlines. The data requested by the CWS covers oil pollution detections from visual or aided by instruments (e.g. radar) for the Atlantic region between April 2012 and March 2023 (Canada, 2024). The data provided inventories 3578 incidents. Data were cleaned and formatted, with missing spill volumes removed from the dataset, resulting in 3572 usable observations to characterize this pollution threat layer.\n\n\n3.2.3 ISTOP\nThe Integrated Satellite Tracking of Pollution (ISTOP) program assists environmental monitoring of coastal waters through satellite imagery analysis to detect oil spills. Since 2006, satellite imagery is analyzed daily to detect and report illegal and accidental oil pollution in marine environments. The analyses performed identify sea-surface anomalies identified as pollution from satellite imagery that are then transformed as vectorized polygons representing the surface affected by the pollution. The data requested by the CWS spanned the period of 2006 to 2023 and includes 637 incidents (Environment and Climate Change Canada, 2024). Only data of categories 1A (i.e. possible oil with a target clearly associated), 1B (i.e. possible oil with a target within 50-km), and 2 (i.e. possible oil but without an identifiable source) were retained to characterize this pollution threat layer, resulting in 123 usable observations.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html#method",
+    "href": "2_petroleum.html#method",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "3.3 Method",
+    "text": "3.3 Method\nSince accidental spills have an effect that goes beyond the immediate location of the incidents due to the diffusion of the spill in the environment, the first step in characterizing the intensity of spills was to establish a potential zone of influence for each incident. To characterize this, we explored weighted kernel density estimates with a Gaussian distribution. However, kernels have the drawback of considering the density around a constant radius surrounding individual points, whereas each spill may have a different spatial footprint as a function of the total volume spilled. For this first iteration of the threat layers, we therefore chose a passive diffusive model to establish the zone of influence and relative intensity of accidental spills in the study area (see Halpern et al., 2008).\nThe diffusion model establishes the zone of influence of the spills by creating concentric rings centred on each incident. An initial value equal to the volume of the incident is assigned to the centre ring and represents the relative intensity of the incident on the environment. A value is then successively assigned to the adjacent rings according to a decay function of a percent value of the previous ring until a minimum threshold is reached. This approach assumes a linear decrease in the influence of the incidents on the environment.\nSince the data used are not directly comparable, we decided to create a single threat layer for each dataset. Furthermore, the range of volumes reported in the NEEC ([]) and NASP ([]) datasets were too great to use directly without completely masking the effects of smaller spill events. As such, we log-transformed the reported volumes to give less weight to very high volumes. The ISTOP dataset, meanwhile, has no reported volume. We therefore used the area in \\(km^2\\) of individual incidents as a proxy of spill volumes. As with the other datasets, we log-transformed these values to decrease the influence of very large spills. Finally, in order to make intensity of threats related to past incidents more comparable, we normalized volumes/areas between 0 and 1 before running the diffusive plume models. The intensity and spatial distribution of accidental spills in the study area were then evaluated as the sum of the values of all concentric rings intersecting with cells of our study grid.\nThe parameters that are currently used for the diffusive plume model are the following:\n\nConcentric rings radius: 100 \\(m\\)\nDecay function percent: 2%\nMinimum threshold: 0.05% of the global minimum, i.e. the lowest spill volume recorded\nInitial values: log-transformed and normalized volumes/areas\n\nAll reported parameters and analytical decisions made could be further explored and modified in future iterations until we agree on the final threat layers desired. For us, these serve as a basis for further discussion towards producing the final threat layers generated through this project. Also, if requested, these parameters could also be included as parameters in the research compendium. The code used to perform this assessment is available here.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html#outstanding-questions",
+    "href": "2_petroleum.html#outstanding-questions",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "3.4 Outstanding questions",
+    "text": "3.4 Outstanding questions\nThe following are some outstanding questions that were not presented in the previous sections.\n\n3.4.1 NEEC\nSo far, we set all NA quantities to 1 to perform the analysis. This should be discussed, as entries without volume makeup 58% of the NEEC dataset. Furthermore, certain volumes are reported in litres and others in kilograms. At the moment we are considering that the units are the same, but this is not necessarily the case. There are 11 incidents reports in kilograms in the NEEC dataset.\n\n\n3.4.2 ISTOP\nThere are many duplicates in the data. For now, we only kept unique rows, but we are wondering whether there is a reason we are unaware of for these duplicates to exist and be used in combination.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+    ]
+  },
+  {
+    "objectID": "2_petroleum.html#notes-references",
+    "href": "2_petroleum.html#notes-references",
+    "title": "3  Petroleum pollution based on past incidents",
+    "section": "3.5 Notes & references",
+    "text": "3.5 Notes & references\n\n\n\n\nCanada, T. (2024). National Aerial Surveillance Program (NASP). Data extraction for period between April 2012 to March 2023. Transport Canada.\n\n\nCentre, N. E. E. (2024). Atlantic (including Quebec) notifications impacting or potentially impacting a waterbody with select substances, 2016-2023. Extracted by Philippe Muise 2024-01-29. Environment and Climate Change Canada.\n\n\nEnvironment, and Climate Change Canada (2024). Integrated Satellite Tracking of Pollution (ISTOP) program. Data extraction for period between 2006 and 2023. Environment and Climate Change Canada.\n\n\nHalpern, B. S., Walbridge, S., Selkoe, K. A., Kappel, C. V., Micheli, F., D’Agrosa, C., et al. (2008). A Global Map of Human Impact on Marine Ecosystems. Science 319, 948–952. doi:10.1126/science.1149345.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
     ]
   }
 ]

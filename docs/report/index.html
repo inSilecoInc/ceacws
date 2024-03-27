@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.543">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -126,12 +155,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Petroleum pollution based on past incidents</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./3_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -142,11 +165,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a></li>
-  <li><a href="#objective-scope" id="toc-objective-scope" class="nav-link" data-scroll-target="#objective-scope"><span class="header-section-number">2</span> Objective &amp; scope</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
-  <li><a href="#specific-tasks" id="toc-specific-tasks" class="nav-link" data-scroll-target="#specific-tasks"><span class="header-section-number">2.1</span> Specific tasks</a></li>
-  <li><a href="#progress-report" id="toc-progress-report" class="nav-link" data-scroll-target="#progress-report"><span class="header-section-number">2.2</span> Progress report</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">1.1</span> Background</a></li>
+  <li><a href="#objective-scope" id="toc-objective-scope" class="nav-link" data-scroll-target="#objective-scope"><span class="header-section-number">1.2</span> Objective &amp; scope</a>
+  <ul class="collapse">
+  <li><a href="#specific-tasks" id="toc-specific-tasks" class="nav-link" data-scroll-target="#specific-tasks"><span class="header-section-number">1.2.1</span> Specific tasks</a></li>
+  <li><a href="#progress-report" id="toc-progress-report" class="nav-link" data-scroll-target="#progress-report"><span class="header-section-number">1.2.2</span> Progress report</a></li>
+  </ul></li>
+  <li><a href="#area-of-interest" id="toc-area-of-interest" class="nav-link" data-scroll-target="#area-of-interest"><span class="header-section-number">1.3</span> Area of interest</a></li>
+  <li><a href="#data-management-and-reproducibility" id="toc-data-management-and-reproducibility" class="nav-link" data-scroll-target="#data-management-and-reproducibility"><span class="header-section-number">1.4</span> Data management and reproducibility</a></li>
+  <li><a href="#notes-references" id="toc-notes-references" class="nav-link" data-scroll-target="#notes-references"><span class="header-section-number">1.5</span> Notes &amp; references</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -184,27 +213,26 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="canadian-wildlife-service" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="canadian-wildlife-service">Canadian Wildlife Service</h4>
-<p>Katharine Studholme<br> Katharine.Studholme@ec.gc.ca<br></p>
-<p><br></p>
-<p>Robert Ronconi<br> Robert.Ronconi@ec.gc.ca<br></p>
-<p><br></p>
-<p>Sarah Wong<br> sarah.wong2@canada.ca<br></p>
-<p><br></p>
+<p><a href="mailto:Katharine.Studholme@ec.gc.ca">Katharine Studholme</a></p>
+<p><a href="mailto:Robert.Ronconi@ec.gc.ca">Robert Ronconi</a></p>
+<p><a href="mailto:sarah.wong2@canada.ca">Sarah Wong</a></p>
 </section>
-<section id="background" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<section id="background" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="background"><span class="header-section-number">1.1</span> Background</h2>
 <p>The Migratory Birds Regulations, under the Migratory Birds Convention Act, 1994, strictly prohibit the harming of migratory birds; however coastal and marine birds are subject to injury and death in Canada due to multiple threats in the marine environment. Under the Ocean Protection Plan (OPP) and the Marine Spatial Planning (MSP) initiatives, ECCC is coordinating efforts to improve information on the spatiotemporal distribution and overlap of coastal and marine birds with threats at sea, such as potential oil spills from industrial infrastructure and marine traffic. The OPP initiative specifically supports the collation and generation of scientific data and knowledge products for integration into marine response plans, the effectiveness of which will be greatly increased if cumulative effects of all known stressors are considered.</p>
 <p>Of the wide range of coastal and marine bird species which breed and forage in the waters around the Atlantic Provinces, many migrate long distances to their overwintering areas so are exposed to additional threats beyond Canada’s jurisdiction, adding to the complexity of understanding cumulative effects on species for which Canada has conservation and stewardship responsibility. For example, Canada hosts &gt;90% of the Atlantic-basin breeding population of the globally threatened Leach’s Storm-Petrel (listed as threatened by Committee on the Status of Endangered Wildlife in Canada) which regularly forage beyond the Exclusive Economic Zone and migrate as far as the waters off southern Africa. With foresight to the development of a Recovery Strategy for this species and in support of OPP and MSP initiatives, ECCC is currently leading a study to better understand habitat use and overlap with anthropogenic threats for this species throughout the annual cycle.</p>
 <p>Of particular interest is improving understanding of the nature (if, when, how) and consequences of seabird interactions with offshore vessel traffic and the offshore oil and gas industry. Seabird interactions with offshore oil and gas platforms is a long-standing issue in the Newfoundland and Labrador and Nova Scotia offshore. In a 2012 Auditor General report (Commissioner of the Environment and Sustainable Development (CESD) 2012) it was noted “Exhibit 1.5. The effects of offshore projects on seabirds need to be better understood”. Within the OPP, ECCC is responsible for informing preparedness, planning and response with respect to migratory birds which requires an understanding of the where and when marine birds are most at risk to threats like oil pollution, vessel traffic, and light pollution.</p>
 <p>This contract will develop spatial-temporal risk layers relevant to seabird conservation within Canada’s EEZ and abroad. Specifically, this work will develop threats layers related to oil pollution, oil and gas infrastructure, vessel traffic, and light pollution.</p>
 </section>
-<section id="objective-scope" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Objective &amp; scope</h1>
+<section id="objective-scope" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="objective-scope"><span class="header-section-number">1.2</span> Objective &amp; scope</h2>
 <p>The general objective of this contract is to generate geospatial data layers quantifying threats to marine birds at sea throughout the annual cycle to inform conservation and management in Atlantic Canada.</p>
-<p>To move forward with conservation and management of marine birds in Atlantic Canada in the face of increasing industrial and shipping activity at sea, we were tasked to acquire and format spatiotemporal datasets and conduct analyses to generate geospatial data products quantifying threats at sea throughout the annual cycle of migratory marine birds. We are be responsible for the data management, quantitative analyses, and reporting – including reproducible workflows (which details methods/approach and includes R code).</p>
-<section id="specific-tasks" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="specific-tasks"><span class="header-section-number">2.1</span> Specific tasks</h2>
-<p>The followins is the list of specific tasks, as described in the Statement of Work:</p>
+<p>To move forward with conservation and management of marine birds in Atlantic Canada in the face of increasing industrial and shipping activity at sea, we were tasked to acquire and format spatiotemporal datasets and conduct analyses to generate geospatial data products quantifying threats at sea throughout the annual cycle of migratory marine birds. We are responsible for the data management, quantitative analyses, and reporting – including reproducible workflows (which details methods/approach and includes R code).</p>
+<section id="specific-tasks" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="specific-tasks"><span class="header-section-number">1.2.1</span> Specific tasks</h3>
+<p>The following is the list of specific tasks, as described in the Statement of Work:</p>
 <ol type="1">
 <li>Source and format data required to generate threat layers for Task 2. The proponent will acquire datasets required for the analyses in Task 2, documenting reproducible workflows whenever possible. Work must be completed by 31 March 2024*.</li>
 <li>Generate oiling and vessel disturbance threat layers. The proponent will format and analyze spatiotemporal data to produce oiling and vessel disturbance threat layers as indicated in Table 1, Task 2, documenting reproducible workflows. Work must be completed by 31 March 2024*.</li>
@@ -212,15 +240,52 @@ ul.task-list li input[type="checkbox"] {
 <li>Generate light-based threat layers. The proponent will format and analyze spatiotemporal data to produce light attraction threat layers as indicated in Table 1, Task 4, documenting reproducible workflows. Work must be completed by 31 July 2024*.</li>
 </ol>
 <ul>
-<li>The proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.</li>
+<li>The proponent will not be held responsible for timely delivery of a given task if the data required to complete that task are not delivered to them in a timely manner – provided the proponent requested data access/delivery during Year 1 of the contract and requested a status update on the request at least once.</li>
 </ul>
 </section>
-<section id="progress-report" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="progress-report"><span class="header-section-number">2.2</span> Progress report</h2>
+<section id="progress-report" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="progress-report"><span class="header-section-number">1.2.2</span> Progress report</h3>
 <p>The current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished.</p>
+</section>
+</section>
+<section id="area-of-interest" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="area-of-interest"><span class="header-section-number">1.3</span> Area of interest</h2>
+<p>The project is conducted in EEZ of eastern Canada and covers the St.&nbsp;Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers 7293008 <span class="math inline">\(km^2\)</span> (<a href="#fig-aoi" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 <span class="math inline">\(km^2\)</span>, although this decision can be revisited at any time throughout the project.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-aoi" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-aoi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-aoi-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aoi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Limits of the study area for the project on mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="data-management-and-reproducibility" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="data-management-and-reproducibility"><span class="header-section-number">1.4</span> Data management and reproducibility</h2>
+<p>The aim of database management is to ensure the transparency and reproducibility of the project. Our approach is based on the <a href="https://ogsl.ca/en/fair-principles/">FAIR</a> (Findable, Accessible, Interoperable, Reusable) data principles, which seek to ensure that the data used are discoverable, accessible, interoperable and reusable. We therefore use programming tools, in particular the language <a href="https://www.r-project.org/">R</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. There are a number of advantages to using programming tools such as <a href="https://www.arcgis.com/index.html">ArcGIS</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. They offer great flexibility, enabling us to very quickly integrate changes or new considerations without having to redo a number of steps in a complex process. This flexibility is not limited to analysis, since all steps of a project, from the integration of raw data to the production of reports, can be integrated and easily modified. It is then an easy matter to integrate comments or new recommendations arising from engagement processes, for example.</p>
+<p>We also use <a href="https://github.com/">GitHub</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, a version control tool for the documentation, quality control, and development/change history of programming elements relevant to the entire project. We created a publicly available <em>research compendium</em> called <a href="https://github.com/inSilecoInc/ceacws"><code>ceacws</code></a> that provides the collection of all parts of our research project including text, figures, data, and code that ensures reproducibility of the study.</p>
+<p>While not including the data directly, the <em>research compendium</em> contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains – or will contain – the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.</p>
+<p>The <em>research compendium</em> relies on another R package called <a href="https://github.com/Ecosystem-Assessments/pipedat"><code>pipedat</code></a>, which provides analytical pipelines to access, load, and format a variety of data from multiple sources programmatically. The goal of <code>pipedat</code> is to enhance the capacity scientists, planners and the wider public to prepare and perform complex and reproducible ecosystem-scale assessments requiring the integration of multiple spatial datasets such as cumulative effects assessments in the context of ecosystem-based management, and Marxan analyses for the establishment of individual and networks of MPAs. While the analytical pipelines used to fetch and format the data for this project are available in this research compendium, their latest version and execution are performed with <code>pipedat</code>.</p>
+</section>
+<section id="notes-references" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="notes-references"><span class="header-section-number">1.5</span> Notes &amp; references</h2>
 
 
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>R is a free software environment for statistics, data science and graphics (https://www.r-project.org/)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>ArcGIS is a geographic information software (GIS) suite developed by the US company Esri (https://www.arcgis.com/index.html)<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>GitHub is a web-based software development hosting and management service with over 40 million users worldwide (https://github.com/).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -303,6 +368,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -337,7 +420,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -615,7 +702,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./1_shipping.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>Shipping-based pollution</span>">
+      <a href="./1_shipping.html" class="pagination-link" aria-label="Shipping-based pollution">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Shipping-based pollution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

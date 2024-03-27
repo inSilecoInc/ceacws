@@ -16,11 +16,15 @@ book:
     - index.qmd
     - 1_shipping.qmd
     - 2_petroleum.qmd
-    - 3_references.qmd
 
-bibliography: references.bib
+bibliography: [references.bib, ../../project-data/pipedat/pipedat.bib]
 csl: frontiers.csl
 
 format:
   html:
     theme: cosmo
+
+execute:
+  echo: false
+  warning: false
+  error: false

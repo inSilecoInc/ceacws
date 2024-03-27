@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.543">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -124,19 +144,22 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Petroleum pollution based on past incidents</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./3_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link active" data-scroll-target="#tasks"><span class="header-section-number">2.1</span> Tasks</a></li>
+  <li><a href="#global-fishing-watch" id="toc-global-fishing-watch" class="nav-link" data-scroll-target="#global-fishing-watch"><span class="header-section-number">2.2</span> Global Fishing Watch</a></li>
+  <li><a href="#vessel-density-mapping" id="toc-vessel-density-mapping" class="nav-link" data-scroll-target="#vessel-density-mapping"><span class="header-section-number">2.3</span> Vessel Density Mapping</a></li>
+  <li><a href="#notes-references" id="toc-notes-references" class="nav-link" data-scroll-target="#notes-references"><span class="header-section-number">2.4</span> Notes &amp; references</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,8 +183,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="tasks" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="tasks"><span class="header-section-number">2.1</span> Tasks</h2>
+<ol type="1">
+<li>Access to shipping AIS data through Global Fishing Watch</li>
+<li>Prepare monthly petroleum pollution and disturbance due to vessel traffic threat layers in the Atlantic Ocean
+<ol type="1">
+<li>All vessels</li>
+<li>Cargo/bulk vessels</li>
+<li>Fishing vessels</li>
+</ol></li>
+</ol>
+</section>
+<section id="global-fishing-watch" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="global-fishing-watch"><span class="header-section-number">2.2</span> Global Fishing Watch</h2>
+<p>The purpose of Global Fishing Watch is to create and publicly share knowledge about human activity at sea to enable fair and sustainable use of our ocean. They use cutting-edge technology to turn big data into actionable information. They believe human activity at sea should be common knowledge in order to safeguard the global ocean for the good of all. Global Fishing Watch’s open-access technology products, datasets, and code accelerate research and innovation and support sustainable ocean management. They offer a variety of products related to human activity at sea, including shipping and fisheries, but also data on ocean conditions and biology. Access to their data can be achieved through their <a href="https://globalfishingwatch.org/our-apis/">API</a>, which is also accessible through an R Package called <a href="https://github.com/GlobalFishingWatch/gfwr"><code>gfwr</code></a>.</p>
+<p>The <code>gfwr</code> R package offers wrapper functions to access data through the GFW APIs. It provides convenient functions to freely pull GFW data directly into R in tidy formats. The package currently works with the following APIs:</p>
+<ul>
+<li><a href="https://globalfishingwatch.org/our-apis/documentation#vessels-api">Vessels API</a>: vessel search and identity based on AIS self-reported data</li>
+<li><a href="https://globalfishingwatch.org/our-apis/documentation#events-api">Events API</a>: encounters, loitering, port visits and fishing events based on AIS data</li>
+<li><a href="https://globalfishingwatch.org/our-apis/documentation#map-visualization-4wings-api">Map Visualization (4Wings API</a>: apparent fishing effort based on AIS data</li>
+</ul>
+<p>The incentive of fetching data from such an API is that the current project could have been built so that continuous integration of new data could be performed, ensuring an updated assessment of this particular threat layer through time. However, after exploring the APIs and contacting representatives of GFW, we had to come to the conclusion that the data needed for this project were not and would likely not be available through their API. They stated that other products that might be useful are planned to be released in the future, such as vessel presence raster resources. However, the release dates for these resources extends beyond the timelines of the current project. We therefore had to pivot to an alternative data source to complete this part of the contract.</p>
+</section>
+<section id="vessel-density-mapping" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="vessel-density-mapping"><span class="header-section-number">2.3</span> Vessel Density Mapping</h2>
+<p>During the same timeframe of this project, <span class="citation" data-cites="veinot2023">Veinot et al. (<a href="#ref-veinot2023" role="doc-biblioref">2023</a>)</span> published a Technical Report detailing a project seeking to map vessel density in the Northwest Atlantic in 2019 using Automatic Identification System (AIS) data. Their work covers our study area, but was not available publicly yet. Since, their work has been extended to include vessel density mapping for the years 2013 through 2022 and has been made public on the Open Government data platform as a series entitled <a href="https://open.canada.ca/data/en/dataset/e60a7e32-5a67-45d6-900d-e6ab6b581a51"><em>Vessel Density Mapping Series in the Northwest Atlantic</em></a>. These data provide vessel density raster layers monthly for all vessel types combined, and yearly for different vessel types. This does not match perfectly with the requirements for this project. Namely, we would need to differentiate between daytime and nighttime vessel traffic, and use monthly data for each vessel type. In light of this, we agreed on a strategy to address this issue.</p>
+<p>First, we built the code necessary to access the openly available data and integrate it in our study grid.; this data serves as an acceptable backup plan in case we cannot access more detailed data. The <a href="https://github.com/inSilecoInc/ceacws/blob/main/project-data/pipedat/vessel_density_mapping_dfo-98916b4a/vessel_density_mapping_dfo-98916b4a.R">code</a> that fetches the data from the Open Government platform and integrates it in our study grid has therefore been developed and is available in the <em>research compendium</em>.</p>
+<p>Second, the team from the CWS contacted the authors of <span class="citation" data-cites="veinot2023">Veinot et al. (<a href="#ref-veinot2023" role="doc-biblioref">2023</a>)</span> to discuss the possibility of either accessing the raw AIS data that they used to generate their own vessel density mapping, collaborating on a refined version of their work that addresses the needs of the CWS, or a combination of both. After discussing with their team, it was agreed that we would meet with a representative from their team to discuss the approach that they used to prepare their vessel density layers and potentially collaborate on updating their code to generate the layers that are required for this project. It was also agreed that the Northwest Atlantic region track lines and AIS data points, with MMSI data and times could be shared with us, under condition of a signed agreement and the transfer of anonymized MMSI numbers to ensure confidentiality. The data were transferred to the CWS on March 20th and we are currently waiting to have access to continue with our work. The threat layers using shipping data will therefore be completed during the second part of this project.</p>
+</section>
+<section id="notes-references" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="notes-references"><span class="header-section-number">2.4</span> Notes &amp; references</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
+<div id="ref-veinot2023" class="csl-entry" role="listitem">
+Veinot, T., Nicoll, A., Rozalska, K., and Coffen-Smout, S. (2023). Vessel <span>Density Mapping</span> of 2019 <span>Automatic Identification System</span> (<span>AIS</span>) <span>Data</span> in the <span>Northwest Atlantic</span>. <span>Can</span>. <span>Tech</span>. <span>Rep</span>. <span>Fish</span>. <span>Aquat</span>. <span>Sci</span>. 3520: Vi + 29 p. <span>Department of Fisheries and Oceans</span>.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -243,6 +303,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -277,7 +355,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -553,12 +635,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link  aria-label=" &lt;span="">
+      <a href="./index.html" class="pagination-link" aria-label="Introduction">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./2_petroleum.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>Petroleum pollution based on past incidents</span>">
+      <a href="./2_petroleum.html" class="pagination-link" aria-label="Petroleum pollution based on past incidents">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Petroleum pollution based on past incidents</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

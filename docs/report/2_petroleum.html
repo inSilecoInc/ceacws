@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.543">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,7 +50,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./3_references.html" rel="next">
 <link href="./1_shipping.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -69,6 +88,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -124,19 +172,32 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Petroleum pollution based on past incidents</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./3_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link active" data-scroll-target="#tasks"><span class="header-section-number">3.1</span> Tasks</a></li>
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing"><span class="header-section-number">3.2</span> Data &amp; processing</a>
+  <ul class="collapse">
+  <li><a href="#neec" id="toc-neec" class="nav-link" data-scroll-target="#neec"><span class="header-section-number">3.2.1</span> NEEC</a></li>
+  <li><a href="#nasp" id="toc-nasp" class="nav-link" data-scroll-target="#nasp"><span class="header-section-number">3.2.2</span> NASP</a></li>
+  <li><a href="#istop" id="toc-istop" class="nav-link" data-scroll-target="#istop"><span class="header-section-number">3.2.3</span> ISTOP</a></li>
+  </ul></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">3.3</span> Method</a></li>
+  <li><a href="#outstanding-questions" id="toc-outstanding-questions" class="nav-link" data-scroll-target="#outstanding-questions"><span class="header-section-number">3.4</span> Outstanding questions</a>
+  <ul class="collapse">
+  <li><a href="#neec-1" id="toc-neec-1" class="nav-link" data-scroll-target="#neec-1"><span class="header-section-number">3.4.1</span> NEEC</a></li>
+  <li><a href="#istop-1" id="toc-istop-1" class="nav-link" data-scroll-target="#istop-1"><span class="header-section-number">3.4.2</span> ISTOP</a></li>
+  </ul></li>
+  <li><a href="#notes-references" id="toc-notes-references" class="nav-link" data-scroll-target="#notes-references"><span class="header-section-number">3.5</span> Notes &amp; references</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,8 +221,92 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="tasks" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="tasks"><span class="header-section-number">3.1</span> Tasks</h2>
+<ol type="1">
+<li>Receive and format data on petroleum pollution based on past accidental spills for nearshore Canadian waters
+<ol type="1">
+<li>National Environmental Emergencies Centre (NEEC)</li>
+<li>National Aerial Surveillance Program (NASP)</li>
+<li>Integrated Satellite Tracking of Pollution (ISTOP)</li>
+</ol></li>
+<li>Prepare petroleum pollution based on past incidents threat layers for specified annual periods</li>
+</ol>
+</section>
+<section id="data-processing" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="data-processing"><span class="header-section-number">3.2</span> Data &amp; processing</h2>
+<p>The data used to generate this threat layers were requested by the CWS and transferred to inSileco. They are stored on a secure Google Cloud Storage bucket to ensure the reproducibility of this project, although this arrangement will need to be revisited at the end of the contract with the CWS. There are three different datasets used, which are detailed below.</p>
+<section id="neec" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="neec"><span class="header-section-number">3.2.1</span> NEEC</h3>
+<p>The <a href="https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html">National Environmental Emergency Centre (NEEC)</a> is a program led by Environment and Climate Change Canada that provides an inventory of environmental emergencies incidents in Canada. The data requested by the CWS covers notifications impacting or potentially impacting a waterbody for the Atlantic region (including Québec) for the period of 2016 to 2023 <span class="citation" data-cites="neec2024">(<a href="#ref-neec2024" role="doc-biblioref">Centre, 2024</a>)</span>. The data provided inventories 9570 incidents.</p>
+<p>The following filtering procedures were applied to the data in order to use it to produce a threat layer:</p>
+<ul>
+<li>Remove empty coordinates</li>
+<li>Use data from “Notification Date Time” when not available from “Incident Local Date Time” field</li>
+<li>Remove records containing “covid”, “istop”, “sipps”</li>
+<li>Select greatest quantity for individual spills with multiple substances</li>
+<li>Remove Incident Name containing “mvi” or “furnace oil” to remove a few dozen incidents that generally won’t impact marine birds</li>
+<li>Keep all incidents within 1 <span class="math inline">\(km\)</span> of the coastline</li>
+</ul>
+<p>This filtering process yields a total of 1677 usable observations to characterize this pollution threat layer.</p>
+<!-- ```{R neecmap}
+mapview::mapview(neec2)
+``` -->
+</section>
+<section id="nasp" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="nasp"><span class="header-section-number">3.2.2</span> NASP</h3>
+<p>The <a href="https://tc.canada.ca/en/programs/national-aerial-surveillance-program">National Aerial Surveillance Program (NASP)</a> is a surveillance program led by Transport Canada that operates across the country to detect pollution through aerial surveys. Its goals are to prevent pollution in our waters, protect our marine environment and endangered marine life, and ensure a safe and efficient transportation industry along our massive and varied coastlines. The data requested by the CWS covers oil pollution detections from visual or aided by instruments (<em>e.g.</em> radar) for the Atlantic region between April 2012 and March 2023 <span class="citation" data-cites="tc2024">(<a href="#ref-tc2024" role="doc-biblioref">Canada, 2024</a>)</span>. The data provided inventories 3578 incidents. Data were cleaned and formatted, with missing spill volumes removed from the dataset, resulting in 3572 usable observations to characterize this pollution threat layer.</p>
+</section>
+<section id="istop" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="istop"><span class="header-section-number">3.2.3</span> ISTOP</h3>
+<p>The <a href="https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html">Integrated Satellite Tracking of Pollution (ISTOP)</a> program assists environmental monitoring of coastal waters through satellite imagery analysis to detect oil spills. Since 2006, satellite imagery is analyzed daily to detect and report illegal and accidental oil pollution in marine environments. The analyses performed identify sea-surface anomalies identified as pollution from satellite imagery that are then transformed as vectorized polygons representing the surface affected by the pollution. The data requested by the CWS spanned the period of 2006 to 2023 and includes 637 incidents <span class="citation" data-cites="eccc2024">(<a href="#ref-eccc2024" role="doc-biblioref">Environment and Climate Change Canada, 2024</a>)</span>. Only data of categories 1A (<em>i.e.</em> possible oil with a target clearly associated), 1B (<em>i.e.</em> possible oil with a target within 50-km), and 2 (<em>i.e.</em> possible oil but without an identifiable source) were retained to characterize this pollution threat layer, resulting in 123 usable observations.</p>
+</section>
+</section>
+<section id="method" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="method"><span class="header-section-number">3.3</span> Method</h2>
+<p>Since accidental spills have an effect that goes beyond the immediate location of the incidents due to the diffusion of the spill in the environment, the first step in characterizing the intensity of spills was to establish a potential zone of influence for each incident. To characterize this, we explored weighted kernel density estimates with a Gaussian distribution. However, kernels have the drawback of considering the density around a constant radius surrounding individual points, whereas each spill may have a different spatial footprint as a function of the total volume spilled. For this first iteration of the threat layers, we therefore chose a passive diffusive model to establish the zone of influence and relative intensity of accidental spills in the study area <span class="citation" data-cites="halpern2008a">(see <a href="#ref-halpern2008a" role="doc-biblioref">Halpern et al., 2008</a>)</span>.</p>
+<p>The diffusion model establishes the zone of influence of the spills by creating concentric rings centred on each incident. An initial value equal to the volume of the incident is assigned to the centre ring and represents the relative intensity of the incident on the environment. A value is then successively assigned to the adjacent rings according to a decay function of a percent value of the previous ring until a minimum threshold is reached. This approach assumes a linear decrease in the influence of the incidents on the environment.</p>
+<p>Since the data used are not directly comparable, we decided to create a single threat layer for each dataset. Furthermore, the range of volumes reported in the NEEC ([]) and NASP ([]) datasets were too great to use directly without completely masking the effects of smaller spill events. As such, we log-transformed the reported volumes to give less weight to very high volumes. The ISTOP dataset, meanwhile, has no reported volume. We therefore used the area in <span class="math inline">\(km^2\)</span> of individual incidents as a proxy of spill volumes. As with the other datasets, we log-transformed these values to decrease the influence of very large spills. Finally, in order to make intensity of threats related to past incidents more comparable, we normalized volumes/areas between 0 and 1 before running the diffusive plume models. The intensity and spatial distribution of accidental spills in the study area were then evaluated as the sum of the values of all concentric rings intersecting with cells of our study grid.</p>
+<p>The parameters that are currently used for the diffusive plume model are the following:</p>
+<ul>
+<li>Concentric rings radius: 100 <span class="math inline">\(m\)</span></li>
+<li>Decay function percent: 2%</li>
+<li>Minimum threshold: 0.05% of the global minimum, <em>i.e.</em> the lowest spill volume recorded</li>
+<li>Initial values: log-transformed and normalized volumes/areas</li>
+</ul>
+<p>All reported parameters and analytical decisions made could be further explored and modified in future iterations until we agree on the final threat layers desired. For us, these serve as a basis for further discussion towards producing the final threat layers generated through this project. Also, if requested, these parameters could also be included as parameters in the <em>research compendium</em>. The code used to perform this assessment is available <a href="https://github.com/inSilecoInc/ceacws/blob/main/R/threat_pollution.R">here</a>.</p>
+</section>
+<section id="outstanding-questions" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="outstanding-questions"><span class="header-section-number">3.4</span> Outstanding questions</h2>
+<p>The following are some outstanding questions that were not presented in the previous sections.</p>
+<section id="neec-1" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="neec-1"><span class="header-section-number">3.4.1</span> NEEC</h3>
+<p>So far, we set all NA quantities to 1 to perform the analysis. This should be discussed, as entries without volume makeup 58% of the NEEC dataset. Furthermore, certain volumes are reported in litres and others in kilograms. At the moment we are considering that the units are the same, but this is not necessarily the case. There are 11 incidents reports in kilograms in the NEEC dataset.</p>
+</section>
+<section id="istop-1" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="istop-1"><span class="header-section-number">3.4.2</span> ISTOP</h3>
+<p>There are many duplicates in the data. For now, we only kept unique rows, but we are wondering whether there is a reason we are unaware of for these duplicates to exist and be used in combination.</p>
+</section>
+</section>
+<section id="notes-references" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="notes-references"><span class="header-section-number">3.5</span> Notes &amp; references</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
+<div id="ref-tc2024" class="csl-entry" role="listitem">
+Canada, T. (2024). National <span>Aerial Surveillance Program</span> (<span>NASP</span>). <span>Data</span> extraction for period between <span>April</span> 2012 to <span>March</span> 2023. Transport Canada.
+</div>
+<div id="ref-neec2024" class="csl-entry" role="listitem">
+Centre, N. E. E. (2024). Atlantic (including <span>Quebec</span>) notifications impacting or potentially impacting a waterbody with select substances, 2016-2023. <span>Extracted</span> by <span>Philippe Muise</span> 2024-01-29. <span>Environment and Climate Change Canada</span>.
+</div>
+<div id="ref-eccc2024" class="csl-entry" role="listitem">
+Environment, and Climate Change Canada (2024). Integrated <span>Satellite Tracking</span> of <span>Pollution</span> (<span>ISTOP</span>) program. <span>Data</span> extraction for period between 2006 and 2023. <span>Environment and Climate Change Canada</span>.
+</div>
+<div id="ref-halpern2008a" class="csl-entry" role="listitem">
+Halpern, B. S., Walbridge, S., Selkoe, K. A., Kappel, C. V., Micheli, F., D’Agrosa, C., et al. (2008). A <span>Global Map</span> of <span>Human Impact</span> on <span>Marine Ecosystems</span>. <em>Science</em> 319, 948–952. doi:<a href="https://doi.org/10.1126/science.1149345">10.1126/science.1149345</a>.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -243,6 +388,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -277,7 +440,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -553,14 +720,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./1_shipping.html" class="pagination-link  aria-label=" &lt;span="" pollution&lt;="" span&gt;"="">
+      <a href="./1_shipping.html" class="pagination-link" aria-label="Shipping-based pollution">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Shipping-based pollution</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./3_references.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>References</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
