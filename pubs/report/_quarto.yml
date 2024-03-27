@@ -1,6 +1,6 @@
 project:
   type: book
-  output-dir: ../../docs/report
+  output-dir: ../../docs
 
 book:
   title: Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada
