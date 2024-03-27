@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: ../../docs/report
+
+book:
+  title: Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada
+  subtitle: Progress report
+  author: 
+    - name: David Beauchesne
+      degrees: PhD
+    - name: Kevin Cazelles
+      degrees: PhD
+    - name: Steve Vissault
+      degrees: MSc
+  chapters:
+    - index.qmd
+    - 1_shipping.qmd
+    - 2_petroleum.qmd
+
+bibliography: [references.bib, ../../project-data/pipedat/pipedat.bib]
+csl: frontiers.csl
+
+format:
+  html:
+    theme: cosmo
+
+execute:
+  echo: false
+  warning: false
+  error: false

@@ -82,6 +82,11 @@ threat_pollution <- function() {
 
   # Remove downloaded data
   # fs::dir_delete(tmp)
+
+  # Export partial data for use in report (this should be revisited)
+  out <- here::here("project-data", "partials")
+  pipedat::chk_create(out)
+  pipedat::masterwrite(neec, here::here(out, "neec"))
   # ----------------------------------------------------------------
   # To explore:
   # Impact to Waterbody field.  Consider if we should treat “actual” vs. “potential” spills differently.  Data on “potential” spills only started being recorded in April 2021 onward (no differentiation before that).  Some “Potential” spills may report very large amounts of substance that was not actually spilled (e.g.  Incident Number NL-20200611-03045-20 was a disabled vessel with 400000 L of fuel on board, but nothing spilled).  These “Potential” spills still represent risk even if no true pollution occurred.
@@ -92,6 +97,9 @@ threat_pollution <- function() {
   nasp <- pipedat::importdat("376f0891", "format")[[1]] |>
     dplyr::filter(!is.na(volume_l)) |>
     dplyr::rename(geometry = geom)
+
+  # Export partial data for use in report (this should be revisited)
+  pipedat::masterwrite(nasp, here::here(out, "nasp"))
 
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
   # ISTOP data
@@ -107,6 +115,9 @@ threat_pollution <- function() {
       area = units::set_units(area, km^2),
       area = as.numeric(area)
     )
+
+  # Export partial data for use in report (this should be revisited)
+  pipedat::masterwrite(istop, here::here(out, "istop"))
 
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
   # Threat layer - diffusive model

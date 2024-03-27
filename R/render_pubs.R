@@ -2,21 +2,7 @@
 #'
 #' @export
 render_report <- function() {
-  # file.copy("./figures/", "./report/", recursive = TRUE)
-  suppressWarnings({
-    setwd('./pubs/report/')
-    bookdown::render_book(
-      input = "index.Rmd",
-      output_format = "bookdown::gitbook",
-      config_file = "_bookdown.yml"
-    )
-    setwd('../../')
-    # file.copy("./figures/", "./report/", recursive = TRUE)
-  })
-  from <- here::here("pubs","report","docs")
-  to <- here::here("docs","report")
-  if (file.exists(to)) fs::file_delete(to)
-  fs::file_move(from, to)
+  quarto::quarto_render("pubs/report")
 }
 
 #' Render publications frontpage 
