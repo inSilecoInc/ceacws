@@ -34,6 +34,7 @@ Imports:
     quarto,
     randomForest,
     raster,
+    rlang,
     sf,
     stars,
     stringr,

@@ -31,11 +31,17 @@ threat_pollution <- function() {
 
   # ----------------------------------------------------------------
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  # TO VERIFY
-  # Set all NA quantities to 1
-  neec <- neec |>
-    dplyr::mutate(quantity = ifelse(is.na(quantity), 1, quantity))
+  # # Older version
+  # # Set all NA quantities to 1
+  # neec <- neec |>
+  #   dplyr::mutate(quantity = ifelse(is.na(quantity), 1, quantity))
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  # Transform quantities into categories ranging from 1 to 5
+  # Unknown categories = 1
+  neec$categories <- gtools::quantcut(neec$quantity, 5)
+  levels(neec$categories) <- 1:5
+  neec$categories <- ifelse(is.na(neec$categories), 1, neec$categories)
+  neec$categories <- as.numeric(neec$categories)
 
   # ----------------------------------------------------------------
   # Select greatest quantity for individual spills with multiple substances
@@ -132,8 +138,9 @@ threat_pollution <- function() {
   # NEEC
   neec_tmp <- neec |>
     dplyr::mutate(
-      quantity = log(quantity + 1),
-      quantity = quantity / max(quantity)
+      # quantity = log(quantity + 1),
+      # quantity = quantity / max(quantity)
+      categories = categories / max(categories)
     ) |>
     sf::st_transform(3348)
   neec_threat <- diffusive(
