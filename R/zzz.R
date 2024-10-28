@@ -9,19 +9,30 @@ NULL
 
 
 # ------------------------------------------------------------------------------
+# Path to configuration file
+yaml_file <- "workspace/config/config.yaml"
+
+# Function to load configuration file
+load_config <- function(config_path = yaml_file) {
+  if (file.exists(config_path)) {
+    config <- yaml::read_yaml(config_path)
+    return(config)
+  } else {
+    stop("Configuration file not found: ", config_path)
+  }
+}
+
+# Option to load on package load
 .onLoad <- function(lib, pkg) {
   rlang::run_on_load()
 }
-# Path to configuration file
-yaml_file <- here::here("project-data", "config", "config.yml")
+
 rlang::on_load({
   # Load configuration file
   if (file.exists(yaml_file)) {
-    config <- yaml::read_yaml(yaml_file)
+    config <- load_config()
 
-    # Store it in an internal environment for use across the package
+    # Store in an internal environment for use across the package
     # .configEnv$config <- config
-  } else {
-    warning("YAML configuration file not found!")
   }
 })

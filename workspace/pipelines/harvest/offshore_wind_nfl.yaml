@@ -1,0 +1,64 @@
+pipeline:
+  id: 94a1b3cb-109a-4871-b1d0-abe318f920a0
+  name: offshore_wind_nfl
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-21 12:09:47
+  last_modified: 2024-09-21 12:09:47
+  description: |
+    Depicts priority area for work under the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador. The Committee for the Regional Assessment of Offshore Wind Development is responsible for providing information, knowledge, and analysis regarding future offshore wind development (OSW). The assessment includes potential environmental, health, social, and economic effects of future OSW. In November 2023, the Committee defined a Focus Area, within a portion of the Study Area, that is the priority for future wind development in Newfoundland and Labrador.
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador"
+    data_type: "SHP, PDF"
+    file_size: "Unknown"
+    license: "Open Government Licence - Canada"
+    last_updated: "2024-05-30"
+    geographic_coverage:
+      region: "Newfoundland and Labrador"
+      bounding_box:
+        - -61.0    # Longitude min
+        - 45.0     # Latitude min
+        - -50.0    # Longitude max
+        - 54.0     # Latitude max
+    temporal_coverage:
+      start_date: "2023-11-07"
+      end_date: "2024-05-30"
+    variables:
+      - focus_area
+      - wind_energy_assessment
+      - environmental_impact
+    data_quality:
+      - "Focus Area was defined in November 2023 and will be subject to updates as further assessments are completed."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{iaac2024,
+        title = {Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador},
+        author = {{Impact Assessment Agency of Canada}},
+        year = {2024},
+        institution = {{Government of Canada}},
+        url = {https://open.canada.ca/data/en/dataset/81560d1e-8394-4b51-8212-2bbe4d8a5ea2}
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "Focus Area Shapefile"
+        source_type: "http"
+        urls: "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_NL_Focus_Area_Le_Secteur_dintervention_ER_TNL.shp.zip"
+        output: "focus_area_nl_shapefile.zip"
+        format: "shapefile"
+
+      - name: "Regional Assessment Agreement"
+        source_type: "http"
+        urls: "https://iaac-aeic.gc.ca/050/documents/p84343/147037E.pdf"
+        output: "regional_assessment_agreement.pdf"
+        format: "pdf"
+  
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"
+    log_dir: "workspace/logs/"
+    archive_raw: true

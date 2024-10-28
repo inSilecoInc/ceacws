@@ -1,0 +1,133 @@
+pipeline:
+  id: e0dc9246-3939-45e5-b8a8-e859cdd76f07
+  name: offshore_wind_usa
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-21 09:05:43
+  last_modified: 2024-09-21 09:05:43
+  description: "This dataset consists of multiple files from the Bureau of Ocean Energy Management (BOEM) covering offshore wind energy data for the United States. The dataset includes geospatial information about wind lease areas, planning areas, and other renewable energy information. The datasets are accessible through BOEM and related portals."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Bureau of Ocean Energy Management (BOEM)"  
+    data_type: "Shapefiles, Geodatabase"        # Type of data being harvested (Shapefiles, Geodatabase)
+    file_size: "~5MB"                           # Approximate size of all the datasets combined
+    license: "Open Government License - United States" # Dataset license information
+    last_updated: "2024-XX-XX"                  # Timestamp of the last data update
+    geographic_coverage:                        # Geographical region covered by the dataset
+      region: "United States Offshore"
+      bounding_box:                             # Bounding box coordinates of the region (min/max lat/long)
+        - -130.0    # Longitude min
+        - 25.0      # Latitude min
+        - -60.0     # Longitude max
+        - 50.0      # Latitude max
+    temporal_coverage:                          # Time period the dataset covers (if applicable)
+      start_date: "2020-01-01"
+      end_date: "2024-12-31"
+    variables:                                  # List of important variables/columns in the dataset
+      - lease_area_id
+      - planning_area
+      - coordinates
+      - wind_speed
+      - water_depth
+    data_quality:                               # Comments on data quality
+      - "Geospatial data on offshore wind energy areas, updated regularly by BOEM."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{boem2024,
+        title = {United States Offshore Wind Data - BOEM},
+        author = {{Bureau of Ocean Energy Management}},
+        year = {2024},
+        institution = {{Bureau of Ocean Energy Management}},
+        url = {https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase}
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "BOEM Renewable Energy Geodatabase"
+        description: "Boundaries of renewable energy lease areas, wind planning areas, and marine hydrokinetic planning areas."
+        source_type: "http"
+        urls: "https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase"
+        output: "boem_renewable_energy_geodatabase.zip"
+        format: "geodatabase"
+
+      - name: "BOEM Offshore Wind - Proposed Project Development Phase Areas"
+        description: "Area within the existing lease where one or more wind energy projects is being planned for development. The full extent of where development activities is likely to occur for each project. Also known as 'project build area', 'Wind Farm Area', 'Wind Development Area'. Until construction is started, all areas are subject to change."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Project_Phase_Areas_Proposed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      # - name: "BOEM Offshore Wind - Proposed or Installed Export Cable Locations"
+      #   description: "These lines which represent the installed or proposed locations of the "Export Cable" portions of a wind farm show the current plans that the developers of the wind farms intend to build. Note that until installation occurs, these locations can change."
+      #   source_type: "gcs"
+      #   urls: "cws-private"
+      #   asset: "BOEM/"
+      #   credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      #   format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Substations"
+        description: "The Proposed or final location of one or more substations supporting an offshore wind farm project. Substations can be those within the offshore lease area or onshore. Proposed locations are subject to change and often represent more than one possible design option for a single project."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Substations_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Turbine Locations"
+        description: "Proposed or final locations of Wind Turbines within a Wind Farm project. Until installed, all locations and turbine particulars are subject to change."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Turbine_Locations_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Cable Interconnections"
+        description: "The location of existing or proposed energy facilities that the power from the wind farm will inject into."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Cable_Interconnections_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Data Collection Devices"
+        description: "The location of buoys, meteorological towers, or other data collection devices planned for installation or currently installed."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Ocean_Observing_Devices_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed Export Cable Corridors"
+        description: "Export Cables are the electrical cables that will carry electricity from the power generators (wind turbines) to a power substation. These polygons represent the potential area (easement) in which proposed locations of the export cable portions of a wind farm may be installed and are meant to show the area that the developer intends to investigate for the final location of one or more export cables that the developers of the wind farms intend to build."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Export_Cable_Corridors_Proposed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Offshore Cable Landings"
+        description: "The location along the U.S. Coastline where offshore export cables will make or has made landfall. If proposed, more than one option is possible, and both may be shown as separate points."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Cable_Landings_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+      - name: "BOEM Offshore Wind - Proposed or Installed Project Inter-array Cables"
+        description: "Proposed and installed inter-array cables for offshore wind projects. These are the linkages and routes of the cables connected between wind turbines and/or substation(s) within an offshore wind power facility."
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "BOEM/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        format: "geopackage"
+
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"     # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                  # Directory for logs (optional)
+    archive_raw: true                           # Option to archive the raw downloaded data

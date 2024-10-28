@@ -1,0 +1,103 @@
+pipeline:
+  id: 835bc0d1-e57a-4e63-a327-908ee871bf2d
+  name: istop
+  version: 1.0.0
+  package_version: "0.0.9"                  
+  created_at: 2024-09-11 11:55:41
+  last_modified: 2024-09-11 11:55:41
+  description: "The Integrated Satellite Tracking of Pollution (ISTOP) program assists environmental monitoring of coastal waters through satellite imagery analysis to detect oil spills. Since 2006, satellite imagery is analyzed daily to detect and report illegal and accidental oil pollution in marine environments. The analyses performed identify sea-surface anomalies, which are then transformed into vectorized polygons representing the affected surface areas. The data spans the period from 2006 to 2023, and includes 637 incidents, of which 123 were categorized as usable observations representing possible oil pollution without an identifiable source (categories 1A, 1B, and 2)."
+
+# Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) program" 
+    data_type: "Vectorized Polygons (Shapefiles)"         # Type of data being harvested (e.g., CSV, JSON, Parquet)
+    file_size: "N/A"                                      # Approximate size of the file or dataset (not provided)
+    license: "Restricted access"                                 # Dataset license information
+    last_updated: "2024-03-15"                            # Timestamp of the last data update (provided by the data source)
+    geographic_coverage:                                 # Geographical region covered by the dataset
+      region: "North America"
+      bounding_box:                                      # Bounding box coordinates of the region (min/max lat/long)
+        - -76    # Longitude min
+        - -33    # Latitude min
+        - 35     # Longitude max
+        - 65     # Latitude max
+    temporal_coverage:                                   # Time period the dataset covers
+      start_date: "2006-01-01"
+      end_date: "2023-12-31"
+    variables:                                           # List of important variables/columns in the dataset
+      - id
+      - incident_date
+      - category
+      - polygon
+      - area
+    data_quality:                                        # Comments on data quality (e.g., missing data, outliers)
+      - "Retained only 123 usable observations out of 637 incidents."
+      - "Categories 1A, 1B, and 2 were retained; other categories were excluded."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{eccc2024,
+        type = {Dataset},
+        title = {Integrated Satellite Tracking of Pollution (ISTOP) Program},
+        author = {{Environment and Climate Change Canada}},
+        year = {2024},
+        institution = {{Environment and Climate Change Canada}},
+      }"
+
+  # Download section: Specifies how to access the data from Google Cloud Storage
+  download:
+    sources:
+      - name: Scientific article
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "ISTOP/OilPollution_Lieskeetal-MS_FINAL.pdf"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: Description of dataset
+        source_type: "gcs"
+        urls: "cws-private"  
+        asset: "ISTOP/Description Pollution datasets_2024-02-08.docx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: ISTOP Regions map
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "ISTOP/ISTOP_Regions_Map.png"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: CIS oil events 2006-2018
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "ISTOP/CIS_Oil_Events_GU_EC_MA_IE_2006_to_Jan6_2018.tzip"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        group: shapefiles
+
+      - name: CIS oil events 2018
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "ISTOP/CIS_Oil_Events_GU_EC_MA_IE_2018_after_Jan6.tzip"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        group: shapefiles
+
+      - name: CIS oil events 2019-2023
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "ISTOP/CIS_Oil_Events_GU_EC_MA_IE_2019to2023.tzip"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+        group: shapefiles
+
+  processing:
+    sources:
+      - name: istop
+        script: prc_istop
+        input_files:
+          - CIS oil events 2006-2018
+          - CIS oil events 2018
+          - CIS oil events 2019-2023
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                # Directory for logs (optional)
+    archive_raw: true                         # Option to archive the raw downloaded data
+

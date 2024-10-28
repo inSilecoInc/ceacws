@@ -1,0 +1,82 @@
+# Research Compendium Configuration File
+
+# Metadata about the project
+project:
+  name: "Environmental Data Analysis Project"  # Name of the project
+  description: "This project focuses on analyzing and integrating environmental data to study climate patterns in North America."
+  version: "1.0.0"
+  author: "Research Team Name"
+  organization: "Institute for Environmental Research"
+  license: "Creative Commons Attribution 4.0 International"
+  creation_date: "2024-09-10"
+
+# Default parameters for the project
+
+time_periods:
+  - id: "period_1"
+    label: "Baseline period"
+    start_date: "2010-01-01"  # Start of the first time period
+    end_date: "2019-12-31"    # End of the first time period
+  - id: "period_2"
+    label: "Analysis period"
+    start_date: "2020-01-01"  # Start of the second time period
+    end_date: "2023-12-31"    # End of the second time period
+  - id: "period_3"
+    label: "Projected future"
+    start_date: "2030-01-01"  # Start of the third time period
+    end_date: "2050-12-31"    # End of the third time period
+
+spatial_extent:
+  region_name: "North America"
+  bounding_box:
+    - lat_min: 24.396308  # Minimum latitude for the region
+    - lon_min: -125.0     # Minimum longitude for the region
+    - lat_max: 49.384358  # Maximum latitude for the region
+    - lon_max: -66.93457  # Maximum longitude for the region
+  crs: "EPSG:4326"         # Coordinate Reference System used (e.g., WGS 84)
+
+# Default color palettes for visualizations
+color_palettes:
+  primary_palette:
+    - "#1f77b4"  # Blue
+    - "#ff7f0e"  # Orange
+    - "#2ca02c"  # Green
+    - "#d62728"  # Red
+    - "#9467bd"  # Purple
+    - "#8c564b"  # Brown
+    - "#e377c2"  # Pink
+    - "#7f7f7f"  # Gray
+    - "#bcbd22"  # Olive
+    - "#17becf"  # Teal
+  sequential_palette:
+    - "#f7fbff"
+    - "#deebf7"
+    - "#c6dbef"
+    - "#9ecae1"
+    - "#6baed6"
+    - "#4292c6"
+    - "#2171b5"
+    - "#084594"
+
+# Parameters for data analysis
+data_analysis:
+  default_resolution: "1km"  # Default spatial resolution for rasterization
+  interpolation_method: "bilinear"  # Default interpolation method (e.g., bilinear, nearest)
+  missing_value_threshold: 0.05  # Threshold for missing data (e.g., 5% missing allowed)
+
+# Logging settings
+logging:
+  level: "INFO"  # Logging level (e.g., DEBUG, INFO, WARN, ERROR)
+  log_to_file: true  # Whether to log output to a file
+  log_file_path: "workspace/data/logs/project_log.log"  # Path to the log file
+
+# Output settings
+output:
+  report_format: "pdf"  # Default format for reports (e.g., pdf, html)
+  visualization_format: "png"  # Default format for visualizations (e.g., png, svg)
+
+# Contact information
+contact:
+  lead_researcher: "Dr. Jane Doe"
+  email: "jane.doe@example.com"
+  phone: "+1-555-123-4567"
