@@ -1,0 +1,45 @@
+pipeline:
+  id: a726889e-848e-4d6c-8496-a7a772e70d85
+  name: petroleum_pollution_incidents
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-10-28 16:18:31
+  last_modified: 2024-10-28 16:18:31
+  description: 'Pipeline for analytical data: petroleum_pollution_incidents'
+  analysis:
+    sources:
+    - name: istop data preparation
+      description: Preparing ISTOP data for diffusive model 
+      script: ana_petroleum_pollution_incidents_istop
+      input_files:
+      - id: 835bc0d1-e57a-4e63-a327-908ee871bf2d
+        name: istop
+
+    - name: nasp data preparation
+      description: Preparing NASP data for diffusive model 
+      script: ana_petroleum_pollution_incidents_nasp
+      input_files:
+      - id: e566fb8c-42d8-4013-8002-17af44a15a46
+        name: nasp
+
+    - name: neec data preparation
+      description: Preparing NEEC data for diffusive model 
+      script: ana_petroleum_pollution_incidents_neec
+      input_files:
+      - id: 56c710c3-1859-4eab-821f-e1e41dbbfd29
+        name: neec
+
+    - name: istop diffusive model
+      description: Diffusive model with ISTOP data
+      script: ana_petroleum_pollution_incidents_istop_diffusive
+      input_files: istop data preparation
+
+    - name: nasp diffusive model
+      description: Diffusive model with NASP data
+      script: ana_petroleum_pollution_incidents_nasp_diffusive
+      input_files: istop data preparation
+
+    - name: neec diffusive model
+      description: Diffusive model with NEEC data
+      script: ana_petroleum_pollution_incidents_neec_diffusive
+      input_files: istop data preparation

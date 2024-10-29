@@ -1,9 +1,4 @@
 prc_neec <- function(input_files, output_path) {
-  input_files <- c(
-    "/Users/davidbeauchesne/Desktop/data/neec-1.0.0/neec.csv",
-    "/Users/davidbeauchesne/Desktop/data/neec-1.0.0/neec_taxonomy.csv"
-  )
-
   # NEEC
   neec <- input_files[stringr::str_detect(input_files, "neec.csv")] |>
     vroom::vroom(progress = FALSE, show_col_types = FALSE) |>
