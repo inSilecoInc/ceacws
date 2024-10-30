@@ -16,6 +16,13 @@ pipeline:
           name: istop
       output_files: istop_prep.gpkg
 
+    - name: istop diffusive model
+      description: Diffusive model with ISTOP data
+      script: ana_petroleum_pollution_incidents_istop_diffusive
+      input_files: 
+        - name: istop data preparation
+      output_files: petroleum_pollution_incidents_istop.tif
+
     - name: nasp data preparation
       description: Preparing NASP data for diffusive model 
       script: ana_petroleum_pollution_incidents_nasp
@@ -24,6 +31,13 @@ pipeline:
         name: nasp
       output_files: nasp_prep.gpkg
 
+    - name: nasp diffusive model
+      description: Diffusive model with NASP data
+      script: ana_petroleum_pollution_incidents_nasp_diffusive
+      input_files: 
+        - name: nasp data preparation
+      output_files: petroleum_pollution_incidents_nasp.tif
+
     - name: neec data preparation
       description: Preparing NEEC data for diffusive model 
       script: ana_petroleum_pollution_incidents_neec
@@ -31,20 +45,6 @@ pipeline:
       - id: 56c710c3-1859-4eab-821f-e1e41dbbfd29
         name: neec
       output_files: neec_prep.gpkg
-
-    - name: istop diffusive model
-      description: Diffusive model with ISTOP data
-      script: ana_petroleum_pollution_incidents_istop_diffusive
-      input_files: 
-        - name: istop data preparation
-      output_files: petroleum_pollution_incidents_istop.tif
-
-    - name: nasp diffusive model
-      description: Diffusive model with NASP data
-      script: ana_petroleum_pollution_incidents_nasp_diffusive
-      input_files: 
-        - name: nasp data preparation
-      output_files: petroleum_pollution_incidents_nasp.tif
 
     - name: neec diffusive model
       description: Diffusive model with NEEC data

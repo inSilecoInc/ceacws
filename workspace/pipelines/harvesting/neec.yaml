@@ -93,12 +93,22 @@ pipeline:
         asset: "NEEC/neec_taxonomy.csv"
         credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
 
+      - name: Substance classification
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "NEEC/substance_tid_with_oil_classification_chemical_state_and_oil_sheen_properties.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
   processing:
     sources:
       - name: neec
         script: prc_neec
-        input_files: NEEC pollution data 2024
-        output_files: neec.csv 
+        input_files: 
+          - NEEC pollution data 2024
+          - Substance classification
+        output_files: 
+          - neec.csv 
+          - substances.csv
 
  # Output section: final output of the processed data
   output:

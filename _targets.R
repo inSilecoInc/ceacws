@@ -158,11 +158,22 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/neec_taxonomy.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/neec_taxonomy.csv"
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_Substance_classification, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "NEEC/substance_tid_with_oil_classification_chemical_state_and_oil_sheen_properties.csv", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/substance_tid_with_oil_classification_chemical_state_and_oil_sheen_properties.csv", 
+            overwrite = TRUE)
+        "workspace/data/harvested/neec-1.0.0/raw/substance_tid_with_oil_classification_chemical_state_and_oil_sheen_properties.csv"
     }, format = "file")), tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec, 
     {
         prc_neec(output_path = "workspace/data/harvested/neec-1.0.0/processed", 
-            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024))
-        "workspace/data/harvested/neec-1.0.0/processed/neec.csv"
+            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024, 
+                tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_Substance_classification))
+        c("workspace/data/harvested/neec-1.0.0/processed/neec.csv", 
+        "workspace/data/harvested/neec-1.0.0/processed/substances.csv"
+        )
     }, format = "file")),
     list(tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Exploration_Licenses, 
     {
@@ -381,26 +392,26 @@ list(
         ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
             input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
         "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/istop_prep.gpkg"
-    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_data_preparation, 
-    {
-        ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/nasp_prep.gpkg"
-    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_data_preparation, 
-    {
-        ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/neec_prep.gpkg"
     }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_diffusive_model, 
     {
         ana_petroleum_pollution_incidents_istop_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
             input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_data_preparation))
         "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.tif"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_data_preparation, 
+    {
+        ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/nasp_prep.gpkg"
     }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_diffusive_model, 
     {
         ana_petroleum_pollution_incidents_nasp_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
             input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_data_preparation))
         "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.tif"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_data_preparation, 
+    {
+        ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/neec_prep.gpkg"
     }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_diffusive_model, 
     {
         ana_petroleum_pollution_incidents_neec_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 

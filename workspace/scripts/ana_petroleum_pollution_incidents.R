@@ -6,7 +6,8 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   neec <- input_files[stringr::str_detect(input_files, "neec.csv")] |>
     vroom::vroom(progress = FALSE, show_col_types = FALSE)
 
-
+  substances <- input_files[stringr::str_detect(input_files, "substances.csv")] |>
+    vroom::vroom(progress = FALSE, show_col_types = FALSE)
   # ----------------------------------------------------------------
   # Filter NEEC data based on specified constraints
   # Remove empty coordinates
@@ -34,7 +35,10 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   # TO VERIFY
   # Set all NA quantities to 1
   neec <- neec |>
-    dplyr::mutate(quantity = ifelse(is.na(quantity_converted), 1, quantity_converted))
+    dplyr::mutate(
+      quantity = ifelse(is.na(quantity_converted), 1, quantity_converted),
+      quantity = ifelse(quantity < 1, 1, quantity)
+    )
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   # ----------------------------------------------------------------
@@ -51,6 +55,15 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   neec <- neec |>
     dplyr::filter(!stringr::str_detect(tolower(incident_name), "mvi")) |>
     dplyr::filter(!stringr::str_detect(tolower(incident_name), "furnace oil"))
+
+  # ----------------------------------------------------------------
+  # Group by substance type
+  neec <- neec |>
+    dplyr::left_join(substances[, c("name", "chemical_state", "oil_sheen")], by = c("substance" = "name")) |>
+    dplyr::mutate(
+      chemical_state = ifelse(is.na(chemical_state), "unknown", chemical_state),
+      oil_sheen = ifelse(is.na(oil_sheen), "unknown", oil_sheen)
+    )
 
   # ----------------------------------------------------------------
   # # Based on email exhange with Robert Ronconi on 2024-02-23
@@ -86,6 +99,27 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
     sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
   iid <- sf::st_disjoint(terre_buf, neec) |> unlist()
   neec <- neec[iid, ]
+
+  # ----------------------------------------------------------------
+  # Function to categorize a numeric vector into n categories by percentile
+  categorize_by_percentile <- function(x) {
+    # Calculate quantiles for dividing into n categories
+    probs <- c(0.0, 0.7, 0.9, 1.0)
+    breaks <- quantile(x, probs = probs, na.rm = TRUE)
+
+    # Use cut to assign each value in x to a percentile category
+    categories <- cut(x, breaks = breaks, include.lowest = TRUE, labels = paste0("Q", 1:(length(probs) - 1)))
+
+    return(categories)
+  }
+
+  # Categorize quantities
+  neec <- neec |>
+    dplyr::mutate(quantity_category = categorize_by_percentile(neec$quantity))
+
+  # Select columns that are going to be useful for the next step only to reduce file size
+  neec <- neec |>
+    dplyr::select(date, year, quantity, quantity_category, chemical_state, oil_sheen)
 
   # Export partial data for use in report (this should be revisited)
   sf::st_write(neec, dsn = file.path(output_path, "neec_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
@@ -137,7 +171,7 @@ ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output
   # NEEC
   neec_tmp <- neec |>
     dplyr::mutate(
-      quantity = log(quantity + 1),
+      quantity = as.numeric(as.factor(quantity_category)),
       quantity = quantity / max(quantity)
     ) |>
     dplyr::rename(geometry = geom) |>
