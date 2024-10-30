@@ -94,6 +94,7 @@ pipeline:
           - CIS oil events 2006-2018
           - CIS oil events 2018
           - CIS oil events 2019-2023
+        output_files: istop.gpkg
 
   # Output section: final output of the processed data
   output:

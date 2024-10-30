@@ -2,8 +2,10 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
   # NEEC data
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
+  input_files <- unlist(input_files)
   neec <- input_files[stringr::str_detect(input_files, "neec.csv")] |>
     vroom::vroom(progress = FALSE, show_col_types = FALSE)
+
 
   # ----------------------------------------------------------------
   # Filter NEEC data based on specified constraints
@@ -15,7 +17,7 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   # Use data from “Notification Date Time” when not available from “Incident Local Date Time” field
   neec <- neec |>
     dplyr::mutate(
-      datetime = ifelse(!is.na(incident_date_time), incident_date_time, notification_date_time),
+      datetime = ifelse(!is.na(incident_local_date_time_local_time), incident_local_date_time_local_time, notification_date_time),
       date = as.Date(datetime, format = "%Y-%m-%d %H:%M"),
       year = format(date, "%Y")
     )
@@ -32,7 +34,7 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   # TO VERIFY
   # Set all NA quantities to 1
   neec <- neec |>
-    dplyr::mutate(quantity = ifelse(is.na(quantity), 1, quantity))
+    dplyr::mutate(quantity = ifelse(is.na(quantity_converted), 1, quantity_converted))
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   # ----------------------------------------------------------------
@@ -51,20 +53,27 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
     dplyr::filter(!stringr::str_detect(tolower(incident_name), "furnace oil"))
 
   # ----------------------------------------------------------------
-  # Based on email exhange with Robert Ronconi on 2024-02-23
-  # Keep all incidents within 1km of the coastline
-  # Coastal outline
-  tmp <- file.path(output_path, "tmp")
-  dir.create(tmp, recursive = TRUE, showWarnings = FALSE)
-  getdat <- function(country) {
-    raster::getData("GADM", country = country, level = 0, path = tmp) |>
-      sf::st_as_sf() |>
-      sf::st_simplify(dTolerance = 600, preserveTopology = FALSE) |>
-      sf::st_make_valid()
+  # # Based on email exhange with Robert Ronconi on 2024-02-23
+  # # Keep all incidents within 1km of the coastline
+  # # Coastal outline
+  fetch_data <- function(url) {
+    # Temporary file
+    tmp <- tempfile(fileext = ".json")
+
+    # Download file
+    curl::curl_download(url, tmp)
+
+    # Import
+    sf::st_read(tmp, quiet = TRUE)
   }
-  can <- getdat("CAN")
-  usa <- getdat("USA")
-  terre <- sf::st_union(can, usa) |>
+
+  coastlines <- c(
+    "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_USA_0.json",
+    "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_CAN_0.json"
+  ) |>
+    lapply(fetch_data)
+
+  terre <- sf::st_union(coastlines[[1]], coastlines[[2]]) |>
     sf::st_transform(32198) |> # To get units in meters
     smoothr::fill_holes(threshold = units::set_units(1000, km^2))
 
@@ -78,9 +87,6 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   iid <- sf::st_disjoint(terre_buf, neec) |> unlist()
   neec <- neec[iid, ]
 
-  # Remove downloaded data
-  fs::dir_delete(tmp)
-
   # Export partial data for use in report (this should be revisited)
   sf::st_write(neec, dsn = file.path(output_path, "neec_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
   # ----------------------------------------------------------------
@@ -92,6 +98,7 @@ ana_petroleum_pollution_incidents_nasp <- function(input_files, output_path) {
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
   # NASP data
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
+  input_files <- unlist(input_files)
   nasp <- input_files[stringr::str_detect(input_files, "nasp.gpkg")] |>
     sf::st_read(quiet = TRUE) |>
     dplyr::filter(!is.na(volume_l)) |>
@@ -106,7 +113,7 @@ ana_petroleum_pollution_incidents_istop <- function(input_files, output_path) {
   # ISTOP data
   # =~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~=~-~= #
   # Load & Filter ISTOP data based on specified constraints
-  istop <- input_files[stringr::str_detect(input_files, "istop.gpkg")] |>
+  istop <- input_files[stringr::str_detect(unlist(input_files), "istop.gpkg")] |>
     sf::st_read(quiet = TRUE) |>
     dplyr::filter(!is.na(date)) |>
     dplyr::distinct() |>
@@ -122,10 +129,10 @@ ana_petroleum_pollution_incidents_istop <- function(input_files, output_path) {
   sf::st_write(istop, dsn = file.path(output_path, "istop_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
 }
 
-ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100) {
+ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
   # Using diffusive model function to generate threat layer for each dataset
   # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  neec <- sf::st_read(input_files[[1]], quiet = TRUE)
+  neec <- sf::st_read(unlist(input_files), quiet = TRUE)
 
   # NEEC
   neec_tmp <- neec |>
@@ -133,6 +140,7 @@ ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output
       quantity = log(quantity + 1),
       quantity = quantity / max(quantity)
     ) |>
+    dplyr::rename(geometry = geom) |>
     sf::st_transform(3348)
   neec_threat <- diffusive_model(
     dat = neec_tmp,
@@ -140,7 +148,8 @@ ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output
     threshold = threshold,
     globalmaximum = min(neec_tmp$quantity),
     decay = decay,
-    increment = increment
+    increment = increment,
+    cellsize = cellsize
   )
 
   # Export
@@ -154,10 +163,10 @@ ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output
     )
 }
 
-ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100) {
+ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
   # Using diffusive model function to generate threat layer for each dataset
   # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  nasp <- sf::st_read(input_files[[1]], quiet = TRUE)
+  nasp <- sf::st_read(unlist(input_files), quiet = TRUE)
 
   # NASP
   nasp_tmp <- nasp |>
@@ -165,6 +174,7 @@ ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output
       volume_l = log(volume_l + 1),
       volume_l = volume_l / max(volume_l)
     ) |>
+    dplyr::rename(geometry = geom) |>
     sf::st_transform(3348)
   nasp_threat <- diffusive_model(
     dat = nasp_tmp,
@@ -172,7 +182,8 @@ ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output
     threshold = threshold,
     globalmaximum = min(nasp_tmp$volume_l),
     decay = decay,
-    increment = increment
+    increment = increment,
+    cellsize = cellsize
   )
 
   # Export
@@ -186,10 +197,10 @@ ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output
     )
 }
 
-ana_petroleum_pollution_incidents_istop_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100) {
+ana_petroleum_pollution_incidents_istop_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
   # Using diffusive model function to generate threat layer for each dataset
   # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  istop <- sf::st_read(input_files[[1]], quiet = TRUE)
+  istop <- sf::st_read(unlist(input_files), quiet = TRUE)
 
   # ISTOP
   istop_tmp <- istop |>
@@ -197,6 +208,7 @@ ana_petroleum_pollution_incidents_istop_diffusive <- function(input_files, outpu
       area = log(area + 1),
       area = area / max(area)
     ) |>
+    dplyr::rename(geometry = geom) |>
     sf::st_transform(3348)
   istop_threat <- diffusive_model(
     dat = istop_tmp,
@@ -204,7 +216,8 @@ ana_petroleum_pollution_incidents_istop_diffusive <- function(input_files, outpu
     threshold = threshold,
     globalmaximum = min(istop_tmp$area),
     decay = decay,
-    increment = increment
+    increment = increment,
+    cellsize = cellsize
   )
 
   # Export

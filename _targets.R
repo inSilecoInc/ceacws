@@ -8,7 +8,7 @@ tar_option_set(packages = c('curl', 'googleCloudStorageR', 'aws.s3', 'yaml', 'dp
 tar_source('workspace/scripts/')
 list(
   tar_target(bibtex_master, bibtex_master(), format = "file", cue = tar_cue(mode = "always")),
-    list(list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_Scientific_article, 
+    list(list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_Scientific_article, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -16,7 +16,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/OilPollution_Lieskeetal-MS_FINAL.pdf", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/OilPollution_Lieskeetal-MS_FINAL.pdf"
-    }, format = "file")), list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_Description_of_dataset, 
+    }, format = "file")), list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_Description_of_dataset, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -24,7 +24,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/Description Pollution datasets_2024-02-08.docx", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/Description Pollution datasets_2024-02-08.docx"
-    }, format = "file")), list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_ISTOP_Regions_map, 
+    }, format = "file")), list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_ISTOP_Regions_map, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -32,7 +32,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/ISTOP_Regions_Map.png", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/ISTOP_Regions_Map.png"
-    }, format = "file")), list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2006_2018, 
+    }, format = "file")), list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2006_2018, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -40,7 +40,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2006_to_Jan6_2018.tzip", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2006_to_Jan6_2018.tzip"
-    }, format = "file")), list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2018, 
+    }, format = "file")), list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2018, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -48,7 +48,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2018_after_Jan6.tzip", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2018_after_Jan6.tzip"
-    }, format = "file")), list(tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2019_2023, 
+    }, format = "file")), list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2019_2023, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -56,15 +56,15 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2019to2023.tzip", 
             overwrite = TRUE)
         "workspace/data/harvested/istop-1.0.0/raw/CIS_Oil_Events_GU_EC_MA_IE_2019to2023.tzip"
-    }, format = "file")), tar_target(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop, 
+    }, format = "file")), tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop, 
     {
         prc_istop(output_path = "workspace/data/harvested/istop-1.0.0/processed", 
-            input_files = list(istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2006_2018, 
-                istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2018, 
-                istop_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2019_2023))
-        "workspace/data/harvested/istop-1.0.0/processed"
+            input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2006_2018, 
+                tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2018, 
+                tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_CIS_oil_events_2019_2023))
+        "workspace/data/harvested/istop-1.0.0/processed/istop.gpkg"
     }, format = "file")),
-    list(list(tar_target(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_Scientific_article, 
+    list(list(tar_target(tg_e566fb8c_42d8_4013_8002_17af44a15a46_Scientific_article, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -72,7 +72,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/nasp-1.0.0/raw/OilPollution_Lieskeetal-MS_FINAL.pdf", 
             overwrite = TRUE)
         "workspace/data/harvested/nasp-1.0.0/raw/OilPollution_Lieskeetal-MS_FINAL.pdf"
-    }, format = "file")), list(tar_target(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_Description_of_dataset, 
+    }, format = "file")), list(tar_target(tg_e566fb8c_42d8_4013_8002_17af44a15a46_Description_of_dataset, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -80,7 +80,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/nasp-1.0.0/raw/Description Pollution datasets_2024-02-08.docx", 
             overwrite = TRUE)
         "workspace/data/harvested/nasp-1.0.0/raw/Description Pollution datasets_2024-02-08.docx"
-    }, format = "file")), list(tar_target(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_xlsx, 
+    }, format = "file")), list(tar_target(tg_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_xlsx, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -88,7 +88,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/nasp-1.0.0/raw/NASP_pollution_compiled_2013-2023.xlsx", 
             overwrite = TRUE)
         "workspace/data/harvested/nasp-1.0.0/raw/NASP_pollution_compiled_2013-2023.xlsx"
-    }, format = "file")), list(tar_target(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_2013_2023, 
+    }, format = "file")), list(tar_target(tg_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_2013_2023, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -96,13 +96,13 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/nasp-1.0.0/raw/NASP.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/nasp-1.0.0/raw/NASP.csv"
-    }, format = "file")), tar_target(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_nasp, 
+    }, format = "file")), tar_target(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp, 
     {
         prc_nasp(output_path = "workspace/data/harvested/nasp-1.0.0/processed", 
-            input_files = list(nasp_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_2013_2023))
-        "workspace/data/harvested/nasp-1.0.0/processed"
+            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_NASP_pollution_2013_2023))
+        "workspace/data/harvested/nasp-1.0.0/processed/nasp.gpkg"
     }, format = "file")),
-    list(list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_Description_of_dataset, 
+    list(list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_Description_of_dataset, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -110,7 +110,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/Description Pollution datasets_2024-02-08.docx", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/Description Pollution datasets_2024-02-08.docx"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_Incident_Fields_and_Taxonomy, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_Incident_Fields_and_Taxonomy, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -118,7 +118,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/NEEOC Incident Fields and Taxonomy_RR.xlsx", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/NEEOC Incident Fields and Taxonomy_RR.xlsx"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_Atlantic_NEEC_2024, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_Atlantic_NEEC_2024, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -126,7 +126,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/Atlantic NEEC CWS Extraction_2024-01-29.xlsx", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/Atlantic NEEC CWS Extraction_2024-01-29.xlsx"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -134,7 +134,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/neec.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/neec.csv"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_incident_fields_2024, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_incident_fields_2024, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -142,7 +142,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/neec_incident_fields.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/neec_incident_fields.csv"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_substances_2024, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_substances_2024, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -150,7 +150,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/neec_substances.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/neec_substances.csv"
-    }, format = "file")), list(tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_taxonomy_2024, 
+    }, format = "file")), list(tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_taxonomy_2024, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -158,121 +158,120 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/neec-1.0.0/raw/neec_taxonomy.csv", 
             overwrite = TRUE)
         "workspace/data/harvested/neec-1.0.0/raw/neec_taxonomy.csv"
-    }, format = "file")), tar_target(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec, 
+    }, format = "file")), tar_target(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec, 
     {
         prc_neec(output_path = "workspace/data/harvested/neec-1.0.0/processed", 
-            input_files = list(neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024, 
-                neec_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_taxonomy_2024))
-        "workspace/data/harvested/neec-1.0.0/processed"
+            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_NEEC_pollution_data_2024))
+        "workspace/data/harvested/neec-1.0.0/processed/neec.csv"
     }, format = "file")),
-    list(tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Exploration_Licenses, 
+    list(tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Exploration_Licenses, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/b1f536a6a7554608aec2810c95821ccc/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_exploration_licenses.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Significant_Discovery_Licenses, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Significant_Discovery_Licenses, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/b7206e539db54daf8548c2c0e2777eb6/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_significant_discovery_licenses.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Production_Licenses, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Production_Licenses, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/5d563b7108fc41d2add34170ea36edd4/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_production_licenses.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Production_Installations, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Production_Installations, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/5af28186d92f4d03857102afe733ad3b/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/production_installations.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Introduction_to_schedule_of_wells_document, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Introduction_to_schedule_of_wells_document, 
     {
         curl::curl_download("https://cnlopb.maps.arcgis.com/sharing/rest/content/items/cab8e82d9ba343caa81c52f9ca300df7/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_document.pdf")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Well_Info_Summary, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Well_Info_Summary, 
     {
         curl::curl_download("https://cnlopb.maps.arcgis.com/sharing/rest/content/items/e64adf617a7d4109b6db253da69dfa7c/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_summary.xlsx")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Delineation_Wells, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Delineation_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/6ff2b3c3d4924497bde5d25e7df6fcc9/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/delineation_wells.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Development_Wells, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Development_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/28cac5ccdace47819a69e897c79ae729/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/development_wells.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Dual_Classified_Wells, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Dual_Classified_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/04d2b5254f894984a59fe322abe98d65/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/dual_classified_wells.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Exploration_Wells, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Exploration_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/d4174b3353b3436fa7b7d182aaf656f5/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/exploration_wells.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL23_CFB01, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL23_CFB01, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/8d6aa15c4aae4ad2bb70c2842f36b4e1/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl23_cfb01.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___South_Eastern_Newfoundland_NL23_CFB02, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___South_Eastern_Newfoundland_NL23_CFB02, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/d84be87845d440149588dd738047ea9d/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/south_eastern_newfoundland_nl23_cfb02.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL24_CFB01, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL24_CFB01, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/4b83e81babc54046864da1340a06e3e2/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl24_cfb01.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Labrador_South_NL02_LS, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Labrador_South_NL02_LS, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/95696d1844b44e619b4d6e4fb0f9f65b/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/labrador_south_nl02_ls.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Eastern_Newfoundland_NL06_EN, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Eastern_Newfoundland_NL06_EN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/1d0b2a6f5f584440994aeefee1c3f1ec/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl06_en.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___North_Eastern_Newfoundland_NL01_NEN, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___North_Eastern_Newfoundland_NL01_NEN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/35b985f48fa04c77a560ddadc0dc5838/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/north_eastern_newfoundland_nl01_nen.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_nfl_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Southern_Newfoundland_NL01_SN, 
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Southern_Newfoundland_NL01_SN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/39a1388daafc43999ff774a599db0948/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/southern_newfoundland_nl01_sn.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
     }, format = "file")),
-    list(tar_target(offshore_petroleum_ns_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
+    list(tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/resource/sda_coordinates_sept_2009.xls", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_areas_sept_2009.xls")
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_ns_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Licenses_Coordinates___September_2022, 
+    }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Licenses_Coordinates___September_2022, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/resource/sdl_coordinates_sept_2022.xls", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_licenses_sept_2022.xls")
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_ns_570b8de3_665c_438e_815b_3b4b23ffe6a6_Production_Licenses_Coordinates___July_2024, 
+    }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Production_Licenses_Coordinates___July_2024, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/pictures/5._pl_coordinates_july26_2024.xlsx", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/production_licenses_july_2024.xlsx")
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
-    }, format = "file"), tar_target(offshore_petroleum_ns_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_, 
+    }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_, 
     {
         curl::curl_download("https://callforbids.ca/sites/default/files/resource/final_call_for_bids_ns22-1_parcels_shapefile.zip", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/call_for_bids_ns22_1_parcels.zip")
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
     }, format = "file")),
-    list(list(tar_target(offshore_wind_can_5a9c177c_4cd0_4996_b455_d2e755355a09_Potential_Future_Development_Areas__PFDA____Nova_Scotia, 
+    list(list(tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Potential_Future_Development_Areas__PFDA____Nova_Scotia, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -280,7 +279,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_can-1.0.0/raw/NS_pfda.zip", 
             overwrite = TRUE)
         "workspace/data/harvested/offshore_wind_can-1.0.0/raw/NS_pfda.zip"
-    }, format = "file")), list(tar_target(offshore_wind_can_5a9c177c_4cd0_4996_b455_d2e755355a09_Preliminary_Offshore_Wind_Licensing_Areas__PLA____Newfoundland, 
+    }, format = "file")), list(tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Preliminary_Offshore_Wind_Licensing_Areas__PLA____Newfoundland, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -288,7 +287,7 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_can-1.0.0/raw/NFL_pla.zip", 
             overwrite = TRUE)
         "workspace/data/harvested/offshore_wind_can-1.0.0/raw/NFL_pla.zip"
-    }, format = "file")), list(tar_target(offshore_wind_can_5a9c177c_4cd0_4996_b455_d2e755355a09_README_file, 
+    }, format = "file")), list(tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_README_file, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
         Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -297,22 +296,22 @@ list(
             overwrite = TRUE)
         "workspace/data/harvested/offshore_wind_can-1.0.0/raw/README.txt"
     }, format = "file"))),
-    list(tarchetypes::tar_download(offshore_wind_nfl_94a1b3cb_109a_4871_b1d0_abe318f920a0_Focus_Area_Shapefile, 
+    list(tarchetypes::tar_download(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_Focus_Area_Shapefile, 
     url = "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_NL_Focus_Area_Le_Secteur_dintervention_ER_TNL.shp.zip", 
     path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/focus_area_nl_shapefile.zip"), 
-    tarchetypes::tar_download(offshore_wind_nfl_94a1b3cb_109a_4871_b1d0_abe318f920a0_Regional_Assessment_Agreement, 
+    tarchetypes::tar_download(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_Regional_Assessment_Agreement, 
         url = "https://iaac-aeic.gc.ca/050/documents/p84343/147037E.pdf", 
         path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/regional_assessment_agreement.pdf")),
-    list(tarchetypes::tar_download(offshore_wind_ns_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Agreement_to_Conduct_a_Regional_Assessment_of_Offshore_Wind_Development_in_Nova_Scotia__English_, 
+    list(tarchetypes::tar_download(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Agreement_to_Conduct_a_Regional_Assessment_of_Offshore_Wind_Development_in_Nova_Scotia__English_, 
     url = "https://iaac-aeic.gc.ca/050/documents/p83514/147038E.pdf", 
     path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/agreement_regional_assessment_ns_en.pdf"), 
-    tarchetypes::tar_download(offshore_wind_ns_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Study_Area_Shapefile, 
+    tarchetypes::tar_download(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Study_Area_Shapefile, 
         url = "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_Study_Area_NS_N%c3%89_Zone_d%c3%a9tude.zip", 
         path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/study_area_ns_shapefile.zip")),
-    list(tarchetypes::tar_download(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Renewable_Energy_Geodatabase, 
+    list(tarchetypes::tar_download(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Renewable_Energy_Geodatabase, 
     url = "https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase", 
     path = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/boem_renewable_energy_geodatabase.zip"), 
-    list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Project_Development_Phase_Areas, 
+    list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Project_Development_Phase_Areas, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -320,7 +319,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Phase_Areas_Proposed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Phase_Areas_Proposed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Substations, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Substations, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -328,7 +327,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Substations_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Substations_Proposed_or_Installed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Turbine_Locations, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Turbine_Locations, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -336,7 +335,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Turbine_Locations_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Turbine_Locations_Proposed_or_Installed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Cable_Interconnections, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Cable_Interconnections, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -344,7 +343,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Cable_Interconnections_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Cable_Interconnections_Proposed_or_Installed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Data_Collection_Devices, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Data_Collection_Devices, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -352,7 +351,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Ocean_Observing_Devices_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Ocean_Observing_Devices_Proposed_or_Installed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Export_Cable_Corridors, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Export_Cable_Corridors, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -360,7 +359,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Export_Cable_Corridors_Proposed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Export_Cable_Corridors_Proposed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Offshore_Cable_Landings, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Offshore_Cable_Landings, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -368,7 +367,7 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Cable_Landings_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Cable_Landings_Proposed_or_Installed.gpkg"
-        }, format = "file")), list(tar_target(offshore_wind_usa_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Project_Inter_array_Cables, 
+        }, format = "file")), list(tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Project_Inter_array_Cables, 
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
             Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -376,5 +375,36 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg"
-        }, format = "file")))
+        }, format = "file"))),
+    list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_data_preparation, 
+    {
+        ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/istop_prep.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_data_preparation, 
+    {
+        ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/nasp_prep.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_data_preparation, 
+    {
+        ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/neec_prep.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_diffusive_model, 
+    {
+        ana_petroleum_pollution_incidents_istop_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_data_preparation))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.tif"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_diffusive_model, 
+    {
+        ana_petroleum_pollution_incidents_nasp_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_nasp_data_preparation))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.tif"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_diffusive_model, 
+    {
+        ana_petroleum_pollution_incidents_neec_diffusive(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_neec_data_preparation))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.tif"
+    }, format = "file"))
 )

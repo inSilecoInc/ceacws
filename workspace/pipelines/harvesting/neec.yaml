@@ -97,9 +97,8 @@ pipeline:
     sources:
       - name: neec
         script: prc_neec
-        input_files: 
-          - NEEC pollution data 2024
-          - NEEC pollution data taxonomy 2024
+        input_files: NEEC pollution data 2024
+        output_files: neec.csv 
 
  # Output section: final output of the processed data
   output:

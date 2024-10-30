@@ -76,6 +76,7 @@ pipeline:
       - name: nasp
         script: prc_nasp
         input_files: NASP pollution 2013-2023
+        output_files: nasp.gpkg
 
   # Output section: final output of the processed data
   output:

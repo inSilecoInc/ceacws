@@ -16,7 +16,7 @@
 #' @details
 #'
 
-diffusive_model <- function(dat, field, threshold, globalmaximum, decay, increment) {
+diffusive_model <- function(dat, field, threshold, globalmaximum, decay, increment, cellsize) {
   # -----
   val <- res <- list()
   for (i in 1:nrow(dat)) {
@@ -48,10 +48,13 @@ diffusive_model <- function(dat, field, threshold, globalmaximum, decay, increme
   }
 
   # Combine and rasterize
-  r <- as(
-    stars::read_stars("project-data/grid/grid.tif"),
-    "Raster"
+  r <- make_grid(
+    aoi = sf::st_bbox(dat),
+    crs = sf::st_crs(dat),
+    cellsize = cellsize
   )
+  r <- as(r, "Raster")
+
   res <- res |>
     dplyr::bind_rows() |>
     sf::st_transform(sf::st_crs(r)) |>
@@ -60,8 +63,7 @@ diffusive_model <- function(dat, field, threshold, globalmaximum, decay, increme
       field = "intensity",
       fun = "sum"
     ) |>
-    stars::st_as_stars() |>
-    mask_aoi()
+    stars::st_as_stars()
 
   # Return
   res
