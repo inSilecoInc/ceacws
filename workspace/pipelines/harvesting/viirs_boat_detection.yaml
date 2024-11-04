@@ -1,0 +1,75 @@
+pipeline:
+  id: e48527b5-3963-40fc-994a-8eec16e0f883
+  name: viirs_boat_detection
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-11-04 13:40:15
+  last_modified: 2024-11-04 13:40:15
+  description: "This pipeline downloads the VIIRS Boat Detection (VBD) nightly data for global coverage from 2020 to 2023. The data is used for maritime surveillance, monitoring illegal fishing activities, and tracking vessel patterns over time."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "VIIRS Boat Detection (VBD) Dataset"
+    data_type: "Nightly CSV files"               # Type of data being harvested
+    file_size: "Variable by date range"          # Approximate size varies by the specified date range
+    license: "Public domain with registration"   # Dataset license information
+    last_updated: "2023-12-31"                   # Timestamp of the last data update
+    geographic_coverage:                         # Geographical region covered by the dataset
+      region: "Global"
+      bounding_box:                              # Bounding box coordinates for global coverage
+        - -180  # Longitude min
+        - -90   # Latitude min
+        - 180   # Longitude max
+        - 90    # Latitude max
+    temporal_coverage:                           # Time period the dataset covers
+      start_date: "2020-01-01"
+      end_date: "2023-12-31"
+    variables:                                   # List of important variables/columns in the dataset
+      - timestamp
+      - latitude
+      - longitude
+      - brightness
+      - vessel_type
+    data_quality:                                # Comments on data quality
+      - "The dataset may include false positives in vessel detection due to atmospheric interference."
+      - "Accuracy depends on cloud cover and ocean conditions affecting nighttime radiance."
+
+  # Bibliographic Information
+  bibliography:
+    - "@Dataset{eog2024,
+        author = {{Earth Observation Group, Payne Institute for Public Policy}},
+        title = {{VIIRS Boat Detection (VBD) Dataset}},
+        year = {2024},
+        url = {https://eogdata.mines.edu/products/vbd/},
+        institution = {{Earth Observation Group, Payne Institute for Public Policy}},
+        note = {Accessed: 2024-11-04}
+      }"
+
+  # Download section: Specifies how to access and download the VBD nightly data files
+  download:
+    sources:
+      - name: VBD Nightly Global Data
+        source_type: "viirs"
+        urls: NA
+        dataset: "vbd"
+        resolution: "nightly"
+        dates: 
+          - ["2023-12-01", "2023-12-15"]        # Specified range of nightly data
+        country_code: "global-saa"                 # Use SAA redacted global dataset
+        credentials: "workspace/credentials/earth_observation_group.json" # Path to JSON credentials for VIIRS data
+
+  # # Processing section: specifies post-processing (if needed) on downloaded data files
+  # processing:
+  #   sources:
+  #     - name: vbd_nightly
+  #       script: process_vbd_nightly
+  #       input_files:
+  #         - VBD Nightly Global Data                # Matches the name from the download section
+  #       output_files: vbd_nightly_global.gpkg
+
+  # Output section: specifies where to store the final processed data
+  output:
+    output_dir: "workspace/data/harvested/vbd_nightly/"  # Directory to save downloaded and processed data
+    log_dir: "workspace/logs/"                           # Directory for storing logs
+    archive_raw: true                                    # Option to archive the raw downloaded data
+

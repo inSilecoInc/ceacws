@@ -387,6 +387,67 @@ list(
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg"
         }, format = "file"))),
+    list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
+    generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
+        source_type = "viirs", urls = "NA", dataset = "vbd", 
+        resolution = "nightly", dates = list(c("2023-12-01", 
+        "2023-12-15")), country_code = "global-saa", credentials = "workspace/credentials/earth_observation_group.json", 
+        output_path = "workspace/data/harvested/viirs_boat_detection-1.0.0/raw", 
+        output = NULL, url = "NA", target_name = structure("tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data", class = c("glue", 
+        "character")))), format = "rds"), tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_files, 
+    {
+        access_token <- get_viirs_access_token("workspace/credentials/earth_observation_group.json")
+        handle <- curl::new_handle()
+        curl::handle_setheaders(handle, Authorization = paste("Bearer", 
+            access_token))
+        lapply(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
+            function(x) {
+                curl::curl_download(url = x, destfile = file.path("workspace/data/harvested/viirs_boat_detection-1.0.0/raw", 
+                  basename(x)), handle = handle, mode = "wb")
+            })
+        "workspace/data/harvested/viirs_boat_detection-1.0.0/raw"
+    }, format = "file"))),
+    list(list(tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_urls, 
+    generate_and_filter_viirs_urls(params = list(name = "VIIRS Night Fire Nightly Data", 
+        source_type = "viirs", urls = "NA", dataset = "vnf", 
+        resolution = "nightly", dates = list(c("2023-12-01", 
+        "2023-12-02")), credentials = "workspace/credentials/earth_observation_group.json", 
+        output_path = "workspace/data/harvested/viirs_night_fire-1.0.0/raw", 
+        output = NULL, url = "NA", target_name = structure("tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data", class = c("glue", 
+        "character")))), format = "rds"), tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_files, 
+    {
+        access_token <- get_viirs_access_token("workspace/credentials/earth_observation_group.json")
+        handle <- curl::new_handle()
+        curl::handle_setheaders(handle, Authorization = paste("Bearer", 
+            access_token))
+        lapply(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_urls, 
+            function(x) {
+                curl::curl_download(url = x, destfile = file.path("workspace/data/harvested/viirs_night_fire-1.0.0/raw", 
+                  basename(x)), handle = handle, mode = "wb")
+            })
+        "workspace/data/harvested/viirs_night_fire-1.0.0/raw"
+    }, format = "file"))),
+    list(list(tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_urls, 
+    generate_and_filter_viirs_urls(params = list(name = "VIIRS Monthly Nighttime Light", 
+        source_type = "viirs", dataset = "vnl", urls = "NA", 
+        resolution = "monthly", dates = list(c("2023-08-01", 
+        "2023-09-15")), file_type = "avg_rade9h", config = "vcm", 
+        platform = "j01", credentials = "workspace/credentials/earth_observation_group.json", 
+        output_path = "workspace/data/harvested/viirs_nighttime_light-1.0.0/raw", 
+        output = NULL, url = "NA", target_name = structure("tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light", class = c("glue", 
+        "character")))), format = "rds"), tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files, 
+    {
+        access_token <- get_viirs_access_token("workspace/credentials/earth_observation_group.json")
+        handle <- curl::new_handle()
+        curl::handle_setheaders(handle, Authorization = paste("Bearer", 
+            access_token))
+        lapply(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_urls, 
+            function(x) {
+                curl::curl_download(url = x, destfile = file.path("workspace/data/harvested/viirs_nighttime_light-1.0.0/raw", 
+                  basename(x)), handle = handle, mode = "wb")
+            })
+        "workspace/data/harvested/viirs_nighttime_light-1.0.0/raw"
+    }, format = "file"))),
     list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_istop_data_preparation, 
     {
         ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
