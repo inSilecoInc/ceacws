@@ -1,0 +1,66 @@
+pipeline:
+  id: ab6dff55-d84b-4004-96fc-dd18f65b8f3e
+  name: offshore_wind_ns
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-21 12:17:53
+  last_modified: 2024-09-21 12:17:53
+  description: |
+    Study Area defined in the Agreement to Conduct a Regional Assessment of Offshore Wind Development in Nova Scotia. 
+    The study area was created by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada 
+    and the province of Nova Scotia. The agreement includes assessing potential environmental, social, and economic 
+    effects of future offshore wind development.
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia"
+    data_type: "PDF, SHPREST"
+    file_size: "Unknown"
+    license: "Open Government Licence - Canada"
+    last_updated: "2024-02-16"
+    geographic_coverage:
+      region: "Nova Scotia, Canada"
+      bounding_box:
+        - -68.25225805    # Longitude min
+        - 42.76834823     # Latitude min
+        - -56.29913305    # Longitude max
+        - 47.74408876     # Latitude max
+    temporal_coverage:
+      start_date: "2023-03-23"
+    variables:
+      - study_area
+      - wind_energy_assessment
+      - environmental_impact
+    data_quality:
+      - "Study Area was defined in 2023 as part of the regional assessment and is subject to updates."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{iaac2024b,
+        title = {Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia},
+        author = {{Impact Assessment Agency of Canada}},
+        year = {2024},
+        institution = {{Government of Canada}},
+        url = {https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157}
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "Agreement to Conduct a Regional Assessment of Offshore Wind Development in Nova Scotia (English)"
+        source_type: "http"
+        urls: "https://iaac-aeic.gc.ca/050/documents/p83514/147038E.pdf"
+        output: "agreement_regional_assessment_ns_en.pdf"
+        format: "pdf"
+      
+      - name: "Study Area Shapefile"
+        source_type: "http"
+        urls: "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_Study_Area_NS_N%c3%89_Zone_d%c3%a9tude.zip"
+        output: "study_area_ns_shapefile.zip"
+        format: "shapefile"
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"
+    log_dir: "workspace/logs/"
+    archive_raw: true

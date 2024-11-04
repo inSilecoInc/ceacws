@@ -1,0 +1,85 @@
+pipeline:
+  id: e566fb8c-42d8-4013-8002-17af44a15a46
+  name: nasp
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-20 11:42:15
+  last_modified: 2024-09-20 11:42:15
+  description: "The National Aerial Surveillance Program (NASP) is a surveillance program led by Transport Canada that operates across the country to detect pollution through aerial surveys. Its goals are to prevent pollution in our waters, protect our marine environment and endangered marine life, and ensure a safe and efficient transportation industry along our massive and varied coastlines. The data provided covers oil pollution detections for the Atlantic region between April 2012 and March 2023. A total of 3578 incidents were recorded, with 3572 usable observations after cleaning, which removed missing spill volumes."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Transport Canada National Aerial Surveillance Program (NASP)"
+    data_type: "CSV"                                    # Type of data being harvested
+    file_size: "N/A"                                    # Approximate size of the file or dataset (not provided)
+    license: "Restricted access"                        # Dataset license information
+    last_updated: "2024-03-15"                          # Timestamp of the last data update
+    geographic_coverage:                                # Geographical region covered by the dataset
+      region: "Atlantic Region, Canada"
+      bounding_box:                                     # Bounding box coordinates of the region (min/max lat/long)
+        - -76    # Longitude min
+        - -33    # Latitude min
+        - 35     # Longitude max
+        - 65     # Latitude max
+    temporal_coverage:                                  # Time period the dataset covers
+      start_date: "2012-04-01"
+      end_date: "2023-03-31"
+    variables:                                          # List of important variables/columns in the dataset
+      - id
+      - incident_date
+      - spill_volume
+      - location
+      - pollution_type
+    data_quality:                                       # Comments on data quality (e.g., missing data, outliers)
+      - "Data cleaned and missing spill volumes removed."
+      - "3572 usable observations out of 3578 incidents."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{tc2024,
+        type = {Dataset},
+        title = {National {{Aerial Surveillance Program}} ({{NASP}}). {{Data}} Extraction for Period between {{April}} 2012 to {{March}} 2023.},
+        author = {{Transport Canada}},
+        year = {2024},
+        institution = {{Transport Canada}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:                                        # List of data sources to be harvested (e.g., main data, metadata)
+      - name: Scientific article
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "NASP/OilPollution_Lieskeetal-MS_FINAL.pdf"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: Description of dataset
+        source_type: "gcs"
+        urls: "cws-private"  
+        asset: "NASP/Description Pollution datasets_2024-02-08.docx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: NASP pollution xlsx
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "NASP/NASP_pollution_compiled_2013-2023.xlsx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: NASP pollution 2013-2023
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "NASP/NASP.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+  processing:
+    sources:
+      - name: nasp
+        script: prc_nasp
+        input_files: NASP pollution 2013-2023
+        output_files: nasp.gpkg
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                # Directory for logs (optional)
+    archive_raw: true                         # Option to archive the raw downloaded data

@@ -32,10 +32,11 @@ raw/
 *.gpkg
 *.rds
 *.tar.xz
-pof-stac-insileco*
+*.json
 
 # Specific files & folders
 figures/*
 !figures/atlas/
 !figures/webinar/
 frontpage.svg
+_targets

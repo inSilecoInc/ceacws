@@ -1,0 +1,76 @@
+pipeline:
+  id: 570b8de3-665c-438e-815b-3b4b23ffe6a6
+  name: offshore_petroleum_ns
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-20 21:53:57
+  last_modified: 2024-09-20 21:53:57
+  description: "This dataset consists of multiple files from the CNSOPB (Canada-Nova Scotia Offshore Petroleum Board) covering significant discovery areas, significant discovery licenses, production licenses, and the most recent call for bids. The datasets are provided through CNSOPB and related portals and include data relevant to offshore petroleum activities in Nova Scotia, Canada."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)"  
+    data_type: "XLS, XLSX, Shapefiles"         # Type of data being harvested (XLS, XLSX, Shapefiles)
+    file_size: "~500MB"                        # Approximate size of all the datasets combined
+    license: "Creative Commons Attribution"    # Dataset license information
+    last_updated: "2024-07-26"                 # Timestamp of the last data update
+    geographic_coverage:                       # Geographical region covered by the dataset
+      region: "Nova Scotia, Canada"
+      bounding_box:                            # Bounding box coordinates of the region (min/max lat/long)
+        - -65.0    # Longitude min
+        - 43.0     # Latitude min
+        - -59.0    # Longitude max
+        - 47.0     # Latitude max
+    temporal_coverage:                         # Time period the dataset covers
+      start_date: "2009-09-01"
+      end_date: "2024-07-26"
+    variables:                                 # List of important variables/columns in the dataset
+      - license_id
+      - well_id
+      - coordinates
+      - exploration_phase
+      - parcel_id
+    data_quality:                              # Comments on data quality
+      - "Coordinates provided for significant discovery, production licenses, and parcels for bids."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{cnsopb2024,
+        title = {Offshore Petroleum Data for Nova Scotia},
+        author = {{Canada-Nova Scotia Offshore Petroleum Board}},
+        year = {2024},
+        institution = {{CNSOPB}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "Significant Discovery Areas - September 2009"
+        source_type: "http_manual"
+        urls: "https://www.cnsopb.ns.ca/sites/default/files/resource/sda_coordinates_sept_2009.xls"
+        output: "significant_discovery_areas_sept_2009.xls"
+        format: "xls"
+      
+      - name: "Significant Discovery Licenses Coordinates - September 2022"
+        source_type: "http_manual"
+        urls: "https://www.cnsopb.ns.ca/sites/default/files/resource/sdl_coordinates_sept_2022.xls"
+        output: "significant_discovery_licenses_sept_2022.xls"
+        format: "xls"
+      
+      - name: "Production Licenses Coordinates - July 2024"
+        source_type: "http_manual"
+        urls: "https://www.cnsopb.ns.ca/sites/default/files/pictures/5._pl_coordinates_july26_2024.xlsx"
+        output: "production_licenses_july_2024.xlsx"
+        format: "xlsx"
+      
+      - name: "Call for Bids NS22-1 Parcels (Shapefile)"
+        source_type: "http_manual"
+        urls: "https://callforbids.ca/sites/default/files/resource/final_call_for_bids_ns22-1_parcels_shapefile.zip"
+        output: "call_for_bids_ns22_1_parcels.zip"
+        format: "zip"
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                # Directory for logs (optional)
+    archive_raw: true    

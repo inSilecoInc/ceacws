@@ -1,0 +1,60 @@
+pipeline:
+  id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
+  name: shipping_ais
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-20 12:09:18
+  last_modified: 2024-09-20 12:09:18
+  description: "This dataset contains satellite data from the Automatic Identification System (AIS) provided by Transports Canada for the year 2023 across Atlantic Canada. The dataset captures the location of ships using vessel locations identified by the AIS."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "AIS Shipping Intensity Data - Transports Canada 2023"                 # Name or identifier of the data source
+    data_type: "GeoJSON"                             # Type of data being harvested (e.g., CSV, JSON, Parquet)
+    file_size: "~10GB"                               # Approximate size of the file or dataset
+    license: "Creative Commons Attribution"          # Dataset license information
+    last_updated: "2024-XX-XX"                       # Placeholder date of the last data update
+    geographic_coverage:                             # Geographical region covered by the dataset
+      region: "Atlantic Canada"
+      bounding_box:                                  # Bounding box coordinates of the region (min/max lat/long)
+        - -76    # Longitude min
+        - -33    # Latitude min
+        - 35     # Longitude max
+        - 65     # Latitude max
+    temporal_coverage:                               # Time period the dataset covers
+      start_date: "2023-01-01"
+      end_date: "2023-12-31"
+    variables:                                       # List of important variables/columns in the dataset
+      - vessel_id
+      - mmsi
+      - vessel_type
+      - location
+      - timestamp
+      - speed
+      - segment_length
+    data_quality:                                    # Comments on data quality (e.g., missing data, outliers)
+      - ""
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{tc2023,
+        title = {Satellite Navigation Data from Automatic Identification System (AIS) in Atlantic Canada, 2023. Data Provided by Transports Canada.},
+        author = {{Transports Canada}},
+        year = {2023},
+        institution = {{Transports Canada}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  harvest:
+    sources:                                        # List of data sources to be harvested (e.g., main data, metadata)
+      - name: Shipping AIS 2023
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "AIS/2023AIS.zip"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                # Directory for logs (optional)
+    archive_raw: true                         # Option to archive the raw downloaded data

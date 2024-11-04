@@ -1,0 +1,157 @@
+pipeline:
+  id: 02c5753f-0ed3-40c0-8be8-3217eb8481cb
+  name: offshore_petroleum_nfl
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-20 12:57:55
+  last_modified: 2024-09-20 12:57:55
+  description: "This dataset consists of multiple shapefiles and tabular datasets from the C-NLOPB (Canada-Newfoundland and Labrador Offshore Petroleum Board) covering offshore petroleum exploration, significant discoveries, production licenses, production installations, wells information, and land tenure. The datasets are provided through the C-NLOPB online portal and include data relevant to offshore petroleum activities in Newfoundland, Canada."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)"  
+    data_type: "Shapefiles, XLSX"               # Type of data being harvested (Shapefiles, XLSX)
+    file_size: "~2GB"                           # Approximate size of all the datasets combined
+    license: "Creative Commons Attribution"     # Dataset license information
+    last_updated: "2024-XX-XX"                  # Timestamp of the last data update
+    geographic_coverage:                        # Geographical region covered by the dataset
+      region: "Newfoundland, Canada"
+      bounding_box:                             # Bounding box coordinates of the region (min/max lat/long)
+        - -56.0    # Longitude min
+        - 46.0     # Latitude min
+        - -52.0    # Longitude max
+        - 49.0     # Latitude max
+    temporal_coverage:                          # Time period the dataset covers
+      start_date: "2023-01-01"
+      end_date: "2023-12-31"
+    variables:                                  # List of important variables/columns in the dataset
+      - license_id
+      - well_id
+      - coordinates
+      - vessel_type
+      - exploration_phase
+    data_quality:                               # Comments on data quality
+      - "Some well records are filtered to exclude suspended or abandoned wells."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{cnlopb2024,
+        title = {Offshore Petroleum Data for Newfoundland},
+        author = {{Canada-Newfoundland and Labrador Offshore Petroleum Board}},
+        year = {2024},
+        institution = {{C-NLOPB}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "Active Exploration Licenses"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/b1f536a6a7554608aec2810c95821ccc/data"
+        output: "active_exploration_licenses.zip"
+        format: "zip"
+      
+      - name: "Active Significant Discovery Licenses"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/b7206e539db54daf8548c2c0e2777eb6/data"
+        output: "active_significant_discovery_licenses.zip"
+        format: "zip"
+      
+      - name: "Active Production Licenses"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/5d563b7108fc41d2add34170ea36edd4/data"
+        output: "active_production_licenses.zip"
+        format: "zip"
+      
+      - name: "Production Installations"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/5af28186d92f4d03857102afe733ad3b/data"
+        output: "production_installations.zip"
+        format: "zip"
+      
+      - name: "Introduction to schedule of wells document"
+        source_type: "http_manual"
+        urls: "https://cnlopb.maps.arcgis.com/sharing/rest/content/items/cab8e82d9ba343caa81c52f9ca300df7/data"
+        output: "well_info_document.pdf"
+        format: "pdf"
+
+      - name: "Well Info Summary"
+        source_type: "http_manual"
+        urls: "https://cnlopb.maps.arcgis.com/sharing/rest/content/items/e64adf617a7d4109b6db253da69dfa7c/data"
+        output: "well_info_summary.xlsx"
+        format: "xlsx"
+        processing:
+          - operation: "filter"
+            condition: "!grepl('suspended|abandoned', Well_Status)"   # Filter out suspended or abandoned wells
+      
+      - name: "Delineation Wells"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/6ff2b3c3d4924497bde5d25e7df6fcc9/data"
+        output: "delineation_wells.zip"
+        format: "zip"
+      
+      - name: "Development Wells"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/28cac5ccdace47819a69e897c79ae729/data"
+        output: "development_wells.zip"
+        format: "zip"
+      
+      - name: "Dual Classified Wells"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/04d2b5254f894984a59fe322abe98d65/data"
+        output: "dual_classified_wells.zip"
+        format: "zip"
+      
+      - name: "Exploration Wells"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/d4174b3353b3436fa7b7d182aaf656f5/data"
+        output: "exploration_wells.zip"
+        format: "zip"
+            
+      - name: "Call for Bids - Eastern Newfoundland NL23-CFB01"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/8d6aa15c4aae4ad2bb70c2842f36b4e1/data"
+        output: "eastern_newfoundland_nl23_cfb01.zip"
+        format: "zip"
+      
+      - name: "Call for Bids - South Eastern Newfoundland NL23-CFB02"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/d84be87845d440149588dd738047ea9d/data"
+        output: "south_eastern_newfoundland_nl23_cfb02.zip"
+        format: "zip"
+      
+      - name: "Call for Bids - Eastern Newfoundland NL24-CFB01"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/4b83e81babc54046864da1340a06e3e2/data"
+        output: "eastern_newfoundland_nl24_cfb01.zip"
+        format: "zip"
+      
+      - name: "Sectors - Labrador South NL02-LS"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/95696d1844b44e619b4d6e4fb0f9f65b/data"
+        output: "labrador_south_nl02_ls.zip"
+        format: "zip"
+
+      - name: "Sectors - Eastern Newfoundland NL06-EN"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/1d0b2a6f5f584440994aeefee1c3f1ec/data"
+        output: "eastern_newfoundland_nl06_en.zip"
+        format: "zip"
+
+      - name: "Sectors - North Eastern Newfoundland NL01-NEN"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/35b985f48fa04c77a560ddadc0dc5838/data"
+        output: "north_eastern_newfoundland_nl01_nen.zip"
+        format: "zip"
+
+      - name: "Sectors - Southern Newfoundland NL01-SN"
+        source_type: "http_manual"
+        urls: "https://www.arcgis.com/sharing/rest/content/items/39a1388daafc43999ff774a599db0948/data"
+        output: "southern_newfoundland_nl01_sn.zip"
+        format: "zip"
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                # Directory for logs (optional)
+    archive_raw: true                         # Option to archive the raw downloaded data

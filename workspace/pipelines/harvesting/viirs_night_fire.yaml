@@ -1,0 +1,54 @@
+pipeline:
+  id: d0479151-75ba-451f-9a5b-0d471115ad4f
+  name: viirs_night_fire
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-11-04 15:45:44
+  last_modified: 2024-11-04 15:45:44
+  description: "Pipeline to harvest VIIRS Night Fire (VNF) nightly data for December 2023."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "VIIRS Night Fire (VNF)"
+    data_type: "CSV (point data)"
+    file_size: "Variable by night"
+    license: "Restricted access"
+    last_updated: "2024-11-04"
+    geographic_coverage:
+      region: "Global"
+    temporal_coverage:
+      start_date: "2023-12-01"
+      end_date: "2023-12-31"
+    variables:
+      - temperature
+      - radiant_heat
+      - source_size
+    data_quality:
+      - "Nightly data available for December 2023 only for the npp platform."
+
+  # Download section: Specifies how to access the data from the VIIRS server
+  download:
+    sources:
+      - name: VIIRS Night Fire Nightly Data
+        source_type: "viirs"
+        urls: NA
+        dataset: "vnf"
+        resolution: "nightly"
+        dates:
+          - ["2023-12-01", "2023-12-02"]
+        credentials: "workspace/credentials/earth_observation_group.json"
+
+  # # Processing (if required)
+  # processing:
+  #   sources:
+  #     - name: vnf_nightly_data
+  #       script: prc_vnf_nightly
+  #       input_files:
+  #         - VIIRS Night Fire Nightly Data
+  #       output_files: vnf_nightly_summary.gpkg
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"
+    log_dir: "workspace/logs/"
+    archive_raw: true

@@ -1,0 +1,79 @@
+pipeline:
+  id: 5a9c177c-4cd0-4996-b455-d2e755355a09
+  name: offshore_wind_can
+  version: 1.0.0
+  package_version: 0.0.0.9000
+  created_at: 2024-09-21 11:55:26
+  last_modified: 2024-09-21 11:55:26  
+  description: |
+    This dataset contains shapefiles representing areas of consideration for offshore wind development in Canada. 
+    These areas have been identified in the Wind Regional Assessment’s Interim Report for each province.
+    - **Nova Scotia**: Potential Future Development Areas (PFDA)
+    - **Newfoundland**: Preliminary Offshore Wind Licensing Areas (PLA)
+    These datasets are expected to become publicly available soon through the Canadian Impact Assessment Registry and the Open Government Portal.
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Wind Regional Assessment - Canada"  # Name of the data source
+    data_type: "Shapefiles, Text"                     # Type of data being harvested (Shapefiles, README text file)
+    file_size: "Unknown"                              # Approximate size of all the datasets combined
+    license: "Restricted Access"                      # Dataset license information
+    last_updated: "2024-09-21"                        # Timestamp of the last data update
+    geographic_coverage:                              # Geographical region covered by the dataset
+      region: "Canada (Nova Scotia, Newfoundland)"
+      bounding_box:                                   # Bounding box coordinates of the region (min/max lat/long)
+        - -60.0    # Longitude min (Nova Scotia)
+        - 42.0     # Latitude min (Nova Scotia)
+        - -52.0    # Longitude max (Newfoundland)
+        - 50.0     # Latitude max (Newfoundland)
+    temporal_coverage:                                # Time period the dataset covers (if applicable)
+      start_date: "2023-01-01"
+      end_date: "2024-12-31"
+    variables:                                        # List of important variables/columns in the dataset
+      - area_id
+      - development_status
+      - coordinates
+    data_quality:                                     # Comments on data quality
+      - "Data are interim and subject to change during the Wind Regional Assessment."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{wind_regional_assessment2024,
+        title = {Offshore Wind Development Areas - Canada},
+        author = {{Wind Regional Assessment Team}},
+        year = {2024},
+        institution = {{Environment and Climate Change Canada}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: "Potential Future Development Areas (PFDA) - Nova Scotia"
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "WIND_CAN/NS_pfda.zip"
+        format: "shapefile"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: "Preliminary Offshore Wind Licensing Areas (PLA) - Newfoundland"
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "WIND_CAN/NFL_pla.zip"
+        format: "shapefile"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: "README file"
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "WIND_CAN/README.txt"
+        format: "text"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"     # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                  # Directory for logs (optional)
+    archive_raw: true                           # Option to archive the raw downloaded data
+
+
+
