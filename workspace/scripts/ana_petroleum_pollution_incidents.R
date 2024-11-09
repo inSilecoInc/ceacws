@@ -33,11 +33,11 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
   # ----------------------------------------------------------------
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   # TO VERIFY
-  # Set all NA quantities to 1
+  # Set all NA quantities to minimum observed quantity
   neec <- neec |>
     dplyr::mutate(
-      quantity = ifelse(is.na(quantity_converted), 1, quantity_converted),
-      quantity = ifelse(quantity < 1, 1, quantity)
+      quantity = ifelse(is.na(quantity_converted), min(quantity_converted, na.rm = TRUE), quantity_converted) # ,
+      # quantity = ifelse(quantity < 1, 1, quantity)
     )
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -113,16 +113,33 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
     return(categories)
   }
 
+
   # Categorize quantities
-  neec <- neec |>
-    dplyr::mutate(quantity_category = categorize_by_percentile(neec$quantity))
+  # neec <- neec |>
+  #   dplyr::mutate(quantity_category = categorize_by_percentile(neec$quantity))
+  neec <- categorize_by_quantity(neec)
+
+  # Add buffer and remove terrestrial zones
+  neec <- sf::st_buffer(neec, neec$quantity_category) |>
+    sf::st_difference(sf::st_transform(terre, 4326))
 
   # Select columns that are going to be useful for the next step only to reduce file size
   neec <- neec |>
-    dplyr::select(date, year, quantity, quantity_category, chemical_state, oil_sheen)
+    dplyr::mutate(
+      date = as.Date(date, format = "%Y-%m-%d %H:%M"),
+      year = format(date, "%Y"),
+      uid = sprintf("neec_%04d", dplyr::row_number())
+    ) |>
+    dplyr::select(uid, date, year, chemical_state, oil_sheen)
 
   # Export partial data for use in report (this should be revisited)
-  sf::st_write(neec, dsn = file.path(output_path, "neec_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
+  sf::st_write(
+    neec,
+    dsn = file.path(output_path, "petroleum_pollution_incidents_neec.gpkg"),
+    quiet = TRUE,
+    delete_dsn = TRUE
+  )
+
   # ----------------------------------------------------------------
   # To explore:
   # Impact to Waterbody field.  Consider if we should treat “actual” vs. “potential” spills differently.  Data on “potential” spills only started being recorded in April 2021 onward (no differentiation before that).  Some “Potential” spills may report very large amounts of substance that was not actually spilled (e.g.  Incident Number NL-20200611-03045-20 was a disabled vessel with 400000 L of fuel on board, but nothing spilled).  These “Potential” spills still represent risk even if no true pollution occurred.
@@ -136,10 +153,51 @@ ana_petroleum_pollution_incidents_nasp <- function(input_files, output_path) {
   nasp <- input_files[stringr::str_detect(input_files, "nasp.gpkg")] |>
     sf::st_read(quiet = TRUE) |>
     dplyr::filter(!is.na(volume_l)) |>
-    dplyr::rename(geometry = geom)
+    dplyr::rename(geometry = geom, quantity = volume_l)
+
+  # Add buffer based on volumes reported
+  # Categorize quantities
+  # neec <- neec |>
+  #   dplyr::mutate(quantity_category = categorize_by_percentile(neec$quantity))
+  nasp <- categorize_by_quantity(nasp)
+
+  # Fetch data to remove terrestrial areas
+  fetch_data <- function(url) {
+    # Temporary file
+    tmp <- tempfile(fileext = ".json")
+
+    # Download file
+    curl::curl_download(url, tmp)
+
+    # Import
+    sf::st_read(tmp, quiet = TRUE)
+  }
+
+  coastlines <- c(
+    "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_USA_0.json",
+    "https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_CAN_0.json"
+  ) |>
+    lapply(fetch_data)
+
+  terre <- sf::st_union(coastlines[[1]], coastlines[[2]]) |>
+    sf::st_transform(32198) |> # To get units in meters
+    smoothr::fill_holes(threshold = units::set_units(1000, km^2))
+
+  # Add buffer and remove terrestrial zones
+  nasp <- sf::st_buffer(nasp, nasp$quantity_category) |>
+    sf::st_difference(sf::st_transform(terre, 4326))
+
+  # Final format
+  nasp <- nasp |>
+    dplyr::mutate(
+      date = as.Date(date, format = "%Y-%m-%d %H:%M"),
+      year = format(date, "%Y"),
+      uid = sprintf("nasp_%04d", dplyr::row_number())
+    ) |>
+    dplyr::select(uid, date, year)
 
   # Export
-  sf::st_write(nasp, dsn = file.path(output_path, "nasp_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
+  sf::st_write(nasp, dsn = file.path(output_path, "petroleum_pollution_incidents_nasp.gpkg"), quiet = TRUE, delete_dsn = TRUE)
 }
 
 ana_petroleum_pollution_incidents_istop <- function(input_files, output_path) {
@@ -157,110 +215,26 @@ ana_petroleum_pollution_incidents_istop <- function(input_files, output_path) {
       area = sf::st_area(geometry),
       area = units::set_units(area, km^2),
       area = as.numeric(area)
-    )
+    ) |>
+    dplyr::mutate(
+      date = as.Date(date, format = "%Y-%m-%d %H:%M"),
+      year = format(date, "%Y"),
+      uid = sprintf("istop_%04d", dplyr::row_number())
+    ) |>
+    dplyr::select(uid, date, year)
 
   # Export partial data for use in report (this should be revisited)
-  sf::st_write(istop, dsn = file.path(output_path, "istop_prep.gpkg"), quiet = TRUE, delete_dsn = TRUE)
+  sf::st_write(istop, dsn = file.path(output_path, "petroleum_pollution_incidents_istop.gpkg"), quiet = TRUE, delete_dsn = TRUE)
 }
 
-ana_petroleum_pollution_incidents_neec_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
-  # Using diffusive model function to generate threat layer for each dataset
-  # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  neec <- sf::st_read(unlist(input_files), quiet = TRUE)
 
-  # NEEC
-  neec_tmp <- neec |>
-    dplyr::mutate(
-      quantity = as.numeric(as.factor(quantity_category)),
-      quantity = quantity / max(quantity)
-    ) |>
-    dplyr::rename(geometry = geom) |>
-    sf::st_transform(3348)
-  neec_threat <- diffusive_model(
-    dat = neec_tmp,
-    field = "quantity",
-    threshold = threshold,
-    globalmaximum = min(neec_tmp$quantity),
-    decay = decay,
-    increment = increment,
-    cellsize = cellsize
-  )
-
-  # Export
-  neec_threat |>
-    terra::rast() |>
-    terra::writeRaster(
-      file.path(output_path, "petroleum_pollution_incidents_neec.tif"),
-      filetype = "COG",
-      gdal = c("COMPRESS=LZW", "TILED=YES", "OVERVIEW_RESAMPLING=AVERAGE"),
-      overwrite = TRUE
-    )
-}
-
-ana_petroleum_pollution_incidents_nasp_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
-  # Using diffusive model function to generate threat layer for each dataset
-  # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  nasp <- sf::st_read(unlist(input_files), quiet = TRUE)
-
-  # NASP
-  nasp_tmp <- nasp |>
-    dplyr::mutate(
-      volume_l = log(volume_l + 1),
-      volume_l = volume_l / max(volume_l)
-    ) |>
-    dplyr::rename(geometry = geom) |>
-    sf::st_transform(3348)
-  nasp_threat <- diffusive_model(
-    dat = nasp_tmp,
-    field = "volume_l",
-    threshold = threshold,
-    globalmaximum = min(nasp_tmp$volume_l),
-    decay = decay,
-    increment = increment,
-    cellsize = cellsize
-  )
-
-  # Export
-  nasp_threat |>
-    terra::rast() |>
-    terra::writeRaster(
-      file.path(output_path, "petroleum_pollution_incidents_nasp.tif"),
-      filetype = "COG",
-      gdal = c("COMPRESS=LZW", "TILED=YES", "OVERVIEW_RESAMPLING=AVERAGE"),
-      overwrite = TRUE
-    )
-}
-
-ana_petroleum_pollution_incidents_istop_diffusive <- function(input_files, output_path, threshold = .05, decay = 2, increment = 100, cellsize = 1000) {
-  # Using diffusive model function to generate threat layer for each dataset
-  # https://github.com/EffetsCumulatifsNavigation/ceanav/blob/main/R/fnc_diffusive_model.R
-  istop <- sf::st_read(unlist(input_files), quiet = TRUE)
-
-  # ISTOP
-  istop_tmp <- istop |>
-    dplyr::mutate(
-      area = log(area + 1),
-      area = area / max(area)
-    ) |>
-    dplyr::rename(geometry = geom) |>
-    sf::st_transform(3348)
-  istop_threat <- diffusive_model(
-    dat = istop_tmp,
-    field = "area",
-    threshold = threshold,
-    globalmaximum = min(istop_tmp$area),
-    decay = decay,
-    increment = increment,
-    cellsize = cellsize
-  )
-
-  # Export
-  istop_threat |>
-    terra::rast() |>
-    terra::writeRaster(
-      file.path(output_path, "petroleum_pollution_incidents_istop.tif"),
-      filetype = "COG",
-      gdal = c("COMPRESS=LZW", "TILED=YES", "OVERVIEW_RESAMPLING=AVERAGE"),
-      overwrite = TRUE
-    )
+categorize_by_quantity <- function(dat) {
+  dat |>
+    dplyr::mutate(quantity_category = dplyr::case_when(
+      quantity < 100 ~ 500,
+      quantity >= 100 & quantity < 1000 ~ 2000,
+      quantity >= 1000 & quantity < 10000 ~ 3000,
+      quantity >= 10000 ~ 5000,
+      .default = NA_real_
+    ))
 }
