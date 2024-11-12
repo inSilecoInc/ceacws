@@ -180,108 +180,116 @@ list(
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/b1f536a6a7554608aec2810c95821ccc/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_exploration_licenses.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_exploration_licenses.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Significant_Discovery_Licenses, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/b7206e539db54daf8548c2c0e2777eb6/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_significant_discovery_licenses.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_significant_discovery_licenses.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Production_Licenses, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/5d563b7108fc41d2add34170ea36edd4/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_production_licenses.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/active_production_licenses.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Production_Installations, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/5af28186d92f4d03857102afe733ad3b/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/production_installations.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/production_installations.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Introduction_to_schedule_of_wells_document, 
     {
         curl::curl_download("https://cnlopb.maps.arcgis.com/sharing/rest/content/items/cab8e82d9ba343caa81c52f9ca300df7/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_document.pdf")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_document.pdf"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Well_Info_Summary, 
     {
         curl::curl_download("https://cnlopb.maps.arcgis.com/sharing/rest/content/items/e64adf617a7d4109b6db253da69dfa7c/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_summary.xlsx")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/well_info_summary.xlsx"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Delineation_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/6ff2b3c3d4924497bde5d25e7df6fcc9/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/delineation_wells.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/delineation_wells.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Development_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/28cac5ccdace47819a69e897c79ae729/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/development_wells.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/development_wells.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Dual_Classified_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/04d2b5254f894984a59fe322abe98d65/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/dual_classified_wells.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/dual_classified_wells.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Exploration_Wells, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/d4174b3353b3436fa7b7d182aaf656f5/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/exploration_wells.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/exploration_wells.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL23_CFB01, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/8d6aa15c4aae4ad2bb70c2842f36b4e1/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl23_cfb01.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl23_cfb01.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___South_Eastern_Newfoundland_NL23_CFB02, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/d84be87845d440149588dd738047ea9d/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/south_eastern_newfoundland_nl23_cfb02.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/south_eastern_newfoundland_nl23_cfb02.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL24_CFB01, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/4b83e81babc54046864da1340a06e3e2/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl24_cfb01.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl24_cfb01.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Labrador_South_NL02_LS, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/95696d1844b44e619b4d6e4fb0f9f65b/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/labrador_south_nl02_ls.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/labrador_south_nl02_ls.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Eastern_Newfoundland_NL06_EN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/1d0b2a6f5f584440994aeefee1c3f1ec/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl06_en.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/eastern_newfoundland_nl06_en.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___North_Eastern_Newfoundland_NL01_NEN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/35b985f48fa04c77a560ddadc0dc5838/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/north_eastern_newfoundland_nl01_nen.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/north_eastern_newfoundland_nl01_nen.zip"
     }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Southern_Newfoundland_NL01_SN, 
     {
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/39a1388daafc43999ff774a599db0948/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/southern_newfoundland_nl01_sn.zip")
-        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/southern_newfoundland_nl01_sn.zip"
     }, format = "file")),
     list(tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/resource/sda_coordinates_sept_2009.xls", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_areas_sept_2009.xls")
-        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_areas_sept_2009.xls"
     }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Licenses_Coordinates___September_2022, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/resource/sdl_coordinates_sept_2022.xls", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_licenses_sept_2022.xls")
-        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/significant_discovery_licenses_sept_2022.xls"
     }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Production_Licenses_Coordinates___July_2024, 
     {
         curl::curl_download("https://www.cnsopb.ns.ca/sites/default/files/pictures/5._pl_coordinates_july26_2024.xlsx", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/production_licenses_july_2024.xlsx")
-        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/production_licenses_july_2024.xlsx"
     }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_, 
     {
         curl::curl_download("https://callforbids.ca/sites/default/files/resource/final_call_for_bids_ns22-1_parcels_shapefile.zip", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/call_for_bids_ns22_1_parcels.zip")
-        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw"
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/call_for_bids_ns22_1_parcels.zip"
+    }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia, 
+    {
+        prc_offshore_petroleum_ns(output_path = "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed", 
+            input_files = list(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Licenses_Coordinates___September_2022, 
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Production_Licenses_Coordinates___July_2024, 
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_))
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg"
     }, format = "file")),
     list(list(tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Potential_Future_Development_Areas__PFDA____Nova_Scotia, 
     {

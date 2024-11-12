@@ -69,6 +69,18 @@ pipeline:
         output: "call_for_bids_ns22_1_parcels.zip"
         format: "zip"
 
+  processing:
+    sources:
+      - name: offshore petroleum nova-scotia
+        script: prc_offshore_petroleum_ns
+        input_files:
+          - Significant Discovery Areas - September 2009
+          - Significant Discovery Licenses Coordinates - September 2022
+          - Production Licenses Coordinates - July 2024
+          - Call for Bids NS22-1 Parcels (Shapefile)
+        output_files: offshore_petroleum_ns.gpkg
+
+
   # Output section: final output of the processed data
   output:
     output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data

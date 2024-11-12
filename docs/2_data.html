@@ -165,6 +165,7 @@ div.csl-indent {
   <li><a href="#integrated-satellite-tracking-of-pollution-istop-istop" id="toc-integrated-satellite-tracking-of-pollution-istop-istop" class="nav-link" data-scroll-target="#integrated-satellite-tracking-of-pollution-istop-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP) {istop}</a></li>
   <li><a href="#national-aerial-surveillance-program-nasp-nasp" id="toc-national-aerial-surveillance-program-nasp-nasp" class="nav-link" data-scroll-target="#national-aerial-surveillance-program-nasp-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP) {nasp}</a></li>
   <li><a href="#national-environmental-emergency-centre-neec-neec" id="toc-national-environmental-emergency-centre-neec-neec" class="nav-link" data-scroll-target="#national-environmental-emergency-centre-neec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC) {neec}</a></li>
+  <li><a href="#canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" id="toc-canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" class="nav-link" data-scroll-target="#canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns"><span class="header-section-number">4.4</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
@@ -199,6 +200,7 @@ div.csl-indent {
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html">Integrated Satellite Tracking of Pollution (ISTOP)</a> program <span class="citation" data-cites="eccc2024">(<a href="#ref-eccc2024" role="doc-biblioref">Environment and Climate Change Canada, 2024</a>)</span> utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include 637 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program</li>
+<li><strong>Accessibility</strong>: Restricted</li>
 <li><strong>Data Type</strong>: Vectorized Polygons</li>
 <li><strong>Coverage</strong>: North American coastal waters, 2006–2023</li>
 <li><strong>Processing Script</strong>: <code>prc_istop.R</code></li>
@@ -210,6 +212,7 @@ div.csl-indent {
 <p>The <a href="https://tc.canada.ca/en/programs/national-aerial-surveillance-program">National Aerial Surveillance Program (NASP)</a> <span class="citation" data-cites="tc2024">(<a href="#ref-tc2024" role="doc-biblioref">Transport Canada, 2024</a>)</span> is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes 3578 incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Transport Canada National Aerial Surveillance Program (NASP)</li>
+<li><strong>Accessibility</strong>: Restricted</li>
 <li><strong>Data Type</strong>: CSV</li>
 <li><strong>Coverage</strong>: Atlantic Region, Canada, 2012–2023</li>
 <li><strong>Processing Script</strong>: <code>prc_nasp.R</code></li>
@@ -221,10 +224,23 @@ div.csl-indent {
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html">National Environmental Emergency Centre (NEEC)</a> <span class="citation" data-cites="neec2024">(<a href="#ref-neec2024" role="doc-biblioref">National Environmental Emergency Centre, 2024</a>)</span>, a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising 9570 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: National Environmental Emergency Centre (NEEC)</li>
+<li><strong>Accessibility</strong>: Restricted</li>
 <li><strong>Data Type</strong>: CSV</li>
 <li><strong>Coverage</strong>: Atlantic Region, Canada (including Québec), 2016–2023</li>
 <li><strong>Processing Script</strong>: <code>prc_neec.R</code></li>
 <li><strong>Output Files</strong>: <code>neec.csv</code> and <code>substances.csv</code></li>
+</ul>
+</section>
+<section id="canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns"><span class="header-section-number">4.4</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}</h2>
+<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (254 coordinates), significant discovery licenses (249 cooordinates), production licenses (58 cooordinates), and the latest call for bids (8 polygons). The data spans from 2009 to 2024, encompassing information on various petroleum exploration and production activities, which is vital for understanding the scope and distribution of offshore petroleum operations in the region. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites.</p>
+<ul>
+<li><strong>Source</strong>: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</li>
+<li><strong>Accessibility</strong>: Open</li>
+<li><strong>Data Type</strong>: XLS, XLSX, Shapefiles</li>
+<li><strong>Coverage</strong>: Offshore regions of Nova Scotia, Canada, 2009–2024</li>
+<li><strong>Processing</strong> Script: prc_offshore_petroleum_ns.R</li>
+<li><strong>Output</strong> File: offshore_petroleum_ns.gpkg</li>
 </ul>
 </section>
 </section>
@@ -233,6 +249,9 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
+<div id="ref-cnsopb2024" class="csl-entry" role="listitem">
+Canada-Nova Scotia Offshore Petroleum Board (2024). Offshore petroleum data for nova scotia. <span>CNSOPB</span>.
+</div>
 <div id="ref-eccc2024" class="csl-entry" role="listitem">
 Environment and Climate Change Canada (2024). Integrated satellite tracking of pollution (ISTOP) program. <span>Environment and Climate Change Canada</span>.
 </div>

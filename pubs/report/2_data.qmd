@@ -14,6 +14,7 @@ istop <- sf::st_read("../../workspace/data/harvested/istop-1.0.0/processed/istop
 The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html) program [@eccc2024] utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include `r nrow(istop)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program
+- **Accessibility**: Restricted
 - **Data Type**: Vectorized Polygons
 - **Coverage**: North American coastal waters, 2006–2023
 - **Processing Script**: `prc_istop.R`
@@ -29,6 +30,7 @@ nasp <- sf::st_read("../../workspace/data/harvested/nasp-1.0.0/processed/nasp.gp
 The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes `r nrow(nasp)` incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada National Aerial Surveillance Program (NASP)
+- **Accessibility**: Restricted
 - **Data Type**: CSV
 - **Coverage**: Atlantic Region, Canada, 2012–2023
 - **Processing Script**: `prc_nasp.R`
@@ -44,10 +46,30 @@ neec <- vroom::vroom("../../workspace/data/harvested/neec-1.0.0/processed/neec.c
 The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: National Environmental Emergency Centre (NEEC)
+- **Accessibility**: Restricted
 - **Data Type**: CSV
 - **Coverage**: Atlantic Region, Canada (including Québec), 2016–2023
 - **Processing Script**: `prc_neec.R`
 - **Output Files**: `neec.csv` and `substances.csv`
+
+
+## Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}
+
+```{r}
+#| message: false
+offshore_petroleum_ns <- sf::st_read("../../workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg", quiet = TRUE)
+types <- table(offshore_petroleum_ns$type)
+```
+
+The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns.ca/) [@cnsopb2024] oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (`r types["Significant discovery areas"]` coordinates), significant discovery licenses (`r types["Significant discovery licenses"]` cooordinates), production licenses (`r types["Production licence"]` cooordinates), and the latest call for bids (`r types["Call for bids"]` polygons). The data spans from 2009 to 2024, encompassing information on various petroleum exploration and production activities, which is vital for understanding the scope and distribution of offshore petroleum operations in the region. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites.
+
+- **Source**: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)
+- **Accessibility**: Open
+- **Data Type**: XLS, XLSX, Shapefiles
+- **Coverage**: Offshore regions of Nova Scotia, Canada, 2009–2024
+- **Processing** Script: prc_offshore_petroleum_ns.R
+- **Output** File: offshore_petroleum_ns.gpkg
+
 
 
 # References
