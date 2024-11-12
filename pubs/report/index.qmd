@@ -46,7 +46,7 @@ The current report covers the work that was to be accomplished before March 31st
 
 ## Area of interest 
 
-```{r aoiarea, echo = FALSE}
+```{r aoiarea, echo = FALSE, eval = FALSE}
 aoi_area <- sf::st_read("../../project-data/aoi/aoi.gpkg", quiet = TRUE) |>
   sf::st_make_valid() |>
   sf::st_area() |>
@@ -56,9 +56,9 @@ aoi_area <- sf::st_read("../../project-data/aoi/aoi.gpkg", quiet = TRUE) |>
   round(0)
 ```
 
-The project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers `r aoi_area` $km^2$ (@fig-aoi). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 $km^2$, although this decision can be revisited at any time throughout the project. 
+The project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers r aoi_area $km^2$ (@fig-aoi). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 $km^2$, although this decision can be revisited at any time throughout the project. 
 
-```{r aoi, echo = FALSE}
+```{r aoi, echo = FALSE, eval = FALSE}
 #| fig-cap: "Limits of the study area for the project on mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada."
 #| out-width: '90%'
 #| label: fig-aoi

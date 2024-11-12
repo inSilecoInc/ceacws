@@ -34,7 +34,7 @@
     "href": "index.html#area-of-interest",
     "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
     "section": "1.3 Area of interest",
-    "text": "1.3 Area of interest\nThe project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers 7293008 \\(km^2\\) (Figure 1.1). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 \\(km^2\\), although this decision can be revisited at any time throughout the project.\n\n\n\n\n\n\n\n\nFigure 1.1: Limits of the study area for the project on mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada.",
+    "text": "1.3 Area of interest\nThe project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers r aoi_area \\(km^2\\) (?fig-aoi). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 \\(km^2\\), although this decision can be revisited at any time throughout the project.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -70,113 +70,53 @@
     ]
   },
   {
-    "objectID": "1_shipping.html",
-    "href": "1_shipping.html",
-    "title": "2  Shipping-based pollution",
+    "objectID": "2_data.html",
+    "href": "2_data.html",
+    "title": "3  Data Sources Overview",
     "section": "",
-    "text": "2.1 Tasks",
+    "text": "4 Data Sources Overview",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Sources Overview</span>"
     ]
   },
   {
-    "objectID": "1_shipping.html#tasks",
-    "href": "1_shipping.html#tasks",
-    "title": "2  Shipping-based pollution",
+    "objectID": "2_data.html#integrated-satellite-tracking-of-pollution-istop-istop",
+    "href": "2_data.html#integrated-satellite-tracking-of-pollution-istop-istop",
+    "title": "3  Data Sources Overview",
+    "section": "4.1 Integrated Satellite Tracking of Pollution (ISTOP) {istop}",
+    "text": "4.1 Integrated Satellite Tracking of Pollution (ISTOP) {istop}\nThe Integrated Satellite Tracking of Pollution (ISTOP) program (Environment and Climate Change Canada, 2024) utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include 637 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.\n\nSource: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program\nData Type: Vectorized Polygons\nCoverage: North American coastal waters, 2006–2023\nProcessing Script: prc_istop.R\nOutput File: istop.gpkg",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Sources Overview</span>"
+    ]
+  },
+  {
+    "objectID": "2_data.html#national-aerial-surveillance-program-nasp-nasp",
+    "href": "2_data.html#national-aerial-surveillance-program-nasp-nasp",
+    "title": "3  Data Sources Overview",
+    "section": "4.2 National Aerial Surveillance Program (NASP) {nasp}",
+    "text": "4.2 National Aerial Surveillance Program (NASP) {nasp}\nThe National Aerial Surveillance Program (NASP) (Transport Canada, 2024) is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes 3578 incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.\n\nSource: Transport Canada National Aerial Surveillance Program (NASP)\nData Type: CSV\nCoverage: Atlantic Region, Canada, 2012–2023\nProcessing Script: prc_nasp.R\nOutput File: nasp.gpkg",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Sources Overview</span>"
+    ]
+  },
+  {
+    "objectID": "2_data.html#national-environmental-emergency-centre-neec-neec",
+    "href": "2_data.html#national-environmental-emergency-centre-neec-neec",
+    "title": "3  Data Sources Overview",
+    "section": "4.3 National Environmental Emergency Centre (NEEC) {neec}",
+    "text": "4.3 National Environmental Emergency Centre (NEEC) {neec}\nThe National Environmental Emergency Centre (NEEC) (National Environmental Emergency Centre, 2024), a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising 9570 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.\n\nSource: National Environmental Emergency Centre (NEEC)\nData Type: CSV\nCoverage: Atlantic Region, Canada (including Québec), 2016–2023\nProcessing Script: prc_neec.R\nOutput Files: neec.csv and substances.csv",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Data Sources Overview</span>"
+    ]
+  },
+  {
+    "objectID": "3_threats.html",
+    "href": "3_threats.html",
+    "title": "4  Threat layers",
     "section": "",
-    "text": "Access to shipping AIS data through Global Fishing Watch\nPrepare monthly petroleum pollution and disturbance due to vessel traffic threat layers in the Atlantic Ocean\n\nAll vessels\nCargo/bulk vessels\nFishing vessels",
+    "text": "5 Petroleum pollution based on past incidents\nThe objective was to assess the risk associated with petroleum incidents by evaluating the frequency of past incidents at specific locations over a defined period. Ideally, a more detailed approach would model the diffusion of each spill based on factors such as total volume, substance type, and local or regional currents to estimate the likely spread of each event. However, this level of detail was beyond the scope of the current study. Given the retrospective nature of the dataset and its focus on historical rather than predictive risk, we chose a simplified approach. Each recorded or probable incident was treated as an individual, discrete event in the dataset to characterize exposure to petroleum-related incidents.\nThis threat layer was constructed using the ISTOP, NEEC and NASP datasets. Each dataset was processed to create spatially and temporally explicit threat layers.\nFor the ISTOP dataset, we retained only categories 1A (possible oil with a clearly associated target), 1B (possible oil with a target within 50 km), and 2 (possible oil without an identifiable source), resulting in 123 usable observations. Since the ISTOP data already includes polygons representing areas of exposure, these polygons were directly utilized as pollution events in the analysis.\nThe NASP data was refined by removing records with missing coordinates, yielding 3403 usable observations. Each NASP incident is represented as a point with latitude/longitude coordinates and includes spill volumes in liters. Since this dataset lacks defined surface areas, we inferred exposure areas by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (Table 5.1).\nThe NEEC dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, and exclusion of terms like “mvi” or “furnace oil.” The final dataset includes 1663 observations within 1 km of the coastline. Similar to the NASP data, the NEEC incidents are represented as points with latitude/longitude coordinates and spill volumes. The same approach of categorizing by volume and buffering each point was applied to the NEEC data (Table 5.1). Additionally, NEEC data was classified by substance type, considering both chemical state (solid, liquid, gas) and the presence of an oil sheen. After filtering, incidents were categorized into liquid with oil sheen (1331), liquid without oil sheen (4), or unknown 328.These categories were retained to create distinct threat layers based on substance type.\nThe full details of the data processing and analytical approach used is available in the script ana_petroleum_pollution_incidents.R.\n\nProcessing Script: ana_petroleum_pollution_incidents.R\nOutput File: petroleum_pollution_incidents.gpkg\n\n\n\n\n\nTable 5.1: Volume categories and buffer size selected to transform incident as point locations to area of exposure from\n\n\n\n\n\n\nVolume (L)\nBuffer size (m)\n\n\n\n\n[0, 100]\n500\n\n\n[100, 1000]\n2000\n\n\n[1000, 10000]\n3000\n\n\n[10000+ [\n5000",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
-    ]
-  },
-  {
-    "objectID": "1_shipping.html#global-fishing-watch",
-    "href": "1_shipping.html#global-fishing-watch",
-    "title": "2  Shipping-based pollution",
-    "section": "2.2 Global Fishing Watch",
-    "text": "2.2 Global Fishing Watch\nThe purpose of Global Fishing Watch is to create and publicly share knowledge about human activity at sea to enable fair and sustainable use of our ocean. They use cutting-edge technology to turn big data into actionable information. They believe human activity at sea should be common knowledge in order to safeguard the global ocean for the good of all. Global Fishing Watch’s open-access technology products, datasets, and code accelerate research and innovation and support sustainable ocean management. They offer a variety of products related to human activity at sea, including shipping and fisheries, but also data on ocean conditions and biology. Access to their data can be achieved through their API, which is also accessible through an R Package called gfwr.\nThe gfwr R package offers wrapper functions to access data through the GFW APIs. It provides convenient functions to freely pull GFW data directly into R in tidy formats. The package currently works with the following APIs:\n\nVessels API: vessel search and identity based on AIS self-reported data\nEvents API: encounters, loitering, port visits and fishing events based on AIS data\nMap Visualization (4Wings API: apparent fishing effort based on AIS data\n\nThe incentive of fetching data from such an API is that the current project could have been built so that continuous integration of new data could be performed, ensuring an updated assessment of this particular threat layer through time. However, after exploring the APIs and contacting representatives of GFW, we had to come to the conclusion that the data needed for this project were not and would likely not be available through their API. They stated that other products that might be useful are planned to be released in the future, such as vessel presence raster resources. However, the release dates for these resources extends beyond the timelines of the current project. We therefore had to pivot to an alternative data source to complete this part of the contract.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
-    ]
-  },
-  {
-    "objectID": "1_shipping.html#vessel-density-mapping",
-    "href": "1_shipping.html#vessel-density-mapping",
-    "title": "2  Shipping-based pollution",
-    "section": "2.3 Vessel Density Mapping",
-    "text": "2.3 Vessel Density Mapping\nDuring the same timeframe of this project, Veinot et al. (2023) published a Technical Report detailing a project seeking to map vessel density in the Northwest Atlantic in 2019 using Automatic Identification System (AIS) data. Their work covers our study area, but was not available publicly yet. Since, their work has been extended to include vessel density mapping for the years 2013 through 2022 and has been made public on the Open Government data platform as a series entitled Vessel Density Mapping Series in the Northwest Atlantic. These data provide vessel density raster layers monthly for all vessel types combined, and yearly for different vessel types. This does not match perfectly with the requirements for this project. Namely, we would need to differentiate between daytime and nighttime vessel traffic, and use monthly data for each vessel type. In light of this, we agreed on a strategy to address this issue.\nFirst, we built the code necessary to access the openly available data and integrate it in our study grid.; this data serves as an acceptable backup plan in case we cannot access more detailed data. The code that fetches the data from the Open Government platform and integrates it in our study grid has therefore been developed and is available in the research compendium.\nSecond, the team from the CWS contacted the authors of Veinot et al. (2023) to discuss the possibility of either accessing the raw AIS data that they used to generate their own vessel density mapping, collaborating on a refined version of their work that addresses the needs of the CWS, or a combination of both. After discussing with their team, it was agreed that we would meet with a representative from their team to discuss the approach that they used to prepare their vessel density layers and potentially collaborate on updating their code to generate the layers that are required for this project. It was also agreed that the Northwest Atlantic region track lines and AIS data points, with MMSI data and times could be shared with us, under condition of a signed agreement and the transfer of anonymized MMSI numbers to ensure confidentiality. The data were transferred to the CWS on March 20th and we are currently waiting to have access to continue with our work. The threat layers using shipping data will therefore be completed during the second part of this project.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
-    ]
-  },
-  {
-    "objectID": "1_shipping.html#notes-references",
-    "href": "1_shipping.html#notes-references",
-    "title": "2  Shipping-based pollution",
-    "section": "2.4 Notes & references",
-    "text": "2.4 Notes & references\n\n\n\n\nVeinot, T., Nicoll, A., Rozalska, K., and Coffen-Smout, S. (2023). Vessel Density Mapping of 2019 Automatic Identification System (AIS) Data in the Northwest Atlantic. Can. Tech. Rep. Fish. Aquat. Sci. 3520: Vi + 29 p. Department of Fisheries and Oceans.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Shipping-based pollution</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html",
-    "href": "2_petroleum.html",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "",
-    "text": "3.1 Tasks",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html#tasks",
-    "href": "2_petroleum.html#tasks",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "",
-    "text": "Receive and format data on petroleum pollution based on past accidental spills for nearshore Canadian waters\n\nNational Environmental Emergencies Centre (NEEC)\nNational Aerial Surveillance Program (NASP)\nIntegrated Satellite Tracking of Pollution (ISTOP)\n\nPrepare petroleum pollution based on past incidents threat layers for specified annual periods",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html#data-processing",
-    "href": "2_petroleum.html#data-processing",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "3.2 Data & processing",
-    "text": "3.2 Data & processing\nThe data used to generate this threat layers were requested by the CWS and transferred to inSileco. They are stored on a secure Google Cloud Storage bucket to ensure the reproducibility of this project, although this arrangement will need to be revisited at the end of the contract with the CWS. There are three different datasets used, which are detailed below.\n\n3.2.1 NEEC\nThe National Environmental Emergency Centre (NEEC) is a program led by Environment and Climate Change Canada that provides an inventory of environmental emergencies incidents in Canada. The data requested by the CWS covers notifications impacting or potentially impacting a waterbody for the Atlantic region (including Québec) for the period of 2016 to 2023 (Centre, 2024). The data provided inventories 9570 incidents.\nThe following filtering procedures were applied to the data in order to use it to produce a threat layer:\n\nRemove empty coordinates\nUse data from “Notification Date Time” when not available from “Incident Local Date Time” field\nRemove records containing “covid”, “istop”, “sipps”\nSelect greatest quantity for individual spills with multiple substances\nRemove Incident Name containing “mvi” or “furnace oil” to remove a few dozen incidents that generally won’t impact marine birds\nKeep all incidents within 1 \\(km\\) of the coastline\n\nThis filtering process yields a total of 1677 usable observations to characterize this pollution threat layer.\n\n\n\n3.2.2 NASP\nThe National Aerial Surveillance Program (NASP) is a surveillance program led by Transport Canada that operates across the country to detect pollution through aerial surveys. Its goals are to prevent pollution in our waters, protect our marine environment and endangered marine life, and ensure a safe and efficient transportation industry along our massive and varied coastlines. The data requested by the CWS covers oil pollution detections from visual or aided by instruments (e.g. radar) for the Atlantic region between April 2012 and March 2023 (Canada, 2024). The data provided inventories 3578 incidents. Data were cleaned and formatted, with missing spill volumes removed from the dataset, resulting in 3572 usable observations to characterize this pollution threat layer.\n\n\n3.2.3 ISTOP\nThe Integrated Satellite Tracking of Pollution (ISTOP) program assists environmental monitoring of coastal waters through satellite imagery analysis to detect oil spills. Since 2006, satellite imagery is analyzed daily to detect and report illegal and accidental oil pollution in marine environments. The analyses performed identify sea-surface anomalies identified as pollution from satellite imagery that are then transformed as vectorized polygons representing the surface affected by the pollution. The data requested by the CWS spanned the period of 2006 to 2023 and includes 637 incidents (Environment and Climate Change Canada, 2024). Only data of categories 1A (i.e. possible oil with a target clearly associated), 1B (i.e. possible oil with a target within 50-km), and 2 (i.e. possible oil but without an identifiable source) were retained to characterize this pollution threat layer, resulting in 123 usable observations.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html#method",
-    "href": "2_petroleum.html#method",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "3.3 Method",
-    "text": "3.3 Method\nSince accidental spills have an effect that goes beyond the immediate location of the incidents due to the diffusion of the spill in the environment, the first step in characterizing the intensity of spills was to establish a potential zone of influence for each incident. To characterize this, we explored weighted kernel density estimates with a Gaussian distribution. However, kernels have the drawback of considering the density around a constant radius surrounding individual points, whereas each spill may have a different spatial footprint as a function of the total volume spilled. For this first iteration of the threat layers, we therefore chose a passive diffusive model to establish the zone of influence and relative intensity of accidental spills in the study area (see Halpern et al., 2008).\nThe diffusion model establishes the zone of influence of the spills by creating concentric rings centred on each incident. An initial value equal to the volume of the incident is assigned to the centre ring and represents the relative intensity of the incident on the environment. A value is then successively assigned to the adjacent rings according to a decay function of a percent value of the previous ring until a minimum threshold is reached. This approach assumes a linear decrease in the influence of the incidents on the environment.\nSince the data used are not directly comparable, we decided to create a single threat layer for each dataset. Furthermore, the range of volumes reported in the NEEC ([]) and NASP ([]) datasets were too great to use directly without completely masking the effects of smaller spill events. As such, we log-transformed the reported volumes to give less weight to very high volumes. The ISTOP dataset, meanwhile, has no reported volume. We therefore used the area in \\(km^2\\) of individual incidents as a proxy of spill volumes. As with the other datasets, we log-transformed these values to decrease the influence of very large spills. Finally, in order to make intensity of threats related to past incidents more comparable, we normalized volumes/areas between 0 and 1 before running the diffusive plume models. The intensity and spatial distribution of accidental spills in the study area were then evaluated as the sum of the values of all concentric rings intersecting with cells of our study grid.\nThe parameters that are currently used for the diffusive plume model are the following:\n\nConcentric rings radius: 100 \\(m\\)\nDecay function percent: 2%\nMinimum threshold: 0.05% of the global minimum, i.e. the lowest spill volume recorded\nInitial values: log-transformed and normalized volumes/areas\n\nAll reported parameters and analytical decisions made could be further explored and modified in future iterations until we agree on the final threat layers desired. For us, these serve as a basis for further discussion towards producing the final threat layers generated through this project. Also, if requested, these parameters could also be included as parameters in the research compendium. The code used to perform this assessment is available here.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html#outstanding-questions",
-    "href": "2_petroleum.html#outstanding-questions",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "3.4 Outstanding questions",
-    "text": "3.4 Outstanding questions\nThe following are some outstanding questions that were not presented in the previous sections.\n\n3.4.1 NEEC\nSo far, we set all NA quantities to 1 to perform the analysis. This should be discussed, as entries without volume makeup 58% of the NEEC dataset. Furthermore, certain volumes are reported in litres and others in kilograms. At the moment we are considering that the units are the same, but this is not necessarily the case. There are 11 incidents reports in kilograms in the NEEC dataset.\n\n\n3.4.2 ISTOP\nThere are many duplicates in the data. For now, we only kept unique rows, but we are wondering whether there is a reason we are unaware of for these duplicates to exist and be used in combination.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
-    ]
-  },
-  {
-    "objectID": "2_petroleum.html#notes-references",
-    "href": "2_petroleum.html#notes-references",
-    "title": "3  Petroleum pollution based on past incidents",
-    "section": "3.5 Notes & references",
-    "text": "3.5 Notes & references\n\n\n\n\nCanada, T. (2024). National Aerial Surveillance Program (NASP). Data extraction for period between April 2012 to March 2023. Transport Canada.\n\n\nCentre, N. E. E. (2024). Atlantic (including Quebec) notifications impacting or potentially impacting a waterbody with select substances, 2016-2023. Extracted by Philippe Muise 2024-01-29. Environment and Climate Change Canada.\n\n\nEnvironment, and Climate Change Canada (2024). Integrated Satellite Tracking of Pollution (ISTOP) program. Data extraction for period between 2006 and 2023. Environment and Climate Change Canada.\n\n\nHalpern, B. S., Walbridge, S., Selkoe, K. A., Kappel, C. V., Micheli, F., D’Agrosa, C., et al. (2008). A Global Map of Human Impact on Marine Ecosystems. Science 319, 948–952. doi:10.1126/science.1149345.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Petroleum pollution based on past incidents</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Threat layers</span>"
     ]
   }
 ]

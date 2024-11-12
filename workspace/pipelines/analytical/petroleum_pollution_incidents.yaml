@@ -8,26 +8,35 @@ pipeline:
   description: 'Pipeline for analytical data: petroleum_pollution_incidents'
   analysis:
     sources:
-    - name: petroleum pollution incidents istop
-      description: Preparing ISTOP data for diffusive model 
-      script: ana_petroleum_pollution_incidents_istop
-      input_files:
-        - id: 835bc0d1-e57a-4e63-a327-908ee871bf2d
-          name: istop
-      output_files: petroleum_pollution_incidents_istop.gpkg
+      - name: petroleum pollution incidents istop
+        description: Preparing ISTOP data for event count
+        script: ana_petroleum_pollution_incidents_istop
+        input_files:
+          - id: 835bc0d1-e57a-4e63-a327-908ee871bf2d
+            name: istop
+        output_files: petroleum_pollution_incidents_istop.gpkg
 
-    - name: petroleum pollution incidents nasp
-      description: Preparing NASP data for diffusive model 
-      script: ana_petroleum_pollution_incidents_nasp
-      input_files:
-      - id: e566fb8c-42d8-4013-8002-17af44a15a46
-        name: nasp
-      output_files: petroleum_pollution_incidents_nasp.gpkg
+      - name: petroleum pollution incidents nasp
+        description: Preparing NASP data for event count
+        script: ana_petroleum_pollution_incidents_nasp
+        input_files:
+        - id: e566fb8c-42d8-4013-8002-17af44a15a46
+          name: nasp
+        output_files: petroleum_pollution_incidents_nasp.gpkg
 
-    - name: petroleum pollution incidents neec
-      description: Preparing NEEC data for diffusive model 
-      script: ana_petroleum_pollution_incidents_neec
-      input_files:
-      - id: 56c710c3-1859-4eab-821f-e1e41dbbfd29
-        name: neec
-      output_files: petroleum_pollution_incidents_neec.gpkg
+      - name: petroleum pollution incidents neec
+        description: Preparing NEEC data for event count
+        script: ana_petroleum_pollution_incidents_neec
+        input_files:
+        - id: 56c710c3-1859-4eab-821f-e1e41dbbfd29
+          name: neec
+        output_files: petroleum_pollution_incidents_neec.gpkg
+
+      - name: petroleum pollution incidents
+        description: Petroleum pollution based on past incidents
+        script: ana_petroleum_pollution_incidents
+        input_files:
+          - petroleum pollution incidents istop
+          - petroleum pollution incidents nasp
+          - petroleum pollution incidents neec
+        output_files: petroleum_pollution_incidents.gpkg

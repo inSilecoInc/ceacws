@@ -1,0 +1,53 @@
+---
+title: "Threat layers"
+---
+
+# Petroleum pollution based on past incidents
+
+```{r}
+#| message: false
+istop <- sf::st_read(
+  "../../workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg",
+  quiet = TRUE
+)
+nasp <- sf::st_read(
+  "../../workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg",
+  quiet = TRUE
+)
+neec <- sf::st_read(
+  "../../workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg",
+  quiet = TRUE
+)
+ppi <- sf::st_read(
+  "../../workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents.gpkg",
+  quiet = TRUE
+)
+```
+
+The objective was to assess the risk associated with petroleum incidents by evaluating the frequency of past incidents at specific locations over a defined period. Ideally, a more detailed approach would model the diffusion of each spill based on factors such as total volume, substance type, and local or regional currents to estimate the likely spread of each event. However, this level of detail was beyond the scope of the current study. Given the retrospective nature of the dataset and its focus on historical rather than predictive risk, we chose a simplified approach. Each recorded or probable incident was treated as an individual, discrete event in the dataset to characterize exposure to petroleum-related incidents.
+
+This threat layer was constructed using the [ISTOP](#istop), [NEEC](#neec) and [NASP](#nasp) datasets. Each dataset was processed to create spatially and temporally explicit threat layers. 
+
+For the ISTOP dataset, we retained only categories 1A (possible oil with a clearly associated target), 1B (possible oil with a target within 50 km), and 2 (possible oil without an identifiable source), resulting in `r nrow(istop)` usable observations. Since the ISTOP data already includes polygons representing areas of exposure, these polygons were directly utilized as pollution events in the analysis. 
+
+The NASP data was refined by removing records with missing coordinates, yielding `r nrow(nasp)` usable observations.  Each NASP incident is represented as a point with latitude/longitude coordinates and includes spill volumes in liters. Since this dataset lacks defined surface areas, we inferred exposure areas by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (@tbl-spillvolumes).
+
+The NEEC dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, and exclusion of terms like "mvi" or "furnace oil." The final dataset includes `r nrow(neec)` observations within 1 km of the coastline. Similar to the NASP data, the NEEC incidents are represented as points with latitude/longitude coordinates and spill volumes. The same approach of categorizing by volume and buffering each point was applied to the NEEC data (@tbl-spillvolumes). Additionally, NEEC data was classified by substance type, considering both chemical state (solid, liquid, gas) and the presence of an oil sheen. After filtering, incidents were categorized into liquid with oil sheen (`r neec |> dplyr::filter(substance == "liquid_with_oil_sheen") |> nrow()`), liquid without oil sheen (`r neec |> dplyr::filter(substance == "liquid_without_oil_sheen") |> nrow()`), or unknown `r neec |> dplyr::filter(substance == "unknown") |> nrow()`.These categories were retained to create distinct threat layers based on substance type.
+
+The full details of the data processing and analytical approach used is available in the script `ana_petroleum_pollution_incidents.R`. 
+
+
+- **Processing Script**: `ana_petroleum_pollution_incidents.R`
+- **Output File**: `petroleum_pollution_incidents.gpkg`
+
+
+
+```{r}
+#| label: tbl-spillvolumes
+#| tbl-cap: "Volume categories and buffer size selected to transform incident as point locations to area of exposure from "
+data.frame(
+  volume = c("[0, 100]", "[100, 1000]", "[1000, 10000]", "[10000+ ["),
+  buffer = c(500, 2000, 3000, 5000)
+) |>
+  knitr::kable(col.names = c("Volume (L)", "Buffer size (m)"))
+```

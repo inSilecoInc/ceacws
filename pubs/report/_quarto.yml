@@ -14,10 +14,11 @@ book:
       degrees: MSc
   chapters:
     - index.qmd
-    - 1_shipping.qmd
-    - 2_petroleum.qmd
+    - 1_research_compendium.qmd
+    - 2_data.qmd
+    - 3_threats.qmd
 
-bibliography: [references.bib, ../../project-data/pipedat/pipedat.bib]
+bibliography: [references.bib, ../../workspace/bibliographies/data.bib]
 csl: frontiers.csl
 
 format:

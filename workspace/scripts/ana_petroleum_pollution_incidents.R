@@ -63,6 +63,15 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
     dplyr::mutate(
       chemical_state = ifelse(is.na(chemical_state), "unknown", chemical_state),
       oil_sheen = ifelse(is.na(oil_sheen), "unknown", oil_sheen)
+    ) |>
+    dplyr::mutate(
+      oil_sheen = dplyr::case_when(
+        oil_sheen == "yes" ~ "with_oil_sheen",
+        oil_sheen == "no" ~ "without_oil_sheen",
+        .default = oil_sheen
+      ),
+      substance = paste0(chemical_state, "_", oil_sheen),
+      substance = stringr::str_replace(substance, "unknown_unknown", "unknown")
     )
 
   # ----------------------------------------------------------------
@@ -130,7 +139,7 @@ ana_petroleum_pollution_incidents_neec <- function(input_files, output_path) {
       year = format(date, "%Y"),
       uid = sprintf("neec_%04d", dplyr::row_number())
     ) |>
-    dplyr::select(uid, date, year, chemical_state, oil_sheen)
+    dplyr::select(uid, date, year, substance)
 
   # Export partial data for use in report (this should be revisited)
   sf::st_write(
@@ -237,4 +246,23 @@ categorize_by_quantity <- function(dat) {
       quantity >= 10000 ~ 5000,
       .default = NA_real_
     ))
+}
+
+ana_petroleum_pollution_incidents <- function(input_files, output_path) {
+  dplyr::bind_rows(
+    input_files[stringr::str_detect(unlist(input_files), "istop.gpkg")] |>
+      sf::st_read(quiet = TRUE) |>
+      sf::st_transform(4326),
+    input_files[stringr::str_detect(unlist(input_files), "nasp.gpkg")] |>
+      sf::st_read(quiet = TRUE) |>
+      sf::st_transform(4326),
+    input_files[stringr::str_detect(unlist(input_files), "neec.gpkg")] |>
+      sf::st_read(quiet = TRUE) |>
+      sf::st_transform(4326)
+  ) |>
+    sf::st_write(
+      dsn = file.path(output_path, "petroleum_pollution_incidents.gpkg"),
+      quiet = TRUE,
+      delete_dsn = TRUE
+    )
 }
