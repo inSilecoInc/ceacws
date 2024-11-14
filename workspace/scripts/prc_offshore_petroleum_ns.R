@@ -1,4 +1,16 @@
 prc_offshore_petroleum_ns <- function(input_files, output_path) {
+  # output_path <- "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/"
+  # input_path <- "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/"
+  # input_files <- file.path(
+  #   input_path,
+  #   c(
+  #     "significant_discovery_areas_sept_2009.xls",
+  #     "significant_discovery_licenses_sept_2022.xls",
+  #     "production_licenses_july_2024.xlsx",
+  #     "call_for_bids_ns22_1_parcels.zip"
+  #   )
+  # )
+
   input_files <- unlist(input_files)
 
   # Function to load xls files from this source
@@ -47,23 +59,35 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     archive::archive_extract(tmp)
   bids <- sf::st_read(file.path(tmp, "CFB NS22-1 Parcels.shp"), quiet = TRUE) |>
     janitor::clean_names() |>
-    dplyr::mutate(type = "call_for_bids") |>
+    dplyr::mutate(
+      dataset = "call_for_bids_ns22_1_parcels",
+      classification = "call for bids"
+    ) |>
     sf::st_transform(4326)
 
   ## Production licences
   production_licences <- input_files[stringr::str_detect(input_files, "production_licenses")] |>
     load_xls() |>
-    dplyr::mutate(type = "production_licenses")
+    dplyr::mutate(
+      dataset = "production_licenses_july_2024",
+      classification = "production"
+    )
 
   ## Significant discovery areas
   significant_discovery_areas <- input_files[stringr::str_detect(input_files, "significant_discovery_areas")] |>
     load_xls() |>
-    dplyr::mutate(type = "significant_discovery_areas")
+    dplyr::mutate(
+      dataset = "significant_discovery_areas_sept_2009",
+      classification = "significant discovery"
+    )
 
   ## Significant discovery licenses
   significant_discovery_licenses <- input_files[stringr::str_detect(input_files, "significant_discovery_licenses")] |>
     load_xls() |>
-    dplyr::mutate(type = "significant_discovery_licenses")
+    dplyr::mutate(
+      dataset = "significant_discovery_licenses_sept_2022",
+      classification = "significant discovery"
+    )
 
   # Bind
   offshore_petroleum_ns <- dplyr::bind_rows(
@@ -71,7 +95,9 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     production_licences,
     significant_discovery_areas,
     significant_discovery_licenses
-  )
+  ) |>
+    dplyr::mutate(uid = sprintf("petroleum_ns_%04d", dplyr::row_number())) |>
+    dplyr::select(uid, dataset, classification)
 
   # Export
   sf::st_write(

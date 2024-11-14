@@ -1,27 +1,27 @@
 prc_offshore_petroleum_nfl <- function(input_files, output_path) {
-  output_path <- "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/"
-  input_path <- "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/"
-  input_files <- file.path(
-    input_path,
-    c(
-      "active_exploration_licenses.zip",
-      "active_significant_discovery_licenses.zip",
-      "active_production_licenses.zip",
-      "production_installations.zip",
-      "well_info_summary.xlsx",
-      "delineation_wells.zip",
-      "development_wells.zip",
-      "dual_classified_wells.zip",
-      "exploration_wells.zip",
-      "eastern_newfoundland_nl23_cfb01.zip",
-      "south_eastern_newfoundland_nl23_cfb02.zip",
-      "eastern_newfoundland_nl24_cfb01.zip",
-      "labrador_south_nl02_ls.zip",
-      "eastern_newfoundland_nl06_en.zip",
-      "north_eastern_newfoundland_nl01_nen.zip",
-      "southern_newfoundland_nl01_sn.zip"
-    )
-  )
+  # output_path <- "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/"
+  # input_path <- "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/"
+  # input_files <- file.path(
+  #   input_path,
+  #   c(
+  #     "active_exploration_licenses.zip",
+  #     "active_significant_discovery_licenses.zip",
+  #     "active_production_licenses.zip",
+  #     "production_installations.zip",
+  #     "well_info_summary.xlsx",
+  #     "delineation_wells.zip",
+  #     "development_wells.zip",
+  #     "dual_classified_wells.zip",
+  #     "exploration_wells.zip",
+  #     "eastern_newfoundland_nl23_cfb01.zip",
+  #     "south_eastern_newfoundland_nl23_cfb02.zip",
+  #     "eastern_newfoundland_nl24_cfb01.zip",
+  #     "labrador_south_nl02_ls.zip",
+  #     "eastern_newfoundland_nl06_en.zip",
+  #     "north_eastern_newfoundland_nl01_nen.zip",
+  #     "southern_newfoundland_nl01_sn.zip"
+  #   )
+  # )
 
   # Utility functions
   format_dates1 <- function(dat, dataset, classification) {
@@ -251,7 +251,7 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
 
   # Bind
   offshore_petroleum_nfl <- dplyr::bind_rows(dat, wells_info) |>
-    dplyr::mutate(id = dplyr::row_number()) |>
+    dplyr::mutate(uid = sprintf("petroleum_nfl_%04d", dplyr::row_number())) |>
     tidyr::separate_rows(classification, sep = " / ") |>
     dplyr::mutate(status = dplyr::case_when(
       status %in% c(
@@ -276,7 +276,7 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
       status == "Off Station" ~ "Off Station",
       .default = NA_character_
     )) |>
-    dplyr::relocate(id)
+    dplyr::relocate(uid)
 
   # Export
   sf::st_write(

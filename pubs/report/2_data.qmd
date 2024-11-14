@@ -195,7 +195,7 @@ offshore_petroleum_ns <- sf::st_read("../../workspace/data/harvested/offshore_pe
 types <- table(offshore_petroleum_ns$type)
 ```
 
-The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns.ca/) [@cnsopb2024] oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (`r types["Significant discovery areas"]` coordinates), significant discovery licenses (`r types["Significant discovery licenses"]` cooordinates), production licenses (`r types["Production licence"]` cooordinates), and the latest call for bids (`r types["Call for bids"]` polygons). The data spans from 2009 to 2024, encompassing information on various petroleum exploration and production activities, which is vital for understanding the scope and distribution of offshore petroleum operations in the region. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites.
+The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns.ca/) [@cnsopb2024] oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (`r types["Significant discovery areas"]` coordinates), significant discovery licenses (`r types["Significant discovery licenses"]` cooordinates), production licenses (`r types["Production licence"]` cooordinates), and the latest call for bids (`r types["Call for bids"]` polygons). The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in @tbl-classifications. Contrary to the data for Newfoudland and Labrador (see @sec-offshore_petroleum_nfl), there were no information included on the status and the time period covered.
 
 - **Source**: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)
 - **Accessibility**: Open
@@ -204,4 +204,4 @@ The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns
 - **Processing** Script: prc_offshore_petroleum_ns.R
 - **Output** File: offshore_petroleum_ns.gpkg
 
-# References
+## References
