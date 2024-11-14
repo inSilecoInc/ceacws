@@ -261,6 +261,26 @@ list(
         curl::curl_download("https://www.arcgis.com/sharing/rest/content/items/39a1388daafc43999ff774a599db0948/data", 
             "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/southern_newfoundland_nl01_sn.zip")
         "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/raw/southern_newfoundland_nl01_sn.zip"
+    }, format = "file"), tar_target(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_offshore_petroleum_newfoundland, 
+    {
+        prc_offshore_petroleum_nfl(output_path = "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed", 
+            input_files = list(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Exploration_Licenses, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Significant_Discovery_Licenses, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Active_Production_Licenses, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Production_Installations, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Well_Info_Summary, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Delineation_Wells, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Development_Wells, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Dual_Classified_Wells, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Exploration_Wells, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL23_CFB01, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___South_Eastern_Newfoundland_NL23_CFB02, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Call_for_Bids___Eastern_Newfoundland_NL24_CFB01, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Labrador_South_NL02_LS, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Eastern_Newfoundland_NL06_EN, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___North_Eastern_Newfoundland_NL01_NEN, 
+                tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_Sectors___Southern_Newfoundland_NL01_SN))
+        "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/offshore_petroleum_nfl.gpkg"
     }, format = "file")),
     list(tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
     {

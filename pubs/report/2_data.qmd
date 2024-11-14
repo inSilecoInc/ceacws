@@ -4,7 +4,7 @@ title: "Data Sources Overview"
 
 # Data Sources Overview
 
-## Integrated Satellite Tracking of Pollution (ISTOP) {istop}
+## Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
 
 ```{r}
 #| message: false
@@ -20,7 +20,7 @@ The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/e
 - **Processing Script**: `prc_istop.R`
 - **Output File**: `istop.gpkg`
 
-## National Aerial Surveillance Program (NASP) {nasp}
+## National Aerial Surveillance Program (NASP) {#sec-nasp}
 
 ```{r}
 #| message: false
@@ -36,7 +36,7 @@ The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/progra
 - **Processing Script**: `prc_nasp.R`
 - **Output File**: `nasp.gpkg`
 
-## National Environmental Emergency Centre (NEEC) {neec}
+## National Environmental Emergency Centre (NEEC) {#sec-neec}
 
 ```{r}
 #| message: false
@@ -53,7 +53,141 @@ The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/en
 - **Output Files**: `neec.csv` and `substances.csv`
 
 
-## Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}
+## Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) {#sec-offshore_petroleum_nfl}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_petroleum_nfl <- sf::st_read("../../workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/offshore_petroleum_nfl.gpkg", quiet = TRUE)
+types <- table(offshore_petroleum_nfl$type)
+```
+
+The [Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)](https://www.cnlopb.ca/) [@cnlopb2024] oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (@tbl-offshore-petroleum-nfl), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in @tbl-classifications. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g. exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in @tbl-status. How date ranges were established for each entry is detailed in @tbl-offshore-petroleum-nfl.
+
+
+- **Source**: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)
+- **Accessibility**: Open, Creative Commons Attribution License
+- **Data Type**: Shapefiles, XLSX
+- **Coverage**: Offshore regions of Newfoundland, Canada
+- **Processing Script**: `prc_offshore_petroleum_nfl.R`
+- **Output File**: `offshore_petroleum_nfl.gpkg`
+
+
+
+```{r}
+#| label: tbl-offshore-petroleum-nfl
+#| tbl-cap: "Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland and Labrador."
+data.frame(
+  id = c(
+    "Active Exploration Licenses",
+    "Active Significant Discovery Licenses",
+    "Active Production Licenses",
+    "Production Installations",
+    "Delineation Wells",
+    "Development Wells",
+    "Dual Classified Wells",
+    "Exploration Wells",
+    "Call for Bids - Eastern Newfoundland NL23-CFB01",
+    "Call for Bids - South Eastern Newfoundland NL23-CFB02",
+    "Call for Bids - Eastern Newfoundland NL24-CFB01",
+    "Sectors - Labrador South NL02-LS",
+    "Sectors - Eastern Newfoundland NL06-EN",
+    "Sectors - North Eastern Newfoundland NL01-NEN",
+    "Sectors - Southern Newfoundland NL01-SN",
+    "Well Info Summary"
+  ),
+  description = c(
+    "Offshore areas in Newfoundland and Labrador that are currently licensed for petroleum exploration. An Exploration License (EL) grants rights to conduct exploratory drilling and other activities aimed at discovering petroleum resources within a designated offshore area. These licenses are typically issued for a fixed period, encouraging exploration activities that assess the resource potential in Newfoundland and Labrador's offshore regions.",
+    "Offshore areas within Newfoundland and Labrador where significant petroleum discoveries have been identified and are actively licensed. An Active Significant Discovery License (SDL) allows the holder to retain rights over a discovery area with proven, potentially commercial quantities of petroleum, preserving the right to future exploration and development.",
+    "Offshore areas in Newfoundland and Labrador where petroleum resources are actively being produced. A Production License (PL) authorizes the holder to extract petroleum within a specified offshore area, following proven resource discoveries. This license allows companies to conduct production activities while adhering to regulatory requirements for resource management, environmental protection, and safety.",
+    "Locations of offshore production installations used in petroleum extraction activities in Newfoundland and Labrador’s offshore areas. A Production Installation refers to infrastructure such as platforms, rigs, or other facilities designed to extract, process, and transport petroleum resources from beneath the seafloor. These installations play a critical role in supporting production operations within licensed areas.",
+    "Locations of delineation wells drilled in offshore areas of Newfoundland and Labrador. A Delineation Well is drilled to determine the extent and characteristics of a known petroleum discovery, helping to assess the size, quality, and commercial viability of the resource. These wells are essential in refining the understanding of hydrocarbon deposits discovered by exploration wells.",
+    "Locations of development wells in offshore areas of Newfoundland and Labrador. Development Wells are drilled within proven petroleum fields to facilitate resource extraction. These wells are strategically placed to optimize production from known hydrocarbon deposits, making them critical for efficient and sustainable petroleum extraction.",
+    "Offshore wells in Newfoundland and Labrador that have been classified under more than one category during their lifecycle. Dual Classified Wells may serve multiple purposes, such as transitioning from an exploration role to development or delineation, depending on the results of drilling and assessments. This dual classification reflects the adaptive approach taken in offshore petroleum exploration and production.",
+    "Locations of offshore wells in Newfoundland and Labrador that are designated for exploration. Exploration Wells are drilled to investigate potential petroleum deposits in unexplored or underexplored areas. These wells are the first step in assessing hydrocarbon presence and play a crucial role in determining the viability of further development.",
+    "The Call for Bids NL23-CFB01 pertains to the Eastern Newfoundland Region and was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023. This call offered 28 parcels, totaling approximately 7,222,551 hectares, for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/) that no bids were received for this call.",
+    "The Call for Bids NL23-CFB02 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023, offering 19 parcels totaling approximately 4,982,275 hectares in the South Eastern Newfoundland Region for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/) that no bids were received for this call.",
+    "The Call for Bids NL24-CFB01 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) on April 29, 2024, inviting bids for exploration licenses in the Eastern Newfoundland Region. This call comprised 41 parcels, covering a total of 10,287,196 hectares. Interested parties were required to submit sealed bids by November 6, 2024. On November 6, 2024, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-region/) that no bids were received for Call for Bids NL24-CFB01.",
+    "The Labrador South Region (Sector NL02-LS) is an offshore area managed by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) as part of its Scheduled Land Tenure System.",
+    "The Eastern Newfoundland Region (Sector NL06-EN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "The North Eastern Newfoundland Region (Sector NL01-NEN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "The Southern Newfoundland Region (Sector NL01-SN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "Contains detailed information on wells drilled within offshore petroleum exploration and production areas. This dataset is designed to offer an inventory of wells, capturing essential data for regulatory oversight, resource management, and operational history. The dataset includes information on well names, operators, drilling dates, statuses, and geographic coordinates, among other fields."
+  ),
+  date_range = c(
+    "The beginning is the effective date (`effective`) and the end is the second exploration period specified (`period2exp`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date when the well first began producing oil (`first_oil`); there is no end date specified.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date on which the sector's licensing or regulatory conditions officially took effect (`effective`); there is no end date specified.",
+    "The beginning is the date on which the sector's licensing or regulatory conditions officially took effect (`effective`); there is no end date specified.",
+    "The beginning corresponds to the date when drilling for the well began (`spud_date`) and the end is the date on which drilling or operational activities for the well concluded (`well_termination_date`)."
+  )
+) |>
+  knitr::kable(col.names = c("Type", "Description", "Period"))
+```
+
+
+
+```{r}
+#| label: tbl-classifications
+#| tbl-cap: "Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland"
+data.frame(
+  Classification = c(
+    "Sectors",
+    "Call for Bids",
+    "Exploration",
+    "Significant Discovery",
+    "Delineation",
+    "Development",
+    "Production"
+  ),
+  Description = c(
+    "Defined geographic areas designated for potential exploration and development activities, often used in the regulatory framework to organize land tenure.",
+    "Competitive bidding rounds where companies submit proposals to obtain exploration or development rights for specified areas within sectors.",
+    "Initial phase focused on discovering hydrocarbons, involving activities like seismic surveys and drilling exploration wells.",
+    "Identification of a commercially viable hydrocarbon discovery during exploration, associated with a Significant Discovery License (SDL) to preserve rights to the area.",
+    "Appraisal phase to define the size, extent, and quality of a discovered reservoir, refining understanding of the resource’s potential.",
+    "Preparation phase involving construction of infrastructure, drilling of production wells, and installation of facilities needed to bring hydrocarbons to the surface.",
+    "Active phase of extracting hydrocarbons, processing them, and transporting them for sale, generating revenue from the resource."
+  )
+) |>
+  knitr::kable()
+```
+
+```{r}
+#| label: tbl-status
+#| tbl-cap: "Simplified Status Classifications with Descriptions"
+data.frame(
+  Status = c(
+    "Abandoned", "Suspended", "Active Production",
+    "Drilling", "Disposal", "Closed", "Off Station", NA
+  ),
+  Description = c(
+    "Wells where activities have been permanently stopped.",
+    "Wells with temporarily halted activities that may resume.",
+    "Wells currently involved in production or injection activities.",
+    "Wells still in the drilling phase.",
+    "Wells used for waste or byproduct disposal.",
+    "Wells officially closed, possibly for regulatory reasons.",
+    "Wells or rigs temporarily off their regular location.",
+    "No information available."
+  )
+) |>
+  knitr::kable()
+```
+
+
+## Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {#sec-offshore_petroleum_ns}
 
 ```{r}
 #| message: false
@@ -69,7 +203,5 @@ The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns
 - **Coverage**: Offshore regions of Nova Scotia, Canada, 2009–2024
 - **Processing** Script: prc_offshore_petroleum_ns.R
 - **Output** File: offshore_petroleum_ns.gpkg
-
-
 
 # References

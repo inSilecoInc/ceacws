@@ -162,10 +162,11 @@ div.csl-indent {
   <ul>
   <li><a href="#data-sources-overview" id="toc-data-sources-overview" class="nav-link active" data-scroll-target="#data-sources-overview"><span class="header-section-number">4</span> Data Sources Overview</a>
   <ul class="collapse">
-  <li><a href="#integrated-satellite-tracking-of-pollution-istop-istop" id="toc-integrated-satellite-tracking-of-pollution-istop-istop" class="nav-link" data-scroll-target="#integrated-satellite-tracking-of-pollution-istop-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP) {istop}</a></li>
-  <li><a href="#national-aerial-surveillance-program-nasp-nasp" id="toc-national-aerial-surveillance-program-nasp-nasp" class="nav-link" data-scroll-target="#national-aerial-surveillance-program-nasp-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP) {nasp}</a></li>
-  <li><a href="#national-environmental-emergency-centre-neec-neec" id="toc-national-environmental-emergency-centre-neec-neec" class="nav-link" data-scroll-target="#national-environmental-emergency-centre-neec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC) {neec}</a></li>
-  <li><a href="#canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" id="toc-canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" class="nav-link" data-scroll-target="#canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns"><span class="header-section-number">4.4</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}</a></li>
+  <li><a href="#sec-istop" id="toc-sec-istop" class="nav-link" data-scroll-target="#sec-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</a></li>
+  <li><a href="#sec-nasp" id="toc-sec-nasp" class="nav-link" data-scroll-target="#sec-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP)</a></li>
+  <li><a href="#sec-neec" id="toc-sec-neec" class="nav-link" data-scroll-target="#sec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC)</a></li>
+  <li><a href="#sec-offshore_petroleum_nfl" id="toc-sec-offshore_petroleum_nfl" class="nav-link" data-scroll-target="#sec-offshore_petroleum_nfl"><span class="header-section-number">4.4</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a></li>
+  <li><a href="#sec-offshore_petroleum_ns" id="toc-sec-offshore_petroleum_ns" class="nav-link" data-scroll-target="#sec-offshore_petroleum_ns"><span class="header-section-number">4.5</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5</span> References</a></li>
   </ul>
@@ -195,8 +196,8 @@ div.csl-indent {
 
 <section id="data-sources-overview" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Data Sources Overview</h1>
-<section id="integrated-satellite-tracking-of-pollution-istop-istop" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="integrated-satellite-tracking-of-pollution-istop-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP) {istop}</h2>
+<section id="sec-istop" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</h2>
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html">Integrated Satellite Tracking of Pollution (ISTOP)</a> program <span class="citation" data-cites="eccc2024">(<a href="#ref-eccc2024" role="doc-biblioref">Environment and Climate Change Canada, 2024</a>)</span> utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include 637 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program</li>
@@ -207,8 +208,8 @@ div.csl-indent {
 <li><strong>Output File</strong>: <code>istop.gpkg</code></li>
 </ul>
 </section>
-<section id="national-aerial-surveillance-program-nasp-nasp" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="national-aerial-surveillance-program-nasp-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP) {nasp}</h2>
+<section id="sec-nasp" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP)</h2>
 <p>The <a href="https://tc.canada.ca/en/programs/national-aerial-surveillance-program">National Aerial Surveillance Program (NASP)</a> <span class="citation" data-cites="tc2024">(<a href="#ref-tc2024" role="doc-biblioref">Transport Canada, 2024</a>)</span> is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes 3578 incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Transport Canada National Aerial Surveillance Program (NASP)</li>
@@ -219,8 +220,8 @@ div.csl-indent {
 <li><strong>Output File</strong>: <code>nasp.gpkg</code></li>
 </ul>
 </section>
-<section id="national-environmental-emergency-centre-neec-neec" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="national-environmental-emergency-centre-neec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC) {neec}</h2>
+<section id="sec-neec" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC)</h2>
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html">National Environmental Emergency Centre (NEEC)</a> <span class="citation" data-cites="neec2024">(<a href="#ref-neec2024" role="doc-biblioref">National Environmental Emergency Centre, 2024</a>)</span>, a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising 9570 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: National Environmental Emergency Centre (NEEC)</li>
@@ -231,9 +232,239 @@ div.csl-indent {
 <li><strong>Output Files</strong>: <code>neec.csv</code> and <code>substances.csv</code></li>
 </ul>
 </section>
-<section id="canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="canada-nova-scotia-offshore-petroleum-board-cnsopb-offshore_petroleum_ns"><span class="header-section-number">4.4</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {offshore_petroleum_ns}</h2>
-<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (254 coordinates), significant discovery licenses (249 cooordinates), production licenses (58 cooordinates), and the latest call for bids (8 polygons). The data spans from 2009 to 2024, encompassing information on various petroleum exploration and production activities, which is vital for understanding the scope and distribution of offshore petroleum operations in the region. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites.</p>
+<section id="sec-offshore_petroleum_nfl" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-offshore_petroleum_nfl"><span class="header-section-number">4.4</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</h2>
+<p>The <a href="https://www.cnlopb.ca/">Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a> <span class="citation" data-cites="cnlopb2024">(<a href="#ref-cnlopb2024" role="doc-biblioref">Canada-Newfoundland and Labrador Offshore Petroleum Board, 2024</a>)</span> oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (<a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g.&nbsp;exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in <a href="#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>. How date ranges were established for each entry is detailed in <a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.</p>
+<ul>
+<li><strong>Source</strong>: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</li>
+<li><strong>Accessibility</strong>: Open, Creative Commons Attribution License</li>
+<li><strong>Data Type</strong>: Shapefiles, XLSX</li>
+<li><strong>Coverage</strong>: Offshore regions of Newfoundland, Canada</li>
+<li><strong>Processing Script</strong>: <code>prc_offshore_petroleum_nfl.R</code></li>
+<li><strong>Output File</strong>: <code>offshore_petroleum_nfl.gpkg</code></li>
+</ul>
+<div class="cell">
+<div id="tbl-offshore-petroleum-nfl" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-offshore-petroleum-nfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland and Labrador.
+</figcaption>
+<div aria-describedby="tbl-offshore-petroleum-nfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Period</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Active Exploration Licenses</td>
+<td style="text-align: left;">Offshore areas in Newfoundland and Labrador that are currently licensed for petroleum exploration. An Exploration License (EL) grants rights to conduct exploratory drilling and other activities aimed at discovering petroleum resources within a designated offshore area. These licenses are typically issued for a fixed period, encouraging exploration activities that assess the resource potential in Newfoundland and Labrador’s offshore regions.</td>
+<td style="text-align: left;">The beginning is the effective date (<code>effective</code>) and the end is the second exploration period specified (<code>period2exp</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Active Significant Discovery Licenses</td>
+<td style="text-align: left;">Offshore areas within Newfoundland and Labrador where significant petroleum discoveries have been identified and are actively licensed. An Active Significant Discovery License (SDL) allows the holder to retain rights over a discovery area with proven, potentially commercial quantities of petroleum, preserving the right to future exploration and development.</td>
+<td style="text-align: left;">The beginning is the date of first exploration activity (<code>spud_date</code>) and the termination of the last renewal phase (<code>term_date</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Active Production Licenses</td>
+<td style="text-align: left;">Offshore areas in Newfoundland and Labrador where petroleum resources are actively being produced. A Production License (PL) authorizes the holder to extract petroleum within a specified offshore area, following proven resource discoveries. This license allows companies to conduct production activities while adhering to regulatory requirements for resource management, environmental protection, and safety.</td>
+<td style="text-align: left;">The beginning is the date of first exploration activity (<code>spud_date</code>) and the termination of the last renewal phase (<code>term_date</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Production Installations</td>
+<td style="text-align: left;">Locations of offshore production installations used in petroleum extraction activities in Newfoundland and Labrador’s offshore areas. A Production Installation refers to infrastructure such as platforms, rigs, or other facilities designed to extract, process, and transport petroleum resources from beneath the seafloor. These installations play a critical role in supporting production operations within licensed areas.</td>
+<td style="text-align: left;">The beginning is the date of first exploration activity (<code>spud_date</code>) and the termination of the last renewal phase (<code>term_date</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Delineation Wells</td>
+<td style="text-align: left;">Locations of delineation wells drilled in offshore areas of Newfoundland and Labrador. A Delineation Well is drilled to determine the extent and characteristics of a known petroleum discovery, helping to assess the size, quality, and commercial viability of the resource. These wells are essential in refining the understanding of hydrocarbon deposits discovered by exploration wells.</td>
+<td style="text-align: left;">The beginning is the date of first exploration activity (<code>spud_date</code>) and the termination of the last renewal phase (<code>term_date</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Development Wells</td>
+<td style="text-align: left;">Locations of development wells in offshore areas of Newfoundland and Labrador. Development Wells are drilled within proven petroleum fields to facilitate resource extraction. These wells are strategically placed to optimize production from known hydrocarbon deposits, making them critical for efficient and sustainable petroleum extraction.</td>
+<td style="text-align: left;">The beginning is the date when the well first began producing oil (<code>first_oil</code>); there is no end date specified.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dual Classified Wells</td>
+<td style="text-align: left;">Offshore wells in Newfoundland and Labrador that have been classified under more than one category during their lifecycle. Dual Classified Wells may serve multiple purposes, such as transitioning from an exploration role to development or delineation, depending on the results of drilling and assessments. This dual classification reflects the adaptive approach taken in offshore petroleum exploration and production.</td>
+<td style="text-align: left;">The beginning is the date when the date on which information about the well or license was publicly posted (<code>date_posted</code>) and the end is the specified call for bids closing year (<code>cfb_clse_dte</code>) and assumed to be on January 1st to allow for date formatting.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exploration Wells</td>
+<td style="text-align: left;">Locations of offshore wells in Newfoundland and Labrador that are designated for exploration. Exploration Wells are drilled to investigate potential petroleum deposits in unexplored or underexplored areas. These wells are the first step in assessing hydrocarbon presence and play a crucial role in determining the viability of further development.</td>
+<td style="text-align: left;">The beginning is the date when the date on which information about the well or license was publicly posted (<code>date_posted</code>) and the end is the specified call for bids closing year (<code>cfb_clse_dte</code>) and assumed to be on January 1st to allow for date formatting.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Call for Bids - Eastern Newfoundland NL23-CFB01</td>
+<td style="text-align: left;">The Call for Bids NL23-CFB01 pertains to the Eastern Newfoundland Region and was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023. This call offered 28 parcels, totaling approximately 7,222,551 hectares, for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB <a href="https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/">announced</a> that no bids were received for this call.</td>
+<td style="text-align: left;">The beginning is the date when the date on which information about the well or license was publicly posted (<code>date_posted</code>) and the end is the specified call for bids closing year (<code>cfb_clse_dte</code>) and assumed to be on January 1st to allow for date formatting.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Call for Bids - South Eastern Newfoundland NL23-CFB02</td>
+<td style="text-align: left;">The Call for Bids NL23-CFB02 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023, offering 19 parcels totaling approximately 4,982,275 hectares in the South Eastern Newfoundland Region for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB <a href="https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/">announced</a> that no bids were received for this call.</td>
+<td style="text-align: left;">The beginning is the date when the date on which information about the well or license was publicly posted (<code>date_posted</code>) and the end is the specified call for bids closing year (<code>cfb_clse_dte</code>) and assumed to be on January 1st to allow for date formatting.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Call for Bids - Eastern Newfoundland NL24-CFB01</td>
+<td style="text-align: left;">The Call for Bids NL24-CFB01 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) on April 29, 2024, inviting bids for exploration licenses in the Eastern Newfoundland Region. This call comprised 41 parcels, covering a total of 10,287,196 hectares. Interested parties were required to submit sealed bids by November 6, 2024. On November 6, 2024, the C-NLOPB <a href="https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-region/">announced</a> that no bids were received for Call for Bids NL24-CFB01.</td>
+<td style="text-align: left;">The beginning is the date is the opening date of the call for bids (<code>cfb_open_dte</code>) and the end is the closing date of the call for bids (<code>cfb_clse_dte</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sectors - Labrador South NL02-LS</td>
+<td style="text-align: left;">The Labrador South Region (Sector NL02-LS) is an offshore area managed by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) as part of its Scheduled Land Tenure System.</td>
+<td style="text-align: left;">The beginning is the date is the opening date of the call for bids (<code>cfb_open_dte</code>) and the end is the closing date of the call for bids (<code>cfb_clse_dte</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sectors - Eastern Newfoundland NL06-EN</td>
+<td style="text-align: left;">The Eastern Newfoundland Region (Sector NL06-EN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.</td>
+<td style="text-align: left;">The beginning is the date is the opening date of the call for bids (<code>cfb_open_dte</code>) and the end is the closing date of the call for bids (<code>cfb_clse_dte</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sectors - North Eastern Newfoundland NL01-NEN</td>
+<td style="text-align: left;">The North Eastern Newfoundland Region (Sector NL01-NEN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.</td>
+<td style="text-align: left;">The beginning is the date on which the sector’s licensing or regulatory conditions officially took effect (<code>effective</code>); there is no end date specified.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sectors - Southern Newfoundland NL01-SN</td>
+<td style="text-align: left;">The Southern Newfoundland Region (Sector NL01-SN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.</td>
+<td style="text-align: left;">The beginning is the date on which the sector’s licensing or regulatory conditions officially took effect (<code>effective</code>); there is no end date specified.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Well Info Summary</td>
+<td style="text-align: left;">Contains detailed information on wells drilled within offshore petroleum exploration and production areas. This dataset is designed to offer an inventory of wells, capturing essential data for regulatory oversight, resource management, and operational history. The dataset includes information on well names, operators, drilling dates, statuses, and geographic coordinates, among other fields.</td>
+<td style="text-align: left;">The beginning corresponds to the date when drilling for the well began (<code>spud_date</code>) and the end is the date on which drilling or operational activities for the well concluded (<code>well_termination_date</code>).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-classifications" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classifications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland
+</figcaption>
+<div aria-describedby="tbl-classifications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Classification</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sectors</td>
+<td style="text-align: left;">Defined geographic areas designated for potential exploration and development activities, often used in the regulatory framework to organize land tenure.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Call for Bids</td>
+<td style="text-align: left;">Competitive bidding rounds where companies submit proposals to obtain exploration or development rights for specified areas within sectors.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exploration</td>
+<td style="text-align: left;">Initial phase focused on discovering hydrocarbons, involving activities like seismic surveys and drilling exploration wells.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Significant Discovery</td>
+<td style="text-align: left;">Identification of a commercially viable hydrocarbon discovery during exploration, associated with a Significant Discovery License (SDL) to preserve rights to the area.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Delineation</td>
+<td style="text-align: left;">Appraisal phase to define the size, extent, and quality of a discovered reservoir, refining understanding of the resource’s potential.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Development</td>
+<td style="text-align: left;">Preparation phase involving construction of infrastructure, drilling of production wells, and installation of facilities needed to bring hydrocarbons to the surface.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Production</td>
+<td style="text-align: left;">Active phase of extracting hydrocarbons, processing them, and transporting them for sale, generating revenue from the resource.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-status" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-status-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Simplified Status Classifications with Descriptions
+</figcaption>
+<div aria-describedby="tbl-status-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Status</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Abandoned</td>
+<td style="text-align: left;">Wells where activities have been permanently stopped.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Suspended</td>
+<td style="text-align: left;">Wells with temporarily halted activities that may resume.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Active Production</td>
+<td style="text-align: left;">Wells currently involved in production or injection activities.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Drilling</td>
+<td style="text-align: left;">Wells still in the drilling phase.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Disposal</td>
+<td style="text-align: left;">Wells used for waste or byproduct disposal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Closed</td>
+<td style="text-align: left;">Wells officially closed, possibly for regulatory reasons.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Off Station</td>
+<td style="text-align: left;">Wells or rigs temporarily off their regular location.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No information available.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="sec-offshore_petroleum_ns" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-offshore_petroleum_ns"><span class="header-section-number">4.5</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</h2>
+<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (NA coordinates), significant discovery licenses (NA cooordinates), production licenses (NA cooordinates), and the latest call for bids (NA polygons). The data spans from 2009 to 2024, encompassing information on various petroleum exploration and production activities, which is vital for understanding the scope and distribution of offshore petroleum operations in the region. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites.</p>
 <ul>
 <li><strong>Source</strong>: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</li>
 <li><strong>Accessibility</strong>: Open</li>
@@ -249,6 +480,9 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
+<div id="ref-cnlopb2024" class="csl-entry" role="listitem">
+Canada-Newfoundland and Labrador Offshore Petroleum Board (2024). Offshore petroleum data for newfoundland. <span>C-NLOPB</span>.
+</div>
 <div id="ref-cnsopb2024" class="csl-entry" role="listitem">
 Canada-Nova Scotia Offshore Petroleum Board (2024). Offshore petroleum data for nova scotia. <span>CNSOPB</span>.
 </div>

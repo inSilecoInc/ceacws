@@ -47,23 +47,23 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     archive::archive_extract(tmp)
   bids <- sf::st_read(file.path(tmp, "CFB NS22-1 Parcels.shp"), quiet = TRUE) |>
     janitor::clean_names() |>
-    dplyr::mutate(type = "Call for bids") |>
+    dplyr::mutate(type = "call_for_bids") |>
     sf::st_transform(4326)
 
   ## Production licences
   production_licences <- input_files[stringr::str_detect(input_files, "production_licenses")] |>
     load_xls() |>
-    dplyr::mutate(type = "Production licence")
+    dplyr::mutate(type = "production_licenses")
 
   ## Significant discovery areas
   significant_discovery_areas <- input_files[stringr::str_detect(input_files, "significant_discovery_areas")] |>
     load_xls() |>
-    dplyr::mutate(type = "Significant discovery areas")
+    dplyr::mutate(type = "significant_discovery_areas")
 
   ## Significant discovery licenses
   significant_discovery_licenses <- input_files[stringr::str_detect(input_files, "significant_discovery_licenses")] |>
     load_xls() |>
-    dplyr::mutate(type = "Significant discovery licenses")
+    dplyr::mutate(type = "significant_discovery_licenses")
 
   # Bind
   offshore_petroleum_ns <- dplyr::bind_rows(

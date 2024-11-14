@@ -150,6 +150,30 @@ pipeline:
         output: "southern_newfoundland_nl01_sn.zip"
         format: "zip"
 
+  processing:
+    sources:
+      - name: offshore petroleum newfoundland
+        script: prc_offshore_petroleum_nfl
+        input_files:
+          - Active Exploration Licenses
+          - Active Significant Discovery Licenses
+          - Active Production Licenses
+          - Production Installations
+          - Well Info Summary
+          - Delineation Wells
+          - Development Wells
+          - Dual Classified Wells
+          - Exploration Wells
+          - Call for Bids - Eastern Newfoundland NL23-CFB01
+          - Call for Bids - South Eastern Newfoundland NL23-CFB02
+          - Call for Bids - Eastern Newfoundland NL24-CFB01
+          - Sectors - Labrador South NL02-LS
+          - Sectors - Eastern Newfoundland NL06-EN
+          - Sectors - North Eastern Newfoundland NL01-NEN
+          - Sectors - Southern Newfoundland NL01-SN
+        output_files: offshore_petroleum_nfl.gpkg
+
+
   # Output section: final output of the processed data
   output:
     output_dir: "workspace/data/harvested/"   # Base directory for all downloaded data
