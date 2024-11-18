@@ -259,7 +259,7 @@ The [Focus Area for the Regional Assessment of Offshore Wind Development in Newf
 offshore_wind_ns <- sf::st_read("../../workspace/data/harvested/offshore_wind_ns-1.0.0/processed/offshore_wind_ns.gpkg", quiet = TRUE)
 ```
 
-The [Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia](https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157) [@iaac2024b] outlines the geographic region under evaluation for future offshore wind development. This area was defined by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada and the province of Nova Scotia. The assessment focuses on evaluating the potential environmental, social, and economic effects of offshore wind energy development within the defined study area. The dataset includes spatial data for the study area and a supporting agreement document. Key variables include `study_area`, `wind_energy_assessment`, and `environmental_impact`. 
+The [Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia](https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157) [@iaac2024b] outlines the geographic region under evaluation for future offshore wind development. This area was defined by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada and the province of Nova Scotia. The assessment focuses on evaluating the potential environmental, social, and economic effects of offshore wind energy development within the defined study area. The dataset includes spatial data for the study area and a supporting agreement document. 
 
 - **Source**: Impact Assessment Agency of Canada
 - **Accessibility**: Open Government Licence - Canada
@@ -268,7 +268,83 @@ The [Study Area for the Regional Assessment of Offshore Wind Development in Nova
 - **Processing Script**: `prc_offshore_wind_ns.R`
 - **Output File**: `offshore_wind_ns.gpkg`
 
+### Bureau of Ocean Energy Management (BOEM) Offshore Wind Data {#sec-offshore_wind_usa}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_usa <- sf::st_read("../../workspace/data/harvested/offshore_wind_ns-1.0.0/processed/offshore_wind_usa.gpkg", quiet = TRUE)
+```
+
+The [Bureau of Ocean Energy Management (BOEM)](https://www.boem.gov/) [@boem2024] manages offshore wind energy activities across U.S. waters. This dataset provides detailed geospatial and tabular data on wind energy development, including lease areas, planning areas, marine hydrokinetic leases, project phase areas, and infrastructure components such as turbines, substations, and cable systems (@tbl-wind-usa-classification). Each entry in the dataset is accompanied with a lease or protraction number (see @tbl-wind-usa-number). The dataset supports decision-making and analysis for renewable energy development by offering comprehensive coverage of offshore wind projects. Access to the data requires a ArcGIS online membership. Data were therefore harvested and stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Bureau of Ocean Energy Management (BOEM)
+- **Accessibility**: Open Government Licence - United States
+- **Data Type**: Shapefiles, Geodatabase
+- **Coverage**: United States Offshore, 2020–2024
+- **Processing Script**: `prc_offshore_wind_usa.R`
+- **Output File**: `offshore_wind_usa.gpkg`
 
 
+```{r}
+#| label: tbl-wind-usa-classification
+#| tbl-cap: "Classifications and descriptions of BOEM offshore wind data components."
+data.frame(
+  Classification = c(
+    "Leases",
+    "Planning areas",
+    "MHK leases and planning areas",
+    "Project phase areas",
+    "Substations",
+    "Turbine locations",
+    "Cable interconnections",
+    "Ocean observing devices",
+    "Export cable corridors",
+    "Cable landings",
+    "Project inter-array cables"
+  ),
+  Description = c(
+    "Represents areas designated for offshore wind energy activities under BOEM's leasing program. Includes four types of leases: 'Commercial' leases for large-scale wind energy production, 'Easement' leases for infrastructure such as cables or substations, 'Right-of-Way Grant' leases for energy transmission corridors, and 'Research' leases for testing and studying renewable energy technologies.",
+    "Defines geographic areas identified by BOEM for potential offshore wind development. These areas are used for assessing wind energy resources and determining where to initiate leasing activities, based on environmental, economic, and technical considerations.",
+    "Includes Marine Hydrokinetic (MHK) areas for renewable energy from ocean-based resources such as waves, tides, or currents. MHK leases encompass 'Research' leases for testing technology, 'Right-of-Way Grant' leases for transmission infrastructure, and 'Easement Area' leases for supporting installations like substations.",
+    "Represents specific geographic areas proposed for different phases of offshore wind energy projects. These areas are identified based on project development stages, including site assessment, construction, and operations.",
+    "Provides point data representing substations with their status (either 'installed' or 'proposed') and location type (either 'offshore' or 'onshore').",
+    "Provides point data representing the locations of wind turbines with their status as either 'proposed' or 'installed'.",
+    "Represents spatial data for cable interconnections linking offshore wind installations to onshore infrastructure or between offshore installations. Includes the status of cables as either 'proposed' or 'installed'.",
+    "Includes point data for devices deployed to observe ocean conditions in areas relevant to offshore wind development. Observing devices monitor factors such as currents, waves, and water quality, and are categorized by their status as either 'proposed' or 'installed'.",
+    "Represents spatial data for corridors used by export cables connecting offshore wind farms to onshore substations. Includes the status of corridors as either 'proposed' or 'installed'.",
+    "Provides point data for locations where export cables come ashore to connect offshore wind farms to the terrestrial power grid. Includes the status of cable landings as either 'proposed' or 'installed'.",
+    "Represents spatial data for inter-array cables within an offshore wind farm. These cables connect turbines to each other and to the offshore substation, with their status categorized as either 'proposed' or 'installed'."
+  )
+) |>
+  knitr::kable()
+```
+
+
+```{r}
+#| label: tbl-wind-usa-number
+#| tbl-cap: "Comparison of lease numbers and protraction numbers in BOEM offshore wind datasets"
+data.frame(
+  Aspect = c(
+    "Purpose",
+    "Format",
+    "Focus",
+    "Context"
+  ),
+  Lease_Numbers = c(
+    "Identifies specific lease agreements for offshore activities.",
+    "Often alphanumeric (e.g., 'OCS-A 0501').",
+    "Administrative and contractual.",
+    "Specific to a lessee's activities."
+  ),
+  Protraction_Numbers = c(
+    "Identifies geographic areas on the Outer Continental Shelf (OCS) used for spatial organization.",
+    "Often numeric or grid-based (e.g., 'NG14-02').",
+    "Geographic and spatial organization.",
+    "Applicable to the broader mapping system."
+  )
+) |>
+  knitr::kable(col.names = c("", "Lease numbers", "Protraction numbers"))
+```
 
 ## References

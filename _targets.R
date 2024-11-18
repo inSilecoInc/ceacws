@@ -433,7 +433,20 @@ list(
                 bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg", 
                 overwrite = TRUE)
             "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/Offshore_Wind_-_Project_Inter-array_Cables_Proposed_or_Installed.gpkg"
-        }, format = "file"))),
+        }, format = "file")), tar_target(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa, 
+        {
+            prc_offshore_wind_usa(output_path = "workspace/data/harvested/offshore_wind_usa-1.0.0/processed", 
+                input_files = list(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Renewable_Energy_Geodatabase, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Project_Development_Phase_Areas, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Substations, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Turbine_Locations, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Cable_Interconnections, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Data_Collection_Devices, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_Export_Cable_Corridors, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Offshore_Cable_Landings, 
+                  tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Project_Inter_array_Cables))
+            "workspace/data/harvested/offshore_wind_usa-1.0.0/processed/offshore_wind_usa.gpkg"
+        }, format = "file")),
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
         source_type = "viirs", urls = "NA", dataset = "vbd", 

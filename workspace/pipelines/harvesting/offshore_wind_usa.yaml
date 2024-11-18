@@ -125,6 +125,22 @@ pipeline:
         credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
         format: "geopackage"
 
+  processing:
+    sources:
+      - name: offshore wind usa
+        script: prc_offshore_wind_usa
+        input_files:
+          - BOEM Renewable Energy Geodatabase
+          - BOEM Offshore Wind - Proposed Project Development Phase Areas
+          - BOEM Offshore Wind - Proposed or Installed Substations
+          - BOEM Offshore Wind - Proposed or Installed Turbine Locations
+          - BOEM Offshore Wind - Proposed or Installed Cable Interconnections
+          - BOEM Offshore Wind - Proposed or Installed Data Collection Devices
+          - BOEM Offshore Wind - Proposed Export Cable Corridors
+          - BOEM Offshore Wind - Proposed or Installed Offshore Cable Landings
+          - BOEM Offshore Wind - Proposed or Installed Project Inter-array Cables
+        output_files: offshore_wind_usa.gpkg
+
 
   # Output section: final output of the processed data
   output:

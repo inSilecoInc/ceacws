@@ -178,6 +178,7 @@ div.csl-indent {
   <li><a href="#sec-offshore_wind_can" id="toc-sec-offshore_wind_can" class="nav-link" data-scroll-target="#sec-offshore_wind_can"><span class="header-section-number">4.3.1</span> Wind Regional Assessment - Canada</a></li>
   <li><a href="#sec-offshore_wind_nfl" id="toc-sec-offshore_wind_nfl" class="nav-link" data-scroll-target="#sec-offshore_wind_nfl"><span class="header-section-number">4.3.2</span> Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador</a></li>
   <li><a href="#sec-offshore_wind_ns" id="toc-sec-offshore_wind_ns" class="nav-link" data-scroll-target="#sec-offshore_wind_ns"><span class="header-section-number">4.3.3</span> Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia</a></li>
+  <li><a href="#sec-offshore_wind_usa" id="toc-sec-offshore_wind_usa" class="nav-link" data-scroll-target="#sec-offshore_wind_usa"><span class="header-section-number">4.3.4</span> Bureau of Ocean Energy Management (BOEM) Offshore Wind Data</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.4</span> References</a></li>
   </ul></li>
@@ -525,7 +526,7 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 </section>
 <section id="sec-offshore_wind_ns" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-offshore_wind_ns"><span class="header-section-number">4.3.3</span> Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia</h3>
-<p>The <a href="https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157">Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia</a> <span class="citation" data-cites="iaac2024b">(<a href="#ref-iaac2024b" role="doc-biblioref">Impact Assessment Agency of Canada, 2024b</a>)</span> outlines the geographic region under evaluation for future offshore wind development. This area was defined by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada and the province of Nova Scotia. The assessment focuses on evaluating the potential environmental, social, and economic effects of offshore wind energy development within the defined study area. The dataset includes spatial data for the study area and a supporting agreement document. Key variables include <code>study_area</code>, <code>wind_energy_assessment</code>, and <code>environmental_impact</code>.</p>
+<p>The <a href="https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157">Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia</a> <span class="citation" data-cites="iaac2024b">(<a href="#ref-iaac2024b" role="doc-biblioref">Impact Assessment Agency of Canada, 2024b</a>)</span> outlines the geographic region under evaluation for future offshore wind development. This area was defined by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada and the province of Nova Scotia. The assessment focuses on evaluating the potential environmental, social, and economic effects of offshore wind energy development within the defined study area. The dataset includes spatial data for the study area and a supporting agreement document.</p>
 <ul>
 <li><strong>Source</strong>: Impact Assessment Agency of Canada</li>
 <li><strong>Accessibility</strong>: Open Government Licence - Canada</li>
@@ -535,12 +536,147 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 <li><strong>Output File</strong>: <code>offshore_wind_ns.gpkg</code></li>
 </ul>
 </section>
+<section id="sec-offshore_wind_usa" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-offshore_wind_usa"><span class="header-section-number">4.3.4</span> Bureau of Ocean Energy Management (BOEM) Offshore Wind Data</h3>
+<p>The <a href="https://www.boem.gov/">Bureau of Ocean Energy Management (BOEM)</a> <span class="citation" data-cites="boem2024">(<a href="#ref-boem2024" role="doc-biblioref">Bureau of Ocean Energy Management, 2024</a>)</span> manages offshore wind energy activities across U.S. waters. This dataset provides detailed geospatial and tabular data on wind energy development, including lease areas, planning areas, marine hydrokinetic leases, project phase areas, and infrastructure components such as turbines, substations, and cable systems (<a href="#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). Each entry in the dataset is accompanied with a lease or protraction number (see <a href="#tbl-wind-usa-number" class="quarto-xref">Table&nbsp;<span>4.5</span></a>). The dataset supports decision-making and analysis for renewable energy development by offering comprehensive coverage of offshore wind projects. Access to the data requires a ArcGIS online membership. Data were therefore harvested and stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+<ul>
+<li><strong>Source</strong>: Bureau of Ocean Energy Management (BOEM)</li>
+<li><strong>Accessibility</strong>: Open Government Licence - United States</li>
+<li><strong>Data Type</strong>: Shapefiles, Geodatabase</li>
+<li><strong>Coverage</strong>: United States Offshore, 2020–2024</li>
+<li><strong>Processing Script</strong>: <code>prc_offshore_wind_usa.R</code></li>
+<li><strong>Output File</strong>: <code>offshore_wind_usa.gpkg</code></li>
+</ul>
+<div class="cell">
+<div id="tbl-wind-usa-classification" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wind-usa-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.4: Classifications and descriptions of BOEM offshore wind data components.
+</figcaption>
+<div aria-describedby="tbl-wind-usa-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 92%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Classification</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Leases</td>
+<td style="text-align: left;">Represents areas designated for offshore wind energy activities under BOEM’s leasing program. Includes four types of leases: ‘Commercial’ leases for large-scale wind energy production, ‘Easement’ leases for infrastructure such as cables or substations, ‘Right-of-Way Grant’ leases for energy transmission corridors, and ‘Research’ leases for testing and studying renewable energy technologies.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Planning areas</td>
+<td style="text-align: left;">Defines geographic areas identified by BOEM for potential offshore wind development. These areas are used for assessing wind energy resources and determining where to initiate leasing activities, based on environmental, economic, and technical considerations.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MHK leases and planning areas</td>
+<td style="text-align: left;">Includes Marine Hydrokinetic (MHK) areas for renewable energy from ocean-based resources such as waves, tides, or currents. MHK leases encompass ‘Research’ leases for testing technology, ‘Right-of-Way Grant’ leases for transmission infrastructure, and ‘Easement Area’ leases for supporting installations like substations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Project phase areas</td>
+<td style="text-align: left;">Represents specific geographic areas proposed for different phases of offshore wind energy projects. These areas are identified based on project development stages, including site assessment, construction, and operations.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Substations</td>
+<td style="text-align: left;">Provides point data representing substations with their status (either ‘installed’ or ‘proposed’) and location type (either ‘offshore’ or ‘onshore’).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turbine locations</td>
+<td style="text-align: left;">Provides point data representing the locations of wind turbines with their status as either ‘proposed’ or ‘installed’.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cable interconnections</td>
+<td style="text-align: left;">Represents spatial data for cable interconnections linking offshore wind installations to onshore infrastructure or between offshore installations. Includes the status of cables as either ‘proposed’ or ‘installed’.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ocean observing devices</td>
+<td style="text-align: left;">Includes point data for devices deployed to observe ocean conditions in areas relevant to offshore wind development. Observing devices monitor factors such as currents, waves, and water quality, and are categorized by their status as either ‘proposed’ or ‘installed’.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Export cable corridors</td>
+<td style="text-align: left;">Represents spatial data for corridors used by export cables connecting offshore wind farms to onshore substations. Includes the status of corridors as either ‘proposed’ or ‘installed’.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cable landings</td>
+<td style="text-align: left;">Provides point data for locations where export cables come ashore to connect offshore wind farms to the terrestrial power grid. Includes the status of cable landings as either ‘proposed’ or ‘installed’.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Project inter-array cables</td>
+<td style="text-align: left;">Represents spatial data for inter-array cables within an offshore wind farm. These cables connect turbines to each other and to the offshore substation, with their status categorized as either ‘proposed’ or ‘installed’.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-wind-usa-number" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wind-usa-number-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offshore wind datasets
+</figcaption>
+<div aria-describedby="tbl-wind-usa-number-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 37%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Lease numbers</th>
+<th style="text-align: left;">Protraction numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Purpose</td>
+<td style="text-align: left;">Identifies specific lease agreements for offshore activities.</td>
+<td style="text-align: left;">Identifies geographic areas on the Outer Continental Shelf (OCS) used for spatial organization.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Format</td>
+<td style="text-align: left;">Often alphanumeric (e.g., ‘OCS-A 0501’).</td>
+<td style="text-align: left;">Often numeric or grid-based (e.g., ‘NG14-02’).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Focus</td>
+<td style="text-align: left;">Administrative and contractual.</td>
+<td style="text-align: left;">Geographic and spatial organization.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Context</td>
+<td style="text-align: left;">Specific to a lessee’s activities.</td>
+<td style="text-align: left;">Applicable to the broader mapping system.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
 </section>
 <section id="references" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="references"><span class="header-section-number">4.4</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
+<div id="ref-boem2024" class="csl-entry" role="listitem">
+Bureau of Ocean Energy Management (2024). United states offshore wind data - BOEM. <span>Bureau of Ocean Energy Management</span> Available at: <a href="https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase">https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase</a>.
+</div>
 <div id="ref-cnlopb2024" class="csl-entry" role="listitem">
 Canada-Newfoundland and Labrador Offshore Petroleum Board (2024). Offshore petroleum data for newfoundland. <span>C-NLOPB</span>.
 </div>
