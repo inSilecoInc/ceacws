@@ -335,7 +335,13 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_wind_can-1.0.0/raw/README.txt", 
             overwrite = TRUE)
         "workspace/data/harvested/offshore_wind_can-1.0.0/raw/README.txt"
-    }, format = "file"))),
+    }, format = "file")), tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_offshore_wind_can, 
+    {
+        prc_offshore_wind_can(output_path = "workspace/data/harvested/offshore_wind_can-1.0.0/processed", 
+            input_files = list(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Potential_Future_Development_Areas__PFDA____Nova_Scotia, 
+                tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Preliminary_Offshore_Wind_Licensing_Areas__PLA____Newfoundland))
+        "workspace/data/harvested/offshore_wind_can-1.0.0/processed/offshore_wind_can.gpkg"
+    }, format = "file")),
     list(tarchetypes::tar_download(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_Focus_Area_Shapefile, 
     url = "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_NL_Focus_Area_Le_Secteur_dintervention_ER_TNL.shp.zip", 
     path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/focus_area_nl_shapefile.zip"), 

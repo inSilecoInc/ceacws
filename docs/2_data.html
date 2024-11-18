@@ -162,12 +162,22 @@ div.csl-indent {
   <ul>
   <li><a href="#data-sources-overview" id="toc-data-sources-overview" class="nav-link active" data-scroll-target="#data-sources-overview"><span class="header-section-number">4</span> Data Sources Overview</a>
   <ul class="collapse">
-  <li><a href="#sec-istop" id="toc-sec-istop" class="nav-link" data-scroll-target="#sec-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</a></li>
-  <li><a href="#sec-nasp" id="toc-sec-nasp" class="nav-link" data-scroll-target="#sec-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP)</a></li>
-  <li><a href="#sec-neec" id="toc-sec-neec" class="nav-link" data-scroll-target="#sec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC)</a></li>
-  <li><a href="#sec-offshore_petroleum_nfl" id="toc-sec-offshore_petroleum_nfl" class="nav-link" data-scroll-target="#sec-offshore_petroleum_nfl"><span class="header-section-number">4.4</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a></li>
-  <li><a href="#sec-offshore_petroleum_ns" id="toc-sec-offshore_petroleum_ns" class="nav-link" data-scroll-target="#sec-offshore_petroleum_ns"><span class="header-section-number">4.5</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.6</span> References</a></li>
+  <li><a href="#accidental-spills" id="toc-accidental-spills" class="nav-link" data-scroll-target="#accidental-spills"><span class="header-section-number">4.1</span> Accidental spills</a>
+  <ul class="collapse">
+  <li><a href="#sec-istop" id="toc-sec-istop" class="nav-link" data-scroll-target="#sec-istop"><span class="header-section-number">4.1.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</a></li>
+  <li><a href="#sec-nasp" id="toc-sec-nasp" class="nav-link" data-scroll-target="#sec-nasp"><span class="header-section-number">4.1.2</span> National Aerial Surveillance Program (NASP)</a></li>
+  <li><a href="#sec-neec" id="toc-sec-neec" class="nav-link" data-scroll-target="#sec-neec"><span class="header-section-number">4.1.3</span> National Environmental Emergency Centre (NEEC)</a></li>
+  </ul></li>
+  <li><a href="#offshore-petroleum-activities" id="toc-offshore-petroleum-activities" class="nav-link" data-scroll-target="#offshore-petroleum-activities"><span class="header-section-number">4.2</span> Offshore petroleum activities</a>
+  <ul class="collapse">
+  <li><a href="#sec-offshore_petroleum_nfl" id="toc-sec-offshore_petroleum_nfl" class="nav-link" data-scroll-target="#sec-offshore_petroleum_nfl"><span class="header-section-number">4.2.1</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a></li>
+  <li><a href="#sec-offshore_petroleum_ns" id="toc-sec-offshore_petroleum_ns" class="nav-link" data-scroll-target="#sec-offshore_petroleum_ns"><span class="header-section-number">4.2.2</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a></li>
+  </ul></li>
+  <li><a href="#offshore-wind-farms" id="toc-offshore-wind-farms" class="nav-link" data-scroll-target="#offshore-wind-farms"><span class="header-section-number">4.3</span> Offshore wind farms</a>
+  <ul class="collapse">
+  <li><a href="#sec-offshore_wind_can" id="toc-sec-offshore_wind_can" class="nav-link" data-scroll-target="#sec-offshore_wind_can"><span class="header-section-number">4.3.1</span> Wind Regional Assessment - Canada</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.4</span> References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -196,8 +206,10 @@ div.csl-indent {
 
 <section id="data-sources-overview" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Data Sources Overview</h1>
-<section id="sec-istop" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-istop"><span class="header-section-number">4.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</h2>
+<section id="accidental-spills" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="accidental-spills"><span class="header-section-number">4.1</span> Accidental spills</h2>
+<section id="sec-istop" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-istop"><span class="header-section-number">4.1.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</h3>
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html">Integrated Satellite Tracking of Pollution (ISTOP)</a> program <span class="citation" data-cites="eccc2024">(<a href="#ref-eccc2024" role="doc-biblioref">Environment and Climate Change Canada, 2024</a>)</span> utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include 637 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program</li>
@@ -208,8 +220,8 @@ div.csl-indent {
 <li><strong>Output File</strong>: <code>istop.gpkg</code></li>
 </ul>
 </section>
-<section id="sec-nasp" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sec-nasp"><span class="header-section-number">4.2</span> National Aerial Surveillance Program (NASP)</h2>
+<section id="sec-nasp" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-nasp"><span class="header-section-number">4.1.2</span> National Aerial Surveillance Program (NASP)</h3>
 <p>The <a href="https://tc.canada.ca/en/programs/national-aerial-surveillance-program">National Aerial Surveillance Program (NASP)</a> <span class="citation" data-cites="tc2024">(<a href="#ref-tc2024" role="doc-biblioref">Transport Canada, 2024</a>)</span> is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes 3578 incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Transport Canada National Aerial Surveillance Program (NASP)</li>
@@ -220,8 +232,8 @@ div.csl-indent {
 <li><strong>Output File</strong>: <code>nasp.gpkg</code></li>
 </ul>
 </section>
-<section id="sec-neec" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="sec-neec"><span class="header-section-number">4.3</span> National Environmental Emergency Centre (NEEC)</h2>
+<section id="sec-neec" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-neec"><span class="header-section-number">4.1.3</span> National Environmental Emergency Centre (NEEC)</h3>
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html">National Environmental Emergency Centre (NEEC)</a> <span class="citation" data-cites="neec2024">(<a href="#ref-neec2024" role="doc-biblioref">National Environmental Emergency Centre, 2024</a>)</span>, a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising 9570 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: National Environmental Emergency Centre (NEEC)</li>
@@ -232,8 +244,11 @@ div.csl-indent {
 <li><strong>Output Files</strong>: <code>neec.csv</code> and <code>substances.csv</code></li>
 </ul>
 </section>
-<section id="sec-offshore_petroleum_nfl" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-offshore_petroleum_nfl"><span class="header-section-number">4.4</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</h2>
+</section>
+<section id="offshore-petroleum-activities" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2</span> Offshore petroleum activities</h2>
+<section id="sec-offshore_petroleum_nfl" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-offshore_petroleum_nfl"><span class="header-section-number">4.2.1</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</h3>
 <p>The <a href="https://www.cnlopb.ca/">Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a> <span class="citation" data-cites="cnlopb2024">(<a href="#ref-cnlopb2024" role="doc-biblioref">Canada-Newfoundland and Labrador Offshore Petroleum Board, 2024</a>)</span> oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (<a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g.&nbsp;exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in <a href="#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>. How date ranges were established for each entry is detailed in <a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.</p>
 <ul>
 <li><strong>Source</strong>: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</li>
@@ -462,9 +477,9 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 </div>
 </div>
 </section>
-<section id="sec-offshore_petroleum_ns" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="sec-offshore_petroleum_ns"><span class="header-section-number">4.5</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</h2>
-<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (NA coordinates), significant discovery licenses (NA cooordinates), production licenses (NA cooordinates), and the latest call for bids (NA polygons). The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Contrary to the data for Newfoudland and Labrador (see <a href="#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.4</span></a>), there were no information included on the status and the time period covered.</p>
+<section id="sec-offshore_petroleum_ns" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-offshore_petroleum_ns"><span class="header-section-number">4.2.2</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</h3>
+<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (NA coordinates), significant discovery licenses (NA cooordinates), production licenses (NA cooordinates), and the latest call for bids (NA polygons). The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Contrary to the data for Newfoudland and Labrador (see <a href="#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a>), there were no information included on the status and the time period covered.</p>
 <ul>
 <li><strong>Source</strong>: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</li>
 <li><strong>Accessibility</strong>: Open</li>
@@ -474,8 +489,29 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 <li><strong>Output</strong> File: offshore_petroleum_ns.gpkg</li>
 </ul>
 </section>
-<section id="references" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="references"><span class="header-section-number">4.6</span> References</h2>
+</section>
+<section id="offshore-wind-farms" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="offshore-wind-farms"><span class="header-section-number">4.3</span> Offshore wind farms</h2>
+<section id="sec-offshore_wind_can" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-offshore_wind_can"><span class="header-section-number">4.3.1</span> Wind Regional Assessment - Canada</h3>
+<p>The <a href="https://www.canada.ca/en/services/environment/conservation/assessments.html">Wind Regional Assessment - Canada</a> <span class="citation" data-cites="wind_regional_assessment2024">(<a href="#ref-wind_regional_assessment2024" role="doc-biblioref">Wind Regional Assessment Team, 2024</a>)</span> identifies areas for potential offshore wind development. This dataset includes shapefiles representing:</p>
+<ul>
+<li><strong>Potential Future Development Areas (PFDA)</strong> in Nova Scotia.</li>
+<li><strong>Preliminary Offshore Wind Licensing Areas (PLA)</strong> in Newfoundland.</li>
+</ul>
+<p>These areas were identified in the <strong>Wind Regional Assessment Interim Report</strong> for offshore wind energy. While still in the planning phase, this dataset provides critical spatial data for understanding the geographic distribution of proposed offshore wind development areas. Data from both regions are expected to be made publicly available via the Canadian Impact Assessment Registry and Open Government Portal. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco. For this project, data from both regions were integrated into a unified spatial layer. Each entry was given a unique identifier to track its origin and dataset of provenance (e.g., <code>wind_can_ns_XXXX</code> for Nova Scotia and <code>wind_can_nfl_XXXX</code> for Newfoundland).</p>
+<ul>
+<li><strong>Source</strong>: Wind Regional Assessment - Canada</li>
+<li><strong>Accessibility</strong>: Restricted Access</li>
+<li><strong>Data Type</strong>: Shapefiles</li>
+<li><strong>Coverage</strong>: Nova Scotia and Newfoundland, Canada</li>
+<li><strong>Processing Script</strong>: <code>prc_offshore_wind_can.R</code></li>
+<li><strong>Output File</strong>: <code>offshore_wind_can.gpkg</code></li>
+</ul>
+</section>
+</section>
+<section id="references" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="references"><span class="header-section-number">4.4</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
@@ -493,6 +529,9 @@ National Environmental Emergency Centre (2024). Atlantic (including <span>Quebec
 </div>
 <div id="ref-tc2024" class="csl-entry" role="listitem">
 Transport Canada (2024). National <span>Aerial Surveillance Program</span> (<span>NASP</span>). <span>Data</span> extraction for period between <span>April</span> 2012 to <span>March</span> 2023. <span>Transport Canada</span>.
+</div>
+<div id="ref-wind_regional_assessment2024" class="csl-entry" role="listitem">
+Wind Regional Assessment Team (2024). Offshore wind development areas - canada. <span>Environment and Climate Change Canada</span>.
 </div>
 </div>
 </section>

@@ -69,6 +69,16 @@ pipeline:
         format: "text"
         credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
 
+
+  processing:
+    sources:
+      - name: offshore wind can
+        script: prc_offshore_wind_can
+        input_files:
+          - Potential Future Development Areas (PFDA) - Nova Scotia
+          - Preliminary Offshore Wind Licensing Areas (PLA) - Newfoundland
+        output_files: offshore_wind_can.gpkg
+
   # Output section: final output of the processed data
   output:
     output_dir: "workspace/data/harvested/"     # Base directory for all downloaded data

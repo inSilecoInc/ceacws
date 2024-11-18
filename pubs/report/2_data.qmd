@@ -4,7 +4,9 @@ title: "Data Sources Overview"
 
 # Data Sources Overview
 
-## Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
+## Accidental spills
+
+### Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
 
 ```{r}
 #| message: false
@@ -20,7 +22,7 @@ The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/e
 - **Processing Script**: `prc_istop.R`
 - **Output File**: `istop.gpkg`
 
-## National Aerial Surveillance Program (NASP) {#sec-nasp}
+### National Aerial Surveillance Program (NASP) {#sec-nasp}
 
 ```{r}
 #| message: false
@@ -36,7 +38,7 @@ The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/progra
 - **Processing Script**: `prc_nasp.R`
 - **Output File**: `nasp.gpkg`
 
-## National Environmental Emergency Centre (NEEC) {#sec-neec}
+### National Environmental Emergency Centre (NEEC) {#sec-neec}
 
 ```{r}
 #| message: false
@@ -52,8 +54,9 @@ The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/en
 - **Processing Script**: `prc_neec.R`
 - **Output Files**: `neec.csv` and `substances.csv`
 
+## Offshore petroleum activities
 
-## Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) {#sec-offshore_petroleum_nfl}
+### Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) {#sec-offshore_petroleum_nfl}
 
 ```{r}
 #| message: false
@@ -187,7 +190,7 @@ data.frame(
 ```
 
 
-## Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {#sec-offshore_petroleum_ns}
+### Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {#sec-offshore_petroleum_ns}
 
 ```{r}
 #| message: false
@@ -203,5 +206,38 @@ The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns
 - **Coverage**: Offshore regions of Nova Scotia, Canada, 2009–2024
 - **Processing** Script: prc_offshore_petroleum_ns.R
 - **Output** File: offshore_petroleum_ns.gpkg
+
+
+## Offshore wind farms
+
+### Wind Regional Assessment - Canada {#sec-offshore_wind_can}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_can <- sf::st_read("../../workspace/data/harvested/offshore_wind_can-1.0.0/processed/offshore_wind_can.gpkg", quiet = TRUE)
+```
+
+The [Wind Regional Assessment - Canada](https://www.canada.ca/en/services/environment/conservation/assessments.html) [@wind_regional_assessment2024] identifies areas for potential offshore wind development. This dataset includes shapefiles representing:
+
+- **Potential Future Development Areas (PFDA)** in Nova Scotia.
+- **Preliminary Offshore Wind Licensing Areas (PLA)** in Newfoundland.
+
+These areas were identified in the **Wind Regional Assessment Interim Report** for offshore wind energy. While still in the planning phase, this dataset provides critical spatial data for understanding the geographic distribution of proposed offshore wind development areas. Data from both regions are expected to be made publicly available via the Canadian Impact Assessment Registry and Open Government Portal. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco. For this project, data from both regions were integrated into a unified spatial layer. Each entry was given a unique identifier to track its origin and dataset of provenance (e.g., `wind_can_ns_XXXX` for Nova Scotia and `wind_can_nfl_XXXX` for Newfoundland).
+
+- **Source**: Wind Regional Assessment - Canada
+- **Accessibility**: Restricted Access
+- **Data Type**: Shapefiles
+- **Coverage**: Nova Scotia and Newfoundland, Canada
+- **Processing Script**: `prc_offshore_wind_can.R`
+- **Output File**: `offshore_wind_can.gpkg`
+
+
+
+
+
+
+
+
 
 ## References
