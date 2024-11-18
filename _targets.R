@@ -359,7 +359,13 @@ list(
     path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/agreement_regional_assessment_ns_en.pdf"), 
     tarchetypes::tar_download(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Study_Area_Shapefile, 
         url = "https://ftp.maps.canada.ca/pub/iaac_aeic/Wind-energy_Energie-eolienne/Boundary-waters_Eaux-limitrophes/RA_OSW_Study_Area_NS_N%c3%89_Zone_d%c3%a9tude.zip", 
-        path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/study_area_ns_shapefile.zip")),
+        path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/study_area_ns_shapefile.zip"), 
+    tar_target(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_offshore_wind_ns, 
+        {
+            prc_offshore_wind_ns(output_path = "workspace/data/harvested/offshore_wind_ns-1.0.0/processed", 
+                input_files = list(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Study_Area_Shapefile))
+            "workspace/data/harvested/offshore_wind_ns-1.0.0/processed/offshore_wind_ns.gpkg"
+        }, format = "file")),
     list(tarchetypes::tar_download(tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Renewable_Energy_Geodatabase, 
     url = "https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase", 
     path = "workspace/data/harvested/offshore_wind_usa-1.0.0/raw/boem_renewable_energy_geodatabase.zip"), 

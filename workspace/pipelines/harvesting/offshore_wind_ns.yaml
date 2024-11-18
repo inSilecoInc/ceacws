@@ -59,6 +59,15 @@ pipeline:
         output: "study_area_ns_shapefile.zip"
         format: "shapefile"
 
+  processing:
+    sources:
+      - name: offshore wind ns
+        script: prc_offshore_wind_ns
+        input_files:
+          - Study Area Shapefile
+        output_files: offshore_wind_ns.gpkg
+
+
   # Output section: final output of the processed data
   output:
     output_dir: "workspace/data/harvested/"
