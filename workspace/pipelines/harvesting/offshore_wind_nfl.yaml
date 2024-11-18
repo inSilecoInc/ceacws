@@ -57,6 +57,14 @@ pipeline:
         output: "regional_assessment_agreement.pdf"
         format: "pdf"
   
+  processing:
+    sources:
+      - name: offshore wind nfl
+        script: prc_offshore_wind_nfl
+        input_files:
+          - Focus Area Shapefile
+        output_files: offshore_wind_nfl.gpkg
+
   # Output section: final output of the processed data
   output:
     output_dir: "workspace/data/harvested/"

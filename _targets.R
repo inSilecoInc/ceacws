@@ -347,7 +347,13 @@ list(
     path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/focus_area_nl_shapefile.zip"), 
     tarchetypes::tar_download(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_Regional_Assessment_Agreement, 
         url = "https://iaac-aeic.gc.ca/050/documents/p84343/147037E.pdf", 
-        path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/regional_assessment_agreement.pdf")),
+        path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/raw/regional_assessment_agreement.pdf"), 
+    tar_target(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_offshore_wind_nfl, 
+        {
+            prc_offshore_wind_nfl(output_path = "workspace/data/harvested/offshore_wind_nfl-1.0.0/processed", 
+                input_files = list(tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_Focus_Area_Shapefile))
+            "workspace/data/harvested/offshore_wind_nfl-1.0.0/processed/offshore_wind_nfl.gpkg"
+        }, format = "file")),
     list(tarchetypes::tar_download(tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_Agreement_to_Conduct_a_Regional_Assessment_of_Offshore_Wind_Development_in_Nova_Scotia__English_, 
     url = "https://iaac-aeic.gc.ca/050/documents/p83514/147038E.pdf", 
     path = "workspace/data/harvested/offshore_wind_ns-1.0.0/raw/agreement_regional_assessment_ns_en.pdf"), 

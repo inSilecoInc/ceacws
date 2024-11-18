@@ -232,6 +232,23 @@ These areas were identified in the **Wind Regional Assessment Interim Report** f
 - **Processing Script**: `prc_offshore_wind_can.R`
 - **Output File**: `offshore_wind_can.gpkg`
 
+### Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador {#sec-offshore_wind_nfl}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_nfl <- sf::st_read("../../workspace/data/harvested/offshore_wind_nfl-1.0.0/processed/offshore_wind_nfl.gpkg", quiet = TRUE)
+```
+
+
+The [Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador](https://iaac-aeic.gc.ca/050/documents/p84343/147037E.pdf) [@iaac2024] defines priority areas for offshore wind development in Newfoundland and Labrador. The assessment, conducted by the Impact Assessment Agency of Canada, aims to provide comprehensive information, knowledge, and analysis about the potential environmental, social, economic, and health effects of offshore wind development. In November 2023, the Committee identified a **Focus Area** within a portion of the Study Area, prioritizing this region for future wind energy projects. The dataset includes spatial data representing the **Focus Area** and is accompanied by a regional assessment agreement document. Key variables include `focus_area`, `wind_energy_assessment`, and `environmental_impact`. 
+
+- **Source**: Impact Assessment Agency of Canada
+- **Accessibility**: Open Government Licence - Canada
+- **Data Type**: Shapefiles, PDF
+- **Coverage**: Newfoundland and Labrador, Canada
+- **Processing Script**: `prc_offshore_wind_nfl.R`
+- **Output File**: `offshore_wind_nfl.gpkg`
 
 
 
