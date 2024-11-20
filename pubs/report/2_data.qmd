@@ -347,4 +347,163 @@ data.frame(
   knitr::kable(col.names = c("", "Lease numbers", "Protraction numbers"))
 ```
 
+
+## Automatic Identification System (AIS) Shipping Data {#sec-shipping_ais}
+
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files.The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Transport Canada
+- **Accessibility**: Restricted
+- **Data Type**: Parquet, Geodatabase
+- **Coverage**: Atlantic Canada, 2023
+- **Processing Script**: `prc_shipping_ais_tracklines.R`
+- **Output File**: `shipping_ais_tracklines.gpkg`
+
+
+```{r}
+#| label: tbl-shipping-ais-attr
+#| tbl-cap: "Columns (attributes) associated with the derived positional AIS parquet files (table from @tc2023)."
+
+data.frame(
+  Column_Name = c("MMSI", "Latitude", "Longitude", "SOG", "COG", "Heading", "YMD_HMS", "Source"),
+  Description = c(
+    "Maritime Mobile Service Identity",
+    "Latitude of the positional message",
+    "Longitude of the positional message",
+    "Speed over ground of vessel",
+    "Course over ground of vessel",
+    "True heading of vessel",
+    "Time of positional message in UTC",
+    "Data source/message type of AIS message"
+  ),
+  Information = c(
+    "9-digits (MMSIs with valid ship country codes are from 201000000 to 775999999). All ship MMSIs use the format M1I2D3X4X5X6X7X8X9, the first three digits represent the Maritime Identification Digits (MID) and they represent the flag/nationality of the ship. The following digits (X4-X9) can be any numerical value from 0 to 9.",
+    "Latitude recorded in decimal degrees with an accuracy of approximately 10 metres (-90 to 90).",
+    "Longitude recorded in decimal degrees with an accuracy of approximately 10 metres (-180 to 180).",
+    "The speed of the ship with respect to the ground, recorded in knots (0 to 102.2 are valid; 102.3 is invalid).",
+    "The course of the ship, recorded in degrees (0-359.9 are valid; 360 is invalid).",
+    "The true heading of the ship, recorded in degrees (0-359 are valid; 360 is invalid).",
+    "The UTC time stamp of when the positional AIS message was sent from the ship (YYYY-MM-DD hh:mm:ss).",
+    "The source (e.g., terrestrial, dynamic, satellite) and class (A or B) of the AIS message sent (e.g., TAIS_A, TAIS_B, SAIS_A)."
+  ),
+  Data_Type = c(
+    "Integer", "Float", "Float", "Float", "Float", "Integer", "Datetime", "String"
+  )
+) |>
+  knitr::kable()
+```
+
+
+### Data Processing Overview
+To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023:
+
+1. **Data Extraction**
+   - AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the `arrow` and `vroom` R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.
+2. **Initial Data Cleaning**
+   - Raw AIS data was filtered to remove invalid records:
+     - Only positions with valid **MMSI** values (201000000–775999999) were retained.
+     - **SOG** values were restricted to the range 0.1–100 knots to remove implausible speeds.
+3. **Day/Night Classification**
+   - Using the `suncalc` R package, each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.
+4. **Trackline Generation**
+   - Tracklines were created by:
+     1. Sorting AIS data by **MMSI** and timestamp.
+     2. Calculating distances between consecutive positions using geodesic measurements.
+     3. Splitting movements into separate tracks when:
+        - The distance exceeded 50 nautical miles.
+        - The time interval between positions exceeded 300 minutes.
+     4. Further segmenting tracklines to differentiate between daytime and nighttime navigation.
+5. **Trackline Attributes**
+   - Additional attributes were calculated for each trackline to facilitate further analysis:
+     - **Average and Maximum Speeds**: Derived from AIS speed data.
+     - **Number of Positions**: Total AIS messages contributing to the trackline.
+     - **Elapsed Hours**: Duration of the trackline.
+     - **Track Length**: Computed in kilometers using geodesic measurements.
+     - **Daytime Classification**: Indicates whether the trackline occurred during the day, night, or a mix of both.
+6. **Post-Processing**
+   - Erratic tracklines were flagged and removed using heuristic thresholds:
+     - Extremely short tracks (<100 meters).
+     - Unrealistic average speeds (<0.3 knots or >100 km/h).
+     - Speeds exceeding vessel-type-specific thresholds:
+      - 30 km/h for pleasure vessels and special ships.
+      - 35 km/h for fishing and tug vessels.
+      - 40 km/h for all other vessel types.
+   - Tracklines identified as spoofing were excluded from further analyses.
+7. **Output**
+   - The cleaned tracklines were exported as a Geopackage file (`.gpkg`) Each trackline includes spatial geometry and relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (@tbl-shipping-ais-tracklines).
+
+```{r}
+#| label: tbl-shipping-ais-tracklines
+#| tbl-cap: "Columns (attributes) associated with the tracklines created from the derived positional AIS parquet files."
+data.frame(
+  Column_Name = c(
+    "mmsi", "track_id", "day_night_segment", "start_time", "end_time", "avg_sog",
+    "max_sog", "n_pos", "elapsed_hours", "month", "year", "daytime", "geometry",
+    "track_length_km", "vess_name", "ntype", "specific_vess_type", "mt_gt",
+    "mt_length", "mt_width", "mt_draught_max", "GT_ID_TC", "avg_speed_kmh", "spoofing_flags"
+  ),
+  Description = c(
+    "Maritime Mobile Service Identity",
+    "Unique identifier for each trackline within a ship's movement",
+    "Unique identifier for segments of tracklines split by day or night",
+    "Start time of the trackline",
+    "End time of the trackline",
+    "Average speed over ground for the trackline",
+    "Maximum speed over ground for the trackline",
+    "Number of AIS positional records in the trackline",
+    "Total elapsed hours for the trackline",
+    "Month in which the trackline occurs",
+    "Year in which the trackline occurs",
+    "Classification of trackline navigation as day, night, or mixed",
+    "Geospatial representation of the trackline as a linestring",
+    "Length of the trackline in kilometers",
+    "Vessel name",
+    "General vessel type",
+    "Specific vessel type",
+    "Gross tonnage of the vessel",
+    "Length of the vessel in meters",
+    "Width of the vessel in meters",
+    "Maximum draught of the vessel in meters",
+    "Gross tonnage classification based on predefined intervals",
+    "Average speed of the vessel during the trackline in kilometers per hour",
+    "Flag indicating whether the trackline is suspected of spoofing"
+  ),
+  Information = c(
+    "9-digit identifier assigned to a vessel",
+    "Calculated based on movement and distance thresholds",
+    "Generated to separate trackline segments into day and night",
+    "Recorded in POSIXct format with timezone UTC",
+    "Recorded in POSIXct format with timezone UTC",
+    "Measured in knots converted to kilometers per hour",
+    "Measured in knots converted to kilometers per hour",
+    "Count of AIS points within the trackline",
+    "Calculated from start and end timestamps",
+    "Numerical month value (1-12)",
+    "Numerical year value (e.g., 2023)",
+    "Derived using sunrise and sunset times",
+    "LINESTRING geometry object in CRS EPSG:4326",
+    "Derived from geospatial data and measured in kilometers",
+    "Obtained from the AIS static data",
+    "Categorized based on the AIS static data",
+    "Detailed classification provided in AIS static data",
+    "From AIS static data; corresponds to ship's gross tonnage",
+    "From AIS static data; corresponds to ship's length",
+    "From AIS static data; corresponds to ship's width",
+    "From AIS static data; corresponds to ship's draught",
+    "Categorization of gross tonnage into predefined bins",
+    "Calculated by dividing track length by elapsed hours",
+    "Binary value indicating if trackline is potentially spoofed"
+  ),
+  Data_Type = c(
+    "Numeric", "Integer", "Integer", "POSIXct", "POSIXct", "Numeric",
+    "Numeric", "Integer", "Units [hours]", "Numeric", "Numeric", "Character",
+    "sfc_LINESTRING", "Units [km]", "Character", "Character", "Character",
+    "Numeric", "Numeric", "Numeric", "Numeric", "Character", "Units [km/h]",
+    "Logical"
+  )
+) |>
+  knitr::kable()
+```
+
+
 ## References

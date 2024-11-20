@@ -447,6 +447,20 @@ list(
                   tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Project_Inter_array_Cables))
             "workspace/data/harvested/offshore_wind_usa-1.0.0/processed/offshore_wind_usa.gpkg"
         }, format = "file")),
+    list(list(tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "AIS/2023AIS.zip", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS.zip", 
+            overwrite = TRUE)
+        "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS.zip"
+    }, format = "file")), tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_tracklines, 
+    {
+        prc_shipping_ais_tracklines(output_path = "workspace/data/harvested/shipping_ais-1.0.0/processed", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023))
+        "workspace/data/harvested/shipping_ais-1.0.0/processed/shipping_ais_tracklines.gpkg"
+    }, format = "file")),
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
         source_type = "viirs", urls = "NA", dataset = "vbd", 

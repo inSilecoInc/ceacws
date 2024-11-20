@@ -22,17 +22,14 @@ Imports:
     archive,
     data.table,
     dplyr,
-    eaMethods,
     exactextractr,
     fasterize,
     fs,
     glue,
     graphicsutils,
     here,
-    iEat,
     mapview,
     quarto,
-    randomForest,
     raster,
     rlang,
     sf,
@@ -45,9 +42,4 @@ Imports:
     xaringan,
     xaringanExtra
 Remotes:
-    Ecosystem-Assessments/pipedat,
-    Ecosystem-Assessments/rcea,
-    Ecosystem-Assessments/eaMethods,
-    david-beauchesne/iEat,
-    inSileco/graphicsutils,
-    mitchelloharawild/icons
+    inSileco/graphicsutils

@@ -180,7 +180,11 @@ div.csl-indent {
   <li><a href="#sec-offshore_wind_ns" id="toc-sec-offshore_wind_ns" class="nav-link" data-scroll-target="#sec-offshore_wind_ns"><span class="header-section-number">4.3.3</span> Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia</a></li>
   <li><a href="#sec-offshore_wind_usa" id="toc-sec-offshore_wind_usa" class="nav-link" data-scroll-target="#sec-offshore_wind_usa"><span class="header-section-number">4.3.4</span> Bureau of Ocean Energy Management (BOEM) Offshore Wind Data</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.4</span> References</a></li>
+  <li><a href="#sec-shipping_ais" id="toc-sec-shipping_ais" class="nav-link" data-scroll-target="#sec-shipping_ais"><span class="header-section-number">4.4</span> Automatic Identification System (AIS) Shipping Data</a>
+  <ul class="collapse">
+  <li><a href="#data-processing-overview" id="toc-data-processing-overview" class="nav-link" data-scroll-target="#data-processing-overview"><span class="header-section-number">4.4.1</span> Data Processing Overview</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.5</span> References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -669,8 +673,338 @@ Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offs
 </div>
 </section>
 </section>
-<section id="references" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="references"><span class="header-section-number">4.4</span> References</h2>
+<section id="sec-shipping_ais" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-shipping_ais"><span class="header-section-number">4.4</span> Automatic Identification System (AIS) Shipping Data</h2>
+<p>The <a href="https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais">Automatic Identification System (AIS)</a> <span class="citation" data-cites="tc2023">(<a href="#ref-tc2023" role="doc-biblioref">Transports Canada, 2023</a>)</span> collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (<a href="#tbl-shipping-ais-attr" class="quarto-xref">Table&nbsp;<span>4.6</span></a>). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files.The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+<ul>
+<li><strong>Source</strong>: Transport Canada</li>
+<li><strong>Accessibility</strong>: Restricted</li>
+<li><strong>Data Type</strong>: Parquet, Geodatabase</li>
+<li><strong>Coverage</strong>: Atlantic Canada, 2023</li>
+<li><strong>Processing Script</strong>: <code>prc_shipping_ais_tracklines.R</code></li>
+<li><strong>Output File</strong>: <code>shipping_ais_tracklines.gpkg</code></li>
+</ul>
+<div class="cell">
+<div id="tbl-shipping-ais-attr" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS parquet files (table from <span class="citation" data-cites="tc2023">Transports Canada (<a href="#ref-tc2023" role="doc-biblioref">2023</a>)</span>).
+</figcaption>
+<div aria-describedby="tbl-shipping-ais-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 10%">
+<col style="width: 84%">
+<col style="width: 2%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column_Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Information</th>
+<th style="text-align: left;">Data_Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MMSI</td>
+<td style="text-align: left;">Maritime Mobile Service Identity</td>
+<td style="text-align: left;">9-digits (MMSIs with valid ship country codes are from 201000000 to 775999999). All ship MMSIs use the format M1I2D3X4X5X6X7X8X9, the first three digits represent the Maritime Identification Digits (MID) and they represent the flag/nationality of the ship. The following digits (X4-X9) can be any numerical value from 0 to 9.</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latitude</td>
+<td style="text-align: left;">Latitude of the positional message</td>
+<td style="text-align: left;">Latitude recorded in decimal degrees with an accuracy of approximately 10 metres (-90 to 90).</td>
+<td style="text-align: left;">Float</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longitude</td>
+<td style="text-align: left;">Longitude of the positional message</td>
+<td style="text-align: left;">Longitude recorded in decimal degrees with an accuracy of approximately 10 metres (-180 to 180).</td>
+<td style="text-align: left;">Float</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SOG</td>
+<td style="text-align: left;">Speed over ground of vessel</td>
+<td style="text-align: left;">The speed of the ship with respect to the ground, recorded in knots (0 to 102.2 are valid; 102.3 is invalid).</td>
+<td style="text-align: left;">Float</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COG</td>
+<td style="text-align: left;">Course over ground of vessel</td>
+<td style="text-align: left;">The course of the ship, recorded in degrees (0-359.9 are valid; 360 is invalid).</td>
+<td style="text-align: left;">Float</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Heading</td>
+<td style="text-align: left;">True heading of vessel</td>
+<td style="text-align: left;">The true heading of the ship, recorded in degrees (0-359 are valid; 360 is invalid).</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">YMD_HMS</td>
+<td style="text-align: left;">Time of positional message in UTC</td>
+<td style="text-align: left;">The UTC time stamp of when the positional AIS message was sent from the ship (YYYY-MM-DD hh:mm:ss).</td>
+<td style="text-align: left;">Datetime</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Source</td>
+<td style="text-align: left;">Data source/message type of AIS message</td>
+<td style="text-align: left;">The source (e.g., terrestrial, dynamic, satellite) and class (A or B) of the AIS message sent (e.g., TAIS_A, TAIS_B, SAIS_A).</td>
+<td style="text-align: left;">String</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<section id="data-processing-overview" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="data-processing-overview"><span class="header-section-number">4.4.1</span> Data Processing Overview</h3>
+<p>To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in <span class="citation" data-cites="veinot2023">(<a href="#ref-veinot2023" role="doc-biblioref"><strong>veinot2023?</strong></a>)</span>:</p>
+<ol type="1">
+<li><strong>Data Extraction</strong>
+<ul>
+<li>AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the <code>arrow</code> and <code>vroom</code> R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.</li>
+</ul></li>
+<li><strong>Initial Data Cleaning</strong>
+<ul>
+<li>Raw AIS data was filtered to remove invalid records:
+<ul>
+<li>Only positions with valid <strong>MMSI</strong> values (201000000–775999999) were retained.</li>
+<li><strong>SOG</strong> values were restricted to the range 0.1–100 knots to remove implausible speeds.</li>
+</ul></li>
+</ul></li>
+<li><strong>Day/Night Classification</strong>
+<ul>
+<li>Using the <code>suncalc</code> R package, each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.</li>
+</ul></li>
+<li><strong>Trackline Generation</strong>
+<ul>
+<li>Tracklines were created by:
+<ol type="1">
+<li>Sorting AIS data by <strong>MMSI</strong> and timestamp.</li>
+<li>Calculating distances between consecutive positions using geodesic measurements.</li>
+<li>Splitting movements into separate tracks when:
+<ul>
+<li>The distance exceeded 50 nautical miles.</li>
+<li>The time interval between positions exceeded 300 minutes.</li>
+</ul></li>
+<li>Further segmenting tracklines to differentiate between daytime and nighttime navigation.</li>
+</ol></li>
+</ul></li>
+<li><strong>Trackline Attributes</strong>
+<ul>
+<li>Additional attributes were calculated for each trackline to facilitate further analysis:
+<ul>
+<li><strong>Average and Maximum Speeds</strong>: Derived from AIS speed data.</li>
+<li><strong>Number of Positions</strong>: Total AIS messages contributing to the trackline.</li>
+<li><strong>Elapsed Hours</strong>: Duration of the trackline.</li>
+<li><strong>Track Length</strong>: Computed in kilometers using geodesic measurements.</li>
+<li><strong>Daytime Classification</strong>: Indicates whether the trackline occurred during the day, night, or a mix of both.</li>
+</ul></li>
+</ul></li>
+<li><strong>Post-Processing</strong>
+<ul>
+<li>Erratic tracklines were flagged and removed using heuristic thresholds:
+<ul>
+<li>Extremely short tracks (&lt;100 meters).</li>
+<li>Unrealistic average speeds (&lt;0.3 knots or &gt;100 km/h).</li>
+<li>Speeds exceeding vessel-type-specific thresholds:</li>
+<li>30 km/h for pleasure vessels and special ships.</li>
+<li>35 km/h for fishing and tug vessels.</li>
+<li>40 km/h for all other vessel types.</li>
+</ul></li>
+<li>Tracklines identified as spoofing were excluded from further analyses.</li>
+</ul></li>
+<li><strong>Output</strong>
+<ul>
+<li>The cleaned tracklines were exported as a Geopackage file (<code>.gpkg</code>) Each trackline includes spatial geometry and relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-tracklines" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div id="tbl-shipping-ais-tracklines" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-tracklines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.7: Columns (attributes) associated with the tracklines created from the derived positional AIS parquet files.
+</figcaption>
+<div aria-describedby="tbl-shipping-ais-tracklines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 43%">
+<col style="width: 36%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column_Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Information</th>
+<th style="text-align: left;">Data_Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mmsi</td>
+<td style="text-align: left;">Maritime Mobile Service Identity</td>
+<td style="text-align: left;">9-digit identifier assigned to a vessel</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">track_id</td>
+<td style="text-align: left;">Unique identifier for each trackline within a ship’s movement</td>
+<td style="text-align: left;">Calculated based on movement and distance thresholds</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">day_night_segment</td>
+<td style="text-align: left;">Unique identifier for segments of tracklines split by day or night</td>
+<td style="text-align: left;">Generated to separate trackline segments into day and night</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">start_time</td>
+<td style="text-align: left;">Start time of the trackline</td>
+<td style="text-align: left;">Recorded in POSIXct format with timezone UTC</td>
+<td style="text-align: left;">POSIXct</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">end_time</td>
+<td style="text-align: left;">End time of the trackline</td>
+<td style="text-align: left;">Recorded in POSIXct format with timezone UTC</td>
+<td style="text-align: left;">POSIXct</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">avg_sog</td>
+<td style="text-align: left;">Average speed over ground for the trackline</td>
+<td style="text-align: left;">Measured in knots converted to kilometers per hour</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">max_sog</td>
+<td style="text-align: left;">Maximum speed over ground for the trackline</td>
+<td style="text-align: left;">Measured in knots converted to kilometers per hour</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">n_pos</td>
+<td style="text-align: left;">Number of AIS positional records in the trackline</td>
+<td style="text-align: left;">Count of AIS points within the trackline</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elapsed_hours</td>
+<td style="text-align: left;">Total elapsed hours for the trackline</td>
+<td style="text-align: left;">Calculated from start and end timestamps</td>
+<td style="text-align: left;">Units [hours]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">month</td>
+<td style="text-align: left;">Month in which the trackline occurs</td>
+<td style="text-align: left;">Numerical month value (1-12)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year</td>
+<td style="text-align: left;">Year in which the trackline occurs</td>
+<td style="text-align: left;">Numerical year value (e.g., 2023)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">daytime</td>
+<td style="text-align: left;">Classification of trackline navigation as day, night, or mixed</td>
+<td style="text-align: left;">Derived using sunrise and sunset times</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geometry</td>
+<td style="text-align: left;">Geospatial representation of the trackline as a linestring</td>
+<td style="text-align: left;">LINESTRING geometry object in CRS EPSG:4326</td>
+<td style="text-align: left;">sfc_LINESTRING</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">track_length_km</td>
+<td style="text-align: left;">Length of the trackline in kilometers</td>
+<td style="text-align: left;">Derived from geospatial data and measured in kilometers</td>
+<td style="text-align: left;">Units [km]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vess_name</td>
+<td style="text-align: left;">Vessel name</td>
+<td style="text-align: left;">Obtained from the AIS static data</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ntype</td>
+<td style="text-align: left;">General vessel type</td>
+<td style="text-align: left;">Categorized based on the AIS static data</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">specific_vess_type</td>
+<td style="text-align: left;">Specific vessel type</td>
+<td style="text-align: left;">Detailed classification provided in AIS static data</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mt_gt</td>
+<td style="text-align: left;">Gross tonnage of the vessel</td>
+<td style="text-align: left;">From AIS static data; corresponds to ship’s gross tonnage</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mt_length</td>
+<td style="text-align: left;">Length of the vessel in meters</td>
+<td style="text-align: left;">From AIS static data; corresponds to ship’s length</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mt_width</td>
+<td style="text-align: left;">Width of the vessel in meters</td>
+<td style="text-align: left;">From AIS static data; corresponds to ship’s width</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mt_draught_max</td>
+<td style="text-align: left;">Maximum draught of the vessel in meters</td>
+<td style="text-align: left;">From AIS static data; corresponds to ship’s draught</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GT_ID_TC</td>
+<td style="text-align: left;">Gross tonnage classification based on predefined intervals</td>
+<td style="text-align: left;">Categorization of gross tonnage into predefined bins</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">avg_speed_kmh</td>
+<td style="text-align: left;">Average speed of the vessel during the trackline in kilometers per hour</td>
+<td style="text-align: left;">Calculated by dividing track length by elapsed hours</td>
+<td style="text-align: left;">Units [km/h]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">spoofing_flags</td>
+<td style="text-align: left;">Flag indicating whether the trackline is suspected of spoofing</td>
+<td style="text-align: left;">Binary value indicating if trackline is potentially spoofed</td>
+<td style="text-align: left;">Logical</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="references" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="references"><span class="header-section-number">4.5</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
@@ -697,6 +1031,9 @@ National Environmental Emergency Centre (2024). Atlantic (including <span>Quebec
 </div>
 <div id="ref-tc2024" class="csl-entry" role="listitem">
 Transport Canada (2024). National <span>Aerial Surveillance Program</span> (<span>NASP</span>). <span>Data</span> extraction for period between <span>April</span> 2012 to <span>March</span> 2023. <span>Transport Canada</span>.
+</div>
+<div id="ref-tc2023" class="csl-entry" role="listitem">
+Transports Canada (2023). Satellite navigation data from automatic identification system (AIS) in atlantic canada, 2023. Data provided by transports canada. <span>Transports Canada</span>.
 </div>
 <div id="ref-wind_regional_assessment2024" class="csl-entry" role="listitem">
 Wind Regional Assessment Team (2024). Offshore wind development areas - canada. <span>Environment and Climate Change Canada</span>.
