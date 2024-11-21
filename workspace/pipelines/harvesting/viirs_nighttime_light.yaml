@@ -24,6 +24,31 @@ pipeline:
     data_quality:
       - "Monthly cloud-free composites; data availability may vary due to cloud cover and polar summer solar illumination."
 
+  bibliography:    
+  - "@Dataset{vnl2024,
+      author = {{Earth Observation Group, Payne Institute for Public Policy}},
+      title = {{VIIRS Night Light (VNL) Dataset}},
+      year = {2024},
+      url = {https://eogdata.mines.edu/products/vnl/},
+      institution = {{Earth Observation Group, Payne Institute for Public Policy}},
+      note = {Accessed: 2024-11-21}
+    }"
+  - "@Article{elvidge2013b,
+      author = {Elvidge, Christopher D. and Baugh, Kimberly E. and Zhizhin, Mikhail and Hsu, Feng-Chi},
+      title = {{Why VIIRS Data Are Superior to DMSP for Mapping Nighttime Lights}},
+      journal = {Asia-Pacific Advanced Network},
+      volume = {35},
+      pages = {62},
+      year = {2013}
+    }"
+  - "@Article{elvidge2024,
+      author = {Elvidge, Christopher D. and Zhizhin, Mikhail and Ghosh, Tathagata and Hsu, Feng-Chi},
+      title = {{Annual Time Series of Global VIIRS Nighttime Lights Derived from Monthly Averages: 2012 to 2019}},
+      journal = {Remote Sensing},
+      status = {In press}
+    }"
+
+
   # Download section: Specifies how to access the data from the VIIRS server
   download:
     sources:

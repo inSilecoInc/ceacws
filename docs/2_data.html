@@ -187,6 +187,7 @@ div.csl-indent {
   <li><a href="#visible-infrared-imaging-radiometer-suite" id="toc-visible-infrared-imaging-radiometer-suite" class="nav-link" data-scroll-target="#visible-infrared-imaging-radiometer-suite"><span class="header-section-number">4.5</span> Visible Infrared Imaging Radiometer Suite</a>
   <ul class="collapse">
   <li><a href="#sec-viirs_boat_detection" id="toc-sec-viirs_boat_detection" class="nav-link" data-scroll-target="#sec-viirs_boat_detection"><span class="header-section-number">4.5.1</span> VIIRS Boat Detection (VBD) Dataset</a></li>
+  <li><a href="#sec-viirs_night_fire" id="toc-sec-viirs_night_fire" class="nav-link" data-scroll-target="#sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.6</span> References</a></li>
   </ul></li>
@@ -1099,6 +1100,286 @@ Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection da
 <li><strong>SHI</strong>: Measures the signal strength relative to a high radiance threshold, helping to exclude detections influenced by bright land-based lights or other high-radiance sources.</li>
 </ul>
 <p>Future iterations of the pipeline could incorporate these metrics for scenarios requiring stricter detection thresholds, such as high-confidence studies of vessel activity in heavily lit areas.</p>
+</section>
+</section>
+<section id="sec-viirs_night_fire" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</h3>
+<!-- To look at: https://www.mdpi.com/2072-4292/13/16/3078 -->
+<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-elvidge2013" role="doc-biblioref"><strong>elvidge2013?</strong></a>; <a href="#ref-vnf2024" role="doc-biblioref"><strong>vnf2024?</strong></a>)</span> provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes that were selected for their relevance to this project.</p>
+<ul>
+<li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
+<li><strong>Accessibility</strong>: Restricted with credentials</li>
+<li><strong>Data Type</strong>: Nightly CSV files</li>
+<li><strong>Coverage</strong>: Global</li>
+<li><strong>Processing Script</strong>: <code>prc_viirs_night_fire.R</code></li>
+<li><strong>Output File</strong>: <code>viirs_night_fire.gpkg</code></li>
+</ul>
+<div class="cell">
+<div id="tbl-viirs-vnf-attr" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire dataset used for this project.
+</figcaption>
+<div aria-describedby="tbl-viirs-vnf-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 70%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column_Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Data_Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Date_Mscan</td>
+<td style="text-align: left;">Date and time of the observation in UTC</td>
+<td style="text-align: left;">POSIXct</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lat_GMTCO</td>
+<td style="text-align: left;">Latitude of the detected thermal anomaly in decimal degrees</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lon_GMTCO</td>
+<td style="text-align: left;">Longitude of the detected thermal anomaly in decimal degrees</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rad_DNB</td>
+<td style="text-align: left;">Radiance intensity from the DNB band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rad_M07</td>
+<td style="text-align: left;">Radiance intensity from the M07 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rad_M08</td>
+<td style="text-align: left;">Radiance intensity from the M08 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rad_M10</td>
+<td style="text-align: left;">Radiance intensity from the M10 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rad_M11</td>
+<td style="text-align: left;">Radiance intensity from the M11 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rad_M12</td>
+<td style="text-align: left;">Radiance intensity from the M12 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rad_M13</td>
+<td style="text-align: left;">Radiance intensity from the M13 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rad_M14</td>
+<td style="text-align: left;">Radiance intensity from the M14 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rad_M15</td>
+<td style="text-align: left;">Radiance intensity from the M15 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rad_M16</td>
+<td style="text-align: left;">Radiance intensity from the M16 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">QF_Detect</td>
+<td style="text-align: left;">Quality flag indicating confidence in the detection (bitwise field)</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">id_iremitter</td>
+<td style="text-align: left;">Unique identifier for the potential emitter</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lat_iremitter</td>
+<td style="text-align: left;">Latitude of the emitter in decimal degrees</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lon_iremitter</td>
+<td style="text-align: left;">Longitude of the emitter in decimal degrees</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type_iremitter</td>
+<td style="text-align: left;">Type of the emitter (e.g., industrial, flaring)</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Category_iremitter</td>
+<td style="text-align: left;">Category of the emitter (e.g., petroleum, thermal anomaly)</td>
+<td style="text-align: left;">Character</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<section id="data-processing-overview-2" class="level4" data-number="4.5.2.1">
+<h4 data-number="4.5.2.1" class="anchored" data-anchor-id="data-processing-overview-2"><span class="header-section-number">4.5.2.1</span> Data Processing Overview</h4>
+<p>To prepare the VNF dataset for further analyses, the following pre-processing steps were applied:</p>
+<ol type="1">
+<li><strong>Data Extraction</strong>
+<ul>
+<li>Raw CSV files were downloaded for December 2023 and processed using <code>arrow::read_csv_arrow()</code> for efficient import. Only necessary columns were selected during import to minimize memory usage.</li>
+</ul></li>
+<li><strong>Quality Filtering</strong>
+<ul>
+<li>Data quality was ensured by applying bitwise filtering to the <code>QF_Detect</code> field. Flags corresponding to high-confidence detections and specific radiance thresholds were retained (<a href="#tbl-viirs-vnf-flags" class="quarto-xref">Table&nbsp;<span>4.10</span></a>):
+<ul>
+<li>High Radiance Thresholds: Retained flags ensuring M07–M16 radiance values exceed file-specific thresholds.</li>
+<li>Thermal Anomalies: Retained detections flagged as local maxima (e.g., <code>M14 local thermal anomaly</code>) or outliers based on scatterplots.</li>
+<li>Cluster Detections: Retained flags identifying pixels as part of clusters or top-hat filtered regions.</li>
+</ul></li>
+</ul></li>
+<li><strong>Spatial Filtering</strong>
+<ul>
+<li>The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
+<ul>
+<li>Longitude: -141° to -50°.</li>
+<li>Latitude: 40° to 85°.</li>
+</ul></li>
+</ul></li>
+<li><strong>Radiance Selection</strong>
+<ul>
+<li>Radiance fields from DNB and spectral bands M07–M16 were retained. These fields are critical for analyzing flare activity, as described in scientific literature.</li>
+</ul></li>
+<li><strong>Emitter Information</strong>
+<ul>
+<li>Fields related to potential thermal sources (<code>id_iremitter</code>, <code>Lat_iremitter</code>, <code>Lon_iremitter</code>, <code>Type_iremitter</code>, <code>Category_iremitter</code>) were included for downstream analyses.</li>
+</ul></li>
+<li><strong>Temporal Standardization</strong>
+<ul>
+<li>Timestamps were standardized to UTC using the <code>lubridate</code> package to ensure temporal consistency across datasets.</li>
+</ul></li>
+<li><strong>Output</strong>
+<ul>
+<li>The pre-processed dataset was saved as a GeoPackage (<code>viirs_night_fire.gpkg</code>).</li>
+<li>The GeoPackage contains spatial coordinates in the EPSG:4326 projection, radiance fields, emitter information, and retained quality flags.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div id="tbl-viirs-vnf-flags" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.10: Retained Quality Flags for VIIRS Nightfire Data Processing.
+</figcaption>
+<div aria-describedby="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 28%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Flag</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">M10 radiance above threshold</td>
+<td style="text-align: left;">Ensures M10 radiance is significant for thermal analysis.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">M10 local maximum (bow-tie corrected)</td>
+<td style="text-align: left;">Captures prominent local maxima in M10, reducing noise from bow-tie duplication.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">M7 radiance above threshold</td>
+<td style="text-align: left;">Identifies potential detections based on M7 radiance thresholds.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">M8 radiance above threshold</td>
+<td style="text-align: left;">Ensures inclusion of detections with high M8 radiance, often indicative of thermal events.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">M12 radiance outside scatterplot limits</td>
+<td style="text-align: left;">Captures M12 detections outside scatterplot-defined radiance limits, indicating anomalies.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32</td>
+<td style="text-align: left;">M13 radiance outside scatterplot limits</td>
+<td style="text-align: left;">Captures M13 detections outside scatterplot-defined radiance limits, indicating anomalies.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">64</td>
+<td style="text-align: left;">DNB local maximum within 3 km of M10</td>
+<td style="text-align: left;">Identifies significant DNB maxima close to thermal detections for contextual analysis.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">128</td>
+<td style="text-align: left;">M10 cluster detection</td>
+<td style="text-align: left;">Highlights clusters of M10 detections, often related to persistent sources.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">65536</td>
+<td style="text-align: left;">M11 cluster detection</td>
+<td style="text-align: left;">Highlights clusters of M11 detections for thermal anomaly identification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2048</td>
+<td style="text-align: left;">M10 tophat-filtered</td>
+<td style="text-align: left;">Filters M10 detections using a tophat approach to remove spurious signals.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4096</td>
+<td style="text-align: left;">M12 tophat-filtered</td>
+<td style="text-align: left;">Filters M12 detections using a tophat approach to remove spurious signals.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8192</td>
+<td style="text-align: left;">M13 tophat-filtered</td>
+<td style="text-align: left;">Filters M13 detections using a tophat approach to remove spurious signals.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">262144</td>
+<td style="text-align: left;">M11 tophat-filtered</td>
+<td style="text-align: left;">Filters M11 detections using a tophat approach to remove spurious signals.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">524288</td>
+<td style="text-align: left;">M14 local thermal anomaly</td>
+<td style="text-align: left;">Identifies strong thermal anomalies in M14, essential for flare detection.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 </section>
 </section>

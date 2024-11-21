@@ -489,8 +489,8 @@ list(
     list(list(tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Night Fire Nightly Data", 
         source_type = "viirs", urls = "NA", dataset = "vnf", 
-        resolution = "nightly", dates = list(c("2023-12-01", 
-        "2023-12-02")), credentials = "workspace/credentials/earth_observation_group.json", 
+        resolution = "nightly", dates = list(c("2023-11-01", 
+        "2024-12-31")), credentials = "workspace/credentials/earth_observation_group.json", 
         output_path = "workspace/data/harvested/viirs_night_fire-1.0.0/raw", 
         output = NULL, url = "NA", target_name = structure("tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data", class = c("glue", 
         "character")))), format = "rds"), tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_files, 
@@ -505,7 +505,12 @@ list(
                   basename(x)), handle = handle, mode = "wb")
             })
         "workspace/data/harvested/viirs_night_fire-1.0.0/raw"
-    }, format = "file"))),
+    }, format = "file")), tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire, 
+    {
+        prc_viirs_night_fire(output_path = "workspace/data/harvested/viirs_night_fire-1.0.0/processed", 
+            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_files))
+        "workspace/data/harvested/viirs_night_fire-1.0.0/processed/viirs_night_fire.gpkg"
+    }, format = "file")),
     list(list(tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Monthly Nighttime Light", 
         source_type = "viirs", dataset = "vnl", urls = "NA", 

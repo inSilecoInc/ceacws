@@ -563,5 +563,127 @@ Future iterations of the pipeline could incorporate these metrics for scenarios 
 
 
 
+### VIIRS Night Fire (VNF) Dataset {#sec-viirs_night_fire}
+
+<!-- To look at: https://www.mdpi.com/2072-4292/13/16/3078 -->
+
+The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes that were selected for their relevance to this project. 
+
+- **Source**: Earth Observation Group, Payne Institute for Public Policy
+- **Accessibility**: Restricted with credentials
+- **Data Type**: Nightly CSV files
+- **Coverage**: Global
+- **Processing Script**: `prc_viirs_night_fire.R`
+- **Output File**: `viirs_night_fire.gpkg`
+
+```{r}
+#| label: tbl-viirs-vnf-attr
+#| tbl-cap: "Columns (attributes) associated with the VIIRS Night Fire dataset used for this project."
+
+data.frame(
+  Column_Name = c(
+    "Date_Mscan", "Lat_GMTCO", "Lon_GMTCO", "Rad_DNB", "Rad_M07", "Rad_M08",
+    "Rad_M10", "Rad_M11", "Rad_M12", "Rad_M13", "Rad_M14", "Rad_M15", "Rad_M16",
+    "QF_Detect", "id_iremitter", "Lat_iremitter", "Lon_iremitter", "Type_iremitter", "Category_iremitter"
+  ),
+  Description = c(
+    "Date and time of the observation in UTC",
+    "Latitude of the detected thermal anomaly in decimal degrees",
+    "Longitude of the detected thermal anomaly in decimal degrees",
+    "Radiance intensity from the DNB band (nW/cm²/sr)",
+    "Radiance intensity from the M07 band (nW/cm²/sr)",
+    "Radiance intensity from the M08 band (nW/cm²/sr)",
+    "Radiance intensity from the M10 band (nW/cm²/sr)",
+    "Radiance intensity from the M11 band (nW/cm²/sr)",
+    "Radiance intensity from the M12 band (nW/cm²/sr)",
+    "Radiance intensity from the M13 band (nW/cm²/sr)",
+    "Radiance intensity from the M14 band (nW/cm²/sr)",
+    "Radiance intensity from the M15 band (nW/cm²/sr)",
+    "Radiance intensity from the M16 band (nW/cm²/sr)",
+    "Quality flag indicating confidence in the detection (bitwise field)",
+    "Unique identifier for the potential emitter",
+    "Latitude of the emitter in decimal degrees",
+    "Longitude of the emitter in decimal degrees",
+    "Type of the emitter (e.g., industrial, flaring)",
+    "Category of the emitter (e.g., petroleum, thermal anomaly)"
+  ),
+  Data_Type = c(
+    "POSIXct", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Numeric", "Integer", "Character", "Numeric", "Numeric", "Character", "Character"
+  )
+) |>
+  knitr::kable()
+```
+
+#### Data Processing Overview
+
+To prepare the VNF dataset for further analyses, the following pre-processing steps were applied:
+
+1. **Data Extraction**
+   - Raw CSV files were downloaded for December 2023 and processed using `arrow::read_csv_arrow()` for efficient import. Only necessary columns were selected during import to minimize memory usage.
+2. **Quality Filtering**
+   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field. Flags corresponding to high-confidence detections and specific radiance thresholds were retained (@tbl-viirs-vnf-flags):
+     - High Radiance Thresholds: Retained flags ensuring M07–M16 radiance values exceed file-specific thresholds.
+     - Thermal Anomalies: Retained detections flagged as local maxima (e.g., `M14 local thermal anomaly`) or outliers based on scatterplots.
+     - Cluster Detections: Retained flags identifying pixels as part of clusters or top-hat filtered regions.
+3. **Spatial Filtering**
+   - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
+     - Longitude: -141° to -50°.
+     - Latitude: 40° to 85°.
+4. **Radiance Selection**
+   - Radiance fields from DNB and spectral bands M07–M16 were retained. These fields are critical for analyzing flare activity, as described in scientific literature.
+5. **Emitter Information**
+   - Fields related to potential thermal sources (`id_iremitter`, `Lat_iremitter`, `Lon_iremitter`, `Type_iremitter`, `Category_iremitter`) were included for downstream analyses.
+6. **Temporal Standardization**
+   - Timestamps were standardized to UTC using the `lubridate` package to ensure temporal consistency across datasets.
+7. **Output**
+   - The pre-processed dataset was saved as a GeoPackage (`viirs_night_fire.gpkg`). 
+   - The GeoPackage contains spatial coordinates in the EPSG:4326 projection, radiance fields, emitter information, and retained quality flags.
+
+
+```{r}
+#| label: tbl-viirs-vnf-flags
+#| tbl-cap: "Retained Quality Flags for VIIRS Nightfire Data Processing."
+
+data.frame(
+  Flag = c(1, 2, 4, 8, 16, 32, 64, 128, 65536, 2048, 4096, 8192, 262144, 524288),
+  Description = c(
+    "M10 radiance above threshold",
+    "M10 local maximum (bow-tie corrected)",
+    "M7 radiance above threshold",
+    "M8 radiance above threshold",
+    "M12 radiance outside scatterplot limits",
+    "M13 radiance outside scatterplot limits",
+    "DNB local maximum within 3 km of M10",
+    "M10 cluster detection",
+    "M11 cluster detection",
+    "M10 tophat-filtered",
+    "M12 tophat-filtered",
+    "M13 tophat-filtered",
+    "M11 tophat-filtered",
+    "M14 local thermal anomaly"
+  ),
+  Rationale = c(
+    "Ensures M10 radiance is significant for thermal analysis.",
+    "Captures prominent local maxima in M10, reducing noise from bow-tie duplication.",
+    "Identifies potential detections based on M7 radiance thresholds.",
+    "Ensures inclusion of detections with high M8 radiance, often indicative of thermal events.",
+    "Captures M12 detections outside scatterplot-defined radiance limits, indicating anomalies.",
+    "Captures M13 detections outside scatterplot-defined radiance limits, indicating anomalies.",
+    "Identifies significant DNB maxima close to thermal detections for contextual analysis.",
+    "Highlights clusters of M10 detections, often related to persistent sources.",
+    "Highlights clusters of M11 detections for thermal anomaly identification.",
+    "Filters M10 detections using a tophat approach to remove spurious signals.",
+    "Filters M12 detections using a tophat approach to remove spurious signals.",
+    "Filters M13 detections using a tophat approach to remove spurious signals.",
+    "Filters M11 detections using a tophat approach to remove spurious signals.",
+    "Identifies strong thermal anomalies in M14, essential for flare detection."
+  )
+) |> knitr::kable(col.names = c("Flag", "Description", "Rationale"))
+```
+
+
+
 
 ## References

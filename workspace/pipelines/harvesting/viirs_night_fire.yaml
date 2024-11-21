@@ -26,6 +26,26 @@ pipeline:
     data_quality:
       - "Nightly data available for December 2023 only for the npp platform."
 
+  bibliography:
+    - "@Dataset{vnf2024,
+        author = {{Earth Observation Group, Payne Institute for Public Policy}},
+        title = {{VIIRS Night Fire (VNF) Dataset}},
+        year = {2024},
+        url = {https://eogdata.mines.edu/products/vnf/},
+        institution = {{Earth Observation Group, Payne Institute for Public Policy}},
+        note = {Accessed: 2024-11-21}
+      }"
+    - "@Article{elvidge2013,
+        author = {Elvidge, Christopher D. and Zhizhin, Mikhail and Hsu, Feng-Chi and Baugh, Kimberly E.},
+        title = {{VIIRS Nightfire: Satellite Pyrometry at Night}},
+        journal = {Remote Sensing},
+        volume = {5},
+        number = {9},
+        pages = {4423--4449},
+        year = {2013},
+        doi = {10.3390/rs5094423}
+      }"
+
   # Download section: Specifies how to access the data from the VIIRS server
   download:
     sources:
@@ -35,17 +55,16 @@ pipeline:
         dataset: "vnf"
         resolution: "nightly"
         dates:
-          - ["2023-12-01", "2023-12-02"]
+          - ["2023-11-01", "2024-12-31"]
         credentials: "workspace/credentials/earth_observation_group.json"
 
-  # # Processing (if required)
-  # processing:
-  #   sources:
-  #     - name: vnf_nightly_data
-  #       script: prc_vnf_nightly
-  #       input_files:
-  #         - VIIRS Night Fire Nightly Data
-  #       output_files: vnf_nightly_summary.gpkg
+  processing:
+    sources:
+      - name: VIIRS Night Fire
+        script: prc_viirs_night_fire
+        input_files:
+          - VIIRS Night Fire Nightly Data_files
+        output_files: viirs_night_fire.gpkg
 
   # Output section: final output of the processed data
   output:
