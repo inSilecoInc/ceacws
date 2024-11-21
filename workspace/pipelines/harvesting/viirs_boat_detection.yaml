@@ -58,14 +58,13 @@ pipeline:
         country_code: "global-saa"                 # Use SAA redacted global dataset
         credentials: "workspace/credentials/earth_observation_group.json" # Path to JSON credentials for VIIRS data
 
-  # # Processing section: specifies post-processing (if needed) on downloaded data files
-  # processing:
-  #   sources:
-  #     - name: vbd_nightly
-  #       script: process_vbd_nightly
-  #       input_files:
-  #         - VBD Nightly Global Data                # Matches the name from the download section
-  #       output_files: vbd_nightly_global.gpkg
+  processing:
+    sources:
+      - name: VIIRS Boat Detection
+        script: prc_viirs_boat_detection
+        input_files:
+          - VBD Nightly Global Data_files              
+        output_files: viirs_boat_detection.gpkg
 
   # Output section: specifies where to store the final processed data
   output:

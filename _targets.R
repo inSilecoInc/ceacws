@@ -480,7 +480,12 @@ list(
                   basename(x)), handle = handle, mode = "wb")
             })
         "workspace/data/harvested/viirs_boat_detection-1.0.0/raw"
-    }, format = "file"))),
+    }, format = "file")), tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VIIRS_Boat_Detection, 
+    {
+        prc_viirs_boat_detection(output_path = "workspace/data/harvested/viirs_boat_detection-1.0.0/processed", 
+            input_files = list(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_files))
+        "workspace/data/harvested/viirs_boat_detection-1.0.0/processed/viirs_boat_detection.gpkg"
+    }, format = "file")),
     list(list(tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Night Fire Nightly Data", 
         source_type = "viirs", urls = "NA", dataset = "vnf", 
