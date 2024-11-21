@@ -188,6 +188,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#sec-viirs_boat_detection" id="toc-sec-viirs_boat_detection" class="nav-link" data-scroll-target="#sec-viirs_boat_detection"><span class="header-section-number">4.5.1</span> VIIRS Boat Detection (VBD) Dataset</a></li>
   <li><a href="#sec-viirs_night_fire" id="toc-sec-viirs_night_fire" class="nav-link" data-scroll-target="#sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</a></li>
+  <li><a href="#sec-viirs_nightlight" id="toc-sec-viirs_nightlight" class="nav-link" data-scroll-target="#sec-viirs_nightlight"><span class="header-section-number">4.5.3</span> VIIRS Nighttime Light (VNL) Dataset</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.6</span> References</a></li>
   </ul></li>
@@ -1013,7 +1014,7 @@ Table&nbsp;4.7: Columns (attributes) associated with the tracklines created from
 <p>The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration’s (NOAA) Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.</p>
 <section id="sec-viirs_boat_detection" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-viirs_boat_detection"><span class="header-section-number">4.5.1</span> VIIRS Boat Detection (VBD) Dataset</h3>
-<p>The <a href="https://eogdata.mines.edu/products/vbd/">VIIRS Boat Detection (VBD) Dataset</a> <span class="citation" data-cites="eog2024">(<a href="#ref-eog2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024</a>)</span> provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (<a href="#tbl-viirs-vbd-attr" class="quarto-xref">Table&nbsp;<span>4.8</span></a>). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.</p>
+<p>The <a href="https://eogdata.mines.edu/products/vbd/">VIIRS Boat Detection (VBD) Dataset</a> <span class="citation" data-cites="eog2024">(<a href="#ref-eog2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024a</a>)</span> provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (<a href="#tbl-viirs-vbd-attr" class="quarto-xref">Table&nbsp;<span>4.8</span></a>). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.</p>
 <ul>
 <li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
 <li><strong>Accessibility</strong>: Public domain with registration</li>
@@ -1105,7 +1106,7 @@ Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection da
 <section id="sec-viirs_night_fire" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</h3>
 <!-- To look at: https://www.mdpi.com/2072-4292/13/16/3078 -->
-<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-elvidge2013" role="doc-biblioref"><strong>elvidge2013?</strong></a>; <a href="#ref-vnf2024" role="doc-biblioref"><strong>vnf2024?</strong></a>)</span> provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes that were selected for their relevance to this project.</p>
+<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-vnf2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024b</a>; <a href="#ref-elvidge2013" role="doc-biblioref">Elvidge et al., 2013b</a>)</span> provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes that were selected for their relevance to this project.</p>
 <ul>
 <li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
 <li><strong>Accessibility</strong>: Restricted with credentials</li>
@@ -1382,6 +1383,24 @@ Table&nbsp;4.10: Retained Quality Flags for VIIRS Nightfire Data Processing.
 </div>
 </section>
 </section>
+<section id="sec-viirs_nightlight" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="sec-viirs_nightlight"><span class="header-section-number">4.5.3</span> VIIRS Nighttime Light (VNL) Dataset</h3>
+<p>The <a href="https://eogdata.mines.edu/products/vnl/">VIIRS Nighttime Light (VNL) Dataset</a> <span class="citation" data-cites="vnl2024 elvidge2013b elvidge2024">(<a href="#ref-vnl2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024c</a>; <a href="#ref-elvidge2024" role="doc-biblioref">Elvidge et al.</a>, <a href="#ref-elvidge2013b" role="doc-biblioref">2013a</a>)</span> provides global observations of nighttime light intensity captured by the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics.</p>
+<p>For this analysis, the file type <code>avg_rade9h</code> was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the <code>vcm</code> configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the <code>j01</code> platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.</p>
+<p>The raw raster files were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ). Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (-141, 40, -50, 85), and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.</p>
+<section id="data-overview" class="level4" data-number="4.5.3.1">
+<h4 data-number="4.5.3.1" class="anchored" data-anchor-id="data-overview"><span class="header-section-number">4.5.3.1</span> Data Overview</h4>
+<ul>
+<li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
+<li><strong>Accessibility</strong>: Restricted access, credentials required</li>
+<li><strong>Data Type</strong>: GeoTIFF files (.tif.gz)</li>
+<li><strong>Coverage</strong>: Global</li>
+<li><strong>Temporal Resolution</strong>: Monthly</li>
+<li><strong>Processing Script</strong>: <code>prc_viirs_night_light.R</code></li>
+<li><strong>Output File</strong>: <code>viirs_night_light.tif</code></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="references" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="references"><span class="header-section-number">4.6</span> References</h2>
@@ -1398,7 +1417,22 @@ Canada-Newfoundland and Labrador Offshore Petroleum Board (2024). Offshore petro
 Canada-Nova Scotia Offshore Petroleum Board (2024). Offshore petroleum data for nova scotia. <span>CNSOPB</span>.
 </div>
 <div id="ref-eog2024" class="csl-entry" role="listitem">
-Earth Observation Group, Payne Institute for Public Policy (2024). <span>VIIRS Boat Detection (VBD) Dataset</span>. Available at: <a href="https://eogdata.mines.edu/products/vbd/">https://eogdata.mines.edu/products/vbd/</a>.
+Earth Observation Group, Payne Institute for Public Policy (2024a). <span>VIIRS Boat Detection (VBD) Dataset</span>. Available at: <a href="https://eogdata.mines.edu/products/vbd/">https://eogdata.mines.edu/products/vbd/</a>.
+</div>
+<div id="ref-vnf2024" class="csl-entry" role="listitem">
+Earth Observation Group, Payne Institute for Public Policy (2024b). <span>VIIRS Night Fire (VNF) Dataset</span>. Available at: <a href="https://eogdata.mines.edu/products/vnf/">https://eogdata.mines.edu/products/vnf/</a>.
+</div>
+<div id="ref-vnl2024" class="csl-entry" role="listitem">
+Earth Observation Group, Payne Institute for Public Policy (2024c). <span>VIIRS Night Light (VNL) Dataset</span>. Available at: <a href="https://eogdata.mines.edu/products/vnl/">https://eogdata.mines.edu/products/vnl/</a>.
+</div>
+<div id="ref-elvidge2013b" class="csl-entry" role="listitem">
+Elvidge, C. D., Baugh, K. E., Zhizhin, M., and Hsu, F.-C. (2013a). <span class="nocase">Why VIIRS Data Are Superior to DMSP for Mapping Nighttime Lights</span>. <em>Asia-Pacific Advanced Network</em> 35, 62.
+</div>
+<div id="ref-elvidge2024" class="csl-entry" role="listitem">
+Elvidge, C. D., Zhizhin, M., Ghosh, T., and Hsu, F.-C. <span class="nocase">Annual Time Series of Global VIIRS Nighttime Lights Derived from Monthly Averages: 2012 to 2019</span>. <em>Remote Sensing</em>.
+</div>
+<div id="ref-elvidge2013" class="csl-entry" role="listitem">
+Elvidge, C. D., Zhizhin, M., Hsu, F.-C., and Baugh, K. E. (2013b). <span class="nocase">VIIRS Nightfire: Satellite Pyrometry at Night</span>. <em>Remote Sensing</em> 5, 4423–4449. doi:<a href="https://doi.org/10.3390/rs5094423">10.3390/rs5094423</a>.
 </div>
 <div id="ref-eccc2024" class="csl-entry" role="listitem">
 Environment and Climate Change Canada (2024). Integrated satellite tracking of pollution (ISTOP) program. <span>Environment and Climate Change Canada</span>.

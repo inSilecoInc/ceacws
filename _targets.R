@@ -531,7 +531,12 @@ list(
                   basename(x)), handle = handle, mode = "wb")
             })
         "workspace/data/harvested/viirs_nighttime_light-1.0.0/raw"
-    }, format = "file"))),
+    }, format = "file")), tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
+    {
+        prc_viirs_nighttime_light(output_path = "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed", 
+            input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files))
+        "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed/"
+    }, format = "file")),
     list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
     {
         ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 

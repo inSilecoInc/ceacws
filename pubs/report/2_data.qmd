@@ -686,4 +686,47 @@ data.frame(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### VIIRS Nighttime Light (VNL) Dataset {#sec-viirs_nightlight}
+
+The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
+
+For this analysis, the file type `avg_rade9h` was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the `vcm` configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the `j01` platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.
+
+The raw raster files were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ). Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (-141, 40, -50, 85), and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.
+
+
+#### Data Overview
+
+- **Source**: Earth Observation Group, Payne Institute for Public Policy
+- **Accessibility**: Restricted access, credentials required
+- **Data Type**: GeoTIFF files (.tif.gz)
+- **Coverage**: Global
+- **Temporal Resolution**: Monthly
+- **Processing Script**: `prc_viirs_night_light.R`
+- **Output File**: `viirs_night_light.tif`
+
+
 ## References
