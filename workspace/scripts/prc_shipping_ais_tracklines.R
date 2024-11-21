@@ -3,7 +3,7 @@ prc_shipping_ais_tracklines <- function(input_files, output_path) {
   # # dir.create(output_path)
   # input_path <- "workspace/data/harvested/shipping_ais-1.0.0/raw/"
   # input_files <- file.path(input_path, "2023AIS.zip")
-  # input_files <- unlist(input_files)
+  input_files <- unlist(input_files)
 
   # Data
   tmp <- file.path(output_path, "tmp")

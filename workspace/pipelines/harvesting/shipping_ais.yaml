@@ -66,7 +66,6 @@ pipeline:
   processing:
     sources:
       - name: shipping ais tracklines
-        description: Creating tracklines
         script: prc_shipping_ais_tracklines
         input_files:
           - Shipping AIS 2023
