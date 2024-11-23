@@ -33,6 +33,7 @@ raw/
 *.rds
 *.tar.xz
 *.json
+*.parquet
 
 # Specific files & folders
 figures/*

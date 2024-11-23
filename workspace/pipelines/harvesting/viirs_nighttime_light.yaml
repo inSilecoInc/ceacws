@@ -58,7 +58,7 @@ pipeline:
         urls: NA
         resolution: "monthly"
         dates:
-          - ["2023-01-01", "2024-12-31"]
+          - ["2023-01-01", "2024-01-01"]
         file_type: "avg_rade9h"
         config: "vcm"
         platform: "j01"

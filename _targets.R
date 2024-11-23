@@ -455,11 +455,11 @@ list(
             bucket = "cws-private", saveToDisk = "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS.zip", 
             overwrite = TRUE)
         "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS.zip"
-    }, format = "file")), tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_tracklines, 
+    }, format = "file")), tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
     {
-        prc_shipping_ais_tracklines(output_path = "workspace/data/harvested/shipping_ais-1.0.0/processed", 
+        prc_shipping_ais_points(output_path = "workspace/data/harvested/shipping_ais-1.0.0/processed", 
             input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023))
-        "workspace/data/harvested/shipping_ais-1.0.0/processed/shipping_ais_tracklines.gpkg"
+        "workspace/data/harvested/shipping_ais-1.0.0/processed/"
     }, format = "file")),
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
@@ -514,8 +514,8 @@ list(
     list(list(tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Monthly Nighttime Light", 
         source_type = "viirs", dataset = "vnl", urls = "NA", 
-        resolution = "monthly", dates = list(c("2023-08-01", 
-        "2023-09-15")), file_type = "avg_rade9h", config = "vcm", 
+        resolution = "monthly", dates = list(c("2023-01-01", 
+        "2024-01-01")), file_type = "avg_rade9h", config = "vcm", 
         platform = "j01", credentials = "workspace/credentials/earth_observation_group.json", 
         output_path = "workspace/data/harvested/viirs_nighttime_light-1.0.0/raw", 
         output = NULL, url = "NA", target_name = structure("tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light", class = c("glue", 

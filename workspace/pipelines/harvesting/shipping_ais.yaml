@@ -65,11 +65,16 @@ pipeline:
 
   processing:
     sources:
-      - name: shipping ais tracklines
-        script: prc_shipping_ais_tracklines
+      # - name: shipping ais tracklines
+      #   script: prc_shipping_ais_tracklines
+      #   input_files:
+      #     - Shipping AIS 2023
+      #   output_files: shipping_ais_tracklines.gpkg
+      - name: shipping ais points
+        script: prc_shipping_ais_points
         input_files:
           - Shipping AIS 2023
-        output_files: shipping_ais_tracklines.gpkg
+        output_files: ""
 
 
   # Output section: final output of the processed data
