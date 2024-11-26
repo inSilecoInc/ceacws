@@ -221,6 +221,8 @@ prc_shipping_ais_points <- function(input_files, output_path) {
       tolower()
     year <- split_name[3]
     month <- split_name[2]
+    month <- lubridate::ymd(paste("2023", month, "01")) |>
+      lubridate::month()
 
     # Export the processed points directly to a Parquet file
     arrow::write_parquet(

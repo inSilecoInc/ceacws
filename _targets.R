@@ -559,5 +559,17 @@ list(
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec))
         "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents.gpkg"
+    }, format = "file")),
+    list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
+    {
+        ana_shipping_intensity_density(output_path = "workspace/data/analyzed/shipping_intensity_density-1.0.0", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points))
+        "workspace/data/analyzed/shipping_intensity_density-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_night_light_intensity_density, 
+    {
+        ana_shipping_night_light_density(output_path = "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points))
+        "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/"
     }, format = "file"))
 )

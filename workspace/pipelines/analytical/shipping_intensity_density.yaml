@@ -1,0 +1,31 @@
+pipeline:
+  id: c6b2be6c-ae9c-45f0-ba30-570c53584421
+  name: shipping_intensity_density
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2024-11-23 08:36:52
+  last_modified: 2024-11-23 08:36:52
+  description: 'Pipeline for analytical data: ana_shipping_intensity'
+  analysis:
+    sources:
+      - name: shipping intensity density
+        description: Intensity of shipping activities from AIS data measured as the number of ships per day in a month
+        script: ana_shipping_intensity_density
+        input_files:
+          - id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
+            name: shipping ais points
+        output_files: ""
+      # - name: Shipping intensity occupancy
+      #   description: Intensity of shipping activities from AIS data measured as time spent per day by ships in grid cells in a month
+      #   script: ana_shipping_intensity_occupancy
+      #   input_files:
+      #     - id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
+      #       name: shipping ais points
+      #   output_files: ""
+      # - name: Shipping light intensity occupancy
+      #   description: Intensity of light from nighttime shipping activities from AIS data measured as time spent per day by ships in grid cells in a month
+      #   script: ana_shipping_light_occupancy
+      #   input_files:
+      #     - id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
+      #       name: shipping ais points
+      #   output_files: ""
