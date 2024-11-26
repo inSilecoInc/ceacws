@@ -280,47 +280,43 @@ create_consecutive_tracklines <- function(points, time_filter = "all", group_by_
     segment_length_km = units::set_units(sf::st_length(geometry), "km")
   )
 
-
-
-
-
   return(tracklines)
 }
 
 
-points <- dat # [1:1000000, ]
-system.time({
-  tracklines <- points |>
-    dplyr::group_by(mmsi, track_id) |>
-    dplyr::arrange(ymd_hms) |>
-    dplyr::mutate(
-      next_lon = dplyr::lead(longitude),
-      next_lat = dplyr::lead(latitude),
-      next_time = dplyr::lead(ymd_hms)
-    ) |>
-    dplyr::filter(!is.na(next_lon) & !is.na(next_lat)) |>
-    dplyr::ungroup()
+# points <- dat # [1:1000000, ]
+# system.time({
+#   tracklines <- points |>
+#     dplyr::group_by(mmsi, track_id) |>
+#     dplyr::arrange(ymd_hms) |>
+#     dplyr::mutate(
+#       next_lon = dplyr::lead(longitude),
+#       next_lat = dplyr::lead(latitude),
+#       next_time = dplyr::lead(ymd_hms)
+#     ) |>
+#     dplyr::filter(!is.na(next_lon) & !is.na(next_lat)) |>
+#     dplyr::ungroup()
 
-  # Vectorized construction of LINESTRING geometries
-  line_coords <- purrr::pmap(
-    list(tracklines$longitude, tracklines$latitude, tracklines$next_lon, tracklines$next_lat),
-    ~ matrix(c(..1, ..3, ..2, ..4), ncol = 2, byrow = FALSE)
-  )
-})
+#   # Vectorized construction of LINESTRING geometries
+#   line_coords <- purrr::pmap(
+#     list(tracklines$longitude, tracklines$latitude, tracklines$next_lon, tracklines$next_lat),
+#     ~ matrix(c(..1, ..3, ..2, ..4), ncol = 2, byrow = FALSE)
+#   )
+# })
 
-# Convert to LINESTRING geometries
-points$geometry <- sf::st_sfc(
-  lapply(line_coords, sf::st_linestring),
-  crs = 4326
-)
+# # Convert to LINESTRING geometries
+# points$geometry <- sf::st_sfc(
+#   lapply(line_coords, sf::st_linestring),
+#   crs = 4326
+# )
 
-# Calculate additional fields
-points <- points |>
-  dplyr::mutate(
-    time_diff_hours = as.numeric(difftime(next_time, ymd_hms, units = "hours")),
-    segment_length_km = units::set_units(sf::st_length(geometry), "km")
-  )
+# # Calculate additional fields
+# points <- points |>
+#   dplyr::mutate(
+#     time_diff_hours = as.numeric(difftime(next_time, ymd_hms, units = "hours")),
+#     segment_length_km = units::set_units(sf::st_length(geometry), "km")
+#   )
 
-# Convert to sf object
-tracklines <- sf::st_as_sf(points, crs = 4326) |>
-  dplyr::select(-next_lon, -next_lat, -next_time)
+# # Convert to sf object
+# tracklines <- sf::st_as_sf(points, crs = 4326) |>
+#   dplyr::select(-next_lon, -next_lat, -next_time)

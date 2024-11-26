@@ -537,6 +537,15 @@ list(
             input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files))
         "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed/"
     }, format = "file")),
+    list(tar_target(tg_6cba6119_d6d8_4cfd_8add_7ea93dfae326_offshore_wind_farm, 
+    {
+        ana_offshore_wind_farm(output_path = "workspace/data/analyzed/offshore_wind_farm-1.0.0", 
+            input_files = list(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_offshore_wind_can, 
+                tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_offshore_wind_nfl, 
+                tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_offshore_wind_ns, 
+                tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa))
+        "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.gpkg"
+    }, format = "file")),
     list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
     {
         ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
