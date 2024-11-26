@@ -1,0 +1,20 @@
+pipeline:
+  id: 129f86e7-9a3c-4454-9118-3c4ea26f2021
+  name: offshore_petroleum_activity
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2024-11-26 14:19:05
+  last_modified: 2024-11-26 14:19:05
+  description: 'Pipeline for analytical data: offshore_petroleum_activity'
+  analysis:
+    sources:
+    - name: offshore petroleum activity 
+      description: integration of offshore petroleum activity datasets
+      script: ana_offshore_petroleum_activity
+      input_files:
+      - id: 02c5753f-0ed3-40c0-8be8-3217eb8481cb
+        name: offshore petroleum newfoundland
+      - id: 570b8de3-665c-438e-815b-3b4b23ffe6a6
+        name: offshore petroleum nova-scotia
+      output_files: offshore_petroleum_activity.gpkg
+
