@@ -1,0 +1,17 @@
+pipeline:
+  id: 6c5a2778-6327-4bc1-a1bc-c7d4e02e6263
+  name: offshore_petroleum_platform_monthly
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2024-11-26 14:52:02
+  last_modified: 2024-11-26 14:52:02
+  description: 'Pipeline for analytical data: offshore_petroleum_platform'
+  analysis:
+    sources:
+    - name: monthly offshore petroleum platform location
+      description: Location of offshore petroleum platforms from VNF dataset flaring
+      script: ana_offshore_petroleum_platform_monthly
+      input_files:
+      - id: d0479151-75ba-451f-9a5b-0d471115ad4f
+        name: VIIRS Night Fire
+      output_files: ""

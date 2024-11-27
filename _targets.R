@@ -569,6 +569,18 @@ list(
                 tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia))
         "workspace/data/analyzed/offshore_petroleum_activity-1.0.0/offshore_petroleum_activity.gpkg"
     }, format = "file")),
+    list(tar_target(tg_ec5b0897_4a5d_41c3_b316_1e070fe17c01_annual_offshore_petroleum_platform_location, 
+    {
+        ana_offshore_petroleum_platform_annual(output_path = "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0", 
+            input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual))
+        "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_6c5a2778_6327_4bc1_a1bc_c7d4e02e6263_monthly_offshore_petroleum_platform_location, 
+    {
+        ana_offshore_petroleum_platform_monthly(output_path = "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0", 
+            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire))
+        "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_6cba6119_d6d8_4cfd_8add_7ea93dfae326_offshore_wind_farm, 
     {
         ana_offshore_wind_farm(output_path = "workspace/data/analyzed/offshore_wind_farm-1.0.0", 
