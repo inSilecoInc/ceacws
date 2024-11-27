@@ -829,23 +829,23 @@ Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS 
 </ul></li>
 <li><strong>Output</strong>
 <ul>
-<li>The cleaned tracklines were exported as a Geopackage file (<code>.gpkg</code>) Each trackline includes spatial geometry and relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-tracklines" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
+<li>The cleaned tracklines were exported as monthly parquet files (<code>.parquet</code>). Each file contains the processed AIS points with vessel information and the necessary information to diffentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-points" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
 </ul></li>
 </ol>
 <div class="cell">
-<div id="tbl-shipping-ais-tracklines" class="cell quarto-float anchored">
+<div id="tbl-shipping-ais-points" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-tracklines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.7: Columns (attributes) associated with the tracklines created from the derived positional AIS parquet files.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.7: Columns (attributes) associated with the AIS positional points processed from the raw parquet files.
 </figcaption>
-<div aria-describedby="tbl-shipping-ais-tracklines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-shipping-ais-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell table table-sm table-striped small">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 43%">
-<col style="width: 36%">
-<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 42%">
+<col style="width: 40%">
+<col style="width: 6%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -863,142 +863,70 @@ Table&nbsp;4.7: Columns (attributes) associated with the tracklines created from
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">latitude</td>
+<td style="text-align: left;">Latitude of the AIS positional point in decimal degrees</td>
+<td style="text-align: left;">Recorded in WGS 84 (EPSG:4326)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">longitude</td>
+<td style="text-align: left;">Longitude of the AIS positional point in decimal degrees</td>
+<td style="text-align: left;">Recorded in WGS 84 (EPSG:4326)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sog</td>
+<td style="text-align: left;">Speed over ground at the AIS positional point</td>
+<td style="text-align: left;">Measured in knots converted to kilometers per hour</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ymd_hms</td>
+<td style="text-align: left;">Timestamp of the AIS positional point in UTC</td>
+<td style="text-align: left;">Recorded in POSIXct format with timezone UTC</td>
+<td style="text-align: left;">POSIXct</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date corresponding to the AIS positional point</td>
+<td style="text-align: left;">Derived from the timestamp for easier grouping and filtering</td>
+<td style="text-align: left;">Date</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">day_or_night</td>
+<td style="text-align: left;">Classification of the AIS positional point as day or night</td>
+<td style="text-align: left;">Derived using sunrise and sunset times from solar calculations</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dist_miles</td>
+<td style="text-align: left;">Distance (in miles) between consecutive AIS positional points</td>
+<td style="text-align: left;">Calculated using geodetic distance between successive points</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">time_diff</td>
+<td style="text-align: left;">Time difference (in minutes) between consecutive AIS positional points</td>
+<td style="text-align: left;">Difference between timestamps of successive points</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">new_track</td>
+<td style="text-align: left;">Flag indicating whether a new trackline is initiated at the point</td>
+<td style="text-align: left;">Determined based on distance or time thresholds for new tracklines</td>
+<td style="text-align: left;">Logical</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">track_id</td>
 <td style="text-align: left;">Unique identifier for each trackline within a ship’s movement</td>
-<td style="text-align: left;">Calculated based on movement and distance thresholds</td>
+<td style="text-align: left;">Generated using the cumulative sum of <code>new_track</code> flags</td>
 <td style="text-align: left;">Integer</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">day_night_segment</td>
 <td style="text-align: left;">Unique identifier for segments of tracklines split by day or night</td>
-<td style="text-align: left;">Generated to separate trackline segments into day and night</td>
+<td style="text-align: left;">Calculated to split tracklines into day and night segments</td>
 <td style="text-align: left;">Integer</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">start_time</td>
-<td style="text-align: left;">Start time of the trackline</td>
-<td style="text-align: left;">Recorded in POSIXct format with timezone UTC</td>
-<td style="text-align: left;">POSIXct</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">end_time</td>
-<td style="text-align: left;">End time of the trackline</td>
-<td style="text-align: left;">Recorded in POSIXct format with timezone UTC</td>
-<td style="text-align: left;">POSIXct</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">avg_sog</td>
-<td style="text-align: left;">Average speed over ground for the trackline</td>
-<td style="text-align: left;">Measured in knots converted to kilometers per hour</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">max_sog</td>
-<td style="text-align: left;">Maximum speed over ground for the trackline</td>
-<td style="text-align: left;">Measured in knots converted to kilometers per hour</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">n_pos</td>
-<td style="text-align: left;">Number of AIS positional records in the trackline</td>
-<td style="text-align: left;">Count of AIS points within the trackline</td>
-<td style="text-align: left;">Integer</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">elapsed_hours</td>
-<td style="text-align: left;">Total elapsed hours for the trackline</td>
-<td style="text-align: left;">Calculated from start and end timestamps</td>
-<td style="text-align: left;">Units [hours]</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">month</td>
-<td style="text-align: left;">Month in which the trackline occurs</td>
-<td style="text-align: left;">Numerical month value (1-12)</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">year</td>
-<td style="text-align: left;">Year in which the trackline occurs</td>
-<td style="text-align: left;">Numerical year value (e.g., 2023)</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">daytime</td>
-<td style="text-align: left;">Classification of trackline navigation as day, night, or mixed</td>
-<td style="text-align: left;">Derived using sunrise and sunset times</td>
-<td style="text-align: left;">Character</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">geometry</td>
-<td style="text-align: left;">Geospatial representation of the trackline as a linestring</td>
-<td style="text-align: left;">LINESTRING geometry object in CRS EPSG:4326</td>
-<td style="text-align: left;">sfc_LINESTRING</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">track_length_km</td>
-<td style="text-align: left;">Length of the trackline in kilometers</td>
-<td style="text-align: left;">Derived from geospatial data and measured in kilometers</td>
-<td style="text-align: left;">Units [km]</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">vess_name</td>
-<td style="text-align: left;">Vessel name</td>
-<td style="text-align: left;">Obtained from the AIS static data</td>
-<td style="text-align: left;">Character</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ntype</td>
-<td style="text-align: left;">General vessel type</td>
-<td style="text-align: left;">Categorized based on the AIS static data</td>
-<td style="text-align: left;">Character</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">specific_vess_type</td>
-<td style="text-align: left;">Specific vessel type</td>
-<td style="text-align: left;">Detailed classification provided in AIS static data</td>
-<td style="text-align: left;">Character</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mt_gt</td>
-<td style="text-align: left;">Gross tonnage of the vessel</td>
-<td style="text-align: left;">From AIS static data; corresponds to ship’s gross tonnage</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">mt_length</td>
-<td style="text-align: left;">Length of the vessel in meters</td>
-<td style="text-align: left;">From AIS static data; corresponds to ship’s length</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mt_width</td>
-<td style="text-align: left;">Width of the vessel in meters</td>
-<td style="text-align: left;">From AIS static data; corresponds to ship’s width</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">mt_draught_max</td>
-<td style="text-align: left;">Maximum draught of the vessel in meters</td>
-<td style="text-align: left;">From AIS static data; corresponds to ship’s draught</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">GT_ID_TC</td>
-<td style="text-align: left;">Gross tonnage classification based on predefined intervals</td>
-<td style="text-align: left;">Categorization of gross tonnage into predefined bins</td>
-<td style="text-align: left;">Character</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">avg_speed_kmh</td>
-<td style="text-align: left;">Average speed of the vessel during the trackline in kilometers per hour</td>
-<td style="text-align: left;">Calculated by dividing track length by elapsed hours</td>
-<td style="text-align: left;">Units [km/h]</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">spoofing_flags</td>
-<td style="text-align: left;">Flag indicating whether the trackline is suspected of spoofing</td>
-<td style="text-align: left;">Binary value indicating if trackline is potentially spoofed</td>
-<td style="text-align: left;">Logical</td>
 </tr>
 </tbody>
 </table>
@@ -1105,15 +1033,15 @@ Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection da
 </section>
 <section id="sec-viirs_night_fire" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</h3>
-<!-- To look at: https://www.mdpi.com/2072-4292/13/16/3078 -->
-<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-vnf2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024b</a>; <a href="#ref-elvidge2013" role="doc-biblioref">Elvidge et al., 2013b</a>)</span> provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes that were selected for their relevance to this project.</p>
+<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-vnf2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024b</a>; <a href="#ref-elvidge2013" role="doc-biblioref">Elvidge et al., 2013b</a>)</span> provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes for the nightly data that were selected for their relevance to this project.</p>
+<p>In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see <a href="#tbl-viirs-vnf-annual-attr" class="quarto-xref">Table&nbsp;<span>4.10</span></a>).</p>
 <ul>
 <li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
 <li><strong>Accessibility</strong>: Restricted with credentials</li>
-<li><strong>Data Type</strong>: Nightly CSV files</li>
+<li><strong>Data Type</strong>: Nightly CSV files and annual GeoPackage files</li>
 <li><strong>Coverage</strong>: Global</li>
-<li><strong>Processing Script</strong>: <code>prc_viirs_night_fire.R</code></li>
-<li><strong>Output File</strong>: <code>viirs_night_fire.gpkg</code></li>
+<li><strong>Processing Scripts</strong>: <code>prc_viirs_night_fire.R</code>, <code>prc_viirs_night_fire_annual.R</code></li>
+<li><strong>Output Files</strong>: <code>viirs_night_fire.gpkg</code>, <code>viirs_night_fire_annual.gpkg</code></li>
 </ul>
 <div class="cell">
 <div id="tbl-viirs-vnf-attr" class="cell quarto-float anchored">
@@ -1125,8 +1053,8 @@ Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire datase
 <div class="cell-output-display">
 <table class="do-not-create-environment cell table table-sm table-striped small">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 70%">
+<col style="width: 20%">
+<col style="width: 68%">
 <col style="width: 10%">
 </colgroup>
 <thead>
@@ -1153,74 +1081,44 @@ Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire datase
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Rad_DNB</td>
-<td style="text-align: left;">Radiance intensity from the DNB band (nW/cm²/sr)</td>
+<td style="text-align: left;">Temp_primary</td>
+<td style="text-align: left;">Primary temperature of the emitting source (Kelvin)</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Rad_M07</td>
-<td style="text-align: left;">Radiance intensity from the M07 band (nW/cm²/sr)</td>
+<td style="text-align: left;">ESF_primary</td>
+<td style="text-align: left;">Emission scaling factor for the primary source</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Rad_M08</td>
-<td style="text-align: left;">Radiance intensity from the M08 band (nW/cm²/sr)</td>
+<td style="text-align: left;">RHI_primary</td>
+<td style="text-align: left;">Radiant heat index for the primary source</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Rad_M10</td>
-<td style="text-align: left;">Radiance intensity from the M10 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Area_primary</td>
+<td style="text-align: left;">Estimated area of the primary emitting source (square meters)</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Rad_M11</td>
-<td style="text-align: left;">Radiance intensity from the M11 band (nW/cm²/sr)</td>
+<td style="text-align: left;">Temp_secondary</td>
+<td style="text-align: left;">Secondary temperature of the emitting source (Kelvin)</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Rad_M12</td>
-<td style="text-align: left;">Radiance intensity from the M12 band (nW/cm²/sr)</td>
+<td style="text-align: left;">ESF_secondary</td>
+<td style="text-align: left;">Emission scaling factor for the secondary source</td>
 <td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Rad_M13</td>
-<td style="text-align: left;">Radiance intensity from the M13 band (nW/cm²/sr)</td>
+<td style="text-align: left;">RHI_secondary</td>
+<td style="text-align: left;">Radiant heat index for the secondary source</td>
 <td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rad_M14</td>
-<td style="text-align: left;">Radiance intensity from the M14 band (nW/cm²/sr)</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rad_M15</td>
-<td style="text-align: left;">Radiance intensity from the M15 band (nW/cm²/sr)</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rad_M16</td>
-<td style="text-align: left;">Radiance intensity from the M16 band (nW/cm²/sr)</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">QF_Detect</td>
-<td style="text-align: left;">Quality flag indicating confidence in the detection (bitwise field)</td>
-<td style="text-align: left;">Integer</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">id_iremitter</td>
 <td style="text-align: left;">Unique identifier for the potential emitter</td>
 <td style="text-align: left;">Character</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Lat_iremitter</td>
-<td style="text-align: left;">Latitude of the emitter in decimal degrees</td>
-<td style="text-align: left;">Numeric</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Lon_iremitter</td>
-<td style="text-align: left;">Longitude of the emitter in decimal degrees</td>
-<td style="text-align: left;">Numeric</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Type_iremitter</td>
@@ -1239,44 +1137,115 @@ Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire datase
 </figure>
 </div>
 </div>
+<div class="cell">
+<div id="tbl-viirs-vnf-annual-attr" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-annual-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.10: Columns (attributes) associated with the annual VIIRS Night Fire dataset used for this project.
+</figcaption>
+<div aria-describedby="tbl-viirs-vnf-annual-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 67%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column_Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Data_Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">avg_temp_k</td>
+<td style="text-align: left;">Average temperature of the emitting source (Kelvin)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">detection_frequency</td>
+<td style="text-align: left;">Detection frequency as a proportion of clear-sky observations</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">clear_obs</td>
+<td style="text-align: left;">Number of clear-sky observations available for the source</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">Type of the thermal anomaly (e.g., flare, fire, etc.)</td>
+<td style="text-align: left;">Character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bcm</td>
+<td style="text-align: left;">Estimated burnable carbon mass (BCM)</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">year</td>
+<td style="text-align: left;">Year of the aggregated data</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geom</td>
+<td style="text-align: left;">Spatial point geometry (latitude and longitude)</td>
+<td style="text-align: left;">sfc_POINT</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 <section id="data-processing-overview-2" class="level4" data-number="4.5.2.1">
 <h4 data-number="4.5.2.1" class="anchored" data-anchor-id="data-processing-overview-2"><span class="header-section-number">4.5.2.1</span> Data Processing Overview</h4>
-<p>To prepare the VNF dataset for further analyses, the following pre-processing steps were applied:</p>
+<p>To prepare the VNF dataset for further analyses, the following pre-processing steps were applied, with information on flares coming from <span class="citation" data-cites="elvidge2016">Elvidge et al. (<a href="#ref-elvidge2016" role="doc-biblioref">2016</a>)</span> and <span class="citation" data-cites="zhizhin2021">Zhizhin et al. (<a href="#ref-zhizhin2021" role="doc-biblioref">2021</a>)</span>:</p>
 <ol type="1">
-<li><strong>Data Extraction</strong>
+<li>Data Extraction
 <ul>
-<li>Raw CSV files were downloaded for December 2023 and processed using <code>arrow::read_csv_arrow()</code> for efficient import. Only necessary columns were selected during import to minimize memory usage.</li>
+<li>Raw CSV files were processed using <code>arrow::read_csv_arrow()</code> for efficient import.</li>
+<li>Only necessary columns were selected during import to minimize memory usage.</li>
 </ul></li>
-<li><strong>Quality Filtering</strong>
+<li>Quality Filtering
 <ul>
-<li>Data quality was ensured by applying bitwise filtering to the <code>QF_Detect</code> field. Flags corresponding to high-confidence detections and specific radiance thresholds were retained (<a href="#tbl-viirs-vnf-flags" class="quarto-xref">Table&nbsp;<span>4.10</span></a>):
+<li>Data quality was ensured by applying bitwise filtering to the <code>QF_Detect</code> field.</li>
+<li>Flags corresponding to high-confidence detections and specific radiance thresholds were retained:
 <ul>
-<li>High Radiance Thresholds: Retained flags ensuring M07–M16 radiance values exceed file-specific thresholds.</li>
-<li>Thermal Anomalies: Retained detections flagged as local maxima (e.g., <code>M14 local thermal anomaly</code>) or outliers based on scatterplots.</li>
-<li>Cluster Detections: Retained flags identifying pixels as part of clusters or top-hat filtered regions.</li>
+<li><strong>High Radiance Thresholds</strong>: Retained flags ensuring significant thermal anomalies in bands M07–M16.</li>
+<li><strong>Thermal Anomalies</strong>: Retained detections flagged as local maxima or cluster detections.</li>
 </ul></li>
 </ul></li>
-<li><strong>Spatial Filtering</strong>
+<li>Spatial Filtering
 <ul>
 <li>The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
 <ul>
-<li>Longitude: -141° to -50°.</li>
-<li>Latitude: 40° to 85°.</li>
+<li><strong>Longitude</strong>: -141° to -50°.</li>
+<li><strong>Latitude</strong>: 40° to 85°.</li>
 </ul></li>
 </ul></li>
-<li><strong>Radiance Selection</strong>
+<li>Processed Radiance Fields
 <ul>
-<li>Radiance fields from DNB and spectral bands M07–M16 were retained. These fields are critical for analyzing flare activity, as described in scientific literature.</li>
+<li>Radiance-derived fields, including <code>Temp_primary</code>, <code>RHI_primary</code>, and <code>ESF_primary</code>, were used for analyzing thermal anomalies.</li>
+<li>Secondary radiance-derived fields (<code>Temp_secondary</code>, <code>RHI_secondary</code>, <code>ESF_secondary</code>) were retained for comprehensive heat calculations.</li>
 </ul></li>
-<li><strong>Emitter Information</strong>
+<li>Total Radiant Heat Calculation
 <ul>
-<li>Fields related to potential thermal sources (<code>id_iremitter</code>, <code>Lat_iremitter</code>, <code>Lon_iremitter</code>, <code>Type_iremitter</code>, <code>Category_iremitter</code>) were included for downstream analyses.</li>
+<li>A <code>total_heat</code> field was computed as the sum of <code>RHI_primary</code> and <code>RHI_secondary</code>, representing the combined radiant heat output of both primary and secondary sources.</li>
 </ul></li>
-<li><strong>Temporal Standardization</strong>
+<li>Flare Identification
+<ul>
+<li>A temperature threshold of <strong>1450 K</strong> was applied to <code>Temp_primary</code> to flag likely gas flares.</li>
+<li>This threshold is based on established studies identifying gas flares as high-temperature sources.</li>
+</ul></li>
+<li>Temporal Standardization
 <ul>
 <li>Timestamps were standardized to UTC using the <code>lubridate</code> package to ensure temporal consistency across datasets.</li>
 </ul></li>
-<li><strong>Output</strong>
+<li>Output
 <ul>
 <li>The pre-processed dataset was saved as a GeoPackage (<code>viirs_night_fire.gpkg</code>).</li>
 <li>The GeoPackage contains spatial coordinates in the EPSG:4326 projection, radiance fields, emitter information, and retained quality flags.</li>
@@ -1286,7 +1255,7 @@ Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire datase
 <div id="tbl-viirs-vnf-flags" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.10: Retained Quality Flags for VIIRS Nightfire Data Processing.
+Table&nbsp;4.11: Retained Quality Flags for VIIRS Nightfire Data Processing.
 </figcaption>
 <div aria-describedby="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1385,7 +1354,7 @@ Table&nbsp;4.10: Retained Quality Flags for VIIRS Nightfire Data Processing.
 </section>
 <section id="sec-viirs_nightlight" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="sec-viirs_nightlight"><span class="header-section-number">4.5.3</span> VIIRS Nighttime Light (VNL) Dataset</h3>
-<p>The <a href="https://eogdata.mines.edu/products/vnl/">VIIRS Nighttime Light (VNL) Dataset</a> <span class="citation" data-cites="vnl2024 elvidge2013b elvidge2024">(<a href="#ref-vnl2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024c</a>; <a href="#ref-elvidge2024" role="doc-biblioref">Elvidge et al.</a>, <a href="#ref-elvidge2013b" role="doc-biblioref">2013a</a>)</span> provides global observations of nighttime light intensity captured by the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics.</p>
+<p>The <a href="https://eogdata.mines.edu/products/vnl/">VIIRS Nighttime Light (VNL) Dataset</a> <span class="citation" data-cites="vnl2024 elvidge2013b elvidge2024">(<a href="#ref-vnl2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024c</a>; <a href="#ref-elvidge2024" role="doc-biblioref">Elvidge et al.</a>, <a href="#ref-elvidge2013b" role="doc-biblioref">2013a</a>)</span> provides global observations of nighttime light intensity captured by te Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics.</p>
 <p>For this analysis, the file type <code>avg_rade9h</code> was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the <code>vcm</code> configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the <code>j01</code> platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.</p>
 <p>The raw raster files were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ). Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (-141, 40, -50, 85), and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.</p>
 <section id="data-overview" class="level4" data-number="4.5.3.1">
@@ -1428,6 +1397,9 @@ Earth Observation Group, Payne Institute for Public Policy (2024c). <span>VIIRS 
 <div id="ref-elvidge2013b" class="csl-entry" role="listitem">
 Elvidge, C. D., Baugh, K. E., Zhizhin, M., and Hsu, F.-C. (2013a). <span class="nocase">Why VIIRS Data Are Superior to DMSP for Mapping Nighttime Lights</span>. <em>Asia-Pacific Advanced Network</em> 35, 62.
 </div>
+<div id="ref-elvidge2016" class="csl-entry" role="listitem">
+Elvidge, C. D., Zhizhin, M., Baugh, K., Hsu, F.-C., and Ghosh, T. (2016). Methods for <span>Global Survey</span> of <span>Natural Gas Flaring</span> from <span>Visible Infrared Imaging Radiometer Suite Data</span>. <em>Energies</em> 9, 14. doi:<a href="https://doi.org/10.3390/en9010014">10.3390/en9010014</a>.
+</div>
 <div id="ref-elvidge2024" class="csl-entry" role="listitem">
 Elvidge, C. D., Zhizhin, M., Ghosh, T., and Hsu, F.-C. <span class="nocase">Annual Time Series of Global VIIRS Nighttime Lights Derived from Monthly Averages: 2012 to 2019</span>. <em>Remote Sensing</em>.
 </div>
@@ -1457,6 +1429,9 @@ Veinot, T., Nicoll, A., Rozalska, K., and Coffen-Smout, S. (2023). Vessel <span>
 </div>
 <div id="ref-wind_regional_assessment2024" class="csl-entry" role="listitem">
 Wind Regional Assessment Team (2024). Offshore wind development areas - canada. <span>Environment and Climate Change Canada</span>.
+</div>
+<div id="ref-zhizhin2021" class="csl-entry" role="listitem">
+Zhizhin, M., Matveev, A., Ghosh, T., Hsu, F.-C., Howells, M., and Elvidge, C. (2021). Measuring <span>Gas Flaring</span> in <span>Russia</span> with <span>Multispectral VIIRS Nightfire</span>. <em>Remote Sensing</em> 13, 3078. doi:<a href="https://doi.org/10.3390/rs13163078">10.3390/rs13163078</a>.
 </div>
 </div>
 </section>

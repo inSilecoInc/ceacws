@@ -534,19 +534,18 @@ The **Signal-to-Mean Index (SMI)** and **Signal-to-High Index (SHI)** are metric
 Future iterations of the pipeline could incorporate these metrics for scenarios requiring stricter detection thresholds, such as high-confidence studies of vessel activity in heavily lit areas.
 
 
-
 ### VIIRS Night Fire (VNF) Dataset {#sec-viirs_night_fire}
 
-<!-- To look at: https://www.mdpi.com/2072-4292/13/16/3078 -->
+The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes for the nightly data that were selected for their relevance to this project.
 
-The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes radiance observations across multiple spectral bands, quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes that were selected for their relevance to this project. 
+In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see @tbl-viirs-vnf-annual-attr). 
 
 - **Source**: Earth Observation Group, Payne Institute for Public Policy
 - **Accessibility**: Restricted with credentials
-- **Data Type**: Nightly CSV files
+- **Data Type**: Nightly CSV files and annual GeoPackage files
 - **Coverage**: Global
-- **Processing Script**: `prc_viirs_night_fire.R`
-- **Output File**: `viirs_night_fire.gpkg`
+- **Processing Scripts**: `prc_viirs_night_fire.R`, `prc_viirs_night_fire_annual.R`
+- **Output Files**: `viirs_night_fire.gpkg`, `viirs_night_fire_annual.gpkg`
 
 ```{r}
 #| label: tbl-viirs-vnf-attr
@@ -554,35 +553,56 @@ The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@
 
 data.frame(
   Column_Name = c(
-    "Date_Mscan", "Lat_GMTCO", "Lon_GMTCO", "Rad_DNB", "Rad_M07", "Rad_M08",
-    "Rad_M10", "Rad_M11", "Rad_M12", "Rad_M13", "Rad_M14", "Rad_M15", "Rad_M16",
-    "QF_Detect", "id_iremitter", "Lat_iremitter", "Lon_iremitter", "Type_iremitter", "Category_iremitter"
+    "Date_Mscan", "Lat_GMTCO", "Lon_GMTCO", "Temp_primary", "ESF_primary",
+    "RHI_primary", "Area_primary", "Temp_secondary", "ESF_secondary",
+    "RHI_secondary", "id_iremitter", "Type_iremitter", "Category_iremitter"
   ),
   Description = c(
     "Date and time of the observation in UTC",
     "Latitude of the detected thermal anomaly in decimal degrees",
     "Longitude of the detected thermal anomaly in decimal degrees",
-    "Radiance intensity from the DNB band (nW/cm²/sr)",
-    "Radiance intensity from the M07 band (nW/cm²/sr)",
-    "Radiance intensity from the M08 band (nW/cm²/sr)",
-    "Radiance intensity from the M10 band (nW/cm²/sr)",
-    "Radiance intensity from the M11 band (nW/cm²/sr)",
-    "Radiance intensity from the M12 band (nW/cm²/sr)",
-    "Radiance intensity from the M13 band (nW/cm²/sr)",
-    "Radiance intensity from the M14 band (nW/cm²/sr)",
-    "Radiance intensity from the M15 band (nW/cm²/sr)",
-    "Radiance intensity from the M16 band (nW/cm²/sr)",
-    "Quality flag indicating confidence in the detection (bitwise field)",
+    "Primary temperature of the emitting source (Kelvin)",
+    "Emission scaling factor for the primary source",
+    "Radiant heat index for the primary source",
+    "Estimated area of the primary emitting source (square meters)",
+    "Secondary temperature of the emitting source (Kelvin)",
+    "Emission scaling factor for the secondary source",
+    "Radiant heat index for the secondary source",
     "Unique identifier for the potential emitter",
-    "Latitude of the emitter in decimal degrees",
-    "Longitude of the emitter in decimal degrees",
     "Type of the emitter (e.g., industrial, flaring)",
     "Category of the emitter (e.g., petroleum, thermal anomaly)"
   ),
   Data_Type = c(
-    "POSIXct", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
-    "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
-    "Numeric", "Integer", "Character", "Numeric", "Numeric", "Character", "Character"
+    "POSIXct", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Character", "Character", "Character"
+  )
+) |>
+  knitr::kable()
+```
+
+
+```{r}
+#| label: tbl-viirs-vnf-annual-attr
+#| tbl-cap: "Columns (attributes) associated with the annual VIIRS Night Fire dataset used for this project."
+
+data.frame(
+  Column_Name = c(
+    "avg_temp_k", "detection_frequency", "clear_obs", "type",
+    "bcm", "year", "geom"
+  ),
+  Description = c(
+    "Average temperature of the emitting source (Kelvin)",
+    "Detection frequency as a proportion of clear-sky observations",
+    "Number of clear-sky observations available for the source",
+    "Type of the thermal anomaly (e.g., flare, fire, etc.)",
+    "Estimated burnable carbon mass (BCM)",
+    "Year of the aggregated data",
+    "Spatial point geometry (latitude and longitude)"
+  ),
+  Data_Type = c(
+    "Numeric", "Numeric", "Numeric", "Character",
+    "Numeric", "Integer", "sfc_POINT"
   )
 ) |>
   knitr::kable()
@@ -590,27 +610,32 @@ data.frame(
 
 #### Data Processing Overview
 
-To prepare the VNF dataset for further analyses, the following pre-processing steps were applied:
+To prepare the VNF dataset for further analyses, the following pre-processing steps were applied, with information on flares coming from @elvidge2016 and @zhizhin2021:
 
-1. **Data Extraction**
-   - Raw CSV files were downloaded for December 2023 and processed using `arrow::read_csv_arrow()` for efficient import. Only necessary columns were selected during import to minimize memory usage.
-2. **Quality Filtering**
-   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field. Flags corresponding to high-confidence detections and specific radiance thresholds were retained (@tbl-viirs-vnf-flags):
-     - High Radiance Thresholds: Retained flags ensuring M07–M16 radiance values exceed file-specific thresholds.
-     - Thermal Anomalies: Retained detections flagged as local maxima (e.g., `M14 local thermal anomaly`) or outliers based on scatterplots.
-     - Cluster Detections: Retained flags identifying pixels as part of clusters or top-hat filtered regions.
-3. **Spatial Filtering**
+1. Data Extraction
+   - Raw CSV files were processed using `arrow::read_csv_arrow()` for efficient import. 
+   - Only necessary columns were selected during import to minimize memory usage.
+2. Quality Filtering
+   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field. 
+   - Flags corresponding to high-confidence detections and specific radiance thresholds were retained:
+     - **High Radiance Thresholds**: Retained flags ensuring significant thermal anomalies in bands M07–M16.
+     - **Thermal Anomalies**: Retained detections flagged as local maxima or cluster detections.
+3. Spatial Filtering
    - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
-     - Longitude: -141° to -50°.
-     - Latitude: 40° to 85°.
-4. **Radiance Selection**
-   - Radiance fields from DNB and spectral bands M07–M16 were retained. These fields are critical for analyzing flare activity, as described in scientific literature.
-5. **Emitter Information**
-   - Fields related to potential thermal sources (`id_iremitter`, `Lat_iremitter`, `Lon_iremitter`, `Type_iremitter`, `Category_iremitter`) were included for downstream analyses.
-6. **Temporal Standardization**
+     - **Longitude**: -141° to -50°.
+     - **Latitude**: 40° to 85°.
+4.  Processed Radiance Fields
+    - Radiance-derived fields, including `Temp_primary`, `RHI_primary`, and `ESF_primary`, were used for analyzing thermal anomalies.
+    - Secondary radiance-derived fields (`Temp_secondary`, `RHI_secondary`, `ESF_secondary`) were retained for comprehensive heat calculations.
+5. Total Radiant Heat Calculation
+   - A `total_heat` field was computed as the sum of `RHI_primary` and `RHI_secondary`, representing the combined radiant heat output of both primary and secondary sources.
+6. Flare Identification
+   - A temperature threshold of **1450 K** was applied to `Temp_primary` to flag likely gas flares. 
+   - This threshold is based on established studies identifying gas flares as high-temperature sources.
+7. Temporal Standardization
    - Timestamps were standardized to UTC using the `lubridate` package to ensure temporal consistency across datasets.
-7. **Output**
-   - The pre-processed dataset was saved as a GeoPackage (`viirs_night_fire.gpkg`). 
+8. Output
+   - The pre-processed dataset was saved as a GeoPackage (`viirs_night_fire.gpkg`).
    - The GeoPackage contains spatial coordinates in the EPSG:4326 projection, radiance fields, emitter information, and retained quality flags.
 
 
@@ -656,9 +681,11 @@ data.frame(
 ```
 
 
+
+
 ### VIIRS Nighttime Light (VNL) Dataset {#sec-viirs_nightlight}
 
-The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
+The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by te Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
 
 For this analysis, the file type `avg_rade9h` was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the `vcm` configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the `j01` platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.
 
