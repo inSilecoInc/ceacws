@@ -9,6 +9,14 @@ tar_option_set(packages = c('curl', 'googleCloudStorageR', 'aws.s3', 'yaml', 'dp
 tar_source('workspace/scripts/') # To edit properly by the end of the project
 list(
   tar_target(bibtex_master, bibtex_master(), format = "file", cue = tar_cue(mode = "always")),
+    list(tar_target(tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi, 
+    {
+        prc_aoi(output_path = "workspace/data/harvested/aoi-1.0.0/processed", 
+            input_files = list())
+        c("workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg", 
+        "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+        )
+    }, format = "file")),
     list(list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_Scientific_article, 
     {
         googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
@@ -587,8 +595,9 @@ list(
             input_files = list(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_offshore_wind_can, 
                 tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_offshore_wind_nfl, 
                 tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_offshore_wind_ns, 
-                tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa))
-        "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.gpkg"
+                tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.tif"
     }, format = "file")),
     list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
     {
@@ -610,8 +619,9 @@ list(
         ana_petroleum_pollution_incidents(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
             input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
-                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents.gpkg"
+                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents.tif"
     }, format = "file")),
     list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
     {

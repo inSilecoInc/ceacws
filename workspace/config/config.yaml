@@ -27,12 +27,12 @@ time_periods:
     end_date: "2050-12-31"    # End of the third time period
 
 spatial_extent:
-  region_name: "North America"
+  region_name: "Northwestern America"
   bounding_box:
-    - lat_min: 24.396308  # Minimum latitude for the region
-    - lon_min: -125.0     # Minimum longitude for the region
-    - lat_max: 49.384358  # Maximum latitude for the region
-    - lon_max: -66.93457  # Maximum longitude for the region
+    - lat_min: 40  # Minimum latitude for the region
+    - lon_min: -80     # Minimum longitude for the region
+    - lat_max: 70  # Maximum latitude for the region
+    - lon_max: -40  # Maximum longitude for the region
   crs: "EPSG:4326"         # Coordinate Reference System used (e.g., WGS 84)
 
 # Default color palettes for visualizations

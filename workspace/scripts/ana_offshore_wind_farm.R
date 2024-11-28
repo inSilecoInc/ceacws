@@ -9,16 +9,38 @@ ana_offshore_wind_farm <- function(input_files, output_path) {
   # )
   input_files <- unlist(input_files)
 
+  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
+
   # Data
   dat <- lapply(input_files, sf::st_read, quiet = TRUE) |>
     dplyr::bind_rows() |>
-    sf::st_union()
+    sf::st_union() |>
+    sf::st_as_sf()
+
+  # AOI & Grid
+  dat <- terra::rasterize(
+    x = dat,
+    y = grid,
+    fun = "count",
+    field = NA
+  )
+  dat <- terra::mask(dat, aoi)
 
   # Export
-  sf::st_write(
+  terra::writeRaster(
     dat,
-    dsn = file.path(output_path, "offshore_wind_farm.gpkg"),
-    quiet = TRUE,
-    delete_dsn = TRUE
+    filename = file.path(output_path, "offshore_wind_farm.tif"),
+    overwrite = TRUE,
+    gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
   )
+
+  # # Export
+  # sf::st_write(
+  #   dat,
+  #   dsn = file.path(output_path, "offshore_wind_farm.gpkg"),
+  #   quiet = TRUE,
+  #   delete_dsn = TRUE
+  # )
 }

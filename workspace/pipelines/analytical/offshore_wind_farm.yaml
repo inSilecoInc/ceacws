@@ -20,4 +20,6 @@ pipeline:
         name: offshore wind ns
       - id: e0dc9246-3939-45e5-b8a8-e859cdd76f07
         name: offshore wind usa
-      output_files: offshore_wind_farm.gpkg
+      - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+        name: study area aoi
+      output_files: offshore_wind_farm.tif

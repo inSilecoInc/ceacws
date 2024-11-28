@@ -39,4 +39,6 @@ pipeline:
           - petroleum pollution incidents istop
           - petroleum pollution incidents nasp
           - petroleum pollution incidents neec
-        output_files: petroleum_pollution_incidents.gpkg
+          - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+            name: study area aoi
+        output_files: petroleum_pollution_incidents.tif

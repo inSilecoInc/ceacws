@@ -249,7 +249,12 @@ categorize_by_quantity <- function(dat) {
 }
 
 ana_petroleum_pollution_incidents <- function(input_files, output_path) {
-  dplyr::bind_rows(
+  input_files <- unlist(input_files)
+  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+
+
+  dat <- dplyr::bind_rows(
     input_files[stringr::str_detect(unlist(input_files), "istop.gpkg")] |>
       sf::st_read(quiet = TRUE) |>
       sf::st_transform(4326),
@@ -259,10 +264,28 @@ ana_petroleum_pollution_incidents <- function(input_files, output_path) {
     input_files[stringr::str_detect(unlist(input_files), "neec.gpkg")] |>
       sf::st_read(quiet = TRUE) |>
       sf::st_transform(4326)
-  ) |>
-    sf::st_write(
-      dsn = file.path(output_path, "petroleum_pollution_incidents.gpkg"),
-      quiet = TRUE,
-      delete_dsn = TRUE
-    )
+  )
+
+  # AOI & Grid
+  dat <- terra::rasterize(
+    x = dat,
+    y = grid,
+    fun = "count",
+    field = NA
+  )
+  dat <- terra::mask(dat, aoi)
+
+  # Export
+  terra::writeRaster(
+    dat,
+    filename = file.path(output_path, "petroleum_pollution_incidents.tif"),
+    overwrite = TRUE,
+    gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
+  )
+
+  # sf::st_write(
+  #   dsn = file.path(output_path, "petroleum_pollution_incidents.gpkg"),
+  #   quiet = TRUE,
+  #   delete_dsn = TRUE
+  # )
 }
