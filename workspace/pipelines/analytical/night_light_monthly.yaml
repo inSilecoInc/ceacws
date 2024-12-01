@@ -1,0 +1,19 @@
+pipeline:
+  id: bc079539-54b9-4501-b42d-a61237264cc6
+  name: night_light_monthly
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2024-12-01 11:46:24
+  last_modified: 2024-12-01 11:46:24
+  description: 'Pipeline for analytical data: night_light_monthly'
+  analysis:
+    sources:
+    - name: night light monthly
+      description: monthly night light
+      script: ana_night_light_monthly
+      input_files:
+      - id: 8c0e9e78-0e9a-4329-b8b8-d8a705c11596
+        name: VIIRS Monthly Nighttime Light
+      - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+        name: study area aoi
+      output_files: ""

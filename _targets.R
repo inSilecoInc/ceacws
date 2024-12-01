@@ -570,6 +570,13 @@ list(
             input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files))
         "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed/"
     }, format = "file")),
+    list(tar_target(tg_bc079539_54b9_4501_b42d_a61237264cc6_night_light_monthly, 
+    {
+        ana_night_light_monthly(output_path = "workspace/data/analyzed/night_light_monthly-1.0.0", 
+            input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/night_light_monthly-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_129f86e7_9a3c_4454_9118_3c4ea26f2021_offshore_petroleum_activity, 
     {
         ana_offshore_petroleum_activity(output_path = "workspace/data/analyzed/offshore_petroleum_activity-1.0.0", 
