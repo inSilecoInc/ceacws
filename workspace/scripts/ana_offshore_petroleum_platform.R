@@ -1,32 +1,23 @@
-ana_offshore_petroleum_platform_monthly <- function(input_files, output_path, bbox = c(-80, 40, -40, 70), resolution = 0.01) {
+ana_offshore_petroleum_platform_monthly <- function(input_files, output_path) {
   # output_path <- "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/"
   # # dir.create(output_path)
   # input_files <- c(
-  #   "workspace/data/harvested/viirs_night_fire-1.0.0/processed/viirs_night_fire_nightly.gpkg"
+  #   "workspace/data/harvested/viirs_night_fire-1.0.0/processed/viirs_night_fire_nightly.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
   # )
   input_files <- unlist(input_files)
+
+  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
 
   # Data
   dat <- sf::st_read(input_files, quiet = TRUE) |>
     dplyr::filter(likely_flare)
 
-  # Create an sf polygon for the bounding box
-  bbox <- sf::st_bbox(c(
-    xmin = bbox[1], ymin = bbox[2],
-    xmax = bbox[3], ymax = bbox[4]
-  ), crs = 4326) |>
-    sf::st_as_sfc() |>
-    sf::st_as_sf()
-
-  # Create grid
-  grid <- terra::rast(
-    ext = terra::ext(bbox),
-    resolution = resolution,
-    crs = terra::crs(bbox)
-  )
-
   # Filter data
-  dat <- dat[sf::st_within(dat, bbox, sparse = FALSE), ]
+  dat <- dat[sf::st_within(dat, aoi, sparse = FALSE), ]
 
   # Group data
   dat <- dat |>
@@ -65,31 +56,23 @@ ana_offshore_petroleum_platform_monthly <- function(input_files, output_path, bb
 }
 
 
-ana_offshore_petroleum_platform_annual <- function(input_files, output_path, bbox = c(-80, 40, -40, 70), resolution = 0.01) {
-  output_path <- "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/"
-  # dir.create(output_path)
-  input_files <- c(
-    "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed/viirs_night_fire_annual.gpkg"
-  )
+ana_offshore_petroleum_platform_annual <- function(input_files, output_path) {
+  # output_path <- "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/"
+  # # dir.create(output_path)
+  # input_files <- c(
+  #   "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed/viirs_night_fire_annual.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+  # )
   input_files <- unlist(input_files)
+
+  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
+
 
   # Data
   dat <- sf::st_read(input_files, quiet = TRUE)
-
-  # Create an sf polygon for the bounding box
-  bbox <- sf::st_bbox(c(
-    xmin = bbox[1], ymin = bbox[2],
-    xmax = bbox[3], ymax = bbox[4]
-  ), crs = 4326) |>
-    sf::st_as_sfc() |>
-    sf::st_as_sf()
-
-  # Create grid
-  grid <- terra::rast(
-    ext = terra::ext(bbox),
-    resolution = resolution,
-    crs = terra::crs(bbox)
-  )
 
   # Rasterize and export
   dat |>

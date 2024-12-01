@@ -1,17 +1,29 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Shipping density
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-ana_shipping_intensity_density <- function(input_files, output_path, bbox = c(-80, 40, -50, 70)) {
+ana_shipping_intensity_density <- function(input_files, output_path) {
   # output_path <- "workspace/data/analyzed/shipping_intensity_density-1.0.0/"
   # # dir.create(output_path)
   # input_path <- "workspace/data/harvested/shipping_ais-1.0.0/processed"
-  # input_files <- input_path
+  # input_files <- c(
+  #   input_path,
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+  # )
   input_files <- unlist(input_files)
+
+  # AOI & grid
+  grid_path <- input_files[basename(input_files) == "grid.tif"]
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
 
   # Get vessel type
   ship_info <- dir(input_files, pattern = "*csv", full.names = TRUE) |>
     vroom::vroom(progress = FALSE, show_col_types = FALSE) |>
     janitor::clean_names()
+
+  # Bounding box
+  bbox <- sf::st_bbox(aoi)
 
   # Prepare for parallel processing
   future::plan(future::multisession, workers = parallel::detectCores() - 3)
@@ -25,13 +37,11 @@ ana_shipping_intensity_density <- function(input_files, output_path, bbox = c(-8
     dat <- arrow::read_parquet(file)
 
     # Apply bbox filter if provided
-    if (!is.null(bbox)) {
-      dat <- dat |>
-        dplyr::filter(
-          latitude >= bbox[2], latitude <= bbox[4],
-          longitude >= bbox[1], longitude <= bbox[3]
-        )
-    }
+    dat <- dat |>
+      dplyr::filter(
+        latitude >= bbox["ymin"], latitude <= bbox["ymax"],
+        longitude >= bbox["xmin"], longitude <= bbox["xmax"]
+      )
 
     # Filename
     filename <- basename(file) |>
@@ -43,7 +53,7 @@ ana_shipping_intensity_density <- function(input_files, output_path, bbox = c(-8
     # Trackline processing
     create_full_tracklines(dat, group_by_type = TRUE, ship_info = ship_info) |>
       calculate_ship_density(
-        resolution = 0.01,
+        grid_path = grid_path,
         output_path = file.path(output_path, filename),
         ntype = "ntype"
       )
@@ -51,17 +61,30 @@ ana_shipping_intensity_density <- function(input_files, output_path, bbox = c(-8
   # plot(log(dat[[1]]), col = viridis::magma(100), maxcell = 100000000)
 }
 
-ana_shipping_night_light_density <- function(input_files, output_path, bbox = c(-80, 40, -50, 70)) {
+ana_shipping_night_light_density <- function(input_files, output_path) {
   # output_path <- "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/"
   # # dir.create(output_path)
   # input_path <- "workspace/data/harvested/shipping_ais-1.0.0/processed"
-  # input_files <- input_path
+  # input_files <- c(
+  #   input_path,
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+  # )
   input_files <- unlist(input_files)
+
+  # AOI & grid
+  grid_path <- input_files[basename(input_files) == "grid.tif"]
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
 
   # Get vessel type
   ship_info <- dir(input_files, pattern = "*csv", full.names = TRUE) |>
     vroom::vroom(progress = FALSE, show_col_types = FALSE) |>
     janitor::clean_names()
+
+
+  # Bounding box
+  bbox <- sf::st_bbox(aoi)
 
   # Prepare for parallel processing
   future::plan(future::multisession, workers = parallel::detectCores() - 3)
@@ -75,13 +98,11 @@ ana_shipping_night_light_density <- function(input_files, output_path, bbox = c(
     dat <- arrow::read_parquet(file)
 
     # Apply bbox filter if provided
-    if (!is.null(bbox)) {
-      dat <- dat |>
-        dplyr::filter(
-          latitude >= bbox[2], latitude <= bbox[4],
-          longitude >= bbox[1], longitude <= bbox[3]
-        )
-    }
+    dat <- dat |>
+      dplyr::filter(
+        latitude >= bbox["ymin"], latitude <= bbox["ymax"],
+        longitude >= bbox["xmin"], longitude <= bbox["xmax"]
+      )
 
     # Filename
     filename <- basename(file) |>
@@ -98,7 +119,7 @@ ana_shipping_night_light_density <- function(input_files, output_path, bbox = c(
       ship_info = ship_info
     ) |>
       calculate_ship_density(
-        resolution = 0.01,
+        grid_path,
         output_path = file.path(output_path, filename),
         ntype = "ntype"
       )
@@ -150,14 +171,9 @@ create_full_tracklines <- function(points, time_filter = "all", group_by_type = 
 }
 
 # Function to calculate ship density using rasterization
-calculate_ship_density <- function(tracklines, output_path = NULL, resolution = 0.01, ntype = NULL) {
-  # Create a blank raster with specified resolution (e.g., ~1km² at the equator)
-  bbox <- terra::ext(tracklines) # Bounding box of the data
-  grid <- terra::rast(
-    ext = bbox,
-    resolution = resolution,
-    crs = terra::crs(tracklines)
-  )
+calculate_ship_density <- function(tracklines, grid_path, output_path = NULL, ntype = NULL) {
+  # Get grid
+  grid <- terra::rast(grid_path)
 
   # Rasterize: Count unique MMSI values in each grid cell
   density_raster <- terra::rasterize(

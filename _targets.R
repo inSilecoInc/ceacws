@@ -574,19 +574,22 @@ list(
     {
         ana_offshore_petroleum_activity(output_path = "workspace/data/analyzed/offshore_petroleum_activity-1.0.0", 
             input_files = list(tg_02c5753f_0ed3_40c0_8be8_3217eb8481cb_offshore_petroleum_newfoundland, 
-                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia))
-        "workspace/data/analyzed/offshore_petroleum_activity-1.0.0/offshore_petroleum_activity.gpkg"
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/offshore_petroleum_activity-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_ec5b0897_4a5d_41c3_b316_1e070fe17c01_annual_offshore_petroleum_platform_location, 
     {
         ana_offshore_petroleum_platform_annual(output_path = "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0", 
-            input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual))
+            input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_6c5a2778_6327_4bc1_a1bc_c7d4e02e6263_monthly_offshore_petroleum_platform_location, 
     {
         ana_offshore_petroleum_platform_monthly(output_path = "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0", 
-            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire))
+            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_6cba6119_d6d8_4cfd_8add_7ea93dfae326_offshore_wind_farm, 
@@ -621,18 +624,20 @@ list(
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents.tif"
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
     {
         ana_shipping_intensity_density(output_path = "workspace/data/analyzed/shipping_intensity_density-1.0.0", 
-            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points))
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/shipping_intensity_density-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_night_light_intensity_density, 
     {
         ana_shipping_night_light_density(output_path = "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0", 
-            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points))
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/"
     }, format = "file"))
 )

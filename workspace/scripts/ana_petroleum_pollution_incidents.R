@@ -249,43 +249,63 @@ categorize_by_quantity <- function(dat) {
 }
 
 ana_petroleum_pollution_incidents <- function(input_files, output_path) {
+  # output_path <- "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
+  # # dir.create(output_path)
+  # input_files <- c(
+  #   "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg",
+  #   "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg",
+  #   "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+  # )
+
   input_files <- unlist(input_files)
   grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
   aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
 
+  # ISTOP
+  input_files[stringr::str_detect(unlist(input_files), "istop.gpkg")] |>
+    sf::st_read(quiet = TRUE) |>
+    sf::st_transform(4326) |>
+    dplyr::mutate(month = lubridate::floor_date(lubridate::ymd(date), unit = "month")) |>
+    group_rasterize_export(
+      grouping_vars = "month",
+      fun = "count",
+      field = NA,
+      grid = grid,
+      aoi = aoi,
+      dataset_name = "petroleum_pollution_incidents_istop",
+      output_path = output_path
+    )
 
-  dat <- dplyr::bind_rows(
-    input_files[stringr::str_detect(unlist(input_files), "istop.gpkg")] |>
-      sf::st_read(quiet = TRUE) |>
-      sf::st_transform(4326),
-    input_files[stringr::str_detect(unlist(input_files), "nasp.gpkg")] |>
-      sf::st_read(quiet = TRUE) |>
-      sf::st_transform(4326),
-    input_files[stringr::str_detect(unlist(input_files), "neec.gpkg")] |>
-      sf::st_read(quiet = TRUE) |>
-      sf::st_transform(4326)
-  )
 
-  # AOI & Grid
-  dat <- terra::rasterize(
-    x = dat,
-    y = grid,
-    fun = "count",
-    field = NA
-  )
-  dat <- terra::mask(dat, aoi)
+  # NASP
+  input_files[stringr::str_detect(unlist(input_files), "nasp.gpkg")] |>
+    sf::st_read(quiet = TRUE) |>
+    sf::st_transform(4326) |>
+    dplyr::mutate(month = lubridate::floor_date(lubridate::ymd(date), unit = "month")) |>
+    group_rasterize_export(
+      grouping_vars = "month",
+      fun = "count",
+      field = NA,
+      grid = grid,
+      aoi = aoi,
+      dataset_name = "petroleum_pollution_incidents_nasp",
+      output_path = output_path
+    )
 
-  # Export
-  terra::writeRaster(
-    dat,
-    filename = file.path(output_path, "petroleum_pollution_incidents.tif"),
-    overwrite = TRUE,
-    gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
-  )
-
-  # sf::st_write(
-  #   dsn = file.path(output_path, "petroleum_pollution_incidents.gpkg"),
-  #   quiet = TRUE,
-  #   delete_dsn = TRUE
-  # )
+  # NEEC
+  input_files[stringr::str_detect(unlist(input_files), "neec.gpkg")] |>
+    sf::st_read(quiet = TRUE) |>
+    sf::st_transform(4326) |>
+    dplyr::mutate(month = lubridate::floor_date(lubridate::ymd(date), unit = "month")) |>
+    group_rasterize_export(
+      grouping_vars = c("month", "substance"),
+      fun = "count",
+      field = NA,
+      grid = grid,
+      aoi = aoi,
+      dataset_name = "petroleum_pollution_incidents_neec",
+      output_path = output_path
+    )
 }

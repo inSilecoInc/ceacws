@@ -3,9 +3,15 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
   # # dir.create(output_path)
   # input_files <- c(
   #   "workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/offshore_petroleum_nfl.gpkg",
-  #   "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg"
+  #   "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
   # )
   input_files <- unlist(input_files)
+
+  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
 
   # Data
   dat <- lapply(input_files, sf::st_read, quiet = TRUE) |>
@@ -24,11 +30,27 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
     sf::st_transform(4326) |>
     dplyr::select(-geom_type)
 
-  # Export
-  sf::st_write(
+  # Intersect aoi & grid
+  dat <- sf::st_intersection(dat, sf::st_geometry(aoi)) |>
+    dplyr::group_by(classification, status)
+  nm <- dplyr::group_keys(dat)
+  dat <- dplyr::group_split(dat)
+  for (i in 1:length(dat)) {
+    dat[[i]] <- sf::st_union(dat[[i]]) |>
+      sf::st_as_sf()
+  }
+  dat <- dplyr::bind_rows(dat) |>
+    cbind(nm)
+
+  # Rasterize and export
+  group_rasterize_export(
     dat,
-    dsn = file.path(output_path, "offshore_petroleum_activity.gpkg"),
-    quiet = TRUE,
-    delete_dsn = TRUE
+    grouping_vars = c("classification", "status"),
+    fun = "count",
+    field = NA,
+    grid = grid,
+    aoi = aoi,
+    dataset_name = "ofshore_petroleum_activity",
+    output_path = output_path
   )
 }

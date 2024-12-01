@@ -16,5 +16,7 @@ pipeline:
         name: offshore petroleum newfoundland
       - id: 570b8de3-665c-438e-815b-3b4b23ffe6a6
         name: offshore petroleum nova-scotia
-      output_files: offshore_petroleum_activity.gpkg
+      - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+        name: study area aoi
+      output_files: ""
 

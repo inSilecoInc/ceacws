@@ -14,4 +14,6 @@ pipeline:
         input_files:
           - id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
             name: shipping ais points
+          - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+            name: study area aoi
         output_files: ""

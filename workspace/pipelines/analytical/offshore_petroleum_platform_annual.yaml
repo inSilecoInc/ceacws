@@ -14,4 +14,6 @@ pipeline:
       input_files:
       - id: e50fea35-bdb1-4d6d-8c77-c5924096c942
         name: VIIRS Night Fire Annual
+      - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+        name: study area aoi
       output_files: ""
