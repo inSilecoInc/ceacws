@@ -1,6 +1,6 @@
 prc_viirs_boat_detection <- function(input_files, output_path) {
   # output_path <- "workspace/data/harvested/viirs_boat_detection-1.0.0/processed/"
-  # dir.create(output_path)
+  # # dir.create(output_path)
   # input_path <- "workspace/data/harvested/viirs_boat_detection-1.0.0/raw/"
   # input_files <- input_path
 

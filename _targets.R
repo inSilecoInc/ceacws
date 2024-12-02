@@ -472,7 +472,7 @@ list(
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
         source_type = "viirs", urls = "NA", dataset = "vbd", 
-        resolution = "nightly", dates = list(c("2023-01-01", 
+        resolution = "nightly", dates = list(c("2020-01-01", 
         "2023-12-31")), country_code = "can", credentials = "workspace/credentials/earth_observation_group.json", 
         output_path = "workspace/data/harvested/viirs_boat_detection-1.0.0/raw", 
         output = NULL, url = "NA", target_name = structure("tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data", class = c("glue", 
@@ -632,6 +632,13 @@ list(
                 tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_653bc3bc_1aa2_4586_af57_34c4ac47e601_ship_night_detection, 
+    {
+        ana_ship_light_detection(output_path = "workspace/data/analyzed/ship_light_detection-1.0.0", 
+            input_files = list(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VIIRS_Boat_Detection, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/ship_light_detection-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
     {

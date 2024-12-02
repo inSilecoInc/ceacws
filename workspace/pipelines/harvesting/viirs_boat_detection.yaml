@@ -54,7 +54,7 @@ pipeline:
         dataset: "vbd"
         resolution: "nightly"
         dates: 
-          - ["2023-01-01", "2023-12-31"]        # Specified range of nightly data
+          - ["2020-01-01", "2023-12-31"]        # Specified range of nightly data
         country_code: "can"                 # Use SAA redacted global dataset
         credentials: "workspace/credentials/earth_observation_group.json" # Path to JSON credentials for VIIRS data
 
