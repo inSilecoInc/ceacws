@@ -44,10 +44,11 @@ The following is the list of specific tasks, as described in the Statement of Wo
 The current report covers the work that was to be accomplished before March 31st, 2024. More specifically, Tasks 1 and 2 were to be completed at this stage of the project which targetted shipping-based pollution and petroleum pollution based on past incidents. The following sections presents the progress accomplished since the beginning of the contract, detailed justifications if the work tasked is not yet completed, and a description of the work accomplished. 
 
 
-## Area of interest 
+## Area of interest {#sec-aoi}
 
-```{r aoiarea, echo = FALSE, eval = FALSE}
-aoi_area <- sf::st_read("../../project-data/aoi/aoi.gpkg", quiet = TRUE) |>
+```{r aoiarea, echo = FALSE}
+aoi <- sf::st_read("../../workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg", quiet = TRUE)
+aoi_area <- aoi |>
   sf::st_make_valid() |>
   sf::st_area() |>
   units::set_units(km^2) |>
@@ -56,13 +57,14 @@ aoi_area <- sf::st_read("../../project-data/aoi/aoi.gpkg", quiet = TRUE) |>
   round(0)
 ```
 
-The project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers r aoi_area $km^2$ (@fig-aoi). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 $km^2$, although this decision can be revisited at any time throughout the project. 
+The project is conducted in EEZ of eastern Canada and covers the St. Lawrence, the western Atlantic and adjacent International Waters. As currently defined, the study area covers `r aoi_area` $km^2$ (@fig-aoi). All threat layers are integrated in a study grid that divides the study area into a regular grid formed of cells of ~1 $km^2$, although this decision can be revisited at any time throughout the project. 
 
-```{r aoi, echo = FALSE, eval = FALSE}
+```{r aoi, echo = FALSE}
 #| fig-cap: "Limits of the study area for the project on mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada."
 #| out-width: '90%'
 #| label: fig-aoi
-ceacws::fig_aoi()
+source("../../R/fig_aoi.R")
+fig_aoi(aoi)
 ```
 
 ## Data management and reproducibility
