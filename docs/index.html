@@ -180,8 +180,7 @@ window.Quarto = {
   <li><a href="#progress-report" id="toc-progress-report" class="nav-link" data-scroll-target="#progress-report"><span class="header-section-number">1.2.2</span> Progress report</a></li>
   </ul></li>
   <li><a href="#sec-aoi" id="toc-sec-aoi" class="nav-link" data-scroll-target="#sec-aoi"><span class="header-section-number">1.3</span> Area of interest</a></li>
-  <li><a href="#data-management-and-reproducibility" id="toc-data-management-and-reproducibility" class="nav-link" data-scroll-target="#data-management-and-reproducibility"><span class="header-section-number">1.4</span> Data management and reproducibility</a></li>
-  <li><a href="#notes-references" id="toc-notes-references" class="nav-link" data-scroll-target="#notes-references"><span class="header-section-number">1.5</span> Notes &amp; references</a></li>
+  <li><a href="#notes-references" id="toc-notes-references" class="nav-link" data-scroll-target="#notes-references"><span class="header-section-number">1.4</span> Notes &amp; references</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -272,26 +271,11 @@ Figure&nbsp;1.1: Limits of the study area for the project on mapping threats at 
 </div>
 </div>
 </section>
-<section id="data-management-and-reproducibility" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="data-management-and-reproducibility"><span class="header-section-number">1.4</span> Data management and reproducibility</h2>
-<p>The aim of database management is to ensure the transparency and reproducibility of the project. Our approach is based on the <a href="https://ogsl.ca/en/fair-principles/">FAIR</a> (Findable, Accessible, Interoperable, Reusable) data principles, which seek to ensure that the data used are discoverable, accessible, interoperable and reusable. We therefore use programming tools, in particular the language <a href="https://www.r-project.org/">R</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. There are a number of advantages to using programming tools such as <a href="https://www.arcgis.com/index.html">ArcGIS</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. They offer great flexibility, enabling us to very quickly integrate changes or new considerations without having to redo a number of steps in a complex process. This flexibility is not limited to analysis, since all steps of a project, from the integration of raw data to the production of reports, can be integrated and easily modified. It is then an easy matter to integrate comments or new recommendations arising from engagement processes, for example.</p>
-<p>We also use <a href="https://github.com/">GitHub</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, a version control tool for the documentation, quality control, and development/change history of programming elements relevant to the entire project. We created a publicly available <em>research compendium</em> called <a href="https://github.com/inSilecoInc/ceacws"><code>ceacws</code></a> that provides the collection of all parts of our research project including text, figures, data, and code that ensures reproducibility of the study.</p>
-<p>While not including the data directly, the <em>research compendium</em> contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains – or will contain – the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.</p>
-<p>The <em>research compendium</em> relies on another R package called <a href="https://github.com/Ecosystem-Assessments/pipedat"><code>pipedat</code></a>, which provides analytical pipelines to access, load, and format a variety of data from multiple sources programmatically. The goal of <code>pipedat</code> is to enhance the capacity scientists, planners and the wider public to prepare and perform complex and reproducible ecosystem-scale assessments requiring the integration of multiple spatial datasets such as cumulative effects assessments in the context of ecosystem-based management, and Marxan analyses for the establishment of individual and networks of MPAs. While the analytical pipelines used to fetch and format the data for this project are available in this research compendium, their latest version and execution are performed with <code>pipedat</code>.</p>
-</section>
-<section id="notes-references" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="notes-references"><span class="header-section-number">1.5</span> Notes &amp; references</h2>
+<section id="notes-references" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="notes-references"><span class="header-section-number">1.4</span> Notes &amp; references</h2>
 
 
 </section>
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>R is a free software environment for statistics, data science and graphics (https://www.r-project.org/)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>ArcGIS is a geographic information software (GIS) suite developed by the US company Esri (https://www.arcgis.com/index.html)<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>GitHub is a web-based software development hosting and management service with over 40 million users worldwide (https://github.com/).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->

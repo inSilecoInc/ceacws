@@ -40,33 +40,53 @@
     ]
   },
   {
-    "objectID": "index.html#data-management-and-reproducibility",
-    "href": "index.html#data-management-and-reproducibility",
-    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
-    "section": "1.4 Data management and reproducibility",
-    "text": "1.4 Data management and reproducibility\nThe aim of database management is to ensure the transparency and reproducibility of the project. Our approach is based on the FAIR (Findable, Accessible, Interoperable, Reusable) data principles, which seek to ensure that the data used are discoverable, accessible, interoperable and reusable. We therefore use programming tools, in particular the language R1. There are a number of advantages to using programming tools such as ArcGIS2. They offer great flexibility, enabling us to very quickly integrate changes or new considerations without having to redo a number of steps in a complex process. This flexibility is not limited to analysis, since all steps of a project, from the integration of raw data to the production of reports, can be integrated and easily modified. It is then an easy matter to integrate comments or new recommendations arising from engagement processes, for example.\nWe also use GitHub3, a version control tool for the documentation, quality control, and development/change history of programming elements relevant to the entire project. We created a publicly available research compendium called ceacws that provides the collection of all parts of our research project including text, figures, data, and code that ensures reproducibility of the study.\nWhile not including the data directly, the research compendium contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains – or will contain – the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.\nThe research compendium relies on another R package called pipedat, which provides analytical pipelines to access, load, and format a variety of data from multiple sources programmatically. The goal of pipedat is to enhance the capacity scientists, planners and the wider public to prepare and perform complex and reproducible ecosystem-scale assessments requiring the integration of multiple spatial datasets such as cumulative effects assessments in the context of ecosystem-based management, and Marxan analyses for the establishment of individual and networks of MPAs. While the analytical pipelines used to fetch and format the data for this project are available in this research compendium, their latest version and execution are performed with pipedat.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
     "objectID": "index.html#notes-references",
     "href": "index.html#notes-references",
     "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
-    "section": "1.5 Notes & references",
-    "text": "1.5 Notes & references",
+    "section": "1.4 Notes & references",
+    "text": "1.4 Notes & references",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
-    "objectID": "index.html#footnotes",
-    "href": "index.html#footnotes",
-    "title": "Mapping threats at sea to marine birds throughout their annual cycle to inform conservation and management in Atlantic Canada",
+    "objectID": "1_research_compendium.html",
+    "href": "1_research_compendium.html",
+    "title": "2  Research compendium",
     "section": "",
-    "text": "R is a free software environment for statistics, data science and graphics (https://www.r-project.org/)↩︎\nArcGIS is a geographic information software (GIS) suite developed by the US company Esri (https://www.arcgis.com/index.html)↩︎\nGitHub is a web-based software development hosting and management service with over 40 million users worldwide (https://github.com/).↩︎",
+    "text": "2.1 Structure and Content\nThe research compendium is organized into the following components:\nBelow is a description of each component of the research compendium.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Research compendium</span>"
+    ]
+  },
+  {
+    "objectID": "1_research_compendium.html#structure-and-content",
+    "href": "1_research_compendium.html#structure-and-content",
+    "title": "2  Research compendium",
+    "section": "",
+    "text": "myResearchCompendium/\n│\n├── _targets/\n│\n├── data/\n│\n├── docs/\n│\n├── figures/\n│\n├── man/\n│\n├── pubs/\n│\n├── R/\n│\n├── workspace/\n│   ├── bibliographies/\n│   ├── config/\n│   ├── credentials/\n│   ├── data/\n│   │   ├── harvested/\n│   │   └── analyzed/\n│   ├── pipelines/\n│   │   ├── harvesting/\n│   │   └── analytical/\n│   └── script/\n│\n├── _targets.R\n├── DESCRIPTION\n├── LICENSE.md\n├── NAMESPACE\n├── README.md\n└── README.Rmd\n\n\n2.1.1 Root-Level Files\n\n_targets.R: The central configuration file for the targets R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.\nDESCRIPTION: Provides metadata about the compendium, including its title, version, author information, and dependencies. This file mirrors the DESCRIPTION file in R packages, enabling compatibility with R’s package ecosystem.\nLICENSE.md: Contains the licensing terms under which the compendium is distributed, ensuring clarity regarding usage and redistribution rights.\nNAMESPACE: Specifies the exported functions and imports from other packages, similar to an R package, to manage the scope and dependencies of functions within the compendium.\nREADME.md and README.Rmd: Provide an overview of the project, its goals, and instructions for setup and use. The R Markdown file (README.Rmd) can be rendered to create the Markdown file (README.md).\n\n\n\n2.1.2 Directories\n\n2.1.2.1 _targets/\nThis directory contains internal files used by the targets package to manage workflow execution. It tracks dependencies, outputs, and progress, ensuring reproducibility and enabling efficient re-execution of only the steps affected by changes. This folder is present once the _targets.R file has been run once.\n\n\n2.1.2.2 data/\nThis directory stores raw and cleaned data files that are essential to the analyses but not directly produced by the workflows. This allows the compendium to maintain a clear separation between input data and processed outputs.\n\n\n2.1.2.3 docs/\nDocumentation files for the project, such as user guides, vignettes, and any additional explanatory materials that provide context for the workflows and outputs.\n\n\n2.1.2.4 figures/\nA repository for plots, charts, and visualizations generated by the analytical workflows. This directory helps centralize all visual outputs for reporting and publication.\n\n\n2.1.2.5 man/\nDocumentation for functions included in the compendium. This directory mirrors the man/ folder in R packages and contains .Rd files that describe each function’s purpose, usage, and arguments.\n\n\n2.1.2.6 pubs/\nA location for storing draft manuscripts, reports, and other publications derived from the project. This ensures that research outputs are connected to their analytical source.\n\n\n2.1.2.7 R/\nContains R scripts defining functions and utilities used across the workflows. This is the primary location for reusable, well-documented R functions that are central to the analyses.\n\n\n2.1.2.8 workspace/\nA comprehensive directory for project-specific resources and configurations. It is further divided into:\n\nbibliographies/: Bibliographic files, such as .bib files, used for citations in reports and publications.\nconfig/: Configuration files (e.g., YAML or JSON) that specify pipeline parameters and global settings for the analyses.\ncredentials/: Secure storage for authentication keys and other sensitive information required for accessing data sources.\ndata/: Organized into two subdirectories:\n\nharvested/: Raw data files downloaded or collected through the harvesting pipelines.\nanalyzed/: Processed data files generated by the analytical pipelines.\n\npipelines/: Divided into:\n\nharvesting/: YAML configurations and scripts for harvesting data from external sources.\nanalytical/: YAML configurations and scripts for performing analyses on harvested data.\n\nscript/: Scripts and functions used by the targets master workflow.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Research compendium</span>"
+    ]
+  },
+  {
+    "objectID": "1_research_compendium.html#navigating-and-using-the-compendium",
+    "href": "1_research_compendium.html#navigating-and-using-the-compendium",
+    "title": "2  Research compendium",
+    "section": "2.2 Navigating and Using the Compendium",
+    "text": "2.2 Navigating and Using the Compendium\n\nSetting Up the Workspace:\n\nThe README.md provides instructions for setting up the compendium, including installing dependencies, configuring paths, and loading required libraries.\n\nCredentials:\n\nThis project requires credentials to access data from two different sources:\n\nSecure google cloud storage managed by inSileco (pof-stac-insileco.json)\nCredentials to access data from the earth observation group (earth_observation_group.json). The structure of the .json file should be:\n\n{\n  \"client_id\": \"eogdata_oidc\",\n  \"client_secret\": \"unique_id\",\n  \"username\": \"username\",\n  \"password\": \"password\",\n  \"grant_type\": \"password\"\n}\nThese credentials have to be stored in workspace/credentials/\n\nRunning the Pipelines:\n\nRunning the master pipeline contained in _targets.R is achevied by executing the targets::tar_make() command in R from the root of the research compendium. Depending on your computer and internet connexion, the first run will likely take a full day to complete.\n\nExploring Outputs:\n\nProcessed data is stored in workspace/data/analyzed/.\nVisualizations and figures are available in figures/, while reports and publications can be found in pubs/.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Research compendium</span>"
+    ]
+  },
+  {
+    "objectID": "1_research_compendium.html#benefits-of-this-structure",
+    "href": "1_research_compendium.html#benefits-of-this-structure",
+    "title": "2  Research compendium",
+    "section": "2.3 Benefits of This Structure",
+    "text": "2.3 Benefits of This Structure\nThe R package-inspired structure ensures that all components of the research process—data, code, outputs, and documentation—are organized and interconnected. This design fosters collaboration, simplifies maintenance, and supports the transparency and reproducibility that are critical for scientific research.\nBy adhering to this structured approach, the CEACWS compendium provides a robust framework for conducting, sharing, and extending cumulative effects assessments in a way that can serve as a model for similar projects.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Research compendium</span>"
     ]
   },
   {

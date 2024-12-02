@@ -67,19 +67,4 @@ source("../../R/fig_aoi.R")
 fig_aoi(aoi)
 ```
 
-## Data management and reproducibility
-
-The aim of database management is to ensure the transparency and reproducibility of the project. Our approach is based on the [FAIR](https://ogsl.ca/en/fair-principles/) (Findable, Accessible, Interoperable, Reusable) data principles, which seek to ensure that the data used are discoverable, accessible, interoperable and reusable. We therefore use programming tools, in particular the language [R](https://www.r-project.org/)[^r]. There are a number of advantages to using programming tools such as [ArcGIS](https://www.arcgis.com/index.html)[^arc]. They offer great flexibility, enabling us to very quickly integrate changes or new considerations without having to redo a number of steps in a complex process. This flexibility is not limited to analysis, since all steps of a project, from the integration of raw data to the production of reports, can be integrated and easily modified. It is then an easy matter to integrate comments or new recommendations arising from engagement processes, for example.
-
-We also use [GitHub](https://github.com/)[^git], a version control tool for the documentation, quality control, and development/change history of programming elements relevant to the entire project. We created a publicly available *research compendium* called [`ceacws`](https://github.com/inSilecoInc/ceacws) that provides the collection of all parts of our research project including text, figures, data, and code that ensures reproducibility of the study. 
-
-While not including the data directly, the *research compendium* contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains -- or will contain -- the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.
-
-The *research compendium* relies on another R package called [`pipedat`](https://github.com/Ecosystem-Assessments/pipedat), which provides analytical pipelines to access, load, and format a variety of data from multiple sources programmatically. The goal of `pipedat` is to enhance the capacity scientists, planners and the wider public to prepare and perform complex and reproducible ecosystem-scale assessments requiring the integration of multiple spatial datasets such as cumulative effects assessments in the context of ecosystem-based management, and Marxan analyses for the establishment of individual and networks of MPAs. While the analytical pipelines used to fetch and format the data for this project are available in this research compendium, their latest version and execution are performed with `pipedat`.
-
-[^r]: R is a free software environment for statistics, data science and graphics (https://www.r-project.org/)
-[^arc]: ArcGIS is a geographic information software (GIS) suite developed by the US company Esri (https://www.arcgis.com/index.html)
-[^git]: GitHub is a web-based software development hosting and management service with over 40 million users worldwide (https://github.com/).
-
-
 ## Notes & references

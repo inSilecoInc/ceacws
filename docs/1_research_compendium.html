@@ -136,7 +136,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#structure-and-content" id="toc-structure-and-content" class="nav-link active" data-scroll-target="#structure-and-content"><span class="header-section-number">2.1</span> Structure and Content</a>
+  <ul class="collapse">
+  <li><a href="#root-level-files" id="toc-root-level-files" class="nav-link" data-scroll-target="#root-level-files"><span class="header-section-number">2.1.1</span> Root-Level Files</a></li>
+  <li><a href="#directories" id="toc-directories" class="nav-link" data-scroll-target="#directories"><span class="header-section-number">2.1.2</span> Directories</a></li>
+  </ul></li>
+  <li><a href="#navigating-and-using-the-compendium" id="toc-navigating-and-using-the-compendium" class="nav-link" data-scroll-target="#navigating-and-using-the-compendium"><span class="header-section-number">2.2</span> Navigating and Using the Compendium</a></li>
+  <li><a href="#benefits-of-this-structure" id="toc-benefits-of-this-structure" class="nav-link" data-scroll-target="#benefits-of-this-structure"><span class="header-section-number">2.3</span> Benefits of This Structure</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,8 +172,155 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We created a publicly available <em>research compendium</em> called <a href="https://github.com/inSilecoInc/ceacws"><code>ceacws</code></a>. The research compendium is designed to facilitate reproducible research by organizing data, scripts, and outputs within a structured framework. By emulating the structure of an R package, the compendium combines the rigor of package development with the flexibility required for complex analytical workflows. This structure ensures transparency, reproducibility, and ease of navigation for researchers and collaborators. The compendium not only supports the organization and documentation of workflows but also allows the seamless integration of R tools and functions. Adopting an R package-like structure provides several advantages:</p>
+<ul>
+<li><strong>Reproducibility</strong>: The standardized structure ensures that all components (data, code, outputs) are easily accessible and linked, reducing the likelihood of errors in replication.</li>
+<li><strong>Portability</strong>: The compendium can be shared and installed like an R package, enabling collaborators to reproduce the work on their systems.</li>
+<li><strong>Documentation</strong>: Built-in support for documentation (e.g., <code>man/</code>, <code>README.md</code>) enhances understanding and usability for current and future users.</li>
+</ul>
+<p>While not including the data directly, the <em>research compendium</em> contains all the resources making it possible to access and transform the raw data and prepare the threat layers for this project. It also contains the code creating figures, tables and this report. Only sensitive data for which confidentiality agreements have been signed remain inaccessible; still, these are stored on Google Cloud Storage in a secure bucket that can be accessed programmatically with an access key. This ensures that the whole project remains fully reproducible even if access to some data is limited.</p>
+<p>This chapter outlines the structure of the CEACWS research compendium and provides guidance on its content, navigation, and usage.</p>
+<section id="structure-and-content" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="structure-and-content"><span class="header-section-number">2.1</span> Structure and Content</h2>
+<p>The research compendium is organized into the following components:</p>
+<pre><code>myResearchCompendium/
+│
+├── _targets/
+│
+├── data/
+│
+├── docs/
+│
+├── figures/
+│
+├── man/
+│
+├── pubs/
+│
+├── R/
+│
+├── workspace/
+│   ├── bibliographies/
+│   ├── config/
+│   ├── credentials/
+│   ├── data/
+│   │   ├── harvested/
+│   │   └── analyzed/
+│   ├── pipelines/
+│   │   ├── harvesting/
+│   │   └── analytical/
+│   └── script/
+│
+├── _targets.R
+├── DESCRIPTION
+├── LICENSE.md
+├── NAMESPACE
+├── README.md
+└── README.Rmd</code></pre>
+<p>Below is a description of each component of the research compendium.</p>
+<section id="root-level-files" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="root-level-files"><span class="header-section-number">2.1.1</span> Root-Level Files</h3>
+<ul>
+<li><strong><code>_targets.R</code></strong>: The central configuration file for the <code>targets</code> R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.</li>
+<li><strong><code>DESCRIPTION</code></strong>: Provides metadata about the compendium, including its title, version, author information, and dependencies. This file mirrors the <code>DESCRIPTION</code> file in R packages, enabling compatibility with R’s package ecosystem.</li>
+<li><strong><code>LICENSE.md</code></strong>: Contains the licensing terms under which the compendium is distributed, ensuring clarity regarding usage and redistribution rights.</li>
+<li><strong><code>NAMESPACE</code></strong>: Specifies the exported functions and imports from other packages, similar to an R package, to manage the scope and dependencies of functions within the compendium.</li>
+<li><strong><code>README.md</code></strong> and <strong><code>README.Rmd</code></strong>: Provide an overview of the project, its goals, and instructions for setup and use. The R Markdown file (<code>README.Rmd</code>) can be rendered to create the Markdown file (<code>README.md</code>).</li>
+</ul>
+</section>
+<section id="directories" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="directories"><span class="header-section-number">2.1.2</span> Directories</h3>
+<section id="targets" class="level4" data-number="2.1.2.1">
+<h4 data-number="2.1.2.1" class="anchored" data-anchor-id="targets"><span class="header-section-number">2.1.2.1</span> <strong><code>_targets/</code></strong></h4>
+<p>This directory contains internal files used by the <code>targets</code> package to manage workflow execution. It tracks dependencies, outputs, and progress, ensuring reproducibility and enabling efficient re-execution of only the steps affected by changes. This folder is present once the <code>_targets.R</code> file has been run once.</p>
+</section>
+<section id="data" class="level4" data-number="2.1.2.2">
+<h4 data-number="2.1.2.2" class="anchored" data-anchor-id="data"><span class="header-section-number">2.1.2.2</span> <strong><code>data/</code></strong></h4>
+<p>This directory stores raw and cleaned data files that are essential to the analyses but not directly produced by the workflows. This allows the compendium to maintain a clear separation between input data and processed outputs.</p>
+</section>
+<section id="docs" class="level4" data-number="2.1.2.3">
+<h4 data-number="2.1.2.3" class="anchored" data-anchor-id="docs"><span class="header-section-number">2.1.2.3</span> <strong><code>docs/</code></strong></h4>
+<p>Documentation files for the project, such as user guides, vignettes, and any additional explanatory materials that provide context for the workflows and outputs.</p>
+</section>
+<section id="figures" class="level4" data-number="2.1.2.4">
+<h4 data-number="2.1.2.4" class="anchored" data-anchor-id="figures"><span class="header-section-number">2.1.2.4</span> <strong><code>figures/</code></strong></h4>
+<p>A repository for plots, charts, and visualizations generated by the analytical workflows. This directory helps centralize all visual outputs for reporting and publication.</p>
+</section>
+<section id="man" class="level4" data-number="2.1.2.5">
+<h4 data-number="2.1.2.5" class="anchored" data-anchor-id="man"><span class="header-section-number">2.1.2.5</span> <strong><code>man/</code></strong></h4>
+<p>Documentation for functions included in the compendium. This directory mirrors the <code>man/</code> folder in R packages and contains <code>.Rd</code> files that describe each function’s purpose, usage, and arguments.</p>
+</section>
+<section id="pubs" class="level4" data-number="2.1.2.6">
+<h4 data-number="2.1.2.6" class="anchored" data-anchor-id="pubs"><span class="header-section-number">2.1.2.6</span> <strong><code>pubs/</code></strong></h4>
+<p>A location for storing draft manuscripts, reports, and other publications derived from the project. This ensures that research outputs are connected to their analytical source.</p>
+</section>
+<section id="r" class="level4" data-number="2.1.2.7">
+<h4 data-number="2.1.2.7" class="anchored" data-anchor-id="r"><span class="header-section-number">2.1.2.7</span> <strong><code>R/</code></strong></h4>
+<p>Contains R scripts defining functions and utilities used across the workflows. This is the primary location for reusable, well-documented R functions that are central to the analyses.</p>
+</section>
+<section id="workspace" class="level4" data-number="2.1.2.8">
+<h4 data-number="2.1.2.8" class="anchored" data-anchor-id="workspace"><span class="header-section-number">2.1.2.8</span> <strong><code>workspace/</code></strong></h4>
+<p>A comprehensive directory for project-specific resources and configurations. It is further divided into:</p>
+<ul>
+<li><strong><code>bibliographies/</code></strong>: Bibliographic files, such as <code>.bib</code> files, used for citations in reports and publications.</li>
+<li><strong><code>config/</code></strong>: Configuration files (e.g., YAML or JSON) that specify pipeline parameters and global settings for the analyses.</li>
+<li><strong><code>credentials/</code></strong>: Secure storage for authentication keys and other sensitive information required for accessing data sources.</li>
+<li><strong><code>data/</code></strong>: Organized into two subdirectories:
+<ul>
+<li><strong><code>harvested/</code></strong>: Raw data files downloaded or collected through the harvesting pipelines.</li>
+<li><strong><code>analyzed/</code></strong>: Processed data files generated by the analytical pipelines.</li>
+</ul></li>
+<li><strong><code>pipelines/</code></strong>: Divided into:
+<ul>
+<li><strong><code>harvesting/</code></strong>: YAML configurations and scripts for harvesting data from external sources.</li>
+<li><strong><code>analytical/</code></strong>: YAML configurations and scripts for performing analyses on harvested data.</li>
+</ul></li>
+<li><strong><code>script/</code></strong>: Scripts and functions used by the targets master workflow.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="navigating-and-using-the-compendium" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="navigating-and-using-the-compendium"><span class="header-section-number">2.2</span> Navigating and Using the Compendium</h2>
+<ol type="1">
+<li><strong>Setting Up the Workspace</strong>:
+<ul>
+<li>The <code>README.md</code> provides instructions for setting up the compendium, including installing dependencies, configuring paths, and loading required libraries.</li>
+</ul></li>
+<li><strong>Credentials</strong>:
+<ul>
+<li>This project requires credentials to access data from two different sources:
+<ul>
+<li>Secure google cloud storage managed by inSileco (<code>pof-stac-insileco.json</code>)</li>
+<li>Credentials to access data from the <a href="https://eogdata.mines.edu/products/register/">earth observation group</a> (<code>earth_observation_group.json</code>). The structure of the <code>.json</code> file should be:</li>
+</ul>
+<pre><code>{
+  "client_id": "eogdata_oidc",
+  "client_secret": "unique_id",
+  "username": "username",
+  "password": "password",
+  "grant_type": "password"
+}</code></pre></li>
+<li>These credentials have to be stored in <code>workspace/credentials/</code></li>
+</ul></li>
+<li><strong>Running the Pipelines</strong>:
+<ul>
+<li>Running the master pipeline contained in <code>_targets.R</code> is achevied by executing the <code>targets::tar_make()</code> command in <code>R</code> from the root of the research compendium. Depending on your computer and internet connexion, the first run will likely take a full day to complete.</li>
+</ul></li>
+<li><strong>Exploring Outputs</strong>:
+<ul>
+<li>Processed data is stored in <code>workspace/data/analyzed/</code>.</li>
+<li>Visualizations and figures are available in <code>figures/</code>, while reports and publications can be found in <code>pubs/</code>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="benefits-of-this-structure" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="benefits-of-this-structure"><span class="header-section-number">2.3</span> Benefits of This Structure</h2>
+<p>The R package-inspired structure ensures that all components of the research process—data, code, outputs, and documentation—are organized and interconnected. This design fosters collaboration, simplifies maintenance, and supports the transparency and reproducibility that are critical for scientific research.</p>
+<p>By adhering to this structured approach, the CEACWS compendium provides a robust framework for conducting, sharing, and extending cumulative effects assessments in a way that can serve as a model for similar projects.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
