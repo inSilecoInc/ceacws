@@ -60,7 +60,7 @@ pipeline:
       - name: Shipping AIS 2023
         source_type: "gcs"
         urls: "cws-private"
-        asset: "AIS/2023AIS.zip"
+        asset: "AIS/2023AIS_06Dec2024.zip"
         credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
 
   processing:

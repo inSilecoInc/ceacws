@@ -6,6 +6,7 @@
 #' @param grouping_vars A character vector of column names in `dat` to group the data.
 #' @param fun from `terra::rasterize`, summarizing function for when there are multiple geometries in one cell. For lines and polygons you can only use ‘"min"’, ‘"max"’, ‘"mean"’, ‘"count"’ and ‘"sum"’ For points you can use any function that returns a single number; for example ‘mean’, ‘length’ (to get a count), ‘min’ or ‘max’
 #' @param field from `terra::rasterize` character or numeric. If ‘field’ is a character, it should a variable name in ‘x’. If ‘field’ is numeric it typically is a single number or a vector of length ‘nrow(x)’. The values are recycled to ‘nrow(x)’
+#' @param norm numeric, value to use to normalize raster values
 #' @param grid A `SpatRaster` object defining the grid to rasterize onto.
 #' @param aoi A polygon of class `sf` or `SpatVector` defining the area of interest to mask the rasters.
 #' @param dataset_name A string specifying the name of the dataset, used in the output filenames.
@@ -38,6 +39,7 @@ group_rasterize_export <- function(
     grouping_vars,
     fun,
     field = NA,
+    norm = NULL,
     grid,
     aoi,
     dataset_name,
@@ -83,6 +85,9 @@ group_rasterize_export <- function(
       fun = fun,
       field = field
     )
+
+    # Normalize
+    if (!is.null(norm)) density_raster <- density_raster / norm
 
     # Mask with AOI
     masked_raster <- terra::mask(density_raster, aoi)

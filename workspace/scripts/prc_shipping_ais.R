@@ -25,7 +25,7 @@ prc_shipping_ais_tracklines <- function(input_files, output_path) {
   future::plan(future::multisession, workers = parallel::detectCores() - 3)
 
   # List of parquet files
-  files <- list.files(parquet_db, full.names = TRUE)[1:8]
+  files <- list.files(parquet_db, full.names = TRUE)
 
   # Apply processing in parallel
   tracklines <- furrr::future_map(files, function(file) {

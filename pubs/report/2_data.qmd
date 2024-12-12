@@ -6,6 +6,15 @@ title: "Data Sources Overview"
 
 ## Accidental spills
 
+
+TODO: 
+
+- Pollution layer
+  - Aggregate within months, remove individual years
+  - Number of incidents / year
+  - Summed pollution layers 
+
+
 ### Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
 
 ```{r}

@@ -12,7 +12,7 @@ This threat layer was constructed using the [ISTOP](@sec-istop), [NEEC](@sec-nee
 - **NASP**: Records with missing coordinates were removed. Each NASP incident, represented as a point with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (@tbl-spillvolumes).
 - **NEEC**: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, exclusion of irrelevant terms (e.g., "mvi," "furnace oil"), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points and processed similarly to the NASP dataset, with additional classification by substance type based on chemical state and the presence of an oil sheen.
 
-Each dataset was clipped to the boundary of the area of interest (@sec-aoi). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure. These layers can be used for risk assessments and other spatial analyses.
+Each dataset was clipped to the boundary of the area of interest (@sec-aoi). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.
 
 - **Processing Scripts**:
   - `ana_petroleum_pollution_incidents_istop.R`
@@ -27,7 +27,7 @@ Each dataset was clipped to the boundary of the area of interest (@sec-aoi). Tem
 #| tbl-cap: "Volume categories and buffer size selected to transform incident as point locations to area of exposure from "
 data.frame(
   volume = c("[0, 100]", "[100, 1000]", "[1000, 10000]", "[10000+ ["),
-  buffer = c(500, 2000, 3000, 5000)
+  buffer = c(250, 500, 1000, 2000)
 ) |>
   knitr::kable(col.names = c("Volume (L)", "Buffer size (m)"))
 ```
