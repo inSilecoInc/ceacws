@@ -2,7 +2,7 @@
 title: "Research compendium"
 ---
 
-We created a publicly available *research compendium* called [`ceacws`](https://github.com/inSilecoInc/ceacws). The research compendium is designed to facilitate reproducible research by organizing data, scripts, and outputs within a structured framework. By emulating the structure of an R package, the compendium combines the rigor of package development with the flexibility required for complex analytical workflows. This structure ensures transparency, reproducibility, and ease of navigation for researchers and collaborators. The compendium not only supports the organization and documentation of workflows but also allows the seamless integration of R tools and functions. Adopting an R package-like structure provides several advantages:
+We created a publicly available *research compendium* called [`ceacws`](https://github.com/inSilecoInc/ceacws). The research compendium is designed to facilitate reproducible research by organizing data, scripts, and outputs within a structured framework. By emulating the structure of an R package, the compendium combines the rigour of package development with the flexibility required for complex analytical workflows. This structure ensures transparency, reproducibility, and ease of navigation for researchers and collaborators. The compendium not only supports the organization and documentation of workflows but also allows the seamless integration of R tools and functions. Adopting an R package-like structure provides several advantages:
 
 - **Reproducibility**: The standardized structure ensures that all components (data, code, outputs) are easily accessible and linked, reducing the likelihood of errors in replication.
 - **Portability**: The compendium can be shared and installed like an R package, enabling collaborators to reproduce the work on their systems.
@@ -59,7 +59,7 @@ myResearchCompendium/
 Below is a description of each component of the research compendium.
 
 ### Root-Level Files
-- **`_targets.R`**: The central configuration file for the `targets` R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.
+- **`_targets.R`**: The central configuration file for the [`targets`](https://CRAN.R-project.org/package=targets) R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.
 - **`DESCRIPTION`**: Provides metadata about the compendium, including its title, version, author information, and dependencies. This file mirrors the `DESCRIPTION` file in R packages, enabling compatibility with R's package ecosystem.
 - **`LICENSE.md`**: Contains the licensing terms under which the compendium is distributed, ensuring clarity regarding usage and redistribution rights.
 - **`NAMESPACE`**: Specifies the exported functions and imports from other packages, similar to an R package, to manage the scope and dependencies of functions within the compendium.
@@ -125,17 +125,9 @@ A comprehensive directory for project-specific resources and configurations. It 
    - These credentials have to be stored in `workspace/credentials/`
 
 1. **Running the Pipelines**:
-   - Running the master pipeline contained in `_targets.R` is achevied by executing the `targets::tar_make()` command in `R` from the root of the research compendium. Depending on your computer and internet connexion, the first run will likely take a full day to complete.
+   - Running the master pipeline contained in `_targets.R` is achieved by executing the `targets::tar_make()` command in `R` from the root of the research compendium. Depending on your computer and internet connection, the first run will likely take a full day to complete.
 
 2. **Exploring Outputs**:
    - Processed data is stored in `workspace/data/analyzed/`.
    - Visualizations and figures are available in `figures/`, while reports and publications can be found in `pubs/`.
-
-
-
-## Benefits of This Structure
-
-The R package-inspired structure ensures that all components of the research process—data, code, outputs, and documentation—are organized and interconnected. This design fosters collaboration, simplifies maintenance, and supports the transparency and reproducibility that are critical for scientific research.
-
-By adhering to this structured approach, the CEACWS compendium provides a robust framework for conducting, sharing, and extending cumulative effects assessments in a way that can serve as a model for similar projects.
 

@@ -7,14 +7,6 @@ title: "Data Sources Overview"
 ## Accidental spills
 
 
-TODO: 
-
-- Pollution layer
-  - Aggregate within months, remove individual years
-  - Number of incidents / year
-  - Summed pollution layers 
-
-
 ### Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
 
 ```{r}
@@ -359,7 +351,7 @@ data.frame(
 
 ## Automatic Identification System (AIS) Shipping Data {#sec-shipping_ais}
 
-The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files.The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada
 - **Accessibility**: Restricted
@@ -407,13 +399,13 @@ data.frame(
 To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023:
 
 1. **Data Extraction**
-   - AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the `arrow` and `vroom` R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.
+   - AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the `arrow` (https://CRAN.R-project.org/package=arrow) and `vroom` (https://CRAN.R-project.org/package=vroom) R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.
 2. **Initial Data Cleaning**
    - Raw AIS data was filtered to remove invalid records:
      - Only positions with valid **MMSI** values (201000000–775999999) were retained.
      - **SOG** values were restricted to the range 0.1–100 knots to remove implausible speeds.
 3. **Day/Night Classification**
-   - Using the `suncalc` R package, each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.
+   - Using the `suncalc` R package (https://cran.r-project.org/web/packages/suncalc/index.html), each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.
 4. **Trackline Generation**
    - Tracklines were created by:
      1. Sorting AIS data by **MMSI** and timestamp.
@@ -439,7 +431,7 @@ To create meaningful tracklines representing vessel movements over space and tim
       - 40 km/h for all other vessel types.
    - Tracklines identified as spoofing were excluded from further analyses.
 7. **Output**
-   - The cleaned tracklines were exported as monthly parquet files (`.parquet`). Each file contains the processed AIS points with vessel information and the necessary information to diffentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (@tbl-shipping-ais-points).
+   - The cleaned tracklines were exported as monthly parquet files (`.parquet`). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (@tbl-shipping-ais-points).
 
 ```{r}
 #| label: tbl-shipping-ais-points
@@ -488,7 +480,7 @@ data.frame(
 
 ## Visible Infrared Imaging Radiometer Suite 
 
-The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration's (NOAA) Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.
+The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration's (NOAA), Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.
 
 ### VIIRS Boat Detection (VBD) Dataset {#sec-viirs_boat_detection}
 

@@ -41,5 +41,3 @@ Imports:
     yaml,
     xaringan,
     xaringanExtra
-Remotes:
-    inSileco/graphicsutils

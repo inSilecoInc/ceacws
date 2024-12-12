@@ -77,7 +77,7 @@ The monthly layers allow for detailed temporal analyses of flaring activity.
 
 ## Offshore Wind Farms
 
-The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for windfarm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States.
+The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States.
 
 More precisely, our analysis used offshore wind farm datasets for Canada (@sec-offshore_wind_can) and the United-States (@sec-offshore_wind_usa). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:
 
