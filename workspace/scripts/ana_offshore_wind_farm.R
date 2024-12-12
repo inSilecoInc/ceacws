@@ -12,6 +12,7 @@ ana_offshore_wind_farm <- function(input_files, output_path) {
   grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
   aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
   input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
+  input_files <- input_files[basename(input_files) %in% c("offshore_wind_can.gpkg", "offshore_wind_usa.gpkg")]
 
   # Data
   dat <- lapply(input_files, sf::st_read, quiet = TRUE) |>
