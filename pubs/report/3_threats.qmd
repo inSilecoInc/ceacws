@@ -161,7 +161,7 @@ The second approach utilized VIIRS Boat Detection (VBD) data (@sec-viirs_boat_de
 
 1. **Data Preparation**: The VBD dataset was filtered to include only observations within the area of interest.
 2. **Temporal Grouping**: Observations were grouped by month, with radiance values aggregated for each month.
-3. **Rasterization**: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell.
+3. **Rasterization**: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell divided by the number of years of data harvested, resulting in total radiance per year in each grid cell.
 4. **Masking and Export**: Rasterized layers were masked to the area of interest and exported as monthly geospatial files.
 
 This layer provides a direct measurement of ship light emissions, offering a complementary perspective to the AIS-derived night lights layer.

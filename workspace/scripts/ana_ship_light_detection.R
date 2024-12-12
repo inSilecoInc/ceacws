@@ -21,7 +21,8 @@ ana_ship_light_detection <- function(input_files, output_path) {
   # Group data
   dat <- dat |>
     dplyr::mutate(
-      month = lubridate::floor_date(lubridate::ymd_hms(date), unit = "month")
+      month = lubridate::month(date)
+      # lubridate::floor_date(lubridate::ymd_hms(date), unit = "month")
     )
 
   # Rasterize and export
@@ -43,6 +44,9 @@ ana_ship_light_detection <- function(input_files, output_path) {
         na.rm = TRUE
       ) |>
         terra::mask(aoi)
+
+      # Normalize by the number of years
+      r <- r / 4
 
       # Save raster for the current month
       output_file <- file.path(output_path, paste0("ship_light_detection_", current_month, ".tif"))

@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>NASP</strong>: Records with missing coordinates were removed. Each NASP incident, represented as a point with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (<a href="#tbl-spillvolumes" class="quarto-xref">Table&nbsp;<span>4.1</span></a>).</li>
 <li><strong>NEEC</strong>: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, exclusion of irrelevant terms (e.g., “mvi,” “furnace oil”), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points and processed similarly to the NASP dataset, with additional classification by substance type based on chemical state and the presence of an oil sheen.</li>
 </ul>
-<p>Each dataset was clipped to the boundary of the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure. These layers can be used for risk assessments and other spatial analyses.</p>
+<p>Each dataset was clipped to the boundary of the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.</p>
 <ul>
 <li><strong>Processing Scripts</strong>:
 <ul>
@@ -216,19 +216,19 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">[0, 100]</td>
-<td style="text-align: right;">500</td>
+<td style="text-align: right;">250</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">[100, 1000]</td>
-<td style="text-align: right;">2000</td>
+<td style="text-align: right;">500</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">[1000, 10000]</td>
-<td style="text-align: right;">3000</td>
+<td style="text-align: right;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">[10000+ [</td>
-<td style="text-align: right;">5000</td>
+<td style="text-align: right;">2000</td>
 </tr>
 </tbody>
 </table>
@@ -286,7 +286,7 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <section id="offshore-wind-farms" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="offshore-wind-farms"><span class="header-section-number">4.3</span> Offshore Wind Farms</h2>
 <p>The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for windfarm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States.</p>
-<p>More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 4.3.1</span></a>), Newfoundland and Labrador (<a href="2_data.html#sec-offshore_wind_nfl" class="quarto-xref"><span>Section 4.3.2</span></a>), Nova-Scotia (<a href="2_data.html#sec-offshore_wind_ns" class="quarto-xref"><span>Section 4.3.3</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 4.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:</p>
+<p>More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 4.3.1</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 4.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: Datasets were merged into a single spatial layer. Overlapping geometries were unified to represent contiguous wind farm areas accurately.</li>
 <li><strong>Clipping to AOI</strong>: The combined dataset was clipped to the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>).</li>
@@ -381,7 +381,7 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <ol type="1">
 <li><strong>Data Preparation</strong>: The VBD dataset was filtered to include only observations within the area of interest.</li>
 <li><strong>Temporal Grouping</strong>: Observations were grouped by month, with radiance values aggregated for each month.</li>
-<li><strong>Rasterization</strong>: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell.</li>
+<li><strong>Rasterization</strong>: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell divided by the number of years of data harvested, resulting in total radiance per year in each grid cell.</li>
 <li><strong>Masking and Export</strong>: Rasterized layers were masked to the area of interest and exported as monthly geospatial files.</li>
 </ol>
 <p>This layer provides a direct measurement of ship light emissions, offering a complementary perspective to the AIS-derived night lights layer.</p>
