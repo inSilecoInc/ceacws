@@ -146,7 +146,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#directories" id="toc-directories" class="nav-link" data-scroll-target="#directories"><span class="header-section-number">2.1.2</span> Directories</a></li>
   </ul></li>
   <li><a href="#navigating-and-using-the-compendium" id="toc-navigating-and-using-the-compendium" class="nav-link" data-scroll-target="#navigating-and-using-the-compendium"><span class="header-section-number">2.2</span> Navigating and Using the Compendium</a></li>
-  <li><a href="#benefits-of-this-structure" id="toc-benefits-of-this-structure" class="nav-link" data-scroll-target="#benefits-of-this-structure"><span class="header-section-number">2.3</span> Benefits of This Structure</a></li>
   </ul>
 </nav>
     </div>
@@ -172,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>We created a publicly available <em>research compendium</em> called <a href="https://github.com/inSilecoInc/ceacws"><code>ceacws</code></a>. The research compendium is designed to facilitate reproducible research by organizing data, scripts, and outputs within a structured framework. By emulating the structure of an R package, the compendium combines the rigor of package development with the flexibility required for complex analytical workflows. This structure ensures transparency, reproducibility, and ease of navigation for researchers and collaborators. The compendium not only supports the organization and documentation of workflows but also allows the seamless integration of R tools and functions. Adopting an R package-like structure provides several advantages:</p>
+<p>We created a publicly available <em>research compendium</em> called <a href="https://github.com/inSilecoInc/ceacws"><code>ceacws</code></a>. The research compendium is designed to facilitate reproducible research by organizing data, scripts, and outputs within a structured framework. By emulating the structure of an R package, the compendium combines the rigour of package development with the flexibility required for complex analytical workflows. This structure ensures transparency, reproducibility, and ease of navigation for researchers and collaborators. The compendium not only supports the organization and documentation of workflows but also allows the seamless integration of R tools and functions. Adopting an R package-like structure provides several advantages:</p>
 <ul>
 <li><strong>Reproducibility</strong>: The standardized structure ensures that all components (data, code, outputs) are easily accessible and linked, reducing the likelihood of errors in replication.</li>
 <li><strong>Portability</strong>: The compendium can be shared and installed like an R package, enabling collaborators to reproduce the work on their systems.</li>
@@ -221,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="root-level-files" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="root-level-files"><span class="header-section-number">2.1.1</span> Root-Level Files</h3>
 <ul>
-<li><strong><code>_targets.R</code></strong>: The central configuration file for the <code>targets</code> R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.</li>
+<li><strong><code>_targets.R</code></strong>: The central configuration file for the <a href="https://CRAN.R-project.org/package=targets"><code>targets</code></a> R package, which manages and tracks the execution of analytical workflows. This file defines the targets (steps) in the analysis and their dependencies.</li>
 <li><strong><code>DESCRIPTION</code></strong>: Provides metadata about the compendium, including its title, version, author information, and dependencies. This file mirrors the <code>DESCRIPTION</code> file in R packages, enabling compatibility with R’s package ecosystem.</li>
 <li><strong><code>LICENSE.md</code></strong>: Contains the licensing terms under which the compendium is distributed, ensuring clarity regarding usage and redistribution rights.</li>
 <li><strong><code>NAMESPACE</code></strong>: Specifies the exported functions and imports from other packages, similar to an R package, to manage the scope and dependencies of functions within the compendium.</li>
@@ -305,7 +304,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li><strong>Running the Pipelines</strong>:
 <ul>
-<li>Running the master pipeline contained in <code>_targets.R</code> is achevied by executing the <code>targets::tar_make()</code> command in <code>R</code> from the root of the research compendium. Depending on your computer and internet connexion, the first run will likely take a full day to complete.</li>
+<li>Running the master pipeline contained in <code>_targets.R</code> is achieved by executing the <code>targets::tar_make()</code> command in <code>R</code> from the root of the research compendium. Depending on your computer and internet connection, the first run will likely take a full day to complete.</li>
 </ul></li>
 <li><strong>Exploring Outputs</strong>:
 <ul>
@@ -313,11 +312,6 @@ ul.task-list li input[type="checkbox"] {
 <li>Visualizations and figures are available in <code>figures/</code>, while reports and publications can be found in <code>pubs/</code>.</li>
 </ul></li>
 </ol>
-</section>
-<section id="benefits-of-this-structure" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="benefits-of-this-structure"><span class="header-section-number">2.3</span> Benefits of This Structure</h2>
-<p>The R package-inspired structure ensures that all components of the research process—data, code, outputs, and documentation—are organized and interconnected. This design fosters collaboration, simplifies maintenance, and supports the transparency and reproducibility that are critical for scientific research.</p>
-<p>By adhering to this structured approach, the CEACWS compendium provides a robust framework for conducting, sharing, and extending cumulative effects assessments in a way that can serve as a model for similar projects.</p>
 
 
 </section>

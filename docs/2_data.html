@@ -221,15 +221,6 @@ div.csl-indent {
 <h1 data-number="4"><span class="header-section-number">4</span> Data Sources Overview</h1>
 <section id="accidental-spills" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="accidental-spills"><span class="header-section-number">4.1</span> Accidental spills</h2>
-<p>TODO:</p>
-<ul>
-<li>Pollution layer
-<ul>
-<li>Aggregate within months, remove individual years</li>
-<li>Number of incidents / year</li>
-<li>Summed pollution layers</li>
-</ul></li>
-</ul>
 <section id="sec-istop" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-istop"><span class="header-section-number">4.1.1</span> Integrated Satellite Tracking of Pollution (ISTOP)</h3>
 <p>The <a href="https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html">Integrated Satellite Tracking of Pollution (ISTOP)</a> program <span class="citation" data-cites="eccc2024">(<a href="#ref-eccc2024" role="doc-biblioref">Environment and Climate Change Canada, 2024</a>)</span> utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include 637 recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
@@ -690,7 +681,7 @@ Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offs
 </section>
 <section id="sec-shipping_ais" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-shipping_ais"><span class="header-section-number">4.4</span> Automatic Identification System (AIS) Shipping Data</h2>
-<p>The <a href="https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais">Automatic Identification System (AIS)</a> <span class="citation" data-cites="tc2023">(<a href="#ref-tc2023" role="doc-biblioref">Transports Canada, 2023</a>)</span> collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (<a href="#tbl-shipping-ais-attr" class="quarto-xref">Table&nbsp;<span>4.6</span></a>). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files.The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+<p>The <a href="https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais">Automatic Identification System (AIS)</a> <span class="citation" data-cites="tc2023">(<a href="#ref-tc2023" role="doc-biblioref">Transports Canada, 2023</a>)</span> collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (<a href="#tbl-shipping-ais-attr" class="quarto-xref">Table&nbsp;<span>4.6</span></a>). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Transport Canada</li>
 <li><strong>Accessibility</strong>: Restricted</li>
@@ -784,7 +775,7 @@ Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS 
 <ol type="1">
 <li><strong>Data Extraction</strong>
 <ul>
-<li>AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the <code>arrow</code> and <code>vroom</code> R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.</li>
+<li>AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the <code>arrow</code> (https://CRAN.R-project.org/package=arrow) and <code>vroom</code> (https://CRAN.R-project.org/package=vroom) R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.</li>
 </ul></li>
 <li><strong>Initial Data Cleaning</strong>
 <ul>
@@ -796,7 +787,7 @@ Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS 
 </ul></li>
 <li><strong>Day/Night Classification</strong>
 <ul>
-<li>Using the <code>suncalc</code> R package, each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.</li>
+<li>Using the <code>suncalc</code> R package (https://cran.r-project.org/web/packages/suncalc/index.html), each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.</li>
 </ul></li>
 <li><strong>Trackline Generation</strong>
 <ul>
@@ -838,7 +829,7 @@ Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS 
 </ul></li>
 <li><strong>Output</strong>
 <ul>
-<li>The cleaned tracklines were exported as monthly parquet files (<code>.parquet</code>). Each file contains the processed AIS points with vessel information and the necessary information to diffentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-points" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
+<li>The cleaned tracklines were exported as monthly parquet files (<code>.parquet</code>). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-points" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
 </ul></li>
 </ol>
 <div class="cell">
@@ -948,7 +939,7 @@ Table&nbsp;4.7: Columns (attributes) associated with the AIS positional points p
 </section>
 <section id="visible-infrared-imaging-radiometer-suite" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="visible-infrared-imaging-radiometer-suite"><span class="header-section-number">4.5</span> Visible Infrared Imaging Radiometer Suite</h2>
-<p>The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration’s (NOAA) Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.</p>
+<p>The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration’s (NOAA), Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.</p>
 <section id="sec-viirs_boat_detection" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-viirs_boat_detection"><span class="header-section-number">4.5.1</span> VIIRS Boat Detection (VBD) Dataset</h3>
 <p>The <a href="https://eogdata.mines.edu/products/vbd/">VIIRS Boat Detection (VBD) Dataset</a> <span class="citation" data-cites="eog2024">(<a href="#ref-eog2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024a</a>)</span> provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (<a href="#tbl-viirs-vbd-attr" class="quarto-xref">Table&nbsp;<span>4.8</span></a>). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.</p>
