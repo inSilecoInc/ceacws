@@ -12,7 +12,11 @@ prc_offshore_wind_ns <- function(input_files, output_path) {
   ## NS pdfa
   input_files[stringr::str_detect(input_files, "study_area_ns_shapefile.zip")] |>
     archive::archive_extract(tmp)
-  dat <- sf::st_read(file.path(tmp, "Study_Area_NS_NÉ_Zone_détude.shp"), quiet = TRUE) |>
+  dat <- sf::st_read(
+    list.files(file.path(tmp), full.names = TRUE) |>
+      stringr::str_subset("Study_Area_NS_.+\\.shp$"), ,
+    quiet = TRUE
+  ) |>
     sf::st_transform(4326) |>
     dplyr::mutate(
       dataset = "wind_ns",

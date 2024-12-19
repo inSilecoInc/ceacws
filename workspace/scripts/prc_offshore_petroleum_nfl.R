@@ -100,7 +100,7 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
   bbox <- sf::st_bbox(c(xmin = -100, xmax = -20, ymin = 35, ymax = 85), crs = 4326) |>
     sf::st_as_sfc()
 
-  dat <- dir(tmp, pattern = "\\.shp$", full.names = TRUE) |>
+  dat <- dir(tmp, pattern = "\\.shp$", full.names = TRUE, recursive = TRUE) |>
     lapply(function(x) {
       x <- sf::st_read(x, quiet = TRUE) |>
         sf::st_transform(4326) |>

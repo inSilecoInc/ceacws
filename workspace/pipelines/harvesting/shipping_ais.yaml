@@ -60,7 +60,12 @@ pipeline:
       - name: Shipping AIS 2023
         source_type: "gcs"
         urls: "cws-private"
-        asset: "AIS/2023AIS_06Dec2024.zip"
+        asset: "AIS/DFO-TC-AIS_TERR_SAT_FUSED_2023.zip"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Shipping AIS 2023 static data 
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "AIS/static_data_2023.csv"
         credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
 
   processing:
@@ -74,6 +79,7 @@ pipeline:
         script: prc_shipping_ais_points
         input_files:
           - Shipping AIS 2023
+          - Shipping AIS 2023 static data
         output_files: ""
 
 

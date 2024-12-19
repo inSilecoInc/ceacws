@@ -455,20 +455,29 @@ list(
                   tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_BOEM_Offshore_Wind___Proposed_or_Installed_Project_Inter_array_Cables))
             "workspace/data/harvested/offshore_wind_usa-1.0.0/processed/offshore_wind_usa.gpkg"
         }, format = "file")),
-    # list(list(tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023, 
-    # {
-    #     googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
-    #     Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
-    #     googleCloudStorageR::gcs_get_object(object_name = "AIS/2023AIS_06Dec2024.zip", 
-    #         bucket = "cws-private", saveToDisk = "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS_06Dec2024.zip", 
-    #         overwrite = TRUE)
-    #     "workspace/data/harvested/shipping_ais-1.0.0/raw/2023AIS_06Dec2024.zip"
-    # }, format = "file")), tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
-    # {
-    #     prc_shipping_ais_points(output_path = "workspace/data/harvested/shipping_ais-1.0.0/processed", 
-    #         input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023))
-    #     "workspace/data/harvested/shipping_ais-1.0.0/processed/"
-    # }, format = "file")),
+    list(list(tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "AIS/DFO-TC-AIS_TERR_SAT_FUSED_2023.zip", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/shipping_ais-1.0.0/raw/DFO-TC-AIS_TERR_SAT_FUSED_2023.zip", 
+            overwrite = TRUE)
+        "workspace/data/harvested/shipping_ais-1.0.0/raw/DFO-TC-AIS_TERR_SAT_FUSED_2023.zip"
+    }, format = "file")), list(tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023_static_data, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "AIS/static_data_2023.csv", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/shipping_ais-1.0.0/raw/static_data_2023.csv", 
+            overwrite = TRUE)
+        "workspace/data/harvested/shipping_ais-1.0.0/raw/static_data_2023.csv"
+    }, format = "file")), tar_target(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+    {
+        prc_shipping_ais_points(output_path = "workspace/data/harvested/shipping_ais-1.0.0/processed", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023, 
+                tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023_static_data))
+        "workspace/data/harvested/shipping_ais-1.0.0/processed/"
+    }, format = "file")),
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
         source_type = "viirs", urls = "NA", dataset = "vbd", 
@@ -570,13 +579,13 @@ list(
             input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files))
         "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed/"
     }, format = "file")),
-    list(tar_target(tg_bc079539_54b9_4501_b42d_a61237264cc6_night_light_monthly, 
-    {
-        ana_night_light_monthly(output_path = "workspace/data/analyzed/night_light_monthly-1.0.0", 
-            input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
-                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-        "workspace/data/analyzed/night_light_monthly-1.0.0/"
-    }, format = "file")),
+    # list(tar_target(tg_bc079539_54b9_4501_b42d_a61237264cc6_night_light_monthly, 
+    # {
+    #     ana_night_light_monthly(output_path = "workspace/data/analyzed/night_light_monthly-1.0.0", 
+    #         input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
+    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+    #     "workspace/data/analyzed/night_light_monthly-1.0.0/"
+    # }, format = "file")),
     list(tar_target(tg_129f86e7_9a3c_4454_9118_3c4ea26f2021_offshore_petroleum_activity, 
     {
         ana_offshore_petroleum_activity(output_path = "workspace/data/analyzed/offshore_petroleum_activity-1.0.0", 
@@ -609,49 +618,49 @@ list(
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.tif"
     }, format = "file")),
-    list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
-    {
-        ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg"
-    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
-    {
-        ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg"
-    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
-    {
-        ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg"
-    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents, 
-    {
-        ana_petroleum_pollution_incidents(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-            input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
-                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
-                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
-                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
-    }, format = "file")),
+    # list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
+    # {
+    #     ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+    #         input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
+    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg"
+    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
+    # {
+    #     ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+    #         input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
+    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg"
+    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
+    # {
+    #     ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+    #         input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
+    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg"
+    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents, 
+    # {
+    #     ana_petroleum_pollution_incidents(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+    #         input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
+    #             tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
+    #             tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
+    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
+    # }, format = "file")),
     list(tar_target(tg_653bc3bc_1aa2_4586_af57_34c4ac47e601_ship_night_detection, 
     {
         ana_ship_light_detection(output_path = "workspace/data/analyzed/ship_light_detection-1.0.0", 
             input_files = list(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VIIRS_Boat_Detection, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/ship_light_detection-1.0.0/"
-    }, format = "file"))#,
-    # list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
-    # {
-    #     ana_shipping_intensity_density(output_path = "workspace/data/analyzed/shipping_intensity_density-1.0.0", 
-    #         input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
-    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-    #     "workspace/data/analyzed/shipping_intensity_density-1.0.0/"
-    # }, format = "file")),
-    # list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_night_light_intensity_density, 
-    # {
-    #     ana_shipping_night_light_density(output_path = "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0", 
-    #         input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
-    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-    #     "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/"
-    # }, format = "file"))
+    }, format = "file")),
+    list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
+    {
+        ana_shipping_intensity_density(output_path = "workspace/data/analyzed/shipping_intensity_density-1.0.0", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/shipping_intensity_density-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_night_light_intensity_density, 
+    {
+        ana_shipping_night_light_density(output_path = "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/"
+    }, format = "file"))
 )

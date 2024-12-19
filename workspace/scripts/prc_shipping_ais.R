@@ -9,7 +9,7 @@ prc_shipping_ais_tracklines <- function(input_files, output_path) {
   tmp <- file.path(output_path, "tmp")
   archive::archive_extract(input_files, tmp)
   parquet_db <- file.path(tmp, "parquet_dataset")
-  try(archive::archive_extract(file.path(tmp, "OneDrive_1_3-13-2024.zip"), parquet_db))
+  # try(archive::archive_extract(file.path(tmp, "OneDrive_1_3-13-2024.zip"), parquet_db))
 
   # Ship info
   ship_info <- vroom::vroom(
@@ -185,16 +185,17 @@ prc_shipping_ais_points <- function(input_files, output_path) {
   # input_path <- "workspace/data/harvested/shipping_ais-1.0.0/raw/"
   # input_files <- file.path(input_path, "2023AIS.zip")
   input_files <- unlist(input_files)
+  
 
   # Data
-  tmp <- file.path(output_path, "tmp")
-  archive::archive_extract(input_files, tmp)
-  parquet_db <- file.path(tmp, "parquet_dataset")
-  try(archive::archive_extract(file.path(tmp, "OneDrive_1_3-13-2024.zip"), parquet_db))
+  tmp <- file.path(output_path, "tmp/")
+  archive::archive_extract(input_files[grepl("zip$", input_files)], tmp)
+  parquet_db <- file.path(tmp, "2023")
+  # try(archive::archive_extract(file.path(tmp, "OneDrive_1_3-13-2024.zip"), parquet_db))
 
   # Load ship info
   ship_info <- vroom::vroom(
-    file.path(tmp, "static_data_2023.csv"),
+    input_files[grepl("csv$", input_files)],
     progress = FALSE,
     show_col_types = FALSE,
     col_types = vroom::cols(Cnt_MMSI = vroom::col_skip())
@@ -205,7 +206,7 @@ prc_shipping_ais_points <- function(input_files, output_path) {
   future::plan(future::multisession, workers = parallel::detectCores() - 3)
 
   # List of parquet files
-  files <- list.files(parquet_db, full.names = TRUE)[1:8]
+  files <- list.files(parquet_db, full.names = TRUE)
 
   # Process each parquet file in parallel and write directly to output
   furrr::future_map(files, function(file) {
