@@ -1,0 +1,113 @@
+pipeline:
+  id: fe466272-993d-4b90-b036-bf418c38a63f
+  name: fisheries_dfo
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-01-06 13:12:06
+  last_modified: 2025-01-06 13:12:06
+  description: "The intensity and distribution of commercial fisheries on the Scotian Shelf was assessed using the Department of Fisheries and Oceans logbook program (Fisheries and Oceans Canada, 2021b). These logbooks provide a thorough, if not exhaustive, overview of fisheries in eastern Canada."
+
+  # Metadata section providing details about the data being harvested
+  metadata:
+    source_name: "Commercial Fisheries Logbooks - ZIFF Data"                  # Name or identifier of the data source
+    data_type: "CSV"                                                          # Type of data being harvested (e.g., CSV, JSON, Parquet)
+    file_size: "~5GB"                                                         # Approximate size of the file or dataset
+    license: "Data Sharing Agreement"                                         # Dataset license information
+    last_updated: "2021-06-11"                                                # Date of the last data update
+    geographic_coverage:                                                      # Geographical region covered by the dataset
+      region: "Scotian Shelf"
+      bounding_box:                                                           # Bounding box coordinates of the region (min/max lat/long)
+        - -67.0    # Longitude min
+        - 39.0     # Latitude min
+        - -54.0    # Longitude max
+        - 47.0     # Latitude max
+    temporal_coverage:                                                        # Time period the dataset covers
+      start_date: "2000-01-01"
+      end_date: "2020-12-31"
+    variables:                                                                # List of important variables/columns in the dataset
+      - vessel_id
+      - logbook_entry_id
+      - species_caught
+      - landing_weight
+      - location
+      - timestamp
+      - gear_type
+      - effort_duration
+    data_quality:                                                             # Comments on data quality (e.g., missing data, outliers)
+      - "Thorough but not exhaustive overview of fisheries in eastern Canada."
+
+  # Bibliographic Information
+  bibliography:
+    - "@TechReport{dfo2021b,
+        title = {Fisheries and {{Oceans Canada}}'s {{Zonal Interchange File Format}} ({{ZIFF}}) Data. {{A}} Compilation of Landing Data from Logbook Data between 2000 and 2020. [{{Data}} Accessed 2021-06-11]},
+        author = {{Fisheries and Oceans Canada}},
+        year = {2021},
+        institution = {{Fisheries and Oceans Canada}},
+      }"
+
+  # Harvest section: Define the sources to download and process
+  download:
+    sources:
+      - name: Documentation
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Documentation_Versiontotale.xlsx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Codes engins
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Codes_engin.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Codes espèces
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Codes_especes.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Logbooks 20102014
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Version_totale_20102014.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Logbooks 20002004
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Version_totale_20002004.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Logbooks 20152019
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Version_totale_20152019.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Logbooks 20052009
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Version_totale_20052009.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+      - name: Logbooks 20202024
+        source_type: "gcs"
+        urls: "fisheries-dfo"
+        asset: "Version_totale_20202024.csv"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+  processing:
+    sources:
+      - name: fisheries logbook
+        script: prc_fisheries_dfo
+        input_files:
+          - Codes engins
+          - Codes espèces
+          - Logbooks 20102014
+          - Logbooks 20002004
+          - Logbooks 20152019
+          - Logbooks 20052009
+          - Logbooks 20202024
+        output_files: 
+          - gear.csv
+          - species.csv
+          - logbooks.parquet
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/harvested/"       # Base directory for all downloaded data
+    log_dir: "workspace/logs/"                    # Directory for logs (optional)
+    archive_raw: true                             # Option to archive the raw downloaded data

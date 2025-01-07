@@ -190,7 +190,8 @@ div.csl-indent {
   <li><a href="#sec-viirs_night_fire" id="toc-sec-viirs_night_fire" class="nav-link" data-scroll-target="#sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</a></li>
   <li><a href="#sec-viirs_nightlight" id="toc-sec-viirs_nightlight" class="nav-link" data-scroll-target="#sec-viirs_nightlight"><span class="header-section-number">4.5.3</span> VIIRS Nighttime Light (VNL) Dataset</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.6</span> References</a></li>
+  <li><a href="#sec-fisheries_dfo" id="toc-sec-fisheries_dfo" class="nav-link" data-scroll-target="#sec-fisheries_dfo"><span class="header-section-number">4.6</span> Commercial Fisheries Logbook Data</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.7</span> References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1371,8 +1372,316 @@ Table&nbsp;4.11: Retained Quality Flags for VIIRS Nightfire Data Processing.
 </section>
 </section>
 </section>
-<section id="references" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="references"><span class="header-section-number">4.6</span> References</h2>
+<section id="sec-fisheries_dfo" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="sec-fisheries_dfo"><span class="header-section-number">4.6</span> Commercial Fisheries Logbook Data</h2>
+<p>The intensity and distribution of commercial fisheries were assessed using logbook data from the <a href="https://www.dfo-mpo.gc.ca/">Department of Fisheries and Oceans (DFO)</a>. The dataset, compiled from Zonal Interchange File Format (ZIFF) data between 2000 and 2020, provides a thorough overview of fisheries in eastern Canada <span class="citation" data-cites="dfo2021b">(<a href="#ref-dfo2021b" role="doc-biblioref">Fisheries and Oceans Canada, 2021</a>)</span>. This dataset includes information on vessel identifiers, species caught, landing weights, and fishing effort, making it a valuable resource for fisheries analysis (see <a href="#tbl-fisheries-dfo-attr" class="quarto-xref">Table&nbsp;<span>4.12</span></a>).</p>
+<p>The data, shared under a data-sharing agreement, was retrieved as CSV files and processed into standardized formats for further analysis. Each logbook entry includes spatial and temporal attributes, fishing gear types, and catch details. The processed data includes metadata for species, fishing gear, and combined logbook entries, which are stored in compressed Parquet format for efficient access and analysis.</p>
+<ul>
+<li><strong>Source</strong>: Fisheries and Oceans Canada</li>
+<li><strong>Accessibility</strong>: Restricted (data-sharing agreement required)</li>
+<li><strong>Data Type</strong>: CSV, Parquet</li>
+<li><strong>Coverage</strong>: Scotian Shelf, 2000–2020</li>
+<li><strong>Processing Script</strong>: <code>prc_fisheries_dfo.R</code></li>
+<li><strong>Output Files</strong>: <code>gear.csv</code>, <code>species.csv</code>, <code>logbooks.parquet</code></li>
+</ul>
+<div class="cell">
+<div id="tbl-fisheries-dfo-attr" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fisheries-dfo-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.12: Variables and their formats in the Fisheries DFO dataset.
+</figcaption>
+<div aria-describedby="tbl-fisheries-dfo-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 24%">
+<col style="width: 6%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable_Name</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">nbpc</td>
+<td style="text-align: left;">NBPC code</td>
+<td style="text-align: left;">$6.</td>
+<td style="text-align: left;">000000, B00000, or &gt;= 190000 correspond to errors or missing data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tonnage</td>
+<td style="text-align: left;">Boat tonnage</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Measured in tons</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cl_ton</td>
+<td style="text-align: left;">Tonnage class</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">See ‘Cl_ton’ tab</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lht</td>
+<td style="text-align: left;">Boat length overall (LOA)</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Measured in feet</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cl_lht</td>
+<td style="text-align: left;">LOA class</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">See ‘Cl_LHT’ tab</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hp</td>
+<td style="text-align: left;">Engine power in horsepower</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Measured in horsepower</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cl_hp</td>
+<td style="text-align: left;">Engine power class</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">See ‘Cl_HP’ tab</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">port_att</td>
+<td style="text-align: left;">Arrival port code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Unique code for the arrival port</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cr_quota</td>
+<td style="text-align: left;">Quota category code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Quota category description available in documentation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no_voy</td>
+<td style="text-align: left;">Voyage number</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Unique voyage identifier</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">date_deb</td>
+<td style="text-align: left;">Departure date</td>
+<td style="text-align: left;">date9.</td>
+<td style="text-align: left;">Date of departure for the voyage</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">div</td>
+<td style="text-align: left;">Division code</td>
+<td style="text-align: left;">$3.</td>
+<td style="text-align: left;">Fishery management division</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">opano</td>
+<td style="text-align: left;">OPANO region code</td>
+<td style="text-align: left;">$3.</td>
+<td style="text-align: left;">Ocean planning area</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">engin</td>
+<td style="text-align: left;">Gear type code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Gear type code from the logbook</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cl_engin</td>
+<td style="text-align: left;">Gear type class</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">See ‘Cl_engin’ tab</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">port_deb</td>
+<td style="text-align: left;">Departure port code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Unique code for the departure port</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cod_esp</td>
+<td style="text-align: left;">Species code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Species identification code</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tail_esp</td>
+<td style="text-align: left;">Species size</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Size of the species caught</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">form_esp</td>
+<td style="text-align: left;">Species form</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Form of the species (e.g., whole, filleted)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">qual_esp</td>
+<td style="text-align: left;">Species quality</td>
+<td style="text-align: left;">$1.</td>
+<td style="text-align: left;">Quality grade of the species</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">un_mes</td>
+<td style="text-align: left;">Unit of measure</td>
+<td style="text-align: left;">$1.</td>
+<td style="text-align: left;">Unit of measure used for weight</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pd_deb</td>
+<td style="text-align: left;">Weight in the departure unit</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Weight recorded in the departure unit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pds_vif</td>
+<td style="text-align: left;">Live weight</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Live weight of the catch</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pav_eff</td>
+<td style="text-align: left;">Landing status</td>
+<td style="text-align: left;">$1.</td>
+<td style="text-align: left;">Flag indicating landing status</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">prespcap</td>
+<td style="text-align: left;">Primary species code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Primary species targeted</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">prespvis</td>
+<td style="text-align: left;">Secondary species code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Secondary species observed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">frn_voy</td>
+<td style="text-align: left;">Voyage funding code</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Funding source for the voyage</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jr_mer</td>
+<td style="text-align: left;">Time at sea (days)</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Total time spent at sea in days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">jr_mouil</td>
+<td style="text-align: left;">Mooring time (days)</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Total time moored in days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jr_peche</td>
+<td style="text-align: left;">Fishing time (days)</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Total time spent fishing in days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">eff_hre</td>
+<td style="text-align: left;">Hours of effort</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Effort duration in hours</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nb_engin</td>
+<td style="text-align: left;">Number of gear used</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Total number of gear deployed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">date_cap</td>
+<td style="text-align: left;">Capture date</td>
+<td style="text-align: left;">date9.</td>
+<td style="text-align: left;">Date of capture</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cl_prof</td>
+<td style="text-align: left;">Depth class</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Depth class from the logbook</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: left;">Region code</td>
+<td style="text-align: left;">$1.</td>
+<td style="text-align: left;">Regional identifier code</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">latit_ori</td>
+<td style="text-align: left;">Original latitude</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Latitude before corrections</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">longit_ori</td>
+<td style="text-align: left;">Original longitude</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Longitude before corrections</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">latit_gis</td>
+<td style="text-align: left;">Corrected latitude</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Corrected latitude value</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">longit_gis</td>
+<td style="text-align: left;">Corrected longitude</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Corrected longitude value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">prof</td>
+<td style="text-align: left;">Depth in meters</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Measured depth in meters</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">quadril</td>
+<td style="text-align: left;">Quadrilateral grid reference</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Quadrilateral reference for spatial analysis</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">capt_est</td>
+<td style="text-align: left;">Estimated capture</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Estimated capture data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pav_mar</td>
+<td style="text-align: left;">Landing flag</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Flag for landing status</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no_log</td>
+<td style="text-align: left;">Logbook number</td>
+<td style="text-align: left;">best12.</td>
+<td style="text-align: left;">Unique logbook identifier</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="references" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="references"><span class="header-section-number">4.7</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" data-line-spacing="5" role="list">
@@ -1408,6 +1717,9 @@ Elvidge, C. D., Zhizhin, M., Hsu, F.-C., and Baugh, K. E. (2013b). <span class="
 </div>
 <div id="ref-eccc2024" class="csl-entry" role="listitem">
 Environment and Climate Change Canada (2024). Integrated satellite tracking of pollution (ISTOP) program. <span>Environment and Climate Change Canada</span>.
+</div>
+<div id="ref-dfo2021b" class="csl-entry" role="listitem">
+Fisheries and Oceans Canada (2021). Fisheries and <span>Oceans Canada</span>’s <span>Zonal Interchange File Format</span> (<span>ZIFF</span>) data. <span>A</span> compilation of landing data from logbook data between 2000 and 2020. [<span>Data</span> accessed 2021-06-11]. <span>Fisheries and Oceans Canada</span>.
 </div>
 <div id="ref-iaac2024" class="csl-entry" role="listitem">
 Impact Assessment Agency of Canada (2024a). Focus area for the regional assessment of offshore wind development in newfoundland and labrador. <span>Government of Canada</span> Available at: <a href="https://open.canada.ca/data/en/dataset/81560d1e-8394-4b51-8212-2bbe4d8a5ea2">https://open.canada.ca/data/en/dataset/81560d1e-8394-4b51-8212-2bbe4d8a5ea2</a>.

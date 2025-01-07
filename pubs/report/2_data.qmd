@@ -704,4 +704,81 @@ The raw raster files were downloaded in GeoTIFF format and processed to focus on
 - **Output File**: `viirs_night_light.tif`
 
 
+
+## Commercial Fisheries Logbook Data {#sec-fisheries_dfo}
+
+The intensity and distribution of commercial fisheries were assessed using logbook data from the [Department of Fisheries and Oceans (DFO)](https://www.dfo-mpo.gc.ca/). The dataset, compiled from Zonal Interchange File Format (ZIFF) data between 2000 and 2020, provides a thorough overview of fisheries in eastern Canada [@dfo2021b]. This dataset includes information on vessel identifiers, species caught, landing weights, and fishing effort, making it a valuable resource for fisheries analysis (see @tbl-fisheries-dfo-attr). 
+
+The data, shared under a data-sharing agreement, was retrieved as CSV files and processed into standardized formats for further analysis. Each logbook entry includes spatial and temporal attributes, fishing gear types, and catch details. The processed data includes metadata for species, fishing gear, and combined logbook entries, which are stored in compressed Parquet format for efficient access and analysis. 
+
+- **Source**: Fisheries and Oceans Canada
+- **Accessibility**: Restricted (data-sharing agreement required)
+- **Data Type**: CSV, Parquet
+- **Coverage**: Scotian Shelf, 2000–2020
+- **Processing Script**: `prc_fisheries_dfo.R`
+- **Output Files**: `gear.csv`, `species.csv`, `logbooks.parquet`
+
+```{r}
+#| label: tbl-fisheries-dfo-attr
+#| tbl-cap: "Variables and their formats in the Fisheries DFO dataset."
+data.frame(
+  Variable_Name = c(
+    "nbpc", "tonnage", "cl_ton", "lht", "cl_lht", "hp", "cl_hp", "port_att",
+    "cr_quota", "no_voy", "date_deb", "div", "opano", "engin", "cl_engin",
+    "port_deb", "cod_esp", "tail_esp", "form_esp", "qual_esp", "un_mes",
+    "pd_deb", "pds_vif", "pav_eff", "prespcap", "prespvis", "frn_voy",
+    "jr_mer", "jr_mouil", "jr_peche", "eff_hre", "nb_engin", "date_cap",
+    "cl_prof", "region", "latit_ori", "longit_ori", "latit_gis", "longit_gis",
+    "prof", "quadril", "capt_est", "pav_mar", "no_log"
+  ),
+  Description = c(
+    "NBPC code", "Boat tonnage", "Tonnage class", "Boat length overall (LOA)", "LOA class",
+    "Engine power in horsepower", "Engine power class", "Arrival port code",
+    "Quota category code", "Voyage number", "Departure date", "Division code",
+    "OPANO region code", "Gear type code", "Gear type class",
+    "Departure port code", "Species code", "Species size", "Species form",
+    "Species quality", "Unit of measure", "Weight in the departure unit",
+    "Live weight", "Landing status", "Primary species code",
+    "Secondary species code", "Voyage funding code", "Time at sea (days)",
+    "Mooring time (days)", "Fishing time (days)", "Hours of effort",
+    "Number of gear used", "Capture date", "Depth class", "Region code",
+    "Original latitude", "Original longitude", "Corrected latitude",
+    "Corrected longitude", "Depth in meters", "Quadrilateral grid reference",
+    "Estimated capture", "Landing flag", "Logbook number"
+  ),
+  Format = c(
+    "$6.", "best12.", "best12.", "best12.", "best12.", "best12.", "best12.",
+    "best12.", "best12.", "best12.", "date9.", "$3.", "$3.", "best12.",
+    "best12.", "best12.", "best12.", "best12.", "best12.", "$1.", "$1.",
+    "best12.", "best12.", "$1.", "best12.", "best12.", "best12.", "best12.",
+    "best12.", "best12.", "best12.", "best12.", "date9.", "best12.", "$1.",
+    "best12.", "best12.", "best12.", "best12.", "best12.", "best12.",
+    "best12.", "best12.", "best12."
+  ),
+  Notes = c(
+    "000000, B00000, or >= 190000 correspond to errors or missing data.",
+    "Measured in tons", "See 'Cl_ton' tab", "Measured in feet", "See 'Cl_LHT' tab",
+    "Measured in horsepower", "See 'Cl_HP' tab", "Unique code for the arrival port",
+    "Quota category description available in documentation", "Unique voyage identifier",
+    "Date of departure for the voyage", "Fishery management division", "Ocean planning area",
+    "Gear type code from the logbook", "See 'Cl_engin' tab",
+    "Unique code for the departure port", "Species identification code", "Size of the species caught",
+    "Form of the species (e.g., whole, filleted)", "Quality grade of the species",
+    "Unit of measure used for weight", "Weight recorded in the departure unit",
+    "Live weight of the catch", "Flag indicating landing status",
+    "Primary species targeted", "Secondary species observed",
+    "Funding source for the voyage", "Total time spent at sea in days",
+    "Total time moored in days", "Total time spent fishing in days",
+    "Effort duration in hours", "Total number of gear deployed", "Date of capture",
+    "Depth class from the logbook", "Regional identifier code",
+    "Latitude before corrections", "Longitude before corrections",
+    "Corrected latitude value", "Corrected longitude value",
+    "Measured depth in meters", "Quadrilateral reference for spatial analysis",
+    "Estimated capture data", "Flag for landing status",
+    "Unique logbook identifier"
+  )
+) |>
+  knitr::kable()
+```
+
 ## References
