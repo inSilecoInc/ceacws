@@ -13,11 +13,7 @@ pipeline:
         script: ana_fisheries_intensity
         input_files:
           - id: fe466272-993d-4b90-b036-bf418c38a63f
-            name: logbooks.parquet
-          - id: fe466272-993d-4b90-b036-bf418c38a63f
-            name: gear.csv
-          - id: fe466272-993d-4b90-b036-bf418c38a63f
-            name: species.csv
+            name: fisheries logbook
           - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
-            name: study area aoi
+            name: fisheries study area aoi
         output_files: ""

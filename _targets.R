@@ -22,6 +22,19 @@ list(
         },
         format = "file"
     )),
+    list(tar_target(tg_40932a82_3ecd_476f_b320_40b128b9a4d5_fisheries_study_area_aoi,
+        {
+            prc_aoi_fisheries(
+                output_path = "workspace/data/harvested/aoi-1.0.0/processed",
+                input_files = list()
+            )
+            c(
+                "workspace/data/harvested/aoi-1.0.0/processed/aoi_fisheries.gpkg",
+                "workspace/data/harvested/aoi-1.0.0/processed/grid_fisheries.tif"
+            )
+        },
+        format = "file"
+    )),
     list(
         list(tar_target(tg_fe466272_993d_4b90_b036_bf418c38a63f_Documentation,
             {
@@ -144,6 +157,19 @@ list(
             format = "file"
         )
     ),
+    list(tar_target(tg_be6d5b12_f1f6_4359_8ea2_275364802166_fisheries_intensity,
+        {
+            ana_fisheries_intensity(
+                output_path = "workspace/data/analyzed/fisheries_intensity-1.0.0",
+                input_files = list(
+                    tg_fe466272_993d_4b90_b036_bf418c38a63f_fisheries_logbook,
+                    tg_40932a82_3ecd_476f_b320_40b128b9a4d5_fisheries_study_area_aoi
+                )
+            )
+            "workspace/data/analyzed/fisheries_intensity-1.0.0/"
+        },
+        format = "file"
+    )),
     list(list(tar_target(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_Scientific_article,
         {
             googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")

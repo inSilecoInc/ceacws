@@ -5,14 +5,14 @@ ana_fisheries_intensity <- function(input_files, output_path) {
   #   "workspace/data/harvested/fisheries_dfo-1.0.0/processed/logbooks.parquet",
   #   "workspace/data/harvested/fisheries_dfo-1.0.0/processed/gear.csv",
   #   "workspace/data/harvested/fisheries_dfo-1.0.0/processed/species.csv",
-  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi.gpkg",
-  #   "workspace/data/harvested/aoi-1.0.0/processed/grid.tif"
+  #   "workspace/data/harvested/aoi-1.0.0/processed/aoi_fisheries.gpkg",
+  #   "workspace/data/harvested/aoi-1.0.0/processed/grid_fisheries.tif"
   # )
   input_files <- unlist(input_files)
 
   # Area of interest & Grid
-  grid <- terra::rast(input_files[basename(input_files) == "grid.tif"])
-  aoi <- sf::st_read(input_files[basename(input_files) == "aoi.gpkg"], quiet = TRUE)
+  grid <- terra::rast(input_files[basename(input_files) == "grid_fisheries.tif"])
+  aoi <- sf::st_read(input_files[basename(input_files) == "aoi_fisheries.gpkg"], quiet = TRUE)
 
   # Gear
   gear <- vroom::vroom(input_files[basename(input_files) == "gear.csv"], progress = FALSE, show_col_types = FALSE) |>
@@ -136,7 +136,8 @@ ana_fisheries_intensity <- function(input_files, output_path) {
   # Spatial object
   intensity <- intensity |>
     dplyr::mutate(year = lubridate::year(date), month = lubridate::month(date)) |>
-    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+    sf::st_transform(sf::st_crs(aoi))
 
   # Rasterize and export
   group_rasterize_export(

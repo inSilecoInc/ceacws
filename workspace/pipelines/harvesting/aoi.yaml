@@ -39,6 +39,12 @@ pipeline:
         output_files:
           - aoi.gpkg
           - grid.tif
+      - name: fisheries study area aoi
+        script: prc_aoi_fisheries
+        input_files: []
+        output_files:
+          - aoi_fisheries.gpkg
+          - grid_fisheries.tif
 
   # Output section: final output of the processed data
   output:
