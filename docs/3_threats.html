@@ -153,6 +153,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sec-shipping_threat" id="toc-sec-shipping_threat" class="nav-link" data-scroll-target="#sec-shipping_threat"><span class="header-section-number">4.5.1</span> Ship-Based Pollution Risk</a></li>
   <li><a href="#ship-based-night-lights" id="toc-ship-based-night-lights" class="nav-link" data-scroll-target="#ship-based-night-lights"><span class="header-section-number">4.5.2</span> Ship-Based Night Lights</a></li>
   </ul></li>
+  <li><a href="#sec-fisheries_intensity" id="toc-sec-fisheries_intensity" class="nav-link" data-scroll-target="#sec-fisheries_intensity"><span class="header-section-number">4.6</span> Commercial Fisheries</a>
+  <ul class="collapse">
+  <li><a href="#exported-layers-and-outputs" id="toc-exported-layers-and-outputs" class="nav-link" data-scroll-target="#exported-layers-and-outputs"><span class="header-section-number">4.6.1</span> Exported Layers and Outputs</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -389,9 +393,1327 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <li><strong>Processing Script</strong>: <code>ana_ship_light_detection.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/ship_light_detection-1.0.0/</code>.</li>
 </ul>
-
-
 </section>
+</section>
+</section>
+<section id="sec-fisheries_intensity" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="sec-fisheries_intensity"><span class="header-section-number">4.6</span> Commercial Fisheries</h2>
+<p>The fisheries intensity threat layer quantifies the spatial and temporal distribution of fishing activities in the study area, using commercial fisheries logbook data (<a href="2_data.html#sec-fisheries_dfo" class="quarto-xref"><span>Section 4.6</span></a>). This analysis focuses on estimating fishing pressure for different gear types, target species, and month-year combinations. The following processing steps were used to create this threat layer:</p>
+<ol type="1">
+<li><strong>Data Preparation</strong>:
+<ul>
+<li>Logbook data (<code>logbooks.parquet</code>) was ingested, alongside auxiliary datasets for gear codes (<code>gear.csv</code>) and species information (<code>species.csv</code>).</li>
+<li>Data was cleaned to ensure completeness and compatibility with the study area grid. Missing values in critical fields, such as <code>nb_engin</code> (number of gear) and <code>eff_hre</code> (effort hours), were addressed with appropriate default values.</li>
+<li>Depth was standardized, converting depth classes (<code>cl_prof</code>) into mean depths in fathoms, and depth values were further converted into meters.</li>
+</ul></li>
+<li><strong>Gear Classification</strong>:
+<ul>
+<li>Gear codes were classified into four main types (see <a href="#tbl-gear-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a>):
+<ul>
+<li><strong>Gillnet</strong>: Includes codes for various gillnet fishing configurations.</li>
+<li><strong>Longline</strong>: Differentiates longline fishing but does not yet distinguish between pelagic and demersal types.</li>
+<li><strong>Trawl</strong>: Covers various trawling techniques.</li>
+<li><strong>Purse Seine</strong>: Identified separately from other seine nets.</li>
+</ul></li>
+<li>This classification allowed for the calculation of fishing intensity per gear type.</li>
+</ul></li>
+<li><strong>Species Traits and Target Species</strong>:
+<ul>
+<li>Species traits related to their environment (e.g., pelagic, demersal) were retrieved and linked to target species in the logbook data. This will support future classification of longline and trawl fishing into pelagic and demersal categories.</li>
+<li>Logbook entries without valid target species (<code>prespvis</code>) or fishing events (<code>nb_engin</code>, <code>effort_days</code>) were excluded.</li>
+</ul></li>
+<li><strong>Intensity Calculation</strong>:
+<ul>
+<li><strong>Gillnet Fishing</strong>: Fishing pressure was calculated as the product of the number of nets set (<code>nb_engin</code>) and soak time in days (<code>effort_days</code>), resulting in an assessment in number of nets per day. For depths greater than 200 m, soak time was limited to 1 hour to account for bird exposure risk.</li>
+<li><strong>Longline Fishing</strong>: Fishing pressure was estimated based on the number of hooks set (<code>nb_engin</code>) and soak time in days (<code>effort_days</code>), resulting in an assessment in number of hooks set per day. Future refinements will incorporate target species to classify longline sets as pelagic or demersal.</li>
+<li><strong>Trawl Fishing</strong>: Fishing pressure was estimated based on the number of trawls (<code>nb_engin</code>) and fishing effort in days (<code>effort_days</code>), resulting in an assessment in number of trawling events per day. Future refinements will incorporate target species to classify longline sets as midwater or demersal.</li>
+<li><strong>Purse Seine Fishing</strong>: Fishing pressure was calculated as the product of the number of seines set (<code>nb_engin</code>) and fishing effort in days (<code>effort_days</code>), resulting in an assessment in number of seines set per day.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div id="tbl-gear-summary" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gear-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Summary of gear types used for the assessment of fisheries intensity.
+</figcaption>
+<div aria-describedby="tbl-gear-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 42%">
+<col style="width: 16%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Gear type</th>
+<th style="text-align: left;">Gear</th>
+<th style="text-align: right;">Events (n)</th>
+<th style="text-align: right;">Total Intensity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: left;">Gillnet (drift)</td>
+<td style="text-align: right;">27680</td>
+<td style="text-align: right;">53309.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: left;">Gillnet (set or fixed)</td>
+<td style="text-align: right;">223500</td>
+<td style="text-align: right;">8824578.23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">229524</td>
+<td style="text-align: right;">340991953.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: left;">Shark longline</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">47107</td>
+<td style="text-align: right;">11235.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Bottom otter trawl (side)</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">589.59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Bottom otter trawl (stern)</td>
+<td style="text-align: right;">610636</td>
+<td style="text-align: right;">171052.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Bottom pair trawl</td>
+<td style="text-align: right;">509</td>
+<td style="text-align: right;">183.80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Midwater pair trawl</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">11.23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Midwater trawl (side)</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">30.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Midwater trawl (stern)</td>
+<td style="text-align: right;">1391</td>
+<td style="text-align: right;">364.97</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Midwater trawl (unspecified)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Shrimp beam trawl</td>
+<td style="text-align: right;">904</td>
+<td style="text-align: right;">559.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: left;">Shrimp trawl</td>
+<td style="text-align: right;">640202</td>
+<td style="text-align: right;">665136.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><br></p>
+<div class="cell">
+<div id="tbl-gear-species-summary" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gear-species-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Summary of target species per gear0 type used for the assessment of fisheries intensity.
+</figcaption>
+<div aria-describedby="tbl-gear-species-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 34%">
+<col style="width: 26%">
+<col style="width: 9%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Gear type</th>
+<th style="text-align: right;">Code</th>
+<th style="text-align: left;">Species name</th>
+<th style="text-align: left;">Scientific name</th>
+<th style="text-align: right;">Events (n)</th>
+<th style="text-align: right;">Total Intensity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">Cod</td>
+<td style="text-align: left;">Gadus morhua</td>
+<td style="text-align: right;">70410</td>
+<td style="text-align: right;">1268356.97</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: left;">Rock cod</td>
+<td style="text-align: left;">Gadus ogac</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">14.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: left;">Haddock</td>
+<td style="text-align: left;">Melanogrammus aeglefinus</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">4280.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: left;">Redfish</td>
+<td style="text-align: left;">Sebastes sp</td>
+<td style="text-align: right;">768</td>
+<td style="text-align: right;">18838.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: left;">Cunner</td>
+<td style="text-align: left;">Tautogolabrus adspersus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: left;">Atlantic halibut</td>
+<td style="text-align: left;">Hippoglossus hippoglossus</td>
+<td style="text-align: right;">965</td>
+<td style="text-align: right;">129675.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: left;">American plaice</td>
+<td style="text-align: left;">Hippoglossoides platessoides</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">8230.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: left;">Yellowtail</td>
+<td style="text-align: left;">Pleuronectes ferrugineus</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">974.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: left;">Greysole (Witch)</td>
+<td style="text-align: left;">Glyptocephalus cynoglossus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">37.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: left;">Winter flounder</td>
+<td style="text-align: left;">Pleuronectes americanus</td>
+<td style="text-align: right;">7546</td>
+<td style="text-align: right;">86911.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: left;">Greenland halibut</td>
+<td style="text-align: left;">Reinhardtius hippoglossoides</td>
+<td style="text-align: right;">77694</td>
+<td style="text-align: right;">5356741.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: left;">Windowpane flounder</td>
+<td style="text-align: left;">Scophthalmus aquosus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: left;">Unspecified flounders</td>
+<td style="text-align: left;">Pleuronectiformes</td>
+<td style="text-align: right;">1925</td>
+<td style="text-align: right;">12993.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja spp.</td>
+<td style="text-align: right;">1640</td>
+<td style="text-align: right;">161261.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: left;">Pollock</td>
+<td style="text-align: left;">Pollachius virens</td>
+<td style="text-align: right;">11455</td>
+<td style="text-align: right;">343125.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: left;">White hake</td>
+<td style="text-align: left;">Urophycis tenuis</td>
+<td style="text-align: right;">8120</td>
+<td style="text-align: right;">457405.76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: left;">Silver hake</td>
+<td style="text-align: left;">Merluccius bilinearis</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">399.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: left;">Cusk</td>
+<td style="text-align: left;">Brosme brosme</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">369.90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: left;">Tomcod</td>
+<td style="text-align: left;">Microgadus tomcod</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">240.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">176</td>
+<td style="text-align: left;">Lumpfish</td>
+<td style="text-align: left;">Cyclopterus lumpus</td>
+<td style="text-align: right;">1028</td>
+<td style="text-align: right;">86249.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: left;">Monkfish</td>
+<td style="text-align: left;">Lophius americanus</td>
+<td style="text-align: right;">5363</td>
+<td style="text-align: right;">558924.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: left;">Red hake</td>
+<td style="text-align: left;">Urophycis chuss</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">100.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: left;">Sculpins</td>
+<td style="text-align: left;">Cottidae</td>
+<td style="text-align: right;">580</td>
+<td style="text-align: right;">5508.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: left;">Grenadier, rough-head</td>
+<td style="text-align: left;">Macrourus berglax</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">150.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: left;">Wrymouth</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">120.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: left;">Hake, blue</td>
+<td style="text-align: left;">Antimora rostrata</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: left;">Atlantic wolffish</td>
+<td style="text-align: left;">Anarhichas lupus</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">434.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: left;">Unspecified groundfish</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">Herring</td>
+<td style="text-align: left;">Clupea harengus</td>
+<td style="text-align: right;">53471</td>
+<td style="text-align: right;">189914.89</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: left;">Mackerel</td>
+<td style="text-align: left;">Scomber scombrus</td>
+<td style="text-align: right;">7967</td>
+<td style="text-align: right;">80200.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">251</td>
+<td style="text-align: left;">Swordfish</td>
+<td style="text-align: left;">Xiphias gladius</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">39.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">Alewife</td>
+<td style="text-align: left;">Alosa pseudoharengus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">15.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">355</td>
+<td style="text-align: left;">Shad</td>
+<td style="text-align: left;">Alosa sapidissima</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">114.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja sp</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">6045.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">359</td>
+<td style="text-align: left;">Sturgeon</td>
+<td style="text-align: left;">Acipenseridae</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">362</td>
+<td style="text-align: left;">Spiny dogfish</td>
+<td style="text-align: left;">Squalus acanthias</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: right;">3584.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">369</td>
+<td style="text-align: left;">Porbeagle</td>
+<td style="text-align: left;">Lamna nasus, Lamna cornubica</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">533.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">Shortfin mako</td>
+<td style="text-align: left;">Isurus oxyrinchus</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">402.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: left;">Unspecified shark</td>
+<td style="text-align: left;">Squaliformes</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">263.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: left;">Lobster</td>
+<td style="text-align: left;">Homarus americanus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">705</td>
+<td style="text-align: left;">Snow crab</td>
+<td style="text-align: left;">Chionoecetes opilio</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">568.50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">928</td>
+<td style="text-align: left;">Lumpfish roe</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1252</td>
+<td style="text-align: right;">94819.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gillnet</td>
+<td style="text-align: right;">956</td>
+<td style="text-align: left;">Commun crab (fishing licence)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">Cod</td>
+<td style="text-align: left;">Gadus morhua</td>
+<td style="text-align: right;">39565</td>
+<td style="text-align: right;">64246250.85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: left;">Rock cod</td>
+<td style="text-align: left;">Gadus ogac</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">6401.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: left;">Haddock</td>
+<td style="text-align: left;">Melanogrammus aeglefinus</td>
+<td style="text-align: right;">15883</td>
+<td style="text-align: right;">62328300.83</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: left;">Redfish</td>
+<td style="text-align: left;">Sebastes sp</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">56904.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: left;">Atlantic halibut</td>
+<td style="text-align: left;">Hippoglossus hippoglossus</td>
+<td style="text-align: right;">111485</td>
+<td style="text-align: right;">142322843.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: left;">American plaice</td>
+<td style="text-align: left;">Hippoglossoides platessoides</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">26365.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: left;">Yellowtail</td>
+<td style="text-align: left;">Pleuronectes ferrugineus</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6481.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: left;">Greysole (Witch)</td>
+<td style="text-align: left;">Glyptocephalus cynoglossus</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">2.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: left;">Winter flounder</td>
+<td style="text-align: left;">Pleuronectes americanus</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">1196.62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: left;">Greenland halibut</td>
+<td style="text-align: left;">Reinhardtius hippoglossoides</td>
+<td style="text-align: right;">4056</td>
+<td style="text-align: right;">16868345.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: left;">Unspecified flounders</td>
+<td style="text-align: left;">Pleuronectiformes</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">8661.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja spp.</td>
+<td style="text-align: right;">1047</td>
+<td style="text-align: right;">2001810.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: left;">Pollock</td>
+<td style="text-align: left;">Pollachius virens</td>
+<td style="text-align: right;">486</td>
+<td style="text-align: right;">247843.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: left;">White hake</td>
+<td style="text-align: left;">Urophycis tenuis</td>
+<td style="text-align: right;">8338</td>
+<td style="text-align: right;">20356958.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: left;">Silver hake</td>
+<td style="text-align: left;">Merluccius bilinearis</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">19201.80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: left;">Cusk</td>
+<td style="text-align: left;">Brosme brosme</td>
+<td style="text-align: right;">4167</td>
+<td style="text-align: right;">11898769.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: left;">Catfish</td>
+<td style="text-align: left;">Anarhichadidae</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">2896.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: left;">Monkfish</td>
+<td style="text-align: left;">Lophius americanus</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">8280.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">179</td>
+<td style="text-align: left;">Roundnose grenadier</td>
+<td style="text-align: left;">Coryphaenoides rupestris</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">225.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: left;">Red hake</td>
+<td style="text-align: left;">Urophycis chuss</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2458.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: left;">Sculpins</td>
+<td style="text-align: left;">Cottidae</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">9662.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: left;">Northern wolffish</td>
+<td style="text-align: left;">Anarhichas denticulatus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">600.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: left;">Atlantic wolffish</td>
+<td style="text-align: left;">Anarhichas lupus</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: right;">5361.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: left;">Hagfish/Slime eel</td>
+<td style="text-align: left;">Myxina glutinosa</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">10.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: left;">Unspecified groundfish</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">14253.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: left;">Mackerel</td>
+<td style="text-align: left;">Scomber scombrus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">251</td>
+<td style="text-align: left;">Swordfish</td>
+<td style="text-align: left;">Xiphias gladius</td>
+<td style="text-align: right;">24347</td>
+<td style="text-align: right;">15019672.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: left;">Tuna, Albacore</td>
+<td style="text-align: left;">Thunnus alalunga</td>
+<td style="text-align: right;">656</td>
+<td style="text-align: right;">52807.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: left;">Tuna, Bigeye</td>
+<td style="text-align: left;">Thunnus obesus</td>
+<td style="text-align: right;">5144</td>
+<td style="text-align: right;">2623381.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: left;">Tuna, Bluefin</td>
+<td style="text-align: left;">Thunnus thynnus</td>
+<td style="text-align: right;">5758</td>
+<td style="text-align: right;">33137.50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: left;">Tuna, Skipjack</td>
+<td style="text-align: left;">Katsuwonus pelamis</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Tuna, Yellowfin</td>
+<td style="text-align: left;">Thunnus albacares</td>
+<td style="text-align: right;">3673</td>
+<td style="text-align: right;">2295936.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: left;">Unspecified tuna</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: left;">blue marlin</td>
+<td style="text-align: left;">Makaira nigricans</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: left;">white marlin</td>
+<td style="text-align: left;">Tetrapterus albidus</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">5336.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">299</td>
+<td style="text-align: left;">Unspecified pelagic fish</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">Alewife</td>
+<td style="text-align: left;">Alosa pseudoharengus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">16241.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">355</td>
+<td style="text-align: left;">Shad</td>
+<td style="text-align: left;">Alosa sapidissima</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja sp</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">241.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">362</td>
+<td style="text-align: left;">Spiny dogfish</td>
+<td style="text-align: left;">Squalus acanthias</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">13741.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">369</td>
+<td style="text-align: left;">Porbeagle</td>
+<td style="text-align: left;">Lamna nasus, Lamna cornubica</td>
+<td style="text-align: right;">1279</td>
+<td style="text-align: right;">221201.90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">372</td>
+<td style="text-align: left;">Blue shark</td>
+<td style="text-align: left;">Prionace glauca</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">11551.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">Shortfin mako</td>
+<td style="text-align: left;">Isurus oxyrinchus</td>
+<td style="text-align: right;">634</td>
+<td style="text-align: right;">214172.90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: left;">Unspecified shark</td>
+<td style="text-align: left;">Squaliformes</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">44420.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">612</td>
+<td style="text-align: left;">Scallop</td>
+<td style="text-align: left;">Pectinidae</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">17.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: left;">Lobster</td>
+<td style="text-align: left;">Homarus americanus</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: left;">Exploratory scallop (fishing licence)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Longline</td>
+<td style="text-align: right;">956</td>
+<td style="text-align: left;">Commun crab (fishing licence)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">Herring</td>
+<td style="text-align: left;">Clupea harengus</td>
+<td style="text-align: right;">32239</td>
+<td style="text-align: right;">8375.97</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: left;">Mackerel</td>
+<td style="text-align: left;">Scomber scombrus</td>
+<td style="text-align: right;">6995</td>
+<td style="text-align: right;">1365.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">260</td>
+<td style="text-align: left;">Billfish</td>
+<td style="text-align: left;">Scomberesox saurus</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">Alewife</td>
+<td style="text-align: left;">Alosa pseudoharengus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Purse seine</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: left;">Capelin</td>
+<td style="text-align: left;">Mallotus villosus</td>
+<td style="text-align: right;">7866</td>
+<td style="text-align: right;">1492.55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">Cod</td>
+<td style="text-align: left;">Gadus morhua</td>
+<td style="text-align: right;">31457</td>
+<td style="text-align: right;">15274.56</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: left;">Haddock</td>
+<td style="text-align: left;">Melanogrammus aeglefinus</td>
+<td style="text-align: right;">197264</td>
+<td style="text-align: right;">46641.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: left;">Redfish</td>
+<td style="text-align: left;">Sebastes sp</td>
+<td style="text-align: right;">107945</td>
+<td style="text-align: right;">27941.32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: left;">Atlantic halibut</td>
+<td style="text-align: left;">Hippoglossus hippoglossus</td>
+<td style="text-align: right;">991</td>
+<td style="text-align: right;">300.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: left;">American plaice</td>
+<td style="text-align: left;">Hippoglossoides platessoides</td>
+<td style="text-align: right;">3924</td>
+<td style="text-align: right;">2213.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: left;">Yellowtail</td>
+<td style="text-align: left;">Pleuronectes ferrugineus</td>
+<td style="text-align: right;">71103</td>
+<td style="text-align: right;">28685.32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: left;">Greysole (Witch)</td>
+<td style="text-align: left;">Glyptocephalus cynoglossus</td>
+<td style="text-align: right;">7548</td>
+<td style="text-align: right;">2245.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: left;">Winter flounder</td>
+<td style="text-align: left;">Pleuronectes americanus</td>
+<td style="text-align: right;">37867</td>
+<td style="text-align: right;">10612.76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: left;">Greenland halibut</td>
+<td style="text-align: left;">Reinhardtius hippoglossoides</td>
+<td style="text-align: right;">16962</td>
+<td style="text-align: right;">6338.51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: left;">Windowpane flounder</td>
+<td style="text-align: left;">Scophthalmus aquosus</td>
+<td style="text-align: right;">515</td>
+<td style="text-align: right;">211.65</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: left;">Unspecified flounders</td>
+<td style="text-align: left;">Pleuronectiformes</td>
+<td style="text-align: right;">7453</td>
+<td style="text-align: right;">2125.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja spp.</td>
+<td style="text-align: right;">2099</td>
+<td style="text-align: right;">609.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: left;">Pollock</td>
+<td style="text-align: left;">Pollachius virens</td>
+<td style="text-align: right;">30291</td>
+<td style="text-align: right;">7345.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: left;">White hake</td>
+<td style="text-align: left;">Urophycis tenuis</td>
+<td style="text-align: right;">3807</td>
+<td style="text-align: right;">1188.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: left;">Silver hake</td>
+<td style="text-align: left;">Merluccius bilinearis</td>
+<td style="text-align: right;">73519</td>
+<td style="text-align: right;">16438.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: left;">Cusk</td>
+<td style="text-align: left;">Brosme brosme</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">25.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: left;">Catfish</td>
+<td style="text-align: left;">Anarhichadidae</td>
+<td style="text-align: right;">421</td>
+<td style="text-align: right;">147.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: left;">Monkfish</td>
+<td style="text-align: left;">Lophius americanus</td>
+<td style="text-align: right;">5705</td>
+<td style="text-align: right;">2156.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: left;">Red hake</td>
+<td style="text-align: left;">Urophycis chuss</td>
+<td style="text-align: right;">469</td>
+<td style="text-align: right;">59.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: left;">Sculpins</td>
+<td style="text-align: left;">Cottidae</td>
+<td style="text-align: right;">10483</td>
+<td style="text-align: right;">809.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: left;">Hake, blue</td>
+<td style="text-align: left;">Antimora rostrata</td>
+<td style="text-align: right;">1268</td>
+<td style="text-align: right;">470.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: left;">Atlantic wolffish</td>
+<td style="text-align: left;">Anarhichas lupus</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">6.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: left;">Spotted wolffish</td>
+<td style="text-align: left;">Anarhichas minor</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: left;">Unspecified groundfish</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">9.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">Herring</td>
+<td style="text-align: left;">Clupea harengus</td>
+<td style="text-align: right;">365</td>
+<td style="text-align: right;">86.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: left;">Mackerel</td>
+<td style="text-align: left;">Scomber scombrus</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1.63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">Alewife</td>
+<td style="text-align: left;">Alosa pseudoharengus</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">10.19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">351</td>
+<td style="text-align: left;">Argentine</td>
+<td style="text-align: left;">Argentinidae</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">355</td>
+<td style="text-align: left;">Shad</td>
+<td style="text-align: left;">Alosa sapidissima</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.54</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: left;">Skate</td>
+<td style="text-align: left;">Raja sp</td>
+<td style="text-align: right;">355</td>
+<td style="text-align: right;">113.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">362</td>
+<td style="text-align: left;">Spiny dogfish</td>
+<td style="text-align: left;">Squalus acanthias</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">27.94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">369</td>
+<td style="text-align: left;">Porbeagle</td>
+<td style="text-align: left;">Lamna nasus, Lamna cornubica</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">Shortfin mako</td>
+<td style="text-align: left;">Isurus oxyrinchus</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: left;">Unspecified shark</td>
+<td style="text-align: left;">Squaliformes</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">399</td>
+<td style="text-align: left;">Unspecified, other fish</td>
+<td style="text-align: left;">Pisces</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">612</td>
+<td style="text-align: left;">Scallop</td>
+<td style="text-align: left;">Pectinidae</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">613</td>
+<td style="text-align: left;">Squid</td>
+<td style="text-align: left;">Teuthoidea</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">23.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">627</td>
+<td style="text-align: left;">Squid, Loligo</td>
+<td style="text-align: left;">Loligo</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">702</td>
+<td style="text-align: left;">Shrimp</td>
+<td style="text-align: left;">Pandalus sp</td>
+<td style="text-align: right;">636236</td>
+<td style="text-align: right;">664603.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">703</td>
+<td style="text-align: left;">Jonah crab</td>
+<td style="text-align: left;">Cancer borealis</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">16.92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">705</td>
+<td style="text-align: left;">Snow crab</td>
+<td style="text-align: left;">Chionoecetes opilio</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">10.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">712</td>
+<td style="text-align: left;">Aesop shrimp (montagui)</td>
+<td style="text-align: left;">Pandalus montagui</td>
+<td style="text-align: right;">4974</td>
+<td style="text-align: right;">1176.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Trawl</td>
+<td style="text-align: right;">944</td>
+<td style="text-align: left;">Whale, minke</td>
+<td style="text-align: left;">Balaenoptera acutorostrata</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.26</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ol start="5" type="1">
+<li><strong>Rasterization and Export</strong>:
+<ul>
+<li>Fishing pressure was grouped by gear type, year, and month. Spatial data points were rasterized onto the study grid to produce spatially explicit layers.</li>
+<li>Separate raster layers were generated for each gear type and month-year combination, representing the sum of fishing pressure (e.g., number of nets fished per day) in each grid cell, thus providing a number per month.</li>
+</ul></li>
+</ol>
+<section id="exported-layers-and-outputs" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="exported-layers-and-outputs"><span class="header-section-number">4.6.1</span> Exported Layers and Outputs</h3>
+<p>The fisheries intensity threat layer provides detailed spatial and temporal representations of fishing activity. It highlights high-pressure areas and their association with gear types and species.</p>
+<ul>
+<li><strong>Processing Script</strong>: <code>ana_fisheries_intensity.R</code></li>
+<li><strong>Output Files</strong>:
+<ul>
+<li><strong>Gear Summary</strong>: <code>gear_summary.csv</code></li>
+<li><strong>Gear-Species Summary</strong>: <code>gear_species_summary.csv</code></li>
+<li><strong>Fisheries Intensity Rasters</strong>: Monthly layers stored in <code>workspace/data/analyzed/fisheries_intensity-1.0.0/</code>.</li>
+</ul></li>
+</ul>
+
+
 </section>
 </section>
 

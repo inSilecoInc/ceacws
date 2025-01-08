@@ -27,7 +27,7 @@ prc_fisheries_dfo <- function(input_files, output_path) {
     vroom::vroom_write(file.path(output_path, "species.csv"), delim = ",")
 
   # Logbooks
-  input_files[stringr::str_detect(input_files, "Version_totale")][1] |>
+  input_files[stringr::str_detect(input_files, "Version_totale")] |>
     lapply(function(x) {
       dat <- vroom::vroom(x, progress = FALSE, show_col_types = FALSE) |>
         janitor::clean_names() |>

@@ -1,0 +1,23 @@
+pipeline:
+  id: be6d5b12-f1f6-4359-8ea2-275364802166
+  name: fisheries_intensity
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-01-07 10:34:16
+  last_modified: 2025-01-07 10:34:16
+  description: 'Pipeline for analytical data: fisheries_intensity'
+  analysis:
+    sources:
+      - name: fisheries intensity
+        description: Intensity of fisheries activities from logbook data
+        script: ana_fisheries_intensity
+        input_files:
+          - id: fe466272-993d-4b90-b036-bf418c38a63f
+            name: logbooks.parquet
+          - id: fe466272-993d-4b90-b036-bf418c38a63f
+            name: gear.csv
+          - id: fe466272-993d-4b90-b036-bf418c38a63f
+            name: species.csv
+          - id: 40932a82-3ecd-476f-b320-40b128b9a4d5
+            name: study area aoi
+        output_files: ""
