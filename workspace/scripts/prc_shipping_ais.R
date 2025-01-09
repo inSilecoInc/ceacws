@@ -183,9 +183,12 @@ prc_shipping_ais_points <- function(input_files, output_path) {
   # output_path <- "workspace/data/harvested/shipping_ais-1.0.0/processed/"
   # # dir.create(output_path)
   # input_path <- "workspace/data/harvested/shipping_ais-1.0.0/raw/"
-  # input_files <- file.path(input_path, "2023AIS.zip")
+  # input_files <- list(
+  #   file.path(input_path, "DFO-TC-AIS_TERR_SAT_FUSED_2023.zip"),
+  #   file.path(input_path, "static_data_2023.csv")
+  # )
   input_files <- unlist(input_files)
-  
+
 
   # Data
   tmp <- file.path(output_path, "tmp/")
@@ -203,13 +206,14 @@ prc_shipping_ais_points <- function(input_files, output_path) {
   write.csv(ship_info, file = file.path(output_path, "vessel_static_information.csv"), row.names = FALSE)
 
   # Prepare for parallel processing
-  future::plan(future::multisession, workers = parallel::detectCores() - 3)
+  future::plan(future::multisession, workers = parallel::detectCores() / 2)
 
   # List of parquet files
   files <- list.files(parquet_db, full.names = TRUE)
 
   # Process each parquet file in parallel and write directly to output
-  furrr::future_map(files, function(file) {
+  # furrr::future_map(files, function(file) {
+  for (file in files) {
     processed_points <- process_parquet(file) |>
       day_night() |>
       create_track_ids(ship_info) |>
@@ -217,11 +221,12 @@ prc_shipping_ais_points <- function(input_files, output_path) {
 
     # Extract the year and month from the file or data
     split_name <- basename(file) |>
+      tools::file_path_sans_ext() |>
       strsplit("_") |>
       unlist() |>
       tolower()
-    year <- split_name[3]
-    month <- split_name[2]
+    year <- split_name[4]
+    month <- split_name[5] |> tools::file_path_sans_ext()
     month <- lubridate::ymd(paste("2023", month, "01")) |>
       lubridate::month()
 
@@ -230,7 +235,7 @@ prc_shipping_ais_points <- function(input_files, output_path) {
       processed_points,
       file.path(output_path, glue::glue("shipping_ais_{year}_{month}.parquet"))
     )
-  }, .options = furrr::furrr_options(seed = TRUE))
+  } # , .options = furrr::furrr_options(seed = TRUE))
 
   # Clean up temporary files
   fs::dir_delete(tmp)
