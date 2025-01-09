@@ -26,13 +26,14 @@ ana_shipping_intensity_density <- function(input_files, output_path) {
   bbox <- sf::st_bbox(aoi)
 
   # Prepare for parallel processing
-  future::plan(future::multisession, workers = parallel::detectCores() - 3)
+  # future::plan(future::multisession, workers = parallel::detectCores() - 3)
 
   # List of Parquet files
   files <- list.files(input_files, pattern = "*.parquet", full.names = TRUE)
 
   # Process each Parquet file in parallel and write directly to output
-  furrr::future_map(files, function(file) {
+  # furrr::future_map(files, function(file) {
+  for (file in files) {
     # Read data from the Parquet file
     dat <- arrow::read_parquet(file)
 
@@ -57,7 +58,7 @@ ana_shipping_intensity_density <- function(input_files, output_path) {
         output_path = file.path(output_path, filename),
         ntype = "ntype"
       )
-  }, .options = furrr::furrr_options(seed = TRUE))
+  } # , .options = furrr::furrr_options(seed = TRUE))
   # plot(log(dat[[1]]), col = viridis::magma(100), maxcell = 100000000)
 }
 
@@ -87,13 +88,14 @@ ana_shipping_night_light_density <- function(input_files, output_path) {
   bbox <- sf::st_bbox(aoi)
 
   # Prepare for parallel processing
-  future::plan(future::multisession, workers = parallel::detectCores() - 3)
+  # future::plan(future::multisession, workers = parallel::detectCores() - 3)
 
   # List of Parquet files
   files <- list.files(input_files, pattern = "*.parquet", full.names = TRUE)
 
   # Process each Parquet file in parallel and write directly to output
-  furrr::future_map(files, function(file) {
+  # furrr::future_map(files, function(file) {
+  for (file in files) {
     # Read data from the Parquet file
     dat <- arrow::read_parquet(file)
 
@@ -123,7 +125,7 @@ ana_shipping_night_light_density <- function(input_files, output_path) {
         output_path = file.path(output_path, filename),
         ntype = "ntype"
       )
-  }, .options = furrr::furrr_options(seed = TRUE))
+  } # , .options = furrr::furrr_options(seed = TRUE))
   # plot(log(dat[[1]]), col = viridis::magma(100), maxcell = 100000000)
 }
 
@@ -164,7 +166,8 @@ create_full_tracklines <- function(points, time_filter = "all", group_by_type = 
       ship_info[, c("mmsi", "ntype")],
       by = "mmsi"
     ) |>
-      dplyr::relocate(mmsi, track_id, ntype)
+      dplyr::relocate(mmsi, track_id, ntype) |>
+      dplyr::filter(!is.na(ntype))
   }
 
   return(tracklines)
