@@ -1,0 +1,1201 @@
+---
+fontsize: 12pt
+format:
+  pdf:
+    toc: false
+    number_sections: false
+    colorlinks: true
+bibliography: ceacws.bib
+csl: ecology.csl
+---
+
+<!--
+quarto::render('./MetadataS1.qmd')
+rmarkdown::render('./FoodWeb-CumulativeImpact.md', output_format = "word_document")
+-->
+
+**Title**: Mapping threats to marine birds to inform conservation and management in Atlantic Canada
+
+**Authors**: David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^, Philippe Muise^4^, Allison Patterson^5^, Robert Ronconi^5^, Katharine Studholme^6^, Sarah Wong^6^
+
+######
+
+**Author affiliations**: 
+
+^1^inSileco, Québec, Canada 
+
+^2^Environment and Climate Change Canada, Ottawa, ON, Canada
+
+^3^Environment and Climate Change Canada, Mount Pearl, Newfoundland and Labrador, Canada
+
+^4^Canada Centre for Mapping and Earth Observation, Canada Centre for Remote Sensing, Ottawa, Ontario, Canada
+
+^5^Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+
+#####
+
+**Abstract**
+
+Coastal and marine birds in Canada face significant threats from anthropogenic activities. Under the Migratory Birds Convention Act (1994) and through the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP) initiatives, efforts are underway to improve our understanding of the spatiotemporal distribution of these birds and their overlap with threats such as oil spills, vessel traffic, and light pollution. This study presents a comprehensive dataset of spatiotemporal threat layers, integrating a wide range of primary data sources to inform seabird conservation and management within Canada’s Exclusive Economic Zone (EEZ) and beyond.
+
+The dataset comprises secondary-use geospatial threat layers developed from various primary datasets, including open-access and proprietary data shared for this project. These layers quantify risks from petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light across the annual cycle of migratory seabirds. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite datasets were used to capture artificial light and flaring activity, complemented by regional assessments of offshore wind development from Canada and the United States.
+
+Spatiotemporal threat layers were created through reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of ship traffic and associated risks. All datasets were processed into a 1-$km^2$ resolution study grid covering Canada’s EEZ, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. The datasets and associated code are openly accessible via Zenodo at https://doi.org/TO/ADD and https://doi.org/TO/ADD, and the codebase is also available on GitHub (https://github.com/inSilecoInc/ceacws).
+
+This work does not generate new primary data but instead integrates diverse datasets to produce secondary-use geospatial threat layers, addressing critical gaps in marine bird conservation. Applications of these data include informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species such as the Leach’s Storm-Petrel, which regularly forages beyond Canada’s jurisdiction. By aligning with Canada’s OPP and MSP frameworks, this dataset contributes to sustainable ocean management and facilitates evidence-based decision-making to safeguard Canada’s coastal and marine bird populations.
+
+
+#####
+
+*Key words/phrases:* 
+Annual cycle,
+Light,
+Petroleum activities,
+Petroleum pollution,
+Marine birds,
+Marine threats,
+Shipping,
+Wind farms
+
+#####
+
+Open Research: Data is available in Zenodo at https://doi.org/TO/ADD. 
+Code is available in Zenodo at https://doi.org/TO/ADD.
+
+#####
+
+*Corresponding Author E-mail: david.beauchesne@insileco.io
+
+# Class I. Data Set Descriptors
+
+## A. Data set identity 
+
+Threats to marine birds to inform conservation and management in Atlantic Canada
+
+## B. Data set identification code
+  
+For this project, each dataset identification code combines:
+
+- Dataset Category: The folder name indicating the thematic category and version (e.g., `offshore_petroleum_activity-1.0.0` or `shipping_night_light_intensity_density-1.0.0`).
+- Dataset Descriptor: File names specifying temporal (e.g., month/year) and sub-category details (e.g., vessel type or spill type), where applicable.
+- File Format: Cloud Optimized Geotiffs (.tif).
+
+## C. Data set description
+
+### Originators
+
+- David Beauchesne
+  - david.beauchesne@insileco.io
+  - inSileco, Québec, Canada
+- Kevin Cazelles
+  - kevin.cazelles@insileco.io
+  - inSileco, Québec, Canada
+- Stephanie Avery-Gomm
+  - Stephanie.Avery-Gomm@ec.gc.ca
+  - Environment and Climate Change Canada, Ottawa, ON, Canada
+- April Hedd
+  - April.Hedd@ec.gc.ca
+  - Environment and Climate Change Canada, Mount Pearl, Newfoundland and Labrador, Canada
+- Philippe Muise
+  - Philippe.Muise@ec.gc.ca
+  - Canada Centre for Mapping and Earth Observation, Canada Centre for Remote Sensing, Ottawa, Ontario, Canada
+- Allison Patterson
+  - Allison.Patterson@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Robert Ronconi
+  - Robert.Ronconi@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Katharine Studholme
+  - Katharine.Studholme@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Sarah Wong
+  - sarah.wong2@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+
+### Abstract
+
+Coastal and marine birds in Canada face significant threats from human activities. Through the Migratory Birds Convention Act (1994) and initiatives like the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP), efforts are underway to understand the spatiotemporal distribution of these birds and their overlap with anthropogenic stressors. This dataset integrates secondary-use geospatial layers derived from multiple primary data sources to inform conservation and management strategies for migratory seabirds. The dataset spans the Canadian Exclusive Economic Zone (EEZ) and includes annual and/or monthly threat layers for 2006–2023 at a 1-$km^2$ resolution in the WGS84 coordinate reference system (EPSG:4326). The data quantify risks from petroleum pollution, vessel activity, artificial light, and offshore wind farms. Sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), Automatic Identification System (AIS) shipping data, VIIRS satellite observations, and regional assessments of wind energy development. Proprietary and public data were processed and integrated through reproducible workflows to generate Cloud Optimized GeoTIFFs (COGs). Key applications include evaluating cumulative effects on species such as the globally threatened Leach’s Storm-Petrel, informing recovery strategies for at-risk species, supporting marine spatial planning, and improving environmental response planning. For example, vessel disturbance layers quantify ship traffic intensity by vessel type, while light pollution layers assess spatial impacts of artificial light across critical seabird habitats. Petroleum pollution layers highlight historical hotspots of oiling events based on geospatial modeling. This dataset bridges critical knowledge gaps in marine bird conservation, aligning with Canada’s OPP and MSP frameworks. 
+
+## D. Key words/phrases: 
+
+Annual cycle,
+Light,
+Petroleum activities,
+Petroleum pollution,
+Marine birds,
+Marine threats,
+Shipping,
+Wind farms
+
+# Class II. Research origin descriptors
+    
+## A. Overall project description
+
+### 1. Identity
+
+Threats to marine birds to inform conservation and management in Atlantic Canada
+
+### 2. Originators
+
+- David Beauchesne
+  - david.beauchesne@insileco.io
+  - inSileco, Québec, Canada
+- Kevin Cazelles
+  - kevin.cazelles@insileco.io
+  - inSileco, Québec, Canada
+- Stephanie Avery-Gomm
+  - Stephanie.Avery-Gomm@ec.gc.ca
+  - Environment and Climate Change Canada, Ottawa, ON, Canada
+- April Hedd
+  - April.Hedd@ec.gc.ca
+  - Environment and Climate Change Canada, Mount Pearl, Newfoundland and Labrador, Canada
+- Philippe Muise
+  - Philippe.Muise@ec.gc.ca
+  - Canada Centre for Mapping and Earth Observation, Canada Centre for Remote Sensing, Ottawa, Ontario, Canada
+- Allison Patterson
+  - Allison.Patterson@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Robert Ronconi
+  - Robert.Ronconi@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Katharine Studholme
+  - Katharine.Studholme@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+- Sarah Wong
+  - sarah.wong2@ec.gc.ca
+  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+
+
+### 3. Period of study 
+
+The study spans data collection and analysis from 2006 to 2023 and varies between each primary dataset used. Data integration and threat layer development commenced in 2022, with final outputs and reproducible workflows completed in December 2024.
+
+### 4. Objectives 
+
+This project aimed to improve the understanding of the spatiotemporal distribution of anthropogenic threats to marine birds within Canada’s Exclusive Economic Zone (EEZ) and beyond. By integrating geospatial data on petroleum pollution, vessel activity, artificial light, and offshore wind development, the program provides actionable insights to inform conservation strategies, recovery plans for at-risk species, and marine spatial planning initiatives under the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP) frameworks.
+
+### 5. Abstract 
+
+Same as above
+
+### 6. Sources of funding
+
+Not applicable
+
+## B. Specific subproject description
+
+### 1. Site description 
+
+The study focuses on Canada’s Exclusive Economic Zone (EEZ), including the Atlantic Ocean, the Gulf of St. Lawrence, and adjacent international waters. The study area encompasses diverse marine habitats critical to migratory seabirds, spanning over 5 million $km^2$. The area features high levels of industrial and maritime activity, making it a key region for assessing cumulative impacts of anthropogenic threats on marine ecosystems. Data layers were analyzed within a standardized 1-$km^2$ resolution grid.
+
+### 2. Experimental or sampling design
+
+This project integrates diverse primary datasets to generate spatiotemporal threat layers for Canada’s Exclusive Economic Zone (EEZ). The overarching process involves three key phases: 1) data acquisition, 2) data processing and 3) threat layer preparation:
+
+1. **Data Acquisition:**  Primary datasets were sourced from a combination of publicly available repositories and proprietary data shared by collaborating organizations. Sources include government programs (e.g., ISTOP, NASP, NEEC), satellite observations (e.g., VIIRS for light and flaring data), and Automatic Identification System (AIS) for vessel tracking. Data formats varied widely, encompassing vectorized polygons, raster files, tabular data, and time-series observations. Metadata was  documented for each dataset (more below).
+
+2. **Data Processing:** All datasets underwent a standardized processing pipeline to harmonize formats, spatial projections, and temporal resolutions. Key steps included:
+   - **Spatial Filtering:** Clipping data to the defined study area (EEZ) using a bounding box and ensuring alignment with the WGS84 coordinate reference system (EPSG:4326).
+   - **Temporal Aggregation:** Aggregating data to monthly or annual time steps, depending on the dataset’s temporal resolution and application needs.
+   - **Data Cleaning:** Removing invalid or missing entries, applying quality assurance filters, and standardizing attribute fields.
+   - **Reformatting:** Converting data into standardized and non-proprietary file formats (e.g., Cloud Optimized GeoTIFFs for raster data, GeoPackages for vector data).
+
+3. **Threat Layer Preparation:** Threat layers were prepared by integrating individual or multiple primary datasets and by applying spatial modeling and analysis techniques. Each threat layer was mapped onto a 1-$km^2$ resolution study grid to ensure uniform spatial representation. Threat layers were then rasterized to quantify intensity or density metrics (e.g., ship traffic density, light pollution radiance). This approach allowed for the integration of multiple data sources while maintaining spatial and temporal consistency. All threat layers were exported as Cloud Optimized GeoTIFFs (COGs).
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+### 3. Research methods
+
+#### Data Sources Overview
+
+##### Accidental spills
+
+###### Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
+
+```{r}
+#| message: false
+istop <- sf::st_read("../../workspace/data/harvested/istop-1.0.0/processed/istop.gpkg", quiet = TRUE)
+```
+
+The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html) program [@eccc2024] utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include `r nrow(istop)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program
+- **Accessibility**: Restricted
+- **Data Type**: Vectorized Polygons
+- **Coverage**: North American coastal waters, 2006–2023
+- **Processing Script**: `prc_istop.R`
+- **Output File**: `istop.gpkg`
+
+###### National Aerial Surveillance Program (NASP) {#sec-nasp}
+
+```{r}
+#| message: false
+nasp <- sf::st_read("../../workspace/data/harvested/nasp-1.0.0/processed/nasp.gpkg", quiet = TRUE)
+```
+
+The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes `r nrow(nasp)` incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Transport Canada National Aerial Surveillance Program (NASP)
+- **Accessibility**: Restricted
+- **Data Type**: CSV
+- **Coverage**: Atlantic Region, Canada, 2012–2023
+- **Processing Script**: `prc_nasp.R`
+- **Output File**: `nasp.gpkg`
+
+###### National Environmental Emergency Centre (NEEC) {#sec-neec}
+
+```{r}
+#| message: false
+neec <- vroom::vroom("../../workspace/data/harvested/neec-1.0.0/processed/neec.csv")
+```
+
+The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: National Environmental Emergency Centre (NEEC)
+- **Accessibility**: Restricted
+- **Data Type**: CSV
+- **Coverage**: Atlantic Region, Canada (including Québec), 2016–2023
+- **Processing Script**: `prc_neec.R`
+- **Output Files**: `neec.csv` and `substances.csv`
+
+##### Offshore petroleum activities
+
+###### Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) {#sec-offshore_petroleum_nfl}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_petroleum_nfl <- sf::st_read("../../workspace/data/harvested/offshore_petroleum_nfl-1.0.0/processed/offshore_petroleum_nfl.gpkg", quiet = TRUE)
+types <- table(offshore_petroleum_nfl$type)
+```
+
+The [Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)](https://www.cnlopb.ca/) [@cnlopb2024] oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (@tbl-offshore-petroleum-nfl), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in @tbl-classifications. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g. exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in @tbl-status. How date ranges were established for each entry is detailed in @tbl-offshore-petroleum-nfl.
+
+
+- **Source**: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)
+- **Accessibility**: Open, Creative Commons Attribution License
+- **Data Type**: Shapefiles, XLSX
+- **Coverage**: Offshore regions of Newfoundland, Canada
+- **Processing Script**: `prc_offshore_petroleum_nfl.R`
+- **Output File**: `offshore_petroleum_nfl.gpkg`
+
+
+
+```{r}
+#| label: tbl-offshore-petroleum-nfl
+#| tbl-cap: "Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland and Labrador."
+data.frame(
+  id = c(
+    "Active Exploration Licenses",
+    "Active Significant Discovery Licenses",
+    "Active Production Licenses",
+    "Production Installations",
+    "Delineation Wells",
+    "Development Wells",
+    "Dual Classified Wells",
+    "Exploration Wells",
+    "Call for Bids - Eastern Newfoundland NL23-CFB01",
+    "Call for Bids - South Eastern Newfoundland NL23-CFB02",
+    "Call for Bids - Eastern Newfoundland NL24-CFB01",
+    "Sectors - Labrador South NL02-LS",
+    "Sectors - Eastern Newfoundland NL06-EN",
+    "Sectors - North Eastern Newfoundland NL01-NEN",
+    "Sectors - Southern Newfoundland NL01-SN",
+    "Well Info Summary"
+  ),
+  description = c(
+    "Offshore areas in Newfoundland and Labrador that are currently licensed for petroleum exploration. An Exploration License (EL) grants rights to conduct exploratory drilling and other activities aimed at discovering petroleum resources within a designated offshore area. These licenses are typically issued for a fixed period, encouraging exploration activities that assess the resource potential in Newfoundland and Labrador's offshore regions.",
+    "Offshore areas within Newfoundland and Labrador where significant petroleum discoveries have been identified and are actively licensed. An Active Significant Discovery License (SDL) allows the holder to retain rights over a discovery area with proven, potentially commercial quantities of petroleum, preserving the right to future exploration and development.",
+    "Offshore areas in Newfoundland and Labrador where petroleum resources are actively being produced. A Production License (PL) authorizes the holder to extract petroleum within a specified offshore area, following proven resource discoveries. This license allows companies to conduct production activities while adhering to regulatory requirements for resource management, environmental protection, and safety.",
+    "Locations of offshore production installations used in petroleum extraction activities in Newfoundland and Labrador’s offshore areas. A Production Installation refers to infrastructure such as platforms, rigs, or other facilities designed to extract, process, and transport petroleum resources from beneath the seafloor. These installations play a critical role in supporting production operations within licensed areas.",
+    "Locations of delineation wells drilled in offshore areas of Newfoundland and Labrador. A Delineation Well is drilled to determine the extent and characteristics of a known petroleum discovery, helping to assess the size, quality, and commercial viability of the resource. These wells are essential in refining the understanding of hydrocarbon deposits discovered by exploration wells.",
+    "Locations of development wells in offshore areas of Newfoundland and Labrador. Development Wells are drilled within proven petroleum fields to facilitate resource extraction. These wells are strategically placed to optimize production from known hydrocarbon deposits, making them critical for efficient and sustainable petroleum extraction.",
+    "Offshore wells in Newfoundland and Labrador that have been classified under more than one category during their lifecycle. Dual Classified Wells may serve multiple purposes, such as transitioning from an exploration role to development or delineation, depending on the results of drilling and assessments. This dual classification reflects the adaptive approach taken in offshore petroleum exploration and production.",
+    "Locations of offshore wells in Newfoundland and Labrador that are designated for exploration. Exploration Wells are drilled to investigate potential petroleum deposits in unexplored or underexplored areas. These wells are the first step in assessing hydrocarbon presence and play a crucial role in determining the viability of further development.",
+    "The Call for Bids NL23-CFB01 pertains to the Eastern Newfoundland Region and was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023. This call offered 28 parcels, totaling approximately 7,222,551 hectares, for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/) that no bids were received for this call.",
+    "The Call for Bids NL23-CFB02 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) in 2023, offering 19 parcels totaling approximately 4,982,275 hectares in the South Eastern Newfoundland Region for exploration licensing. Interested parties were invited to submit sealed bids by November 1, 2023. However, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-and-south-eastern-newfoundland-regions/) that no bids were received for this call.",
+    "The Call for Bids NL24-CFB01 was issued by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) on April 29, 2024, inviting bids for exploration licenses in the Eastern Newfoundland Region. This call comprised 41 parcels, covering a total of 10,287,196 hectares. Interested parties were required to submit sealed bids by November 6, 2024. On November 6, 2024, the C-NLOPB [announced](https://www.cnlopb.ca/news/c-nlopb-announces-results-of-calls-for-bids-in-the-eastern-newfoundland-region/) that no bids were received for Call for Bids NL24-CFB01.",
+    "The Labrador South Region (Sector NL02-LS) is an offshore area managed by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) as part of its Scheduled Land Tenure System.",
+    "The Eastern Newfoundland Region (Sector NL06-EN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "The North Eastern Newfoundland Region (Sector NL01-NEN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "The Southern Newfoundland Region (Sector NL01-SN) is an offshore area designated by the Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) under its Scheduled Land Tenure System.",
+    "Contains detailed information on wells drilled within offshore petroleum exploration and production areas. This dataset is designed to offer an inventory of wells, capturing essential data for regulatory oversight, resource management, and operational history. The dataset includes information on well names, operators, drilling dates, statuses, and geographic coordinates, among other fields."
+  ),
+  date_range = c(
+    "The beginning is the effective date (`effective`) and the end is the second exploration period specified (`period2exp`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date of first exploration activity (`spud_date`) and the termination of the last renewal phase (`term_date`).",
+    "The beginning is the date when the well first began producing oil (`first_oil`); there is no end date specified.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date when the date on which information about the well or license was publicly posted (`date_posted`) and the end is the specified call for bids closing year (`cfb_clse_dte`) and assumed to be on January 1st to allow for date formatting.",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date is the opening date of the call for bids (`cfb_open_dte`) and the end is the closing date of the call for bids (`cfb_clse_dte`).",
+    "The beginning is the date on which the sector's licensing or regulatory conditions officially took effect (`effective`); there is no end date specified.",
+    "The beginning is the date on which the sector's licensing or regulatory conditions officially took effect (`effective`); there is no end date specified.",
+    "The beginning corresponds to the date when drilling for the well began (`spud_date`) and the end is the date on which drilling or operational activities for the well concluded (`well_termination_date`)."
+  )
+) |>
+  knitr::kable(col.names = c("Type", "Description", "Period"))
+```
+
+
+
+```{r}
+#| label: tbl-classifications
+#| tbl-cap: "Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland"
+data.frame(
+  Classification = c(
+    "Sectors",
+    "Call for Bids",
+    "Exploration",
+    "Significant Discovery",
+    "Delineation",
+    "Development",
+    "Production"
+  ),
+  Description = c(
+    "Defined geographic areas designated for potential exploration and development activities, often used in the regulatory framework to organize land tenure.",
+    "Competitive bidding rounds where companies submit proposals to obtain exploration or development rights for specified areas within sectors.",
+    "Initial phase focused on discovering hydrocarbons, involving activities like seismic surveys and drilling exploration wells.",
+    "Identification of a commercially viable hydrocarbon discovery during exploration, associated with a Significant Discovery License (SDL) to preserve rights to the area.",
+    "Appraisal phase to define the size, extent, and quality of a discovered reservoir, refining understanding of the resource’s potential.",
+    "Preparation phase involving construction of infrastructure, drilling of production wells, and installation of facilities needed to bring hydrocarbons to the surface.",
+    "Active phase of extracting hydrocarbons, processing them, and transporting them for sale, generating revenue from the resource."
+  )
+) |>
+  knitr::kable()
+```
+
+```{r}
+#| label: tbl-status
+#| tbl-cap: "Simplified Status Classifications with Descriptions"
+data.frame(
+  Status = c(
+    "Abandoned", "Suspended", "Active Production",
+    "Drilling", "Disposal", "Closed", "Off Station", NA
+  ),
+  Description = c(
+    "Wells where activities have been permanently stopped.",
+    "Wells with temporarily halted activities that may resume.",
+    "Wells currently involved in production or injection activities.",
+    "Wells still in the drilling phase.",
+    "Wells used for waste or byproduct disposal.",
+    "Wells officially closed, possibly for regulatory reasons.",
+    "Wells or rigs temporarily off their regular location.",
+    "No information available."
+  )
+) |>
+  knitr::kable()
+```
+
+
+###### Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {#sec-offshore_petroleum_ns}
+
+```{r}
+#| message: false
+offshore_petroleum_ns <- sf::st_read("../../workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg", quiet = TRUE)
+types <- table(offshore_petroleum_ns$type)
+```
+
+The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns.ca/) [@cnsopb2024] oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (`r types["Significant discovery areas"]` coordinates), significant discovery licenses (`r types["Significant discovery licenses"]` cooordinates), production licenses (`r types["Production licence"]` cooordinates), and the latest call for bids (`r types["Call for bids"]` polygons). The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in @tbl-classifications. Contrary to the data for Newfoudland and Labrador (see @sec-offshore_petroleum_nfl), there were no information included on the status and the time period covered.
+
+- **Source**: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)
+- **Accessibility**: Open
+- **Data Type**: XLS, XLSX, Shapefiles
+- **Coverage**: Offshore regions of Nova Scotia, Canada, 2009–2024
+- **Processing** Script: prc_offshore_petroleum_ns.R
+- **Output** File: offshore_petroleum_ns.gpkg
+
+
+##### Offshore wind farms
+
+###### Wind Regional Assessment - Canada {#sec-offshore_wind_can}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_can <- sf::st_read("../../workspace/data/harvested/offshore_wind_can-1.0.0/processed/offshore_wind_can.gpkg", quiet = TRUE)
+```
+
+The [Wind Regional Assessment - Canada](https://www.canada.ca/en/services/environment/conservation/assessments.html) [@wind_regional_assessment2024] identifies areas for potential offshore wind development. This dataset includes shapefiles representing:
+
+- **Potential Future Development Areas (PFDA)** in Nova Scotia.
+- **Preliminary Offshore Wind Licensing Areas (PLA)** in Newfoundland.
+
+These areas were identified in the **Wind Regional Assessment Interim Report** for offshore wind energy. While still in the planning phase, this dataset provides critical spatial data for understanding the geographic distribution of proposed offshore wind development areas. Data from both regions are expected to be made publicly available via the Canadian Impact Assessment Registry and Open Government Portal. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco. For this project, data from both regions were integrated into a unified spatial layer. Each entry was given a unique identifier to track its origin and dataset of provenance (e.g., `wind_can_ns_XXXX` for Nova Scotia and `wind_can_nfl_XXXX` for Newfoundland).
+
+- **Source**: Wind Regional Assessment - Canada
+- **Accessibility**: Restricted Access
+- **Data Type**: Shapefiles
+- **Coverage**: Nova Scotia and Newfoundland, Canada
+- **Processing Script**: `prc_offshore_wind_can.R`
+- **Output File**: `offshore_wind_can.gpkg`
+
+###### Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador {#sec-offshore_wind_nfl}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_nfl <- sf::st_read("../../workspace/data/harvested/offshore_wind_nfl-1.0.0/processed/offshore_wind_nfl.gpkg", quiet = TRUE)
+```
+
+
+The [Focus Area for the Regional Assessment of Offshore Wind Development in Newfoundland and Labrador](https://iaac-aeic.gc.ca/050/documents/p84343/147037E.pdf) [@iaac2024] defines priority areas for offshore wind development in Newfoundland and Labrador. The assessment, conducted by the Impact Assessment Agency of Canada, aims to provide comprehensive information, knowledge, and analysis about the potential environmental, social, economic, and health effects of offshore wind development. In November 2023, the Committee identified a **Focus Area** within a portion of the Study Area, prioritizing this region for future wind energy projects. The dataset includes spatial data representing the **Focus Area** and is accompanied by a regional assessment agreement document. Key variables include `focus_area`, `wind_energy_assessment`, and `environmental_impact`. 
+
+- **Source**: Impact Assessment Agency of Canada
+- **Accessibility**: Open Government Licence - Canada
+- **Data Type**: Shapefiles, PDF
+- **Coverage**: Newfoundland and Labrador, Canada
+- **Processing Script**: `prc_offshore_wind_nfl.R`
+- **Output File**: `offshore_wind_nfl.gpkg`
+
+
+###### Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia {#sec-offshore_wind_ns}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_ns <- sf::st_read("../../workspace/data/harvested/offshore_wind_ns-1.0.0/processed/offshore_wind_ns.gpkg", quiet = TRUE)
+```
+
+The [Study Area for the Regional Assessment of Offshore Wind Development in Nova Scotia](https://open.canada.ca/data/en/dataset/051c7034-c13b-49a9-9d4a-99b0b594d157) [@iaac2024b] outlines the geographic region under evaluation for future offshore wind development. This area was defined by the Impact Assessment Agency of Canada in collaboration with Natural Resources Canada and the province of Nova Scotia. The assessment focuses on evaluating the potential environmental, social, and economic effects of offshore wind energy development within the defined study area. The dataset includes spatial data for the study area and a supporting agreement document. 
+
+- **Source**: Impact Assessment Agency of Canada
+- **Accessibility**: Open Government Licence - Canada
+- **Data Type**: Shapefiles, PDF
+- **Coverage**: Nova Scotia, Canada
+- **Processing Script**: `prc_offshore_wind_ns.R`
+- **Output File**: `offshore_wind_ns.gpkg`
+
+###### Bureau of Ocean Energy Management (BOEM) Offshore Wind Data {#sec-offshore_wind_usa}
+
+```{r}
+#| message: false
+#| eval: false
+offshore_wind_usa <- sf::st_read("../../workspace/data/harvested/offshore_wind_ns-1.0.0/processed/offshore_wind_usa.gpkg", quiet = TRUE)
+```
+
+The [Bureau of Ocean Energy Management (BOEM)](https://www.boem.gov/) [@boem2024] manages offshore wind energy activities across U.S. waters. This dataset provides detailed geospatial and tabular data on wind energy development, including lease areas, planning areas, marine hydrokinetic leases, project phase areas, and infrastructure components such as turbines, substations, and cable systems (@tbl-wind-usa-classification). Each entry in the dataset is accompanied with a lease or protraction number (see @tbl-wind-usa-number). The dataset supports decision-making and analysis for renewable energy development by offering comprehensive coverage of offshore wind projects. Access to the data requires a ArcGIS online membership. Data were therefore harvested and stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Bureau of Ocean Energy Management (BOEM)
+- **Accessibility**: Open Government Licence - United States
+- **Data Type**: Shapefiles, Geodatabase
+- **Coverage**: United States Offshore, 2020–2024
+- **Processing Script**: `prc_offshore_wind_usa.R`
+- **Output File**: `offshore_wind_usa.gpkg`
+
+
+```{r}
+#| label: tbl-wind-usa-classification
+#| tbl-cap: "Classifications and descriptions of BOEM offshore wind data components."
+data.frame(
+  Classification = c(
+    "Leases",
+    "Planning areas",
+    "MHK leases and planning areas",
+    "Project phase areas",
+    "Substations",
+    "Turbine locations",
+    "Cable interconnections",
+    "Ocean observing devices",
+    "Export cable corridors",
+    "Cable landings",
+    "Project inter-array cables"
+  ),
+  Description = c(
+    "Represents areas designated for offshore wind energy activities under BOEM's leasing program. Includes four types of leases: 'Commercial' leases for large-scale wind energy production, 'Easement' leases for infrastructure such as cables or substations, 'Right-of-Way Grant' leases for energy transmission corridors, and 'Research' leases for testing and studying renewable energy technologies.",
+    "Defines geographic areas identified by BOEM for potential offshore wind development. These areas are used for assessing wind energy resources and determining where to initiate leasing activities, based on environmental, economic, and technical considerations.",
+    "Includes Marine Hydrokinetic (MHK) areas for renewable energy from ocean-based resources such as waves, tides, or currents. MHK leases encompass 'Research' leases for testing technology, 'Right-of-Way Grant' leases for transmission infrastructure, and 'Easement Area' leases for supporting installations like substations.",
+    "Represents specific geographic areas proposed for different phases of offshore wind energy projects. These areas are identified based on project development stages, including site assessment, construction, and operations.",
+    "Provides point data representing substations with their status (either 'installed' or 'proposed') and location type (either 'offshore' or 'onshore').",
+    "Provides point data representing the locations of wind turbines with their status as either 'proposed' or 'installed'.",
+    "Represents spatial data for cable interconnections linking offshore wind installations to onshore infrastructure or between offshore installations. Includes the status of cables as either 'proposed' or 'installed'.",
+    "Includes point data for devices deployed to observe ocean conditions in areas relevant to offshore wind development. Observing devices monitor factors such as currents, waves, and water quality, and are categorized by their status as either 'proposed' or 'installed'.",
+    "Represents spatial data for corridors used by export cables connecting offshore wind farms to onshore substations. Includes the status of corridors as either 'proposed' or 'installed'.",
+    "Provides point data for locations where export cables come ashore to connect offshore wind farms to the terrestrial power grid. Includes the status of cable landings as either 'proposed' or 'installed'.",
+    "Represents spatial data for inter-array cables within an offshore wind farm. These cables connect turbines to each other and to the offshore substation, with their status categorized as either 'proposed' or 'installed'."
+  )
+) |>
+  knitr::kable()
+```
+
+
+```{r}
+#| label: tbl-wind-usa-number
+#| tbl-cap: "Comparison of lease numbers and protraction numbers in BOEM offshore wind datasets"
+data.frame(
+  Aspect = c(
+    "Purpose",
+    "Format",
+    "Focus",
+    "Context"
+  ),
+  Lease_Numbers = c(
+    "Identifies specific lease agreements for offshore activities.",
+    "Often alphanumeric (e.g., 'OCS-A 0501').",
+    "Administrative and contractual.",
+    "Specific to a lessee's activities."
+  ),
+  Protraction_Numbers = c(
+    "Identifies geographic areas on the Outer Continental Shelf (OCS) used for spatial organization.",
+    "Often numeric or grid-based (e.g., 'NG14-02').",
+    "Geographic and spatial organization.",
+    "Applicable to the broader mapping system."
+  )
+) |>
+  knitr::kable(col.names = c("", "Lease numbers", "Protraction numbers"))
+```
+
+
+##### Automatic Identification System (AIS) Shipping Data {#sec-shipping_ais}
+
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+
+- **Source**: Transport Canada
+- **Accessibility**: Restricted
+- **Data Type**: Parquet, Geodatabase
+- **Coverage**: Atlantic Canada, 2023
+- **Processing Script**: `prc_shipping_ais_tracklines.R`
+- **Output File**: `shipping_ais_tracklines.gpkg`
+
+
+```{r}
+#| label: tbl-shipping-ais-attr
+#| tbl-cap: "Columns (attributes) associated with the derived positional AIS parquet files (table from @tc2023)."
+
+data.frame(
+  Column_Name = c("MMSI", "Latitude", "Longitude", "SOG", "COG", "Heading", "YMD_HMS", "Source"),
+  Description = c(
+    "Maritime Mobile Service Identity",
+    "Latitude of the positional message",
+    "Longitude of the positional message",
+    "Speed over ground of vessel",
+    "Course over ground of vessel",
+    "True heading of vessel",
+    "Time of positional message in UTC",
+    "Data source/message type of AIS message"
+  ),
+  Information = c(
+    "9-digits (MMSIs with valid ship country codes are from 201000000 to 775999999). All ship MMSIs use the format M1I2D3X4X5X6X7X8X9, the first three digits represent the Maritime Identification Digits (MID) and they represent the flag/nationality of the ship. The following digits (X4-X9) can be any numerical value from 0 to 9.",
+    "Latitude recorded in decimal degrees with an accuracy of approximately 10 metres (-90 to 90).",
+    "Longitude recorded in decimal degrees with an accuracy of approximately 10 metres (-180 to 180).",
+    "The speed of the ship with respect to the ground, recorded in knots (0 to 102.2 are valid; 102.3 is invalid).",
+    "The course of the ship, recorded in degrees (0-359.9 are valid; 360 is invalid).",
+    "The true heading of the ship, recorded in degrees (0-359 are valid; 360 is invalid).",
+    "The UTC time stamp of when the positional AIS message was sent from the ship (YYYY-MM-DD hh:mm:ss).",
+    "The source (e.g., terrestrial, dynamic, satellite) and class (A or B) of the AIS message sent (e.g., TAIS_A, TAIS_B, SAIS_A)."
+  ),
+  Data_Type = c(
+    "Integer", "Float", "Float", "Float", "Float", "Integer", "Datetime", "String"
+  )
+) |>
+  knitr::kable()
+```
+
+
+###### Data Processing Overview
+To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023:
+
+1. **Data Extraction**
+   - AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the `arrow` (https://CRAN.R-project.org/package=arrow) and `vroom` (https://CRAN.R-project.org/package=vroom) R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.
+2. **Initial Data Cleaning**
+   - Raw AIS data was filtered to remove invalid records:
+     - Only positions with valid **MMSI** values (201000000–775999999) were retained.
+     - **SOG** values were restricted to the range 0.1–100 knots to remove implausible speeds.
+3. **Day/Night Classification**
+   - Using the `suncalc` R package (https://cran.r-project.org/web/packages/suncalc/index.html), each AIS position was classified as daytime or nighttime. The classification was based on local sunrise and sunset times at each position, ensuring alignment with the UTC timestamp.
+4. **Trackline Generation**
+   - Tracklines were created by:
+     1. Sorting AIS data by **MMSI** and timestamp.
+     2. Calculating distances between consecutive positions using geodesic measurements.
+     3. Splitting movements into separate tracks when:
+        - The distance exceeded 50 nautical miles.
+        - The time interval between positions exceeded 300 minutes.
+     4. Further segmenting tracklines to differentiate between daytime and nighttime navigation.
+5. **Trackline Attributes**
+   - Additional attributes were calculated for each trackline to facilitate further analysis:
+     - **Average and Maximum Speeds**: Derived from AIS speed data.
+     - **Number of Positions**: Total AIS messages contributing to the trackline.
+     - **Elapsed Hours**: Duration of the trackline.
+     - **Track Length**: Computed in kilometers using geodesic measurements.
+     - **Daytime Classification**: Indicates whether the trackline occurred during the day, night, or a mix of both.
+6. **Post-Processing**
+   - Erratic tracklines were flagged and removed using heuristic thresholds:
+     - Extremely short tracks (<100 meters).
+     - Unrealistic average speeds (<0.3 knots or >100 km/h).
+     - Speeds exceeding vessel-type-specific thresholds:
+      - 30 km/h for pleasure vessels and special ships.
+      - 35 km/h for fishing and tug vessels.
+      - 40 km/h for all other vessel types.
+   - Tracklines identified as spoofing were excluded from further analyses.
+7. **Output**
+   - The cleaned tracklines were exported as monthly parquet files (`.parquet`). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (@tbl-shipping-ais-points).
+
+```{r}
+#| label: tbl-shipping-ais-points
+#| tbl-cap: "Columns (attributes) associated with the AIS positional points processed from the raw parquet files."
+
+data.frame(
+  Column_Name = c(
+    "mmsi", "latitude", "longitude", "sog", "ymd_hms", "date", "day_or_night",
+    "dist_miles", "time_diff", "new_track", "track_id", "day_night_segment"
+  ),
+  Description = c(
+    "Maritime Mobile Service Identity",
+    "Latitude of the AIS positional point in decimal degrees",
+    "Longitude of the AIS positional point in decimal degrees",
+    "Speed over ground at the AIS positional point",
+    "Timestamp of the AIS positional point in UTC",
+    "Date corresponding to the AIS positional point",
+    "Classification of the AIS positional point as day or night",
+    "Distance (in miles) between consecutive AIS positional points",
+    "Time difference (in minutes) between consecutive AIS positional points",
+    "Flag indicating whether a new trackline is initiated at the point",
+    "Unique identifier for each trackline within a ship's movement",
+    "Unique identifier for segments of tracklines split by day or night"
+  ),
+  Information = c(
+    "9-digit identifier assigned to a vessel",
+    "Recorded in WGS 84 (EPSG:4326)",
+    "Recorded in WGS 84 (EPSG:4326)",
+    "Measured in knots converted to kilometers per hour",
+    "Recorded in POSIXct format with timezone UTC",
+    "Derived from the timestamp for easier grouping and filtering",
+    "Derived using sunrise and sunset times from solar calculations",
+    "Calculated using geodetic distance between successive points",
+    "Difference between timestamps of successive points",
+    "Determined based on distance or time thresholds for new tracklines",
+    "Generated using the cumulative sum of `new_track` flags",
+    "Calculated to split tracklines into day and night segments"
+  ),
+  Data_Type = c(
+    "Numeric", "Numeric", "Numeric", "Numeric", "POSIXct", "Date", "Character",
+    "Numeric", "Numeric", "Logical", "Integer", "Integer"
+  )
+) |>
+  knitr::kable()
+```
+
+##### Visible Infrared Imaging Radiometer Suite 
+
+The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration's (NOAA), Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.
+
+###### VIIRS Boat Detection (VBD) Dataset {#sec-viirs_boat_detection}
+
+The [VIIRS Boat Detection (VBD) Dataset](https://eogdata.mines.edu/products/vbd/) [@eog2024] provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (@tbl-viirs-vbd-attr). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.
+
+- **Source**: Earth Observation Group, Payne Institute for Public Policy
+- **Accessibility**: Public domain with registration
+- **Data Type**: CSV files
+- **Coverage**: Global, 2020–2023
+- **Processing Script**: `prc_viirs_boat_detection.R`
+- **Output File**: `viirs_boat_detection.gpkg`
+
+```{r}
+#| label: tbl-viirs-vbd-attr
+#| tbl-cap: "Columns (attributes) associated with the VIIRS Boat Detection dataset used for this project."
+
+data.frame(
+  Column_Name = c("Date_Mscan", "Lat_DNB", "Lon_DNB", "Rad_DNB", "QF_Detect"),
+  Description = c(
+    "Date and time of the observation in UTC",
+    "Latitude of the detected boat in decimal degrees",
+    "Longitude of the detected boat in decimal degrees",
+    "Radiance intensity detected at the location (nW/cm²/sr)",
+    "Quality flag indicating confidence in the detection (1 = high confidence)"
+  ),
+  Data_Type = c("POSIXct", "Numeric", "Numeric", "Numeric", "Integer")
+) |>
+  knitr::kable()
+```
+
+**Data Processing Overview**
+
+To prepare the VBD dataset for further analyses, the following pre-processing steps were applied:
+
+- Raw `.csv.gz` files were downloaded and processed using the `arrow` package, which allows for efficient reading of compressed CSV files.
+- High-confidence detections were retained by filtering for rows with:
+  - **QF_Detect = 1**: Ensures only high-confidence detections are included.
+  - **Rad_DNB > 0**: Removes detections with non-positive radiance values.
+- Optionally, filters for **SMI** (Signal-to-Mean Index) and **SHI** (Signal-to-High Index) can be applied for stricter data quality criteria (e.g., **SMI > 0.1**, **SHI > 0.75**).
+- The filtered dataset was converted to a spatial object with spatial projection **EPSG:4326** using the `sf` package, enabling geospatial analyses and integration with other datasets.
+- Observation timestamps were standardized to UTC using the `lubridate` package to ensure consistent temporal referencing across datasets.
+- The pre-processed dataset was saved as a Geopackage (`viirs_boat_detection.gpkg`)
+
+
+**Signal-to-Mean Index (SMI) and Signal-to-High Index (SHI) in VIIRS Boat Detection Data**
+
+The **Signal-to-Mean Index (SMI)** and **Signal-to-High Index (SHI)** are metrics included in the VBD dataset that provide additional quality indicators for radiance detections. While these indices were not directly applied in the current processing pipeline, they could be used for further refining data quality and reducing false positives:
+
+- **SMI**: Measures the signal strength relative to the mean radiance value in the surrounding area. Higher values indicate stronger, more distinct detections.
+- **SHI**: Measures the signal strength relative to a high radiance threshold, helping to exclude detections influenced by bright land-based lights or other high-radiance sources.
+
+Future iterations of the pipeline could incorporate these metrics for scenarios requiring stricter detection thresholds, such as high-confidence studies of vessel activity in heavily lit areas.
+
+
+###### VIIRS Night Fire (VNF) Dataset {#sec-viirs_night_fire}
+
+The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes for the nightly data that were selected for their relevance to this project.
+
+In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see @tbl-viirs-vnf-annual-attr). 
+
+- **Source**: Earth Observation Group, Payne Institute for Public Policy
+- **Accessibility**: Restricted with credentials
+- **Data Type**: Nightly CSV files and annual GeoPackage files
+- **Coverage**: Global
+- **Processing Scripts**: `prc_viirs_night_fire.R`, `prc_viirs_night_fire_annual.R`
+- **Output Files**: `viirs_night_fire.gpkg`, `viirs_night_fire_annual.gpkg`
+
+```{r}
+#| label: tbl-viirs-vnf-attr
+#| tbl-cap: "Columns (attributes) associated with the VIIRS Night Fire dataset used for this project."
+
+data.frame(
+  Column_Name = c(
+    "Date_Mscan", "Lat_GMTCO", "Lon_GMTCO", "Temp_primary", "ESF_primary",
+    "RHI_primary", "Area_primary", "Temp_secondary", "ESF_secondary",
+    "RHI_secondary", "id_iremitter", "Type_iremitter", "Category_iremitter"
+  ),
+  Description = c(
+    "Date and time of the observation in UTC",
+    "Latitude of the detected thermal anomaly in decimal degrees",
+    "Longitude of the detected thermal anomaly in decimal degrees",
+    "Primary temperature of the emitting source (Kelvin)",
+    "Emission scaling factor for the primary source",
+    "Radiant heat index for the primary source",
+    "Estimated area of the primary emitting source (square meters)",
+    "Secondary temperature of the emitting source (Kelvin)",
+    "Emission scaling factor for the secondary source",
+    "Radiant heat index for the secondary source",
+    "Unique identifier for the potential emitter",
+    "Type of the emitter (e.g., industrial, flaring)",
+    "Category of the emitter (e.g., petroleum, thermal anomaly)"
+  ),
+  Data_Type = c(
+    "POSIXct", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Numeric", "Numeric", "Numeric", "Numeric", "Numeric",
+    "Character", "Character", "Character"
+  )
+) |>
+  knitr::kable()
+```
+
+
+```{r}
+#| label: tbl-viirs-vnf-annual-attr
+#| tbl-cap: "Columns (attributes) associated with the annual VIIRS Night Fire dataset used for this project."
+
+data.frame(
+  Column_Name = c(
+    "avg_temp_k", "detection_frequency", "clear_obs", "type",
+    "bcm", "year", "geom"
+  ),
+  Description = c(
+    "Average temperature of the emitting source (Kelvin)",
+    "Detection frequency as a proportion of clear-sky observations",
+    "Number of clear-sky observations available for the source",
+    "Type of the thermal anomaly (e.g., flare, fire, etc.)",
+    "Estimated burnable carbon mass (BCM)",
+    "Year of the aggregated data",
+    "Spatial point geometry (latitude and longitude)"
+  ),
+  Data_Type = c(
+    "Numeric", "Numeric", "Numeric", "Character",
+    "Numeric", "Integer", "sfc_POINT"
+  )
+) |>
+  knitr::kable()
+```
+
+**Data Processing Overview**
+
+To prepare the VNF dataset for further analyses, the following pre-processing steps were applied, with information on flares coming from @elvidge2016 and @zhizhin2021:
+
+1. Data Extraction
+   - Raw CSV files were processed using `arrow::read_csv_arrow()` for efficient import. 
+   - Only necessary columns were selected during import to minimize memory usage.
+2. Quality Filtering
+   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field. 
+   - Flags corresponding to high-confidence detections and specific radiance thresholds were retained:
+     - **High Radiance Thresholds**: Retained flags ensuring significant thermal anomalies in bands M07–M16.
+     - **Thermal Anomalies**: Retained detections flagged as local maxima or cluster detections.
+3. Spatial Filtering
+   - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
+     - **Longitude**: -141° to -50°.
+     - **Latitude**: 40° to 85°.
+4.  Processed Radiance Fields
+    - Radiance-derived fields, including `Temp_primary`, `RHI_primary`, and `ESF_primary`, were used for analyzing thermal anomalies.
+    - Secondary radiance-derived fields (`Temp_secondary`, `RHI_secondary`, `ESF_secondary`) were retained for comprehensive heat calculations.
+5. Total Radiant Heat Calculation
+   - A `total_heat` field was computed as the sum of `RHI_primary` and `RHI_secondary`, representing the combined radiant heat output of both primary and secondary sources.
+6. Flare Identification
+   - A temperature threshold of **1450 K** was applied to `Temp_primary` to flag likely gas flares. 
+   - This threshold is based on established studies identifying gas flares as high-temperature sources.
+7. Temporal Standardization
+   - Timestamps were standardized to UTC using the `lubridate` package to ensure temporal consistency across datasets.
+8. Output
+   - The pre-processed dataset was saved as a GeoPackage (`viirs_night_fire.gpkg`).
+   - The GeoPackage contains spatial coordinates in the EPSG:4326 projection, radiance fields, emitter information, and retained quality flags.
+
+
+```{r}
+#| label: tbl-viirs-vnf-flags
+#| tbl-cap: "Retained Quality Flags for VIIRS Nightfire Data Processing."
+
+data.frame(
+  Flag = c(1, 2, 4, 8, 16, 32, 64, 128, 65536, 2048, 4096, 8192, 262144, 524288),
+  Description = c(
+    "M10 radiance above threshold",
+    "M10 local maximum (bow-tie corrected)",
+    "M7 radiance above threshold",
+    "M8 radiance above threshold",
+    "M12 radiance outside scatterplot limits",
+    "M13 radiance outside scatterplot limits",
+    "DNB local maximum within 3 km of M10",
+    "M10 cluster detection",
+    "M11 cluster detection",
+    "M10 tophat-filtered",
+    "M12 tophat-filtered",
+    "M13 tophat-filtered",
+    "M11 tophat-filtered",
+    "M14 local thermal anomaly"
+  ),
+  Rationale = c(
+    "Ensures M10 radiance is significant for thermal analysis.",
+    "Captures prominent local maxima in M10, reducing noise from bow-tie duplication.",
+    "Identifies potential detections based on M7 radiance thresholds.",
+    "Ensures inclusion of detections with high M8 radiance, often indicative of thermal events.",
+    "Captures M12 detections outside scatterplot-defined radiance limits, indicating anomalies.",
+    "Captures M13 detections outside scatterplot-defined radiance limits, indicating anomalies.",
+    "Identifies significant DNB maxima close to thermal detections for contextual analysis.",
+    "Highlights clusters of M10 detections, often related to persistent sources.",
+    "Highlights clusters of M11 detections for thermal anomaly identification.",
+    "Filters M10 detections using a tophat approach to remove spurious signals.",
+    "Filters M12 detections using a tophat approach to remove spurious signals.",
+    "Filters M13 detections using a tophat approach to remove spurious signals.",
+    "Filters M11 detections using a tophat approach to remove spurious signals.",
+    "Identifies strong thermal anomalies in M14, essential for flare detection."
+  )
+) |> knitr::kable(col.names = c("Flag", "Description", "Rationale"))
+```
+
+
+###### VIIRS Nighttime Light (VNL) Dataset {#sec-viirs_nightlight}
+
+The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by te Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
+
+For this analysis, the file type `avg_rade9h` was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the `vcm` configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the `j01` platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.
+
+The raw raster files were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ). Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (-141, 40, -50, 85), and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.
+
+- **Source**: Earth Observation Group, Payne Institute for Public Policy
+- **Accessibility**: Restricted access, credentials required
+- **Data Type**: GeoTIFF files (.tif.gz)
+- **Coverage**: Global
+- **Temporal Resolution**: Monthly
+- **Processing Script**: `prc_viirs_night_light.R`
+- **Output File**: `viirs_night_light.tif`
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+#### Threat layers
+
+##### Petroleum Pollution Based on Past Incidents
+
+The objective was to assess the risk associated with petroleum incidents by evaluating the frequency of past incidents at specific locations over a defined period. Ideally, a more detailed approach would model the diffusion of each spill based on factors such as total volume, substance type, and local or regional currents to estimate the likely spread of each event. However, this level of detail was beyond the scope of the current study. Given the retrospective nature of the dataset and its focus on historical rather than predictive risk, we chose a simplified approach. Each recorded or probable incident was treated as an individual, discrete event in the dataset to characterize exposure to petroleum-related incidents.
+
+This threat layer was constructed using the [ISTOP](@sec-istop), [NEEC](@sec-neec), and [NASP](@sec-nasp) datasets. Each dataset was processed to create spatially and temporally explicit threat layers:
+
+- **ISTOP**: Categories 1A (possible oil with a clearly associated target), 1B (possible oil with a target within 50 km), and 2 (possible oil without an identifiable source) were retained. The ISTOP data already included polygons representing areas of exposure, which were directly utilized as pollution events in the analysis.
+- **NASP**: Records with missing coordinates were removed. Each NASP incident, represented as a point with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (@tbl-spillvolumes).
+- **NEEC**: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, exclusion of irrelevant terms (e.g., "mvi," "furnace oil"), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points and processed similarly to the NASP dataset, with additional classification by substance type based on chemical state and the presence of an oil sheen.
+
+Each dataset was clipped to the boundary of the area of interest (@sec-aoi). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.
+
+- **Processing Scripts**:
+  - `ana_petroleum_pollution_incidents_istop.R`
+  - `ana_petroleum_pollution_incidents_nasp.R`
+  - `ana_petroleum_pollution_incidents_neec.R`
+  - `ana_petroleum_pollution_incidents.R`
+- **Output Files**: Rasterized layers stored in `workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/`.
+
+
+```{r}
+#| label: tbl-spillvolumes
+#| tbl-cap: "Volume categories and buffer size selected to transform incident as point locations to area of exposure from "
+data.frame(
+  volume = c("[0, 100]", "[100, 1000]", "[1000, 10000]", "[10000+ ["),
+  buffer = c(250, 500, 1000, 2000)
+) |>
+  knitr::kable(col.names = c("Volume (L)", "Buffer size (m)"))
+```
+
+
+##### Offshore Petroleum
+
+###### Offshore Petroleum Activities
+
+The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland [@sec-offshore_petroleum_nfl] and Nova Scotia [@sec-offshore_petroleum_ns]. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest and grouped by classification (@tbl-classifications) and status categories (@tbl-status). Spatial features were grouped into discrete threat layers using union operations to consolidate overlapping geometries and identify areas where activities occurred as presence-absence. To quantify exposure, the threat layers were rasterized using the study grid (@sec-aoi). Each cell in the raster represents the count of overlapping features for a given combination of classification and status. This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.
+
+- **Processing Script**: `ana_offshore_petroleum_activity.R`
+- **Output File(s)**: Rasterized layers stored in `workspace/data/analyzed/offshore_petroleum_activity-1.0.0/`.
+
+###### Offshore Petroleum Platforms
+
+The offshore petroleum platform threat layers were created using the VIIRS Night Fire (VNF) dataset (@sec-viirs_night_fire), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint.
+
+**Annual Layers**
+
+The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (`avg_temp_k`). The following steps were applied to create the annual threat layers:
+
+1. **Data Preparation**: The annual VNF dataset was filtered to retain only records within the area of interest (@sec-aoi).
+2. **Aggregation**: Flaring activity was grouped by year to calculate annual summaries of total heat output (`total_heat`) at each platform location.
+3. **Rasterization**: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of `total_heat` values for all platforms in that cell for a given year.
+4. **Export**: Rasterized layers were exported as geospatial files, with one raster file generated for each year.
+
+The resulting layers provide annual snapshots of flaring activity.
+
+- **Processing Script**: `ana_offshore_petroleum_platform_annual.R`
+- **Output Files**: Rasterized annual layers stored in `workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/`.
+
+**Monthly Layers**
+
+The monthly VNF dataset was used to generate high-resolution temporal layers, summarizing flaring activity at a monthly level. These layers provide finer granularity in monitoring platform activity. It should be noted that only data for the year 2023 are available. The following steps were applied to create the monthly threat layers:
+
+1. **Data Preparation**: The monthly VNF dataset was filtered to retain only records flagged as `likely_flare` and located within the area of interest (@sec-aoi).
+2. **Temporal Grouping**: Flaring activity was grouped by month, with the `total_heat` value aggregated for each month.
+3. **Rasterization**: For each month, flaring data was rasterized onto the study grid, with cell values representing the sum of `total_heat` values for all platforms within that cell.
+4. **Export**: Rasterized layers were exported as geospatial files, with one raster file generated for each month.
+
+The monthly layers allow for detailed temporal analyses of flaring activity.
+
+- **Processing Script**: `ana_offshore_petroleum_platform_monthly.R`
+- **Output Files**: Rasterized monthly layers stored in `workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/`.
+
+
+##### Offshore Wind Farms
+
+The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States.
+
+More precisely, our analysis used offshore wind farm datasets for Canada (@sec-offshore_wind_can) and the United-States (@sec-offshore_wind_usa). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:
+
+1. **Data Preparation**: Datasets were merged into a single spatial layer. Overlapping geometries were unified to represent contiguous wind farm areas accurately.
+2. **Clipping to AOI**: The combined dataset was clipped to the area of interest (@sec-aoi).
+3. **Rasterization**: The spatial data was rasterized onto the study grid, with each cell representing the count of overlapping wind farm polygons.
+4. **Export**: The processed raster layer was exported as a geospatial file.
+
+The offshore wind farm threat layer provides a spatially explicit representation of wind farm locations and projects, enabling further analyses of potential environmental impacts. The resulting raster layer can be integrated into broader assessments of offshore activities.
+
+- **Processing Script**: `ana_offshore_wind_farm.R`
+- **Output File**: `offshore_wind_farm.tif`, stored in `workspace/data/analyzed/offshore_wind_farm-1.0.0/`.
+
+
+##### Nighttime Lights
+
+The night lights threat layer was developed to quantify the spatial and temporal distribution of artificial light pollution. This analysis used the VIIRS Monthly Nighttime Light dataset (@sec-viirs_nightlight), which provides high-resolution observations of nighttime light intensity. The data was analyzed using the following steps: 
+
+1. **Data Preparation**: Each monthly VIIRS nighttime light raster file was resampled to the study grid.
+2. **Coastal Masking**: A coastal mask was applied to focus the analysis on regions near the coastline. The mask was created by:
+   - Downloading and merging coastline data for Canada, the United States, and Greenland.
+   - Buffering the coastlines by 1 km offshore and 5 km inland.
+   - Masking the resampled nighttime light data.
+3. **Temporal Aggregation**: Each monthly raster file was processed individually to extract nighttime light intensity values.
+4. **Raster Export**: Processed raster files were exported as geospatial files, with one raster generated for each month in the dataset.
+
+The night lights threat layer provides a spatially explicit representation of artificial light pollution along the coastlines, with monthly granularity.
+
+- **Processing Script**: `ana_night_light_monthly.R`
+- **Output Files**: Rasterized monthly layers stored in `workspace/data/analyzed/night_light_monthly-1.0.0/`.
+
+
+
+##### Shipping
+
+###### Ship-Based Pollution Risk {#sec-shipping_threat}
+
+The ship-based pollution risk layer quantifies the density of ship traffic within the area of interest, providing insight into the spatial and temporal variability of shipping activities and their potential environmental impacts. This analysis utilizes Automatic Identification System (AIS) data (@sec-shipping_ais). The following processing steps were used to create this threat layer, but refer to @sec-shipping_ais for more information on AIS data processing:
+
+1. **Data Preparation**:
+   - AIS data for ship locations and movements were ingested in Parquet format and pre-processed to ensure compatibility with the study grid.
+   - Auxiliary information on vessel types was included by merging with a reference dataset containing vessel classification (`ntype`).
+2. **Spatial Filtering**:
+   - Data points were filtered to retain only those within the area of interest, as defined by its bounding box.
+   - Vessel movements were further processed to create continuous tracklines by connecting sequential AIS points for individual vessels.
+3. **Temporal Grouping**:
+   - Vessel tracklines were grouped by month, allowing for the calculation of monthly ship traffic densities.
+4. **Density Calculation**:
+   - Ship densities were calculated by rasterizing the trackline data onto the study grid. For each grid cell, the number of unique vessel occurrences was normalized by the number of days in the corresponding month to obtain a density assessment in number of ships per month in each grid cell.
+5. **Vessel Type-Specific Analysis**:
+   - Ship densities were categorized by vessel type (`ntype`), creating separate layers for different vessel classes.
+6. **Export**:
+   - Rasterized ship density layers were exported as geospatial files, with separate files generated for each month and vessel type.
+
+The ship-based pollution risk layer provides spatially and temporally explicit representations of shipping activity, highlighting areas with higher densities of vessel traffic. These layers can inform risk assessments related to ship-based pollution, such as oil spills and other environmental hazards.
+
+- **Processing Script**: `ana_shipping_intensity_density.R`
+- **Output Files**: Monthly ship density layers stored in `workspace/data/analyzed/shipping_intensity_density-1.0.0/`.
+
+
+###### Ship-Based Night Lights
+
+The ship-based night lights threat layer quantifies the spatial and temporal distribution of artificial light emitted by ships at night. Two distinct data sources were utilized to create this layer: Automatic Identification System (AIS) data filtered for nighttime activities and VIIRS Boat Detection (VBD) data.
+
+**Nighttime Shipping Activities Using AIS Data**
+
+This layer builds on the methods described in section @sec-shipping_threat but focuses specifically on nighttime shipping activities. The following key differences in processing were applied:
+
+1. **Nighttime Filtering**: AIS data was filtered to retain only ship positions recorded during nighttime, as determined by the `day_or_night` field in the processed AIS dataset (see @sec-shipping_ais).
+2. **Trackline Creation**: Tracklines were constructed using only nighttime data points, maintaining the methodology described previously.
+3. **Density Calculation**: The density of nighttime shipping activities was calculated and normalized by the number of nights in each month, resulting in monthly raster layers providing the number of ships per month in each grid cell.
+
+This layer highlights areas with intense nighttime shipping activities, reflecting potential light pollution from ship-based operations.
+
+- **Processing Script**: `ana_shipping_night_light_density.R`
+- **Output Files**: Rasterized monthly layers stored in `workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/`.
+
+**Nighttime Ship Light Detection Using VBD Data**
+
+The second approach utilized VIIRS Boat Detection (VBD) data (@sec-viirs_boat_detection), which directly measures the radiance of lights detected from boats at night. The following steps were applied:
+
+1. **Data Preparation**: The VBD dataset was filtered to include only observations within the area of interest.
+2. **Temporal Grouping**: Observations were grouped by month, with radiance values aggregated for each month.
+3. **Rasterization**: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell divided by the number of years of data harvested, resulting in total radiance per year in each grid cell.
+4. **Masking and Export**: Rasterized layers were masked to the area of interest and exported as monthly geospatial files.
+
+This layer provides a direct measurement of ship light emissions, offering a complementary perspective to the AIS-derived night lights layer.
+
+- **Processing Script**: `ana_ship_light_detection.R`
+- **Output Files**: Rasterized monthly layers stored in `workspace/data/analyzed/ship_light_detection-1.0.0/`.
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+### 4. Project personnel: 
+
+- David Beauchesne
+  - david.beauchesne@insileco.io
+  - inSileco, Québec, Canada
+- Kevin Cazelles
+  - kevin.cazelles@insileco.io
+  - inSileco, Québec, Canada
+
+
+# Class III. Data set status and accessibility
+
+## A. Status
+
+1. Latest update: <!-- TO DO -->
+2. Latest archive date: current
+3. Metadata status: current
+4. Data verification: current
+
+## B. Accessibility
+
+1. Storage location and medium: the complete dataset of the threat layers is available on Zenodo at https://doi.org/TO/ADD. <!-- TO DO -->
+2. Contact persons: David Beauchesne, email: david.beauchesne@insileco.io
+3. Copyright restrictions: none
+4. Proprietary restrictions: 
+  - a. Release date: when manuscript is accepted
+  - b. Citation: When using the dataset, please cite this article to recognize the effort involved in harvesting the primary data and preparing the threat layers. 
+  - c. Disclaimer(s): The threat layers and methods presented in this project represent the best available data and methodologies known to us at the time of its development. They were specifically designed to align with the scope and objectives of this project, focusing on generating broad, spatiotemporal assessments of anthropogenic threats within Canada’s Exclusive Economic Zone (EEZ). While these layers provide valuable insights, they may not be suitable for all applications. Users are advised to critically evaluate their specific objectives and compare them with the scope, resolution, and limitations of this project to determine whether these threat layers meet their needs. Alternative datasets or methods may be more appropriate for generating highly detailed or application-specific threat assessments.
+5. Costs: Costs associated with acquiring data (may vary by size of data request, desired medium, etc.)
+
+# Class IV. Data Structural Descriptors
+
+## A. Data Set File
+
+1. Identity:  
+   - Threat Layers: Separate folders for each thematic threat layer (e.g., `shipping_night_light_intensity_density`, `petroleum_pollution`) containing processed geospatial raster files in Cloud Optimized GeoTIFF (COG) format. File names indicate the specific type, temporal coverage, and subcategories (e.g., `fisheries_intensity_longline_2008_10.tif`, `shipping_night_light_intensity_density_2023_5_container.tif`).
+   - Raw Data: Processed datasets (e.g., `istop.gpkg`, `nasp.gpkg`) and tabular records (e.g., `neec.csv`) provided in GeoPackage, CSV, or Parquet format. Note that raw data are not part of the archived dataset, but referenced here for the reader only. The codebase allows access to openly available data, but not to proprietary data shared exclusively for this project. 
+   - Metadata and Scripts: Processing scripts (e.g., `prc_fisheries_intensity.R`) and metadata files provided in plain text or RMarkdown format.
+2. Size:  
+   - Geospatial threat layers: ~300 MB total, with individual raster files ranging from 10 MB to 500 MB, depending on resolution and coverage.  
+   - Raw datasets: ~110 GB across multiple formats, including GeoPackages, CSVs, and Parquet files (not part of the archived dataset).  
+   - Metadata and scripts: ~1 MB, covering all workflows and metadata documentation.
+3. Format and Storage Mode:  
+   - All threat layers were exported as Cloud Optimized GeoTIFFs (COGs)
+4. Header Information:  
+   - Raster files: No headers.  
+5. Alphanumeric Attributes:  
+   - None
+6. Special Characters/Fields:  
+   - None
+7. Authentication Procedures:  
+   - Files include MD5 checksums for integrity validation during transfer.  
+   - File access for proprietary data (e.g., AIS) requires secure authentication via API keys.
+   - No authentication required to access threat layers.
+
+## B. Variable Information
+
+1. Variable Identity:  
+   - Raster: Intensity or density values for threat layers (e.g., `light_radiance`, `vessel_density`).  
+2. Variable Definition:  
+   - Threat layers: Quantify the intensity or presence of threats (e.g., petroleum incidents, vessel traffic).  
+3. Units of Measurement:  
+   - Radiance (nW/cm²/sr for VIIRS datasets), density (vessels/km²), and pollution volume (liters for NEEC dataset), presence/absence.  
+4. Data Type:  
+   - Storage Type: Cloud Optimized GeoTIFFS (COGs)
+   - Variable Codes: No explicit coding in rasters. Explicit names given to stored files. 
+   - Range for Numeric Values: Variable between dataset (e.g., radiance: 0–500 nW/cm²/sr, vessel density: 0–50/km²).  
+   - Missing Value Codes: `NA`
+   - Precision: Raster precision varies between datasets.  
+5. Data Format:  
+   - Not applicable
+
+## C. Data Anomalies 
+
+- Missing Data: Certain datasets (e.g., NEEC incidents) may have incomplete spatial or temporal coverage.  
+- Anomalous Data: Noise in satellite datasets (e.g., VIIRS light pollution) filtered using confidence thresholds.  
+- Calibration Errors: Historical incident records may lack consistent reporting methods.  
+
+# Class V. Supplemental descriptors
+
+## A. Data acquisition
+
+1. Data forms or acquisition methods: Not applicable
+2. Location of completed data forms: Not applicable
+3. Data entry verification procedures: Not applicable
+
+## B. Quality assurance/quality control procedures 
+
+See above in section II.B.3. Research methods
+
+## C. Related materials
+
+Not applicable 
+
+## D. Computer programs and data-processing algorithms
+
+The open-source software R 4.2.3 was used for all analyses [@rcoreteam2023] and the code to reproduce the codebase is available on Zenodo (https://doi.org/TO/ADD) and on GitHub (https://github.com/inSilecoInc/ceacws).
+
+## E. Archiving
+
+1. Archival procedures: The complete dataset is available on Zenodo at https://doi.org/TO/ADD <!-- TO DO -->
+2. Redundant archival sites: None
+
+## F. Publications and results
+
+None
+
+## G. History of data set usage
+   
+1. Data request history: none
+2. Data set update history: Dataset modified on YYYY/MM/DD <!-- TO DO -->
+3. Review history: None
+4. Questions and comments from secondary users: Please direct any questions or comments to David Beauchesne (david.beauchesne@insileco.io)
+
+# Literature Citations

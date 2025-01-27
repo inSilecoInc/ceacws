@@ -34,6 +34,8 @@ raw/
 *.tar.xz
 *.json
 *.parquet
+*.docx
+*.pdf
 
 # Specific files & folders
 figures/*
@@ -41,3 +43,4 @@ figures/*
 !figures/webinar/
 frontpage.svg
 _targets
+fisheries_delete.md
