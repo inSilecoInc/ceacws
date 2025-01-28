@@ -5,8 +5,14 @@ format:
     toc: false
     number_sections: false
     colorlinks: true
+  docx:
+    toc: false
 bibliography: ceacws.bib
 csl: ecology.csl
+execute:
+  echo: false
+  warning: false
+  error: false
 ---
 
 <!--
@@ -38,12 +44,13 @@ rmarkdown::render('./FoodWeb-CumulativeImpact.md', output_format = "word_documen
 
 Coastal and marine birds in Canada face significant threats from anthropogenic activities. Under the Migratory Birds Convention Act (1994) and through the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP) initiatives, efforts are underway to improve our understanding of the spatiotemporal distribution of these birds and their overlap with threats such as oil spills, vessel traffic, and light pollution. This study presents a comprehensive dataset of spatiotemporal threat layers, integrating a wide range of primary data sources to inform seabird conservation and management within Canada’s Exclusive Economic Zone (EEZ) and beyond.
 
-The dataset comprises secondary-use geospatial threat layers developed from various primary datasets, including open-access and proprietary data shared for this project. These layers quantify risks from petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light across the annual cycle of migratory seabirds. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite datasets were used to capture artificial light and flaring activity, complemented by regional assessments of offshore wind development from Canada and the United States.
+The dataset comprises secondary-use geospatial threat layers developed from various primary datasets, including open access and proprietary data shared for this project. These layers quantify risks from petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light across the annual cycle of migratory seabirds. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite datasets were used to capture artificial light and flaring activity, complemented by regional assessments of offshore wind development from Canada and the United States.
 
 Spatiotemporal threat layers were created through reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of ship traffic and associated risks. All datasets were processed into a 1-$km^2$ resolution study grid covering Canada’s EEZ, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. The datasets and associated code are openly accessible via Zenodo at https://doi.org/TO/ADD and https://doi.org/TO/ADD, and the codebase is also available on GitHub (https://github.com/inSilecoInc/ceacws).
 
-This work does not generate new primary data but instead integrates diverse datasets to produce secondary-use geospatial threat layers, addressing critical gaps in marine bird conservation. Applications of these data include informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species such as the Leach’s Storm-Petrel, which regularly forages beyond Canada’s jurisdiction. By aligning with Canada’s OPP and MSP frameworks, this dataset contributes to sustainable ocean management and facilitates evidence-based decision-making to safeguard Canada’s coastal and marine bird populations.
+This work does not generate new primary data but instead integrates diverse datasets to produce secondary-use geospatial threat layers, addressing critical gaps in marine bird conservation. Applications of these data include informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species, such as the Leach’s Storm-Petrel, which regularly forages beyond Canada’s jurisdiction. By aligning with Canada’s OPP and MSP frameworks, this dataset contributes to sustainable ocean management and facilitates evidence-based decision-making to safeguard Canada’s coastal and marine bird populations.
 
+**Current word count**: ***408*** of a potential ***500*** words
 
 #####
 
@@ -77,8 +84,8 @@ Threats to marine birds to inform conservation and management in Atlantic Canada
 For this project, each dataset identification code combines:
 
 - Dataset Category: The folder name indicating the thematic category and version (e.g., `offshore_petroleum_activity-1.0.0` or `shipping_night_light_intensity_density-1.0.0`).
-- Dataset Descriptor: File names specifying temporal (e.g., month/year) and sub-category details (e.g., vessel type or spill type), where applicable.
-- File Format: Cloud Optimized Geotiffs (.tif).
+- Dataset Descriptor: File names specifying temporal (e.g., month/year) and subcategory details (e.g., vessel type or spill type), where applicable.
+- File Format: Cloud Optimized GeoTIFFs (.tif).
 
 ## C. Data set description
 
@@ -114,7 +121,7 @@ For this project, each dataset identification code combines:
 
 ### Abstract
 
-Coastal and marine birds in Canada face significant threats from human activities. Through the Migratory Birds Convention Act (1994) and initiatives like the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP), efforts are underway to understand the spatiotemporal distribution of these birds and their overlap with anthropogenic stressors. This dataset integrates secondary-use geospatial layers derived from multiple primary data sources to inform conservation and management strategies for migratory seabirds. The dataset spans the Canadian Exclusive Economic Zone (EEZ) and includes annual and/or monthly threat layers for 2006–2023 at a 1-$km^2$ resolution in the WGS84 coordinate reference system (EPSG:4326). The data quantify risks from petroleum pollution, vessel activity, artificial light, and offshore wind farms. Sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), Automatic Identification System (AIS) shipping data, VIIRS satellite observations, and regional assessments of wind energy development. Proprietary and public data were processed and integrated through reproducible workflows to generate Cloud Optimized GeoTIFFs (COGs). Key applications include evaluating cumulative effects on species such as the globally threatened Leach’s Storm-Petrel, informing recovery strategies for at-risk species, supporting marine spatial planning, and improving environmental response planning. For example, vessel disturbance layers quantify ship traffic intensity by vessel type, while light pollution layers assess spatial impacts of artificial light across critical seabird habitats. Petroleum pollution layers highlight historical hotspots of oiling events based on geospatial modeling. This dataset bridges critical knowledge gaps in marine bird conservation, aligning with Canada’s OPP and MSP frameworks. 
+Coastal and marine birds in Canada face significant threats from human activities. Through the Migratory Birds Convention Act (1994) and initiatives like the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP), efforts are underway to understand the spatiotemporal distribution of these birds and their overlap with anthropogenic stressors. This dataset integrates secondary-use geospatial layers derived from multiple primary data sources to inform conservation and management strategies for migratory seabirds. The dataset spans the Canadian Exclusive Economic Zone (EEZ) and includes annual and/or monthly threat layers for 2006–2023 at a 1-$km^2$ resolution in the WGS84 coordinate reference system (EPSG:4326). The data quantify risks from petroleum pollution, vessel activity, artificial light, and offshore wind farms. Sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), Automatic Identification System (AIS) shipping data, VIIRS satellite observations, and regional assessments of wind energy development. Proprietary and public data were processed and integrated through reproducible workflows to generate Cloud Optimized GeoTIFFs (COGs). Key applications include evaluating cumulative effects on species, such as the globally threatened Leach’s Storm-Petrel, informing recovery strategies for at-risk species, supporting marine spatial planning, and improving environmental response planning. For example, vessel disturbance layers quantify ship traffic intensity by vessel type, while light pollution layers assess the spatial effects of artificial light across critical seabird habitats. Petroleum pollution layers highlight historical hotspots of oiling events based on geospatial modeling. This dataset bridges critical knowledge gaps in marine bird conservation, aligning with Canada’s OPP and MSP frameworks. 
 
 ## D. Key words/phrases: 
 
@@ -186,7 +193,7 @@ Not applicable
 
 ### 1. Site description 
 
-The study focuses on Canada’s Exclusive Economic Zone (EEZ), including the Atlantic Ocean, the Gulf of St. Lawrence, and adjacent international waters. The study area encompasses diverse marine habitats critical to migratory seabirds, spanning over 5 million $km^2$. The area features high levels of industrial and maritime activity, making it a key region for assessing cumulative impacts of anthropogenic threats on marine ecosystems. Data layers were analyzed within a standardized 1-$km^2$ resolution grid.
+The study focuses on Canada’s Exclusive Economic Zone (EEZ), including the Atlantic Ocean, the Gulf of St. Lawrence, and adjacent international waters. The study area encompasses diverse marine habitats critical to migratory seabirds, spanning over 5 million $km^2$. The area features high levels of industrial and maritime activity, making it a key region for assessing the cumulative effects of anthropogenic threats on marine ecosystems. Data layers were analyzed within a standardized 1-$km^2$ resolution grid.
 
 ### 2. Experimental or sampling design
 
@@ -220,7 +227,7 @@ This project integrates diverse primary datasets to generate spatiotemporal thre
 istop <- sf::st_read("../../workspace/data/harvested/istop-1.0.0/processed/istop.gpkg", quiet = TRUE)
 ```
 
-The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html) program [@eccc2024] utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include `r nrow(istop)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/en/environment-climate-change/services/ice-forecasts-observations/latest-conditions/oil-pollution-monitoring-overview/satellite-spills-overview.html) program [@eccc2024] utilizes satellite imagery to monitor and detect oil spills in coastal waters. Since 2006, daily satellite analyses have been conducted to identify and report both illegal and accidental marine oil pollution. These analyses detect sea-surface anomalies, which are vectorized into polygons representing affected areas. The data obtained span 2006 to 2023 and include `r nrow(istop)` recorded incidents. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program
 - **Accessibility**: Restricted
@@ -236,7 +243,7 @@ The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/e
 nasp <- sf::st_read("../../workspace/data/harvested/nasp-1.0.0/processed/nasp.gpkg", quiet = TRUE)
 ```
 
-The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes `r nrow(nasp)` incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes `r nrow(nasp)` incidents. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada National Aerial Surveillance Program (NASP)
 - **Accessibility**: Restricted
@@ -252,7 +259,7 @@ The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/progra
 neec <- vroom::vroom("../../workspace/data/harvested/neec-1.0.0/processed/neec.csv")
 ```
 
-The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: National Environmental Emergency Centre (NEEC)
 - **Accessibility**: Restricted
@@ -430,7 +437,7 @@ The [Wind Regional Assessment - Canada](https://www.canada.ca/en/services/enviro
 - **Potential Future Development Areas (PFDA)** in Nova Scotia.
 - **Preliminary Offshore Wind Licensing Areas (PLA)** in Newfoundland.
 
-These areas were identified in the **Wind Regional Assessment Interim Report** for offshore wind energy. While still in the planning phase, this dataset provides critical spatial data for understanding the geographic distribution of proposed offshore wind development areas. Data from both regions are expected to be made publicly available via the Canadian Impact Assessment Registry and Open Government Portal. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco. For this project, data from both regions were integrated into a unified spatial layer. Each entry was given a unique identifier to track its origin and dataset of provenance (e.g., `wind_can_ns_XXXX` for Nova Scotia and `wind_can_nfl_XXXX` for Newfoundland).
+These areas were identified in the **Wind Regional Assessment Interim Report** for offshore wind energy. While still in the planning phase, this dataset provides critical spatial data for understanding the geographic distribution of proposed offshore wind development areas. Data from both regions are expected to be made publicly available via the Canadian Impact Assessment Registry and Open Government Portal. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco. For this project, data from both regions were integrated into a unified spatial layer. Each entry was given a unique identifier to track its origin and dataset of provenance (e.g., `wind_can_ns_XXXX` for Nova Scotia and `wind_can_nfl_XXXX` for Newfoundland).
 
 - **Source**: Wind Regional Assessment - Canada
 - **Accessibility**: Restricted Access
@@ -557,7 +564,7 @@ data.frame(
 
 ##### Automatic Identification System (AIS) Shipping Data {#sec-shipping_ais}
 
-The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada
 - **Accessibility**: Restricted
@@ -601,7 +608,6 @@ data.frame(
 ```
 
 
-###### Data Processing Overview
 To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023:
 
 1. **Data Extraction**
@@ -717,7 +723,6 @@ data.frame(
   knitr::kable()
 ```
 
-**Data Processing Overview**
 
 To prepare the VBD dataset for further analyses, the following pre-processing steps were applied:
 
@@ -815,7 +820,6 @@ data.frame(
   knitr::kable()
 ```
 
-**Data Processing Overview**
 
 To prepare the VNF dataset for further analyses, the following pre-processing steps were applied, with information on flares coming from @elvidge2016 and @zhizhin2021:
 
@@ -921,7 +925,7 @@ This threat layer was constructed using the [ISTOP](@sec-istop), [NEEC](@sec-nee
 - **NASP**: Records with missing coordinates were removed. Each NASP incident, represented as a point with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (@tbl-spillvolumes).
 - **NEEC**: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, exclusion of irrelevant terms (e.g., "mvi," "furnace oil"), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points and processed similarly to the NASP dataset, with additional classification by substance type based on chemical state and the presence of an oil sheen.
 
-Each dataset was clipped to the boundary of the area of interest (@sec-aoi). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.
+Each dataset was clipped to the boundary of the area of interest. Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.
 
 - **Processing Scripts**:
   - `ana_petroleum_pollution_incidents_istop.R`
@@ -946,7 +950,7 @@ data.frame(
 
 ###### Offshore Petroleum Activities
 
-The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland [@sec-offshore_petroleum_nfl] and Nova Scotia [@sec-offshore_petroleum_ns]. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest and grouped by classification (@tbl-classifications) and status categories (@tbl-status). Spatial features were grouped into discrete threat layers using union operations to consolidate overlapping geometries and identify areas where activities occurred as presence-absence. To quantify exposure, the threat layers were rasterized using the study grid (@sec-aoi). Each cell in the raster represents the count of overlapping features for a given combination of classification and status. This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.
+The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland [@sec-offshore_petroleum_nfl] and Nova Scotia [@sec-offshore_petroleum_ns]. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest and grouped by classification (@tbl-classifications) and status categories (@tbl-status). Spatial features were grouped into discrete threat layers using union operations to consolidate overlapping geometries and identify areas where activities occurred as presence-absence. To quantify exposure, the threat layers were rasterized using the study grid. Each cell in the raster represents the count of overlapping features for a given combination of classification and status. This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.
 
 - **Processing Script**: `ana_offshore_petroleum_activity.R`
 - **Output File(s)**: Rasterized layers stored in `workspace/data/analyzed/offshore_petroleum_activity-1.0.0/`.
@@ -959,7 +963,7 @@ The offshore petroleum platform threat layers were created using the VIIRS Night
 
 The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (`avg_temp_k`). The following steps were applied to create the annual threat layers:
 
-1. **Data Preparation**: The annual VNF dataset was filtered to retain only records within the area of interest (@sec-aoi).
+1. **Data Preparation**: The annual VNF dataset was filtered to retain only records within the area of interest.
 2. **Aggregation**: Flaring activity was grouped by year to calculate annual summaries of total heat output (`total_heat`) at each platform location.
 3. **Rasterization**: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of `total_heat` values for all platforms in that cell for a given year.
 4. **Export**: Rasterized layers were exported as geospatial files, with one raster file generated for each year.
@@ -973,7 +977,7 @@ The resulting layers provide annual snapshots of flaring activity.
 
 The monthly VNF dataset was used to generate high-resolution temporal layers, summarizing flaring activity at a monthly level. These layers provide finer granularity in monitoring platform activity. It should be noted that only data for the year 2023 are available. The following steps were applied to create the monthly threat layers:
 
-1. **Data Preparation**: The monthly VNF dataset was filtered to retain only records flagged as `likely_flare` and located within the area of interest (@sec-aoi).
+1. **Data Preparation**: The monthly VNF dataset was filtered to retain only records flagged as `likely_flare` and located within the area of interest.
 2. **Temporal Grouping**: Flaring activity was grouped by month, with the `total_heat` value aggregated for each month.
 3. **Rasterization**: For each month, flaring data was rasterized onto the study grid, with cell values representing the sum of `total_heat` values for all platforms within that cell.
 4. **Export**: Rasterized layers were exported as geospatial files, with one raster file generated for each month.
@@ -991,7 +995,7 @@ The offshore wind farm threat layers were developed to assess the spatial footpr
 More precisely, our analysis used offshore wind farm datasets for Canada (@sec-offshore_wind_can) and the United-States (@sec-offshore_wind_usa). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:
 
 1. **Data Preparation**: Datasets were merged into a single spatial layer. Overlapping geometries were unified to represent contiguous wind farm areas accurately.
-2. **Clipping to AOI**: The combined dataset was clipped to the area of interest (@sec-aoi).
+2. **Clipping to AOI**: The combined dataset was clipped to the area of interest.
 3. **Rasterization**: The spatial data was rasterized onto the study grid, with each cell representing the count of overlapping wind farm polygons.
 4. **Export**: The processed raster layer was exported as a geospatial file.
 
@@ -1146,7 +1150,7 @@ This layer provides a direct measurement of ship light emissions, offering a com
 2. Variable Definition:  
    - Threat layers: Quantify the intensity or presence of threats (e.g., petroleum incidents, vessel traffic).  
 3. Units of Measurement:  
-   - Radiance (nW/cm²/sr for VIIRS datasets), density (vessels/km²), and pollution volume (liters for NEEC dataset), presence/absence.  
+   - Radiance (nW/cm²/sr for VIIRS datasets), density (vessels/km²), and pollution volume (litres for NEEC dataset), presence/absence.  
 4. Data Type:  
    - Storage Type: Cloud Optimized GeoTIFFS (COGs)
    - Variable Codes: No explicit coding in rasters. Explicit names given to stored files. 
