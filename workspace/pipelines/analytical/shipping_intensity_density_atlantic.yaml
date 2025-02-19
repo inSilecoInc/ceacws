@@ -1,0 +1,19 @@
+pipeline:
+  id: c4a39171-588e-41c4-80c4-43beed25acd6
+  name: shipping_intensity_density_atlantic
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-02-18 16:00:31
+  last_modified: 2025-02-18 16:00:31
+  description: 'Pipeline for analytical data: ana_shipping_intensity_atlantic'
+  analysis:
+    sources:
+      - name: shipping intensity density atlantic
+        description: Intensity of shipping activities from AIS data in the atlantic measured as the number of ships per day in a month
+        script: ana_shipping_intensity_density
+        input_files:
+          - id: 1a2d23e3-bcfa-4b8b-9f42-9bfe60cfd9f6
+            name: shipping ais points
+          - id: a0afc22a-91db-4ab2-981e-4c32103a876c
+            name: study area aoi atlantic
+        output_files: ""

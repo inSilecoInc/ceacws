@@ -250,6 +250,22 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 </section>
 <section id="offshore-petroleum-platforms" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="offshore-petroleum-platforms"><span class="header-section-number">4.2.2</span> Offshore Petroleum Platforms</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Atlantic scale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326.</p>
+</div>
+</div>
+</div>
 <p>The offshore petroleum platform threat layers were created using the VIIRS Night Fire (VNF) dataset (<a href="2_data.html#sec-viirs_night_fire" class="quarto-xref"><span>Section 4.5.2</span></a>), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint.</p>
 <section id="annual-layers" class="level4" data-number="4.2.2.1">
 <h4 data-number="4.2.2.1" class="anchored" data-anchor-id="annual-layers"><span class="header-section-number">4.2.2.1</span> Annual Layers</h4>
@@ -323,6 +339,22 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <h2 data-number="4.5" class="anchored" data-anchor-id="shipping"><span class="header-section-number">4.5</span> Shipping</h2>
 <section id="sec-shipping_threat" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-shipping_threat"><span class="header-section-number">4.5.1</span> Ship-Based Pollution Risk</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Atlantic scale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326. However, the scale of the AIS data does not provide a whole Atlantic-scale characterization of ship-based pollution risk.</p>
+</div>
+</div>
+</div>
 <p>The ship-based pollution risk layer quantifies the density of ship traffic within the area of interest, providing insight into the spatial and temporal variability of shipping activities and their potential environmental impacts. This analysis utilizes Automatic Identification System (AIS) data (<a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 4.4</span></a>). The following processing steps were used to create this threat layer, but refer to <a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 4.4</span></a> for more information on AIS data processing:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>:
@@ -377,6 +409,22 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 </section>
 <section id="nighttime-ship-light-detection-using-vbd-data" class="level4" data-number="4.5.2.2">
 <h4 data-number="4.5.2.2" class="anchored" data-anchor-id="nighttime-ship-light-detection-using-vbd-data"><span class="header-section-number">4.5.2.2</span> Nighttime Ship Light Detection Using VBD Data</h4>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Atlantic scale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326.</p>
+</div>
+</div>
+</div>
 <p>The second approach utilized VIIRS Boat Detection (VBD) data (<a href="2_data.html#sec-viirs_boat_detection" class="quarto-xref"><span>Section 4.5.1</span></a>), which directly measures the radiance of lights detected from boats at night. The following steps were applied:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: The VBD dataset was filtered to include only observations within the area of interest.</li>

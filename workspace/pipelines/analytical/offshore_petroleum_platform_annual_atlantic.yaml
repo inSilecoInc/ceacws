@@ -1,0 +1,19 @@
+pipeline:
+  id: aedaa52c-9c7e-4fa4-85e7-7aa4c4d3df1a
+  name: offshore_petroleum_platform_annual_atlantic
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-02-19 09:36:23
+  last_modified: 2025-02-19 09:36:23
+  description: 'Pipeline for analytical data: offshore_petroleum_platform_annual_atlantic'
+  analysis:
+    sources:
+    - name: annual offshore petroleum platform location atlantic
+      description: Location of offshore petroleum platforms from VNF dataset annual flaring atlantic
+      script: ana_offshore_petroleum_platform_annual
+      input_files:
+      - id: e50fea35-bdb1-4d6d-8c77-c5924096c942
+        name: VIIRS Night Fire Annual Atlantic
+      - id: a0afc22a-91db-4ab2-981e-4c32103a876c
+        name: study area aoi atlantic
+      output_files: ""

@@ -64,4 +64,11 @@ source("../../R/fig_aoi.R")
 fig_aoi(aoi)
 ```
 
+We also created an Atlantic-wide area of interest to extract a few threat layers at a larger scale. The bounding box in epsg:4326 of this area of interest is: 
+
+- Longitude min: -97
+- Latitude min: -54
+- Longitude max: 49 
+- Latitude max: 66.5
+
 ## Notes & references

@@ -23,13 +23,13 @@ prc_offshore_wind_usa <- function(input_files, output_path) {
   ## BEOM Geodatabase
   input_files[tools::file_ext(input_files) == "zip"] |>
     archive::archive_extract(tmp)
-  boem_layers <- sf::st_layers(file.path(tmp, "BOEM_Renewable_Energy_Geodatabase.gdb"))[[1]]
+  boem_layers <- sf::st_layers(file.path(tmp, "leases_planning_areas_jan_2025.gdb"))[[1]]
 
   ### Leases
   suppressWarnings({
     boem[["leases"]] <- sf::st_read(
-      file.path(tmp, "BOEM_Renewable_Energy_Geodatabase.gdb"),
-      layer = boem_layers[stringr::str_detect(boem_layers, "BOEM_Wind_Leases")],
+      file.path(tmp, "leases_planning_areas_jan_2025.gdb"),
+      layer = boem_layers[stringr::str_detect(boem_layers, "Wind_Leases")],
       quiet = TRUE
     ) |>
       sf::st_transform(4326) |>
@@ -52,8 +52,8 @@ prc_offshore_wind_usa <- function(input_files, output_path) {
 
   ### Planning areas
   boem[["planning_areas"]] <- sf::st_read(
-    file.path(tmp, "BOEM_Renewable_Energy_Geodatabase.gdb"),
-    layer = boem_layers[stringr::str_detect(boem_layers, "BOEM_Wind_Planning_Areas")],
+    file.path(tmp, "leases_planning_areas_jan_2025.gdb"),
+    layer = boem_layers[stringr::str_detect(boem_layers, "Wind_Planning_Areas")],
     quiet = TRUE
   ) |>
     sf::st_transform(4326) |>
@@ -67,7 +67,7 @@ prc_offshore_wind_usa <- function(input_files, output_path) {
 
   ### MHK leases and planning areas
   boem[["mhk_leases_and_planning_areas"]] <- sf::st_read(
-    file.path(tmp, "BOEM_Renewable_Energy_Geodatabase.gdb"),
+    file.path(tmp, "leases_planning_areas_jan_2025.gdb"),
     layer = boem_layers[stringr::str_detect(boem_layers, "BOEM_MHKLeasesandPlanningAreas")],
     quiet = TRUE
   ) |>
@@ -207,7 +207,8 @@ prc_offshore_wind_usa <- function(input_files, output_path) {
     dplyr::select(
       uid, dataset, classification, type, date_start,
       date_end, lease_number, protraction_number
-    )
+    ) |>
+    sf::st_make_valid()
 
   # Export
   sf::st_write(

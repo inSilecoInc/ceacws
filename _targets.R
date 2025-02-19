@@ -9,6 +9,14 @@ tar_option_set(packages = c('curl', 'googleCloudStorageR', 'aws.s3', 'yaml', 'dp
 tar_source('workspace/scripts/') # To edit properly by the end of the project
 list(
   tar_target(bibtex_master, bibtex_master(), format = "file", cue = tar_cue(mode = "always")),
+    list(tar_target(tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic, 
+    {
+        prc_aoi_atlantic(output_path = "workspace/data/harvested/aoi_atlantic-1.0.0/processed", 
+            input_files = list())
+        c("workspace/data/harvested/aoi_atlantic-1.0.0/processed/aoi.gpkg", 
+        "workspace/data/harvested/aoi_atlantic-1.0.0/processed/grid.tif"
+        )
+    }, format = "file")),
     list(tar_target(tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi, 
     {
         prc_aoi(output_path = "workspace/data/harvested/aoi-1.0.0/processed", 
@@ -478,6 +486,31 @@ list(
                 tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_Shipping_AIS_2023_static_data))
         "workspace/data/harvested/shipping_ais-1.0.0/processed/"
     }, format = "file")),
+    list(list(tar_target(tg_b9fbee58_0c81_43da_a442_16995375445a_VBD_Nightly_Global_Data_Atlantic_urls, 
+    generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data Atlantic", 
+        source_type = "viirs", urls = "NA", dataset = "vbd", 
+        resolution = "nightly", dates = list(c("2020-01-01", 
+        "2023-12-31")), country_code = "global-saa", credentials = "workspace/credentials/earth_observation_group.json", 
+        output_path = "workspace/data/harvested/viirs_boat_detection_atlantic-1.0.0/raw", 
+        output = NULL, url = "NA", target_name = structure("tg_b9fbee58_0c81_43da_a442_16995375445a_VBD_Nightly_Global_Data_Atlantic", class = c("glue", 
+        "character")))), format = "rds"), tar_target(tg_b9fbee58_0c81_43da_a442_16995375445a_VBD_Nightly_Global_Data_Atlantic_files, 
+    {
+        access_token <- get_viirs_access_token("workspace/credentials/earth_observation_group.json")
+        handle <- curl::new_handle()
+        curl::handle_setheaders(handle, Authorization = paste("Bearer", 
+            access_token))
+        lapply(tg_b9fbee58_0c81_43da_a442_16995375445a_VBD_Nightly_Global_Data_Atlantic_urls, 
+            function(x) {
+                curl::curl_download(url = x, destfile = file.path("workspace/data/harvested/viirs_boat_detection_atlantic-1.0.0/raw", 
+                  basename(x)), handle = handle, mode = "wb")
+            })
+        "workspace/data/harvested/viirs_boat_detection_atlantic-1.0.0/raw"
+    }, format = "file")), tar_target(tg_b9fbee58_0c81_43da_a442_16995375445a_VIIRS_Boat_Detection_Atlantic, 
+    {
+        prc_viirs_boat_detection(output_path = "workspace/data/harvested/viirs_boat_detection_atlantic-1.0.0/processed", 
+            input_files = list(tg_b9fbee58_0c81_43da_a442_16995375445a_VBD_Nightly_Global_Data_Atlantic_files))
+        "workspace/data/harvested/viirs_boat_detection_atlantic-1.0.0/processed/viirs_boat_detection.gpkg"
+    }, format = "file")),
     list(list(tar_target(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VBD_Nightly_Global_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VBD Nightly Global Data", 
         source_type = "viirs", urls = "NA", dataset = "vbd", 
@@ -527,6 +560,11 @@ list(
         prc_viirs_night_fire_annual(output_path = "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed", 
             input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual_Data_files))
         "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed/viirs_night_fire_annual.gpkg"
+    }, format = "file"), tar_target(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual_Atlantic, 
+    {
+        prc_viirs_night_fire_annual_atlantic(output_path = "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed", 
+            input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual_Data_files))
+        "workspace/data/harvested/viirs_night_fire_annual-1.0.0/processed/viirs_night_fire_annual_atlantic.gpkg"
     }, format = "file")),
     list(list(tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Night Fire Nightly Data", 
@@ -552,6 +590,11 @@ list(
         prc_viirs_night_fire_nightly(output_path = "workspace/data/harvested/viirs_night_fire-1.0.0/processed", 
             input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_files))
         "workspace/data/harvested/viirs_night_fire-1.0.0/processed/viirs_night_fire_nightly.gpkg"
+    }, format = "file"), tar_target(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_atlantic, 
+    {
+        prc_viirs_night_fire_nightly_atlantic(output_path = "workspace/data/harvested/viirs_night_fire-1.0.0/processed", 
+            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_Nightly_Data_files))
+        "workspace/data/harvested/viirs_night_fire-1.0.0/processed/viirs_night_fire_nightly_atlantic.gpkg"
     }, format = "file")),
     list(list(tar_target(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_urls, 
     generate_and_filter_viirs_urls(params = list(name = "VIIRS Monthly Nighttime Light", 
@@ -579,13 +622,13 @@ list(
             input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light_files))
         "workspace/data/harvested/viirs_nighttime_light-1.0.0/processed/"
     }, format = "file")),
-    # list(tar_target(tg_bc079539_54b9_4501_b42d_a61237264cc6_night_light_monthly, 
-    # {
-    #     ana_night_light_monthly(output_path = "workspace/data/analyzed/night_light_monthly-1.0.0", 
-    #         input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
-    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-    #     "workspace/data/analyzed/night_light_monthly-1.0.0/"
-    # }, format = "file")),
+    list(tar_target(tg_bc079539_54b9_4501_b42d_a61237264cc6_night_light_monthly, 
+    {
+        ana_night_light_monthly(output_path = "workspace/data/analyzed/night_light_monthly-1.0.0", 
+            input_files = list(tg_8c0e9e78_0e9a_4329_b8b8_d8a705c11596_VIIRS_Monthly_Nighttime_Light, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/night_light_monthly-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_129f86e7_9a3c_4454_9118_3c4ea26f2021_offshore_petroleum_activity, 
     {
         ana_offshore_petroleum_activity(output_path = "workspace/data/analyzed/offshore_petroleum_activity-1.0.0", 
@@ -594,12 +637,26 @@ list(
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_petroleum_activity-1.0.0/"
     }, format = "file")),
+    list(tar_target(tg_aedaa52c_9c7e_4fa4_85e7_7aa4c4d3df1a_annual_offshore_petroleum_platform_location_atlantic, 
+    {
+        ana_offshore_petroleum_platform_annual(output_path = "workspace/data/analyzed/offshore_petroleum_platform_annual_atlantic-1.0.0", 
+            input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual_Atlantic, 
+                tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic))
+        "workspace/data/analyzed/offshore_petroleum_platform_annual_atlantic-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_ec5b0897_4a5d_41c3_b316_1e070fe17c01_annual_offshore_petroleum_platform_location, 
     {
         ana_offshore_petroleum_platform_annual(output_path = "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0", 
             input_files = list(tg_e50fea35_bdb1_4d6d_8c77_c5924096c942_VIIRS_Night_Fire_Annual, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_5f9ebc23_ca66_414f_b0a9_5bd2a1aeef95_monthly_offshore_petroleum_platform_location_atlantic, 
+    {
+        ana_offshore_petroleum_platform_monthly(output_path = "workspace/data/analyzed/offshore_petroleum_platform_monthly_atlantic-1.0.0", 
+            input_files = list(tg_d0479151_75ba_451f_9a5b_0d471115ad4f_VIIRS_Night_Fire_atlantic, 
+                tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic))
+        "workspace/data/analyzed/offshore_petroleum_platform_monthly_atlantic-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_6c5a2778_6327_4bc1_a1bc_c7d4e02e6263_monthly_offshore_petroleum_platform_location, 
     {
@@ -618,36 +675,50 @@ list(
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.tif"
     }, format = "file")),
-    # list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
-    # {
-    #     ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-    #         input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
-    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg"
-    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
-    # {
-    #     ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-    #         input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
-    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg"
-    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
-    # {
-    #     ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-    #         input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
-    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg"
-    # }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents, 
-    # {
-    #     ana_petroleum_pollution_incidents(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
-    #         input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
-    #             tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
-    #             tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
-    #             tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-    #     "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
-    # }, format = "file")),
+    list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
+    {
+        ana_petroleum_pollution_incidents_istop(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_835bc0d1_e57a_4e63_a327_908ee871bf2d_istop))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_istop.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
+    {
+        ana_petroleum_pollution_incidents_nasp(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_e566fb8c_42d8_4013_8002_17af44a15a46_nasp))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_nasp.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
+    {
+        ana_petroleum_pollution_incidents_neec(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_56c710c3_1859_4eab_821f_e1e41dbbfd29_neec))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/petroleum_pollution_incidents_neec.gpkg"
+    }, format = "file"), tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents, 
+    {
+        ana_petroleum_pollution_incidents(output_path = "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0", 
+            input_files = list(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
+                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_nasp, 
+                tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_neec, 
+                tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
+        "workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_49efe7f1_7831_406e_8c56_d132b1100950_ship_night_detection_atlantic, 
+    {
+        ana_ship_light_detection(output_path = "workspace/data/analyzed/ship_light_detection_atlantic-1.0.0", 
+            input_files = list(tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic, 
+                tg_b9fbee58_0c81_43da_a442_16995375445a_VIIRS_Boat_Detection_Atlantic))
+        "workspace/data/analyzed/ship_light_detection_atlantic-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_653bc3bc_1aa2_4586_af57_34c4ac47e601_ship_night_detection, 
     {
         ana_ship_light_detection(output_path = "workspace/data/analyzed/ship_light_detection-1.0.0", 
             input_files = list(tg_e48527b5_3963_40fc_994a_8eec16e0f883_VIIRS_Boat_Detection, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/ship_light_detection-1.0.0/"
+    }, format = "file")),
+    list(tar_target(tg_c4a39171_588e_41c4_80c4_43beed25acd6_shipping_intensity_density_atlantic, 
+    {
+        ana_shipping_intensity_density(output_path = "workspace/data/analyzed/shipping_intensity_density_atlantic-1.0.0", 
+            input_files = list(tg_1a2d23e3_bcfa_4b8b_9f42_9bfe60cfd9f6_shipping_ais_points, 
+                tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic))
+        "workspace/data/analyzed/shipping_intensity_density_atlantic-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_c6b2be6c_ae9c_45f0_ba30_570c53584421_shipping_intensity_density, 
     {

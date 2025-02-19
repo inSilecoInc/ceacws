@@ -44,7 +44,14 @@ The offshore petroleum activity threat layers were developed to assess spatial e
 
 ### Offshore Petroleum Platforms
 
+:::{.callout-note collapse="true"}
+## Atlantic scale 
+
+This threat layer was also prepared at the scale of the whole Atlantic, *i.e.* in bounding box  `longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5` in epsg:4326.
+:::
+
 The offshore petroleum platform threat layers were created using the VIIRS Night Fire (VNF) dataset (@sec-viirs_night_fire), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint.
+
 
 #### Annual Layers
 
@@ -115,6 +122,12 @@ The night lights threat layer provides a spatially explicit representation of ar
 
 ### Ship-Based Pollution Risk {#sec-shipping_threat}
 
+:::{.callout-warning collapse="true"}
+## Atlantic scale 
+
+This threat layer was also prepared at the scale of the whole Atlantic, *i.e.* in bounding box  `longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5` in epsg:4326. However, the scale of the AIS data does not provide a whole Atlantic-scale characterization of ship-based pollution risk.
+:::
+
 The ship-based pollution risk layer quantifies the density of ship traffic within the area of interest, providing insight into the spatial and temporal variability of shipping activities and their potential environmental impacts. This analysis utilizes Automatic Identification System (AIS) data (@sec-shipping_ais). The following processing steps were used to create this threat layer, but refer to @sec-shipping_ais for more information on AIS data processing:
 
 1. **Data Preparation**:
@@ -156,6 +169,13 @@ This layer highlights areas with intense nighttime shipping activities, reflecti
 - **Output Files**: Rasterized monthly layers stored in `workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/`.
 
 #### Nighttime Ship Light Detection Using VBD Data
+
+:::{.callout-note collapse="true"}
+## Atlantic scale 
+
+This threat layer was also prepared at the scale of the whole Atlantic, *i.e.* in bounding box  `longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5` in epsg:4326.
+:::
+
 
 The second approach utilized VIIRS Boat Detection (VBD) data (@sec-viirs_boat_detection), which directly measures the radiance of lights detected from boats at night. The following steps were applied:
 

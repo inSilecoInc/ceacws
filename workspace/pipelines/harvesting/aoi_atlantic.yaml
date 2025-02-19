@@ -1,0 +1,47 @@
+pipeline:
+  id: a0afc22a-91db-4ab2-981e-4c32103a876c
+  name: aoi_atlantic
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-02-18 15:48:44
+  last_modified: 2025-02-18 15:48:44
+  description: "This pipeline creates a polygon of the atlantic study area (AOI) and a raster grid from that polygon using the prc_aoi_atlantic script."
+
+  # Metadata section providing details about the analysis
+  metadata:
+    source_name: "Study Area AOI and Raster Grid"    # Name of the analysis
+    data_type: "GeoPackage and Raster"              # Types of output data
+    file_size: "Variable"                           # Size depends on the study area
+    license: "Internal Use Only"                    # License for the outputs
+    last_updated: "2024-11-26"                      # Date of creation
+    geographic_coverage:                            # Geographical region covered by the AOI
+      region: "Study Area"
+      bounding_box:                                 # Bounding box coordinates of the AOI
+        - -97    # Longitude min
+        - -54     # Latitude min
+        - 49    # Longitude max
+        - 66.5     # Latitude max
+    temporal_coverage:                              # Not applicable for static AOI
+      start_date: null
+      end_date: null
+    variables:                                      # Outputs include spatial variables
+      - aoi_polygon
+      - raster_grid
+    data_quality:                                   # Data quality notes
+      - "Generated AOI and raster grid based on provided bounding box."
+
+  # Processing section: Define the analysis step
+  processing:
+    sources:
+      - name: study area aoi atlantic
+        script: prc_aoi_atlantic
+        input_files: []
+        output_files:
+          - aoi.gpkg
+          - grid.tif
+
+  # Output section: final output of the processed data
+  output:
+    output_dir: "workspace/data/analyzed/"         # Base directory for the generated data
+    log_dir: "workspace/logs/"                     # Directory for logs (optional)
+    archive_raw: false                             # No raw data to archive for this analysis

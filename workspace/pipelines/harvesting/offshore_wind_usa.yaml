@@ -35,10 +35,10 @@ pipeline:
 
   # Bibliographic Information
   bibliography:
-    - "@TechReport{boem2024,
+    - "@TechReport{boem2025,
         title = {United States Offshore Wind Data - BOEM},
         author = {{Bureau of Ocean Energy Management}},
-        year = {2024},
+        year = {2025},
         institution = {{Bureau of Ocean Energy Management}},
         url = {https://www.boem.gov/renewable-energy/boem-renewable-energy-geodatabase}
       }"

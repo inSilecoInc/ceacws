@@ -63,3 +63,42 @@ prc_aoi <- function(input_files, output_path) {
     gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
   )
 }
+
+
+prc_aoi_atlantic <- function(input_files, output_path) {
+  # Bounding box
+  bbox <- c(-97, -54, 49, 66.5)
+  bbox <- sf::st_bbox(c(
+    xmin = bbox[1], ymin = bbox[2],
+    xmax = bbox[3], ymax = bbox[4]
+  ), crs = 4326) |>
+    sf::st_as_sfc() |>
+    sf::st_as_sf()
+
+  # AOI
+  aoi <- bbox
+
+  # Export partial data for use in report (this should be revisited)
+  sf::st_write(
+    aoi,
+    dsn = file.path(output_path, "aoi.gpkg"),
+    quiet = TRUE,
+    delete_dsn = TRUE
+  )
+
+  # Create grid
+  bbox <- terra::ext(aoi)
+  grid <- terra::rast(
+    ext = bbox,
+    resolution = 0.25,
+    crs = terra::crs(aoi)
+  )
+  terra::values(grid) <- 1
+  grid <- terra::mask(grid, aoi)
+  terra::writeRaster(
+    grid,
+    filename = file.path(output_path, "grid.tif"),
+    overwrite = TRUE,
+    gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
+  )
+}

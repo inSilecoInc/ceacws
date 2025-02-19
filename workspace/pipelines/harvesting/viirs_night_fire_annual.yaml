@@ -99,6 +99,11 @@ pipeline:
         input_files:
           - VIIRS Night Fire Annual Data_files
         output_files: viirs_night_fire_annual.gpkg
+      - name: VIIRS Night Fire Annual Atlantic
+        script: prc_viirs_night_fire_annual_atlantic
+        input_files:
+          - VIIRS Night Fire Annual Data_files
+        output_files: viirs_night_fire_annual_atlantic.gpkg
 
   # Output section: final output of the processed data
   output:

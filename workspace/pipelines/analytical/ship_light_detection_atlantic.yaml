@@ -1,0 +1,20 @@
+pipeline:
+  id: 49efe7f1-7831-406e-8c56-d132b1100950
+  name: ship_light_detection_atlantic
+  version: 1.0.0
+  package_version: 0.0.0.9001
+  created_at: 2025-02-19 08:49:13
+  last_modified: 2025-02-19 08:49:13
+  description: 'Pipeline for analytical data: ship_light_detection_atlantic'
+  analysis:
+    sources:
+    - name: ship night detection atlantic
+      description: Nightly detection of ship lights atlantic
+      script: ana_ship_light_detection
+      input_files:
+      - id: a0afc22a-91db-4ab2-981e-4c32103a876c
+        name: study area aoi atlantic
+      - id: b9fbee58-0c81-43da-a442-16995375445a
+        name: VIIRS Boat Detection Atlantic
+      output_files: ""
+
