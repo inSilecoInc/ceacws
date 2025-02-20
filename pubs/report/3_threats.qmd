@@ -85,11 +85,11 @@ The offshore petroleum platform threat layers were created using the VIIRS Night
 
 #### Annual Layers
 
-The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (`avg_temp_k`). The following steps were applied to create the annual threat layers:
+The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (`avg_temp_k`) and the detection frequency (`detection_frequency`). The following steps were applied to create the annual threat layers:
 
 1. **Data Preparation**: The annual VNF dataset was filtered to retain only records within the area of interest (@sec-aoi).
-2. **Aggregation**: Flaring activity was grouped by year to calculate annual summaries of total heat output (`total_heat`) at each platform location.
-3. **Rasterization**: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of `total_heat` values for all platforms in that cell for a given year.
+2. **Aggregation**: Flaring activity was grouped by year to calculate annual summaries of total heat output (`total_heat`) and total detection frequencies (`detection_frequency`) at each platform location.
+3. **Rasterization**: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of `total_heat` and `detection_frequency` values for all platforms in that cell for a given year.
 4. **Export**: Rasterized layers were exported as geospatial files, with one raster file generated for each year.
 
 The resulting layers provide annual snapshots of flaring activity.

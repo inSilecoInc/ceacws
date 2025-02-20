@@ -82,7 +82,7 @@ ana_offshore_petroleum_platform_annual <- function(input_files, output_path) {
       # Extract the month
       current_year <- unique(yearly_sf$year)
 
-      # Rasterize the data and sum total_heat for the current month
+      # Rasterize the data and sum total_heat for the current year
       r <- terra::rasterize(
         yearly_sf,
         grid,
@@ -93,7 +93,29 @@ ana_offshore_petroleum_platform_annual <- function(input_files, output_path) {
       )
 
       # Save raster for the current month
-      output_file <- file.path(output_path, paste0("offshore_petroleum_platform_", current_year, ".tif"))
+      output_file <- file.path(output_path, paste0("offshore_petroleum_platform_total_heat_", current_year, ".tif"))
+      terra::writeRaster(
+        r,
+        output_file,
+        overwrite = TRUE,
+        gdal = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=IF_SAFER")
+      )
+
+      # Rasterize the data and sum detection_frequency for the current year
+      r <- terra::rasterize(
+        yearly_sf,
+        grid,
+        field = "detection_frequency",
+        fun = sum,
+        background = 0,
+        na.rm = TRUE
+      )
+
+      # Save raster for the current month
+      output_file <- file.path(
+        output_path,
+        paste0("offshore_petroleum_platform_detection_frequency_", current_year, ".tif")
+      )
       terra::writeRaster(
         r,
         output_file,

@@ -109,13 +109,24 @@ prc_viirs_night_fire_annual <- function(input_files, output_path) {
       "flares downstream oil", "flares oil downstream", "flare downstream oil", "flare oil downstream",
       "flares_upstream", "flares upstream", "flare upstream", "flare downstream"
     )]
-    lapply(sht, function(y) readxl::read_excel(x, sheet = y)) |>
+    tmp <- lapply(sht, function(y) readxl::read_excel(x, sheet = y)) |>
       dplyr::bind_rows() |>
       janitor::clean_names() |>
       process_column_names()
+
+    if ("detection_freq" %in% colnames(tmp)) {
+      tmp <- dplyr::rename(tmp, detection_frequency = detection_freq)
+    }
+
+    if (any(tmp$detection_frequency > 1)) {
+      tmp$detection_frequency <- tmp$detection_frequency / 100
+    }
+
+    tmp
   }) |>
     dplyr::bind_rows() |>
     dplyr::mutate(avg_temp_k = dplyr::if_else(is.na(avg_temp_k), avg_temp, avg_temp_k)) |>
+    dplyr::mutate(detection_frequency = dplyr::if_else(is.na(detection_frequency), 0, detection_frequency)) |>
     dplyr::filter(country == "Canada") |>
     dplyr::select(
       latitude, longitude, avg_temp_k, detection_frequency,
@@ -166,6 +177,8 @@ prc_viirs_night_fire_annual_atlantic <- function(input_files, output_path) {
 
   # Data
   nm <- c("flares_upstream", "flares_downstream_oil", "flares_downstream_gas")
+  # Data
+  nm <- c("flares_upstream", "flares_downstream_oil", "flares_downstream_gas")
   dat <- lapply(files, function(x) {
     sht <- readxl::excel_sheets(x)
     sht <- sht[sht %in% c(
@@ -175,13 +188,24 @@ prc_viirs_night_fire_annual_atlantic <- function(input_files, output_path) {
       "flares downstream oil", "flares oil downstream", "flare downstream oil", "flare oil downstream",
       "flares_upstream", "flares upstream", "flare upstream", "flare downstream"
     )]
-    lapply(sht, function(y) readxl::read_excel(x, sheet = y)) |>
+    tmp <- lapply(sht, function(y) readxl::read_excel(x, sheet = y)) |>
       dplyr::bind_rows() |>
       janitor::clean_names() |>
       process_column_names()
+
+    if ("detection_freq" %in% colnames(tmp)) {
+      tmp <- dplyr::rename(tmp, detection_frequency = detection_freq)
+    }
+
+    if (any(tmp$detection_frequency > 1)) {
+      tmp$detection_frequency <- tmp$detection_frequency / 100
+    }
+
+    tmp
   }) |>
     dplyr::bind_rows() |>
     dplyr::mutate(avg_temp_k = dplyr::if_else(is.na(avg_temp_k), avg_temp, avg_temp_k)) |>
+    dplyr::mutate(detection_frequency = dplyr::if_else(is.na(detection_frequency), 0, detection_frequency)) |>
     dplyr::select(
       latitude, longitude, avg_temp_k, detection_frequency,
       clear_obs, type, bcm, year
