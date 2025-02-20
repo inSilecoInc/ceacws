@@ -197,6 +197,8 @@ ul.task-list li input[type="checkbox"] {
 <li><code>ana_petroleum_pollution_incidents.R</code></li>
 </ul></li>
 <li><strong>Output Files</strong>: Rasterized layers stored in <code>workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/</code>.</li>
+<li><strong>Units</strong>: number of incidents / month</li>
+<li><strong>Years</strong>: 2006-2023</li>
 </ul>
 <div class="cell">
 <div id="tbl-spillvolumes" class="cell quarto-float anchored">
@@ -242,10 +244,12 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum"><span class="header-section-number">4.2</span> Offshore Petroleum</h2>
 <section id="offshore-petroleum-activities" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2.1</span> Offshore Petroleum Activities</h3>
-<p>The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 4.2.2</span></a>. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; <a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>), operational status (e.g., active, abandoned; <a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>), and subtype (e.g., oil producer, gas injector; <a href="2_data.html#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). The classification system ensures clear distinctions between current, past, and potential future activities where that information is avilable (see <a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
+<p>The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 4.2.2</span></a>. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; <a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>), operational status (e.g., active, abandoned; <a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>), and subtype (e.g., oil producer, gas injector; <a href="2_data.html#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). The classification system ensures clear distinctions between current, past, and potential future activities where that information is available (see <a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_activity.R</code></li>
 <li><strong>Output File(s)</strong>: Rasterized layers stored in <code>workspace/data/analyzed/offshore_petroleum_activity-1.0.0/</code>.</li>
+<li><strong>Units</strong>: presence / absence</li>
+<li><strong>Years</strong>: 1966-2032</li>
 </ul>
 <div class="cell">
 <div id="tbl-offshore-petroleum-categories" class="cell quarto-float anchored">
@@ -344,17 +348,23 @@ Atlantic scale
 <p>The offshore petroleum platform threat layers were created using the VIIRS Night Fire (VNF) dataset (<a href="2_data.html#sec-viirs_night_fire" class="quarto-xref"><span>Section 4.5.2</span></a>), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint.</p>
 <section id="annual-layers" class="level4" data-number="4.2.2.1">
 <h4 data-number="4.2.2.1" class="anchored" data-anchor-id="annual-layers"><span class="header-section-number">4.2.2.1</span> Annual Layers</h4>
-<p>The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (<code>avg_temp_k</code>). The following steps were applied to create the annual threat layers:</p>
+<p>The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (<code>avg_temp_k</code>) and the detection frequency (<code>detection_frequency</code>). The following steps were applied to create the annual threat layers:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: The annual VNF dataset was filtered to retain only records within the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>).</li>
-<li><strong>Aggregation</strong>: Flaring activity was grouped by year to calculate annual summaries of total heat output (<code>total_heat</code>) at each platform location.</li>
-<li><strong>Rasterization</strong>: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of <code>total_heat</code> values for all platforms in that cell for a given year.</li>
+<li><strong>Aggregation</strong>: Flaring activity was grouped by year to calculate annual summaries of total heat output (<code>total_heat</code>) and total detection frequencies (<code>detection_frequency</code>) at each platform location.</li>
+<li><strong>Rasterization</strong>: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of <code>total_heat</code> and <code>detection_frequency</code> values for all platforms in that cell for a given year.</li>
 <li><strong>Export</strong>: Rasterized layers were exported as geospatial files, with one raster file generated for each year.</li>
 </ol>
 <p>The resulting layers provide annual snapshots of flaring activity.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_platform_annual.R</code></li>
 <li><strong>Output Files</strong>: Rasterized annual layers stored in <code>workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/</code>.</li>
+<li><strong>Units</strong>:
+<ul>
+<li>Total heat in Kelvin</li>
+<li>Detection frequency as sum of percent detection frequency</li>
+</ul></li>
+<li><strong>Years</strong>: 2017-2023</li>
 </ul>
 </section>
 </section>
@@ -371,24 +381,79 @@ Atlantic scale
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_platform_monthly.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/</code>.</li>
+<li><strong>Units</strong>: Total heat in Kelvin</li>
+<li><strong>Years</strong>: November 2023 - September 2024</li>
 </ul>
 </section>
 </section>
 <section id="offshore-wind-farms" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="offshore-wind-farms"><span class="header-section-number">4.3</span> Offshore Wind Farms</h2>
-<p>The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States.</p>
-<p>More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 4.3.1</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 4.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. The following steps were applied to create the threat layers:</p>
-<ol type="1">
-<li><strong>Data Preparation</strong>: Datasets were merged into a single spatial layer. Overlapping geometries were unified to represent contiguous wind farm areas accurately.</li>
-<li><strong>Clipping to AOI</strong>: The combined dataset was clipped to the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>).</li>
-<li><strong>Rasterization</strong>: The spatial data was rasterized onto the study grid, with each cell representing the count of overlapping wind farm polygons.</li>
-<li><strong>Export</strong>: The processed raster layer was exported as a geospatial file.</li>
-</ol>
-<p>The offshore wind farm threat layer provides a spatially explicit representation of wind farm locations and projects, enabling further analyses of potential environmental impacts. The resulting raster layer can be integrated into broader assessments of offshore activities.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Atlantic scale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326.</p>
+</div>
+</div>
+</div>
+<p>The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States. More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 4.3.1</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 4.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. Activities were classified into distinct categories based on the BOEM classification (e.g., leases and turbine locations; <a href="2_data.html#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>4.5</span></a>). We further categorized the BOEM classification to obtain four individual categories, i.e.&nbsp;current wind farms, transmission infrastructure, future development areas, and environmental monitoring (<a href="#tbl-offshore-wind-categories" class="quarto-xref">Table&nbsp;<span>4.3</span></a>). Point and line geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. Union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for wind farm activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_wind_farm.R</code></li>
-<li><strong>Output File</strong>: <code>offshore_wind_farm.tif</code>, stored in <code>workspace/data/analyzed/offshore_wind_farm-1.0.0/</code>.</li>
+<li><strong>Output File</strong>: Rasterized layers stored in <code>workspace/data/analyzed/offshore_wind_farm-1.0.0/</code>.</li>
+<li><strong>Units</strong>: presence / absence</li>
+<li><strong>Years</strong>: NA</li>
 </ul>
+<div class="cell">
+<div id="tbl-offshore-wind-categories" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-offshore-wind-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Categorization of Offshore Wind Farm Activities
+</figcaption>
+<div aria-describedby="tbl-offshore-wind-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Existing Wind Farms</td>
+<td style="text-align: left;">Areas with installed offshore wind turbines and supporting substations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transmission Infrastructure</td>
+<td style="text-align: left;">Cables and transmission routes connecting wind farms to the grid, including cable interconnections, export cable corridors, cable landings, and inter-array cables.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Future Development Areas</td>
+<td style="text-align: left;">Regions designated for offshore wind expansion, including leased areas, planning areas, Marine Hydrokinetic (MHK) zones, and project phase areas.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Environmental Monitoring</td>
+<td style="text-align: left;">Devices used to collect data on environmental and ocean conditions in wind farm areas, such as ocean observing devices.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="nighttime-lights" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="nighttime-lights"><span class="header-section-number">4.4</span> Nighttime Lights</h2>
@@ -408,6 +473,8 @@ Atlantic scale
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_night_light_monthly.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/night_light_monthly-1.0.0/</code>.</li>
+<li><strong>Units</strong>: average nanowatts per square centimeter per steradian per month (nW/cm²/sr/month)</li>
+<li><strong>Years</strong>: January 2023 - January 2024</li>
 </ul>
 </section>
 <section id="shipping" class="level2" data-number="4.5">
@@ -415,7 +482,7 @@ Atlantic scale
 <section id="sec-shipping_threat" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-shipping_threat"><span class="header-section-number">4.5.1</span> Ship-Based Pollution Risk</h3>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -424,7 +491,7 @@ Atlantic scale
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326. However, the scale of the AIS data does not provide a whole Atlantic-scale characterization of ship-based pollution risk.</p>
 </div>
@@ -463,6 +530,8 @@ Atlantic scale
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_shipping_intensity_density.R</code></li>
 <li><strong>Output Files</strong>: Monthly ship density layers stored in <code>workspace/data/analyzed/shipping_intensity_density-1.0.0/</code>.</li>
+<li><strong>Units</strong>: number of ships per month</li>
+<li><strong>Years</strong>: 2023</li>
 </ul>
 </section>
 <section id="ship-based-night-lights" class="level3" data-number="4.5.2">
@@ -480,12 +549,14 @@ Atlantic scale
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_shipping_night_light_density.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/</code>.</li>
+<li><strong>Units</strong>: number of ships per night per month</li>
+<li><strong>Years</strong>: 2023</li>
 </ul>
 </section>
 <section id="nighttime-ship-light-detection-using-vbd-data" class="level4" data-number="4.5.2.2">
 <h4 data-number="4.5.2.2" class="anchored" data-anchor-id="nighttime-ship-light-detection-using-vbd-data"><span class="header-section-number">4.5.2.2</span> Nighttime Ship Light Detection Using VBD Data</h4>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -494,7 +565,7 @@ Atlantic scale
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This threat layer was also prepared at the scale of the whole Atlantic, <em>i.e.</em> in bounding box <code>longitude min: -97; latitude min: -54; longitude max: 49, latitude max: 66.5</code> in epsg:4326.</p>
 </div>
@@ -511,6 +582,8 @@ Atlantic scale
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_ship_light_detection.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/ship_light_detection-1.0.0/</code>.</li>
+<li><strong>Units</strong>: average nanowatts per square centimeter per steradian per month (nW/cm²/sr/month)</li>
+<li><strong>Years</strong>: 2020-2023</li>
 </ul>
 
 

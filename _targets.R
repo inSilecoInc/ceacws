@@ -683,6 +683,16 @@ list(
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
         "workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/"
     }, format = "file")),
+    list(tar_target(tg_45b96ad6_7304_4f21_801a_e2fc987ea007_offshore_wind_farm_atlantic, 
+    {
+        ana_offshore_wind_farm(output_path = "workspace/data/analyzed/offshore_wind_farm_atlantic-1.0.0", 
+            input_files = list(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_offshore_wind_can, 
+                tg_94a1b3cb_109a_4871_b1d0_abe318f920a0_offshore_wind_nfl, 
+                tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_offshore_wind_ns, 
+                tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa, 
+                tg_a0afc22a_91db_4ab2_981e_4c32103a876c_study_area_aoi_atlantic))
+        "workspace/data/analyzed/offshore_wind_farm_atlantic-1.0.0/"
+    }, format = "file")),
     list(tar_target(tg_6cba6119_d6d8_4cfd_8add_7ea93dfae326_offshore_wind_farm, 
     {
         ana_offshore_wind_farm(output_path = "workspace/data/analyzed/offshore_wind_farm-1.0.0", 
@@ -691,7 +701,7 @@ list(
                 tg_ab6dff55_d84b_4004_96fc_dd18f65b8f3e_offshore_wind_ns, 
                 tg_e0dc9246_3939_45e5_b8a8_e859cdd76f07_offshore_wind_usa, 
                 tg_40932a82_3ecd_476f_b320_40b128b9a4d5_study_area_aoi))
-        "workspace/data/analyzed/offshore_wind_farm-1.0.0/offshore_wind_farm.tif"
+        "workspace/data/analyzed/offshore_wind_farm-1.0.0/"
     }, format = "file")),
     list(tar_target(tg_a726889e_848e_4d6c_8496_a7a772e70d85_petroleum_pollution_incidents_istop, 
     {

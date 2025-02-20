@@ -39,7 +39,8 @@ prc_offshore_wind_can <- function(input_files, output_path) {
 
 
   # Bind
-  wind_can <- dplyr::bind_rows(ns, nfl)
+  wind_can <- dplyr::bind_rows(ns, nfl) |>
+    dplyr::mutate(classification = "planning area")
 
   # Export
   sf::st_write(

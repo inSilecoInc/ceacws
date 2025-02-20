@@ -196,7 +196,10 @@ prc_offshore_wind_usa <- function(input_files, output_path) {
     ) |>
     dplyr::select(dataset, classification, status, lease_number = LEASE_NUMBER)
 
-
+  ## Make sure geoometries are all the same
+  boem <- lapply(boem, function(x) {
+    x |> sf::st_set_geometry("geom")
+  })
 
   # Bind
   boem <- dplyr::bind_rows(boem) |>
