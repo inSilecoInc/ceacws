@@ -318,13 +318,31 @@ list(
         curl::curl_download("https://callforbids.ca/sites/default/files/resource/final_call_for_bids_ns22-1_parcels_shapefile.zip", 
             "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/call_for_bids_ns22_1_parcels.zip")
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/call_for_bids_ns22_1_parcels.zip"
-    }, format = "file"), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia, 
+    }, format = "file"), list(tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Active_Exploration_Licenses_2020, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "CNSOPB/Active_EL_2020.xlsx", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/Active_EL_2020.xlsx", 
+            overwrite = TRUE)
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/Active_EL_2020.xlsx"
+    }, format = "file")), list(tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_CNSOPB_Platform_Locations_2020, 
+    {
+        googleCloudStorageR::gcs_auth("workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        Sys.setenv(GCS_AUTH_FILE = "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json")
+        googleCloudStorageR::gcs_get_object(object_name = "CNSOPB/CNSOPB_platform_locations.xlsx", 
+            bucket = "cws-private", saveToDisk = "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/CNSOPB_platform_locations.xlsx", 
+            overwrite = TRUE)
+        "workspace/data/harvested/offshore_petroleum_ns-1.0.0/raw/CNSOPB_platform_locations.xlsx"
+    }, format = "file")), tar_target(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_offshore_petroleum_nova_scotia, 
     {
         prc_offshore_petroleum_ns(output_path = "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed", 
             input_files = list(tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Areas___September_2009, 
                 tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Significant_Discovery_Licenses_Coordinates___September_2022, 
                 tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Production_Licenses_Coordinates___July_2024, 
-                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_))
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Call_for_Bids_NS22_1_Parcels__Shapefile_, 
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_Active_Exploration_Licenses_2020, 
+                tg_570b8de3_665c_438e_815b_3b4b23ffe6a6_CNSOPB_Platform_Locations_2020))
         "workspace/data/harvested/offshore_petroleum_ns-1.0.0/processed/offshore_petroleum_ns.gpkg"
     }, format = "file")),
     list(list(tar_target(tg_5a9c177c_4cd0_4996_b455_d2e755355a09_Potential_Future_Development_Areas__PFDA____Nova_Scotia, 

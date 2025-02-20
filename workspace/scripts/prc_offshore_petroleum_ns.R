@@ -7,6 +7,8 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
   #     "significant_discovery_areas_sept_2009.xls",
   #     "significant_discovery_licenses_sept_2022.xls",
   #     "production_licenses_july_2024.xlsx",
+  #     "Active_EL_2020.xlsx",
+  #     "CNSOPB_platform_locations.xlsx",
   #     "call_for_bids_ns22_1_parcels.zip"
   #   )
   # )
@@ -89,15 +91,39 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
       classification = "significant discovery"
     )
 
+  ## Exploration licenses
+  exploration_licenses <- input_files[stringr::str_detect(input_files, "Active_EL_2020")] |>
+    readxl::read_xlsx() |>
+    janitor::clean_names() |>
+    dplyr::mutate(
+      dataset = "Active_EL_2020",
+      classification = "exploration",
+      status = "Suspended"
+    ) |>
+    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+  ## Platform locations
+  platform_locations <- input_files[stringr::str_detect(input_files, "platform_locations")] |>
+    readxl::read_xlsx() |>
+    janitor::clean_names() |>
+    dplyr::mutate(
+      dataset = "CNSOPB Platform Locations 2020",
+      classification = "production",
+      status = "Suspended"
+    ) |>
+    sf::st_as_sf(coords = c("decimal_long", "decimal_lat"), crs = 4326)
+
   # Bind
   offshore_petroleum_ns <- dplyr::bind_rows(
     bids,
     production_licences,
     significant_discovery_areas,
-    significant_discovery_licenses
+    significant_discovery_licenses,
+    exploration_licenses,
+    platform_locations
   ) |>
     dplyr::mutate(uid = sprintf("petroleum_ns_%04d", dplyr::row_number())) |>
-    dplyr::select(uid, dataset, classification)
+    dplyr::select(uid, dataset, classification, status)
 
   # Export
   sf::st_write(
@@ -109,4 +135,21 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
 
   # Remove unzipped files
   fs::dir_delete(tmp)
+}
+
+# Function to create polygons from grouped latitude and longitude points
+generate_license_polygons <- function(df) {
+  df |>
+    # Convert to sf object using lat/lon
+    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+    # Group by license_no
+    dplyr::group_by(license_no) |>
+    dplyr::summarise(
+      geometry = sf::st_convex_hull(sf::st_union(geometry)), # Create convex hull polygon
+      company = dplyr::first(company),
+      dataset = dplyr::first(dataset),
+      classification = dplyr::first(classification),
+      status = dplyr::first(status),
+      .groups = "drop"
+    )
 }

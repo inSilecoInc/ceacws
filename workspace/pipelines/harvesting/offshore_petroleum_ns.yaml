@@ -69,6 +69,20 @@ pipeline:
         output: "call_for_bids_ns22_1_parcels.zip"
         format: "zip"
 
+      - name: "Active Exploration Licenses 2020"
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "CNSOPB/Active_EL_2020.xlsx"
+        format: "xlsx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
+      - name: "CNSOPB Platform Locations 2020"
+        source_type: "gcs"
+        urls: "cws-private"
+        asset: "CNSOPB/CNSOPB_platform_locations.xlsx"
+        format: "xlsx"
+        credentials: "workspace/credentials/pof-stac-insileco-5d20b0cb59ef.json"
+
   processing:
     sources:
       - name: offshore petroleum nova-scotia
@@ -78,6 +92,8 @@ pipeline:
           - Significant Discovery Licenses Coordinates - September 2022
           - Production Licenses Coordinates - July 2024
           - Call for Bids NS22-1 Parcels (Shapefile)
+          - Active Exploration Licenses 2020
+          - CNSOPB Platform Locations 2020
         output_files: offshore_petroleum_ns.gpkg
 
 

@@ -14,10 +14,80 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
   input_files <- input_files[!basename(input_files) %in% c("grid.tif", "aoi.gpkg")]
 
   # Data
+
+  # Current Production* - Active production license polygons, active development wells, active production installations
+  # Current Discovery - Active significant discovery license polygons, active delineation wells
+  # Current Exploration - Active exploration license polygons, active exploration wells
+  # (Could sum to make a single ‘Current Activity’ layer)
+
+  # Future Scope - Recent calls for bids polygons (NS: 2022; NL: 2023, 2024), active sector polygons. Not sure if we should include closed sectors to incorporate Labrador South sector NL-01LS (see notes in Polygon Layers below)
+
+  # Past Production* - Inactive production wells, inactive production license polygons (if available)
+  # Past Discovery - Inactive delineation wells, inactive significant discovery license polygons (if available)
+  # Past Exploration - Inactive exploration wells, inactive exploration license polygons (if available)
+  # (Could sum to make a single ‘Past Activity’ layer)
+
   dat <- lapply(input_files, sf::st_read, quiet = TRUE) |>
     dplyr::bind_rows() |>
     sf::st_transform(32198) |>
-    dplyr::mutate(geom_type = sf::st_geometry_type(geom))
+    dplyr::mutate(geom_type = sf::st_geometry_type(geom)) |>
+    dplyr::mutate(
+      categories = dplyr::case_when(
+        # Future scope
+        classification %in% c("call for bids", "sector") ~ "Future Scope",
+
+        # Production - Oil
+        classification %in% c("production", "development") &
+          status %in% c("Active Production", "Drilling", "Disposal") &
+          subtype %in% c(
+            "Production Operations", "Oil Producer",
+            "Oil and Gas Well", "Oil Well", "Oil Well"
+          ) ~ "Current Oil Production",
+        classification %in% c("production", "development") &
+          status %in% c("Abandoned", "Suspended", "Closed", "Off Station") &
+          subtype %in% c(
+            "Production Operations", "Oil Producer",
+            "Oil and Gas Well", "Oil Well", "Oil Well"
+          ) ~ "Past Oil Production",
+
+        # Production - Non-Oil
+        classification %in% c("production", "development") &
+          status %in% c("Active Production", "Drilling", "Disposal") &
+          !subtype %in% c(
+            "Production Operations", "Oil Producer",
+            "Oil and Gas Well", "Oil Well", "Oil Well"
+          ) ~ "Current Non-Oil Production",
+        classification %in% c("production", "development") &
+          status %in% c("Abandoned", "Suspended", "Closed", "Off Station") &
+          !subtype %in% c(
+            "Production Operations", "Oil Producer",
+            "Oil and Gas Well", "Oil Well", "Oil Well"
+          ) ~ "Past Non-Oil Production",
+
+        # Production Other
+        classification %in% c("production", "development") & is.na(status) ~ "Other Production",
+
+        # Discovery
+        classification %in% c("significant discovery", "delineation") &
+          status %in% c("Active Production", "Drilling", "Disposal") ~ "Current Discovery",
+        classification %in% c("significant discovery", "delineation") &
+          status %in% c("Abandoned", "Suspended", "Closed", "Off Station") ~ "Past Discovery",
+        classification %in% c("significant discovery", "delineation") & is.na(status) ~ "Other Discovery",
+
+
+        # Exploration
+        classification %in% c("exploration") &
+          status %in% c("Active Production", "Drilling", "Disposal") ~ "Current Exploration",
+        classification %in% c("exploration") &
+          status %in% c("Abandoned", "Suspended", "Closed", "Off Station") ~ "Past Exploration",
+        classification %in% c("exploration") & is.na(status) ~ "Other Exploration",
+
+        # Default
+        .default = NA_character_
+      )
+    )
+
+  # Spatial processing
   uid <- dat$geom_type == "POINT"
   pts <- dat[uid, ]
   poly <- dat[!uid, ]
@@ -32,12 +102,14 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
   # Intersect aoi & grid
   dat <- sf::st_intersection(dat, sf::st_geometry(aoi)) |>
-    dplyr::group_by(classification, status)
+    dplyr::group_by(categories)
   nm <- dplyr::group_keys(dat)
   dat <- dplyr::group_split(dat)
   for (i in 1:length(dat)) {
     dat[[i]] <- sf::st_union(dat[[i]]) |>
       sf::st_as_sf()
+    uid <- sf::st_geometry_type(dat[[i]]) == "MULTILINESTRING"
+    dat[[i]] <- dat[[i]][!uid, ]
   }
   dat <- dplyr::bind_rows(dat) |>
     cbind(nm)
@@ -45,12 +117,12 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
   # Rasterize and export
   group_rasterize_export(
     dat,
-    grouping_vars = c("classification", "status"),
+    grouping_vars = "categories",
     fun = "count",
     field = NA,
     grid = grid,
     aoi = aoi,
-    dataset_name = "ofshore_petroleum_activity",
+    dataset_name = "offshore_petroleum_activity",
     output_path = output_path
   )
 }

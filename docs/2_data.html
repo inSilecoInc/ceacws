@@ -262,7 +262,7 @@ div.csl-indent {
 <h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2</span> Offshore petroleum activities</h2>
 <section id="sec-offshore_petroleum_nfl" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-offshore_petroleum_nfl"><span class="header-section-number">4.2.1</span> Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</h3>
-<p>The <a href="https://www.cnlopb.ca/">Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a> <span class="citation" data-cites="cnlopb2024">(<a href="#ref-cnlopb2024" role="doc-biblioref">Canada-Newfoundland and Labrador Offshore Petroleum Board, 2024</a>)</span> oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (<a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g.&nbsp;exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in <a href="#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>. How date ranges were established for each entry is detailed in <a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>.</p>
+<p>The <a href="https://www.cnlopb.ca/">Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</a> <span class="citation" data-cites="cnlopb2024">(<a href="#ref-cnlopb2024" role="doc-biblioref">Canada-Newfoundland and Labrador Offshore Petroleum Board, 2024</a>)</span> oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (<a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g.&nbsp;exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in <a href="#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>. How date ranges were established for each entry is detailed in <a href="#tbl-offshore-petroleum-nfl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>. Finally, types of activities such as oil well and oil producers are presented in <a href="#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>4.4</span></a>.</p>
 <ul>
 <li><strong>Source</strong>: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)</li>
 <li><strong>Accessibility</strong>: Open, Creative Commons Attribution License</li>
@@ -489,10 +489,93 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 </figure>
 </div>
 </div>
+<div class="cell">
+<div id="tbl-offshore-petroleum-subtypes" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-offshore-petroleum-subtypes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.4: Descriptions of Offshore Petroleum Well Subtypes
+</figcaption>
+<div aria-describedby="tbl-offshore-petroleum-subtypes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Subtype</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Oil Well</td>
+<td style="text-align: left;">A well drilled primarily for the extraction of oil.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gas Well</td>
+<td style="text-align: left;">A well drilled primarily for the extraction of natural gas.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oil and Gas Well</td>
+<td style="text-align: left;">A well drilled to extract both oil and gas from the same reservoir.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oil Show</td>
+<td style="text-align: left;">A well where traces of oil have been detected but is not in production.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oil and Gas Show</td>
+<td style="text-align: left;">A well where traces of both oil and gas have been detected but is not in production.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oil Producer</td>
+<td style="text-align: left;">A well producing oil.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Water Injector</td>
+<td style="text-align: left;">A well used to inject water into a reservoir to maintain pressure and enhance recovery.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gas Injector</td>
+<td style="text-align: left;">A well used to inject gas into a reservoir to enhance oil recovery or for storage.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gas Show</td>
+<td style="text-align: left;">A well where traces of gas have been detected but is not in production.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Production Operations</td>
+<td style="text-align: left;">Facilities and operations involved in extracting and processing oil or gas.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="sec-offshore_petroleum_ns" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-offshore_petroleum_ns"><span class="header-section-number">4.2.2</span> Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</h3>
-<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas (NA coordinates), significant discovery licenses (NA cooordinates), production licenses (NA cooordinates), and the latest call for bids (NA polygons). The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Contrary to the data for Newfoudland and Labrador (see <a href="#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a>), there were no information included on the status and the time period covered.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exploration Licenses &amp; Platforms
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note that the data used for platforms and exploration licenses come from a manual transfer dating back from 2020 that was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+</div>
+</div>
+</div>
+<p>The <a href="https://www.cnsopb.ns.ca/">Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</a> <span class="citation" data-cites="cnsopb2024">(<a href="#ref-cnsopb2024" role="doc-biblioref">Canada-Nova Scotia Offshore Petroleum Board, 2024</a>)</span> oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas, significant discovery licenses, exploration licenses, production licenses, platform locations, and the latest call for bids. The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification and status, when available, of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in <a href="#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>. Contrary to the data for Newfoudland and Labrador (see <a href="#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a>), there were no information included on the time period covered and information on status was limited.</p>
 <ul>
 <li><strong>Source</strong>: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)</li>
 <li><strong>Accessibility</strong>: Open</li>
@@ -548,7 +631,7 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 </section>
 <section id="sec-offshore_wind_usa" class="level3" data-number="4.3.4">
 <h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-offshore_wind_usa"><span class="header-section-number">4.3.4</span> Bureau of Ocean Energy Management (BOEM) Offshore Wind Data</h3>
-<p>The <a href="https://www.boem.gov/">Bureau of Ocean Energy Management (BOEM)</a> <span class="citation" data-cites="boem2025">(<a href="#ref-boem2025" role="doc-biblioref">Bureau of Ocean Energy Management, 2025</a>)</span> manages offshore wind energy activities across U.S. waters. This dataset provides detailed geospatial and tabular data on wind energy development, including lease areas, planning areas, marine hydrokinetic leases, project phase areas, and infrastructure components such as turbines, substations, and cable systems (<a href="#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). Each entry in the dataset is accompanied with a lease or protraction number (see <a href="#tbl-wind-usa-number" class="quarto-xref">Table&nbsp;<span>4.5</span></a>). The dataset supports decision-making and analysis for renewable energy development by offering comprehensive coverage of offshore wind projects. Access to the data requires a ArcGIS online membership. Data were therefore harvested and stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+<p>The <a href="https://www.boem.gov/">Bureau of Ocean Energy Management (BOEM)</a> <span class="citation" data-cites="boem2025">(<a href="#ref-boem2025" role="doc-biblioref">Bureau of Ocean Energy Management, 2025</a>)</span> manages offshore wind energy activities across U.S. waters. This dataset provides detailed geospatial and tabular data on wind energy development, including lease areas, planning areas, marine hydrokinetic leases, project phase areas, and infrastructure components such as turbines, substations, and cable systems (<a href="#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>4.5</span></a>). Each entry in the dataset is accompanied with a lease or protraction number (see <a href="#tbl-wind-usa-number" class="quarto-xref">Table&nbsp;<span>4.6</span></a>). The dataset supports decision-making and analysis for renewable energy development by offering comprehensive coverage of offshore wind projects. Access to the data requires a ArcGIS online membership. Data were therefore harvested and stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Bureau of Ocean Energy Management (BOEM)</li>
 <li><strong>Accessibility</strong>: Open Government Licence - United States</li>
@@ -561,7 +644,7 @@ Table&nbsp;4.3: Simplified Status Classifications with Descriptions
 <div id="tbl-wind-usa-classification" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wind-usa-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.4: Classifications and descriptions of BOEM offshore wind data components.
+Table&nbsp;4.5: Classifications and descriptions of BOEM offshore wind data components.
 </figcaption>
 <div aria-describedby="tbl-wind-usa-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -632,7 +715,7 @@ Table&nbsp;4.4: Classifications and descriptions of BOEM offshore wind data comp
 <div id="tbl-wind-usa-number" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wind-usa-number-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offshore wind datasets
+Table&nbsp;4.6: Comparison of lease numbers and protraction numbers in BOEM offshore wind datasets
 </figcaption>
 <div aria-describedby="tbl-wind-usa-number-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -681,7 +764,7 @@ Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offs
 </section>
 <section id="sec-shipping_ais" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-shipping_ais"><span class="header-section-number">4.4</span> Automatic Identification System (AIS) Shipping Data</h2>
-<p>The <a href="https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais">Automatic Identification System (AIS)</a> <span class="citation" data-cites="tc2023">(<a href="#ref-tc2023" role="doc-biblioref">Transports Canada, 2023</a>)</span> collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (<a href="#tbl-shipping-ais-attr" class="quarto-xref">Table&nbsp;<span>4.6</span></a>). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
+<p>The <a href="https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais">Automatic Identification System (AIS)</a> <span class="citation" data-cites="tc2023">(<a href="#ref-tc2023" role="doc-biblioref">Transports Canada, 2023</a>)</span> collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (<a href="#tbl-shipping-ais-attr" class="quarto-xref">Table&nbsp;<span>4.7</span></a>). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.</p>
 <ul>
 <li><strong>Source</strong>: Transport Canada</li>
 <li><strong>Accessibility</strong>: Restricted</li>
@@ -694,7 +777,7 @@ Table&nbsp;4.5: Comparison of lease numbers and protraction numbers in BOEM offs
 <div id="tbl-shipping-ais-attr" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS parquet files (table from <span class="citation" data-cites="tc2023">Transports Canada (<a href="#ref-tc2023" role="doc-biblioref">2023</a>)</span>).
+Table&nbsp;4.7: Columns (attributes) associated with the derived positional AIS parquet files (table from <span class="citation" data-cites="tc2023">Transports Canada (<a href="#ref-tc2023" role="doc-biblioref">2023</a>)</span>).
 </figcaption>
 <div aria-describedby="tbl-shipping-ais-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -829,14 +912,14 @@ Table&nbsp;4.6: Columns (attributes) associated with the derived positional AIS 
 </ul></li>
 <li><strong>Output</strong>
 <ul>
-<li>The cleaned tracklines were exported as monthly parquet files (<code>.parquet</code>). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-points" class="quarto-xref">Table&nbsp;<span>4.7</span></a>).</li>
+<li>The cleaned tracklines were exported as monthly parquet files (<code>.parquet</code>). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (<a href="#tbl-shipping-ais-points" class="quarto-xref">Table&nbsp;<span>4.8</span></a>).</li>
 </ul></li>
 </ol>
 <div class="cell">
 <div id="tbl-shipping-ais-points" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shipping-ais-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.7: Columns (attributes) associated with the AIS positional points processed from the raw parquet files.
+Table&nbsp;4.8: Columns (attributes) associated with the AIS positional points processed from the raw parquet files.
 </figcaption>
 <div aria-describedby="tbl-shipping-ais-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -942,7 +1025,7 @@ Table&nbsp;4.7: Columns (attributes) associated with the AIS positional points p
 <p>The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard the National Oceanic and Atmospheric Administration’s (NOAA), Suomi National Polar-orbiting Partnership (Suomi NPP) and NOAA-20 satellites. VIIRS collects visible and infrared imagery and radiometric measurements, supporting applications such as environmental monitoring, weather forecasting, and maritime surveillance, including boat detection.</p>
 <section id="sec-viirs_boat_detection" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-viirs_boat_detection"><span class="header-section-number">4.5.1</span> VIIRS Boat Detection (VBD) Dataset</h3>
-<p>The <a href="https://eogdata.mines.edu/products/vbd/">VIIRS Boat Detection (VBD) Dataset</a> <span class="citation" data-cites="eog2024">(<a href="#ref-eog2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024a</a>)</span> provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (<a href="#tbl-viirs-vbd-attr" class="quarto-xref">Table&nbsp;<span>4.8</span></a>). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.</p>
+<p>The <a href="https://eogdata.mines.edu/products/vbd/">VIIRS Boat Detection (VBD) Dataset</a> <span class="citation" data-cites="eog2024">(<a href="#ref-eog2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024a</a>)</span> provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (<a href="#tbl-viirs-vbd-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a>). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.</p>
 <ul>
 <li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
 <li><strong>Accessibility</strong>: Public domain with registration</li>
@@ -955,7 +1038,7 @@ Table&nbsp;4.7: Columns (attributes) associated with the AIS positional points p
 <div id="tbl-viirs-vbd-attr" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vbd-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection dataset used for this project.
+Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Boat Detection dataset used for this project.
 </figcaption>
 <div aria-describedby="tbl-viirs-vbd-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1033,8 +1116,8 @@ Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection da
 </section>
 <section id="sec-viirs_night_fire" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-viirs_night_fire"><span class="header-section-number">4.5.2</span> VIIRS Night Fire (VNF) Dataset</h3>
-<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-vnf2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024b</a>; <a href="#ref-elvidge2013" role="doc-biblioref">Elvidge et al., 2013b</a>)</span> provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.9</span></a> presents a subset of available attributes for the nightly data that were selected for their relevance to this project.</p>
-<p>In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see <a href="#tbl-viirs-vnf-annual-attr" class="quarto-xref">Table&nbsp;<span>4.10</span></a>).</p>
+<p>The <a href="https://eogdata.mines.edu/products/vnf/">VIIRS Night Fire (VNF) Dataset</a> <span class="citation" data-cites="elvidge2013 vnf2024">(<a href="#ref-vnf2024" role="doc-biblioref">Earth Observation Group, Payne Institute for Public Policy, 2024b</a>; <a href="#ref-elvidge2013" role="doc-biblioref">Elvidge et al., 2013b</a>)</span> provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. <a href="#tbl-viirs-vnf-attr" class="quarto-xref">Table&nbsp;<span>4.10</span></a> presents a subset of available attributes for the nightly data that were selected for their relevance to this project.</p>
+<p>In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see <a href="#tbl-viirs-vnf-annual-attr" class="quarto-xref">Table&nbsp;<span>4.11</span></a>).</p>
 <ul>
 <li><strong>Source</strong>: Earth Observation Group, Payne Institute for Public Policy</li>
 <li><strong>Accessibility</strong>: Restricted with credentials</li>
@@ -1047,7 +1130,7 @@ Table&nbsp;4.8: Columns (attributes) associated with the VIIRS Boat Detection da
 <div id="tbl-viirs-vnf-attr" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire dataset used for this project.
+Table&nbsp;4.10: Columns (attributes) associated with the VIIRS Night Fire dataset used for this project.
 </figcaption>
 <div aria-describedby="tbl-viirs-vnf-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1141,7 +1224,7 @@ Table&nbsp;4.9: Columns (attributes) associated with the VIIRS Night Fire datase
 <div id="tbl-viirs-vnf-annual-attr" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-annual-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.10: Columns (attributes) associated with the annual VIIRS Night Fire dataset used for this project.
+Table&nbsp;4.11: Columns (attributes) associated with the annual VIIRS Night Fire dataset used for this project.
 </figcaption>
 <div aria-describedby="tbl-viirs-vnf-annual-attr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1255,7 +1338,7 @@ Table&nbsp;4.10: Columns (attributes) associated with the annual VIIRS Night Fir
 <div id="tbl-viirs-vnf-flags" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.11: Retained Quality Flags for VIIRS Nightfire Data Processing.
+Table&nbsp;4.12: Retained Quality Flags for VIIRS Nightfire Data Processing.
 </figcaption>
 <div aria-describedby="tbl-viirs-vnf-flags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">

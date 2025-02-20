@@ -37,10 +37,40 @@ data.frame(
 
 ### Offshore Petroleum Activities
 
-The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland [@sec-offshore_petroleum_nfl] and Nova Scotia [@sec-offshore_petroleum_ns]. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest and grouped by classification (@tbl-classifications) and status categories (@tbl-status). Spatial features were grouped into discrete threat layers using union operations to consolidate overlapping geometries and identify areas where activities occurred as presence-absence. To quantify exposure, the threat layers were rasterized using the study grid (@sec-aoi). Each cell in the raster represents the count of overlapping features for a given combination of classification and status. This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.
+The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland [@sec-offshore_petroleum_nfl] and Nova Scotia [@sec-offshore_petroleum_ns]. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; @tbl-classifications), operational status (e.g., active, abandoned; @tbl-status), and subtype (e.g., oil producer, gas injector; @tbl-offshore-petroleum-subtypes). The classification system ensures clear distinctions between current, past, and potential future activities where that information is avilable (see @tbl-offshore-petroleum-categories). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (@sec-aoi). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (@tbl-offshore-petroleum-categories). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.
+
 
 - **Processing Script**: `ana_offshore_petroleum_activity.R`
 - **Output File(s)**: Rasterized layers stored in `workspace/data/analyzed/offshore_petroleum_activity-1.0.0/`.
+
+```{r}
+#| label: tbl-offshore-petroleum-categories
+#| tbl-cap: "Categorization of Offshore Petroleum Activities"
+data.frame(
+  Category = c(
+    "Future Scope",
+    "Current Oil Production", "Past Oil Production",
+    "Current Non-Oil Production", "Past Non-Oil Production", "Other Production",
+    "Current Discovery", "Past Discovery", "Other Discovery",
+    "Current Exploration", "Past Exploration", "Other Exploration"
+  ),
+  Description = c(
+    "Areas designated for future petroleum activities, such as call for bids and sector planning.",
+    "Active oil production sites, including oil wells, oil producers, and oil and gas wells that are currently operating or under development.",
+    "Previously active oil production sites that are now abandoned, suspended, closed, or off station.",
+    "Active non-oil production sites, including gas wells, injectors, and other operations not classified as oil production.",
+    "Previously active non-oil production sites that are now abandoned, suspended, closed, or off station.",
+    "Other production-related sites where the operational status is unspecified.",
+    "Currently active discovery and delineation sites undergoing exploration drilling or development.",
+    "Past discovery sites that are no longer active.",
+    "Other discovery sites with an unspecified operational status.",
+    "Active exploration activities, including drilling and operational exploratory wells.",
+    "Exploration sites that are no longer active (abandoned, suspended, closed, or off station).",
+    "Other exploration sites with an unspecified operational status."
+  )
+) |> knitr::kable()
+```
+
 
 ### Offshore Petroleum Platforms
 

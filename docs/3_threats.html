@@ -242,11 +242,86 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 <h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum"><span class="header-section-number">4.2</span> Offshore Petroleum</h2>
 <section id="offshore-petroleum-activities" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2.1</span> Offshore Petroleum Activities</h3>
-<p>The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 4.2.2</span></a>. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest and grouped by classification (<a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>) and status categories (<a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>). Spatial features were grouped into discrete threat layers using union operations to consolidate overlapping geometries and identify areas where activities occurred as presence-absence. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of classification and status. This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
+<p>The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 4.2.2</span></a>. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; <a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>), operational status (e.g., active, abandoned; <a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>), and subtype (e.g., oil producer, gas injector; <a href="2_data.html#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). The classification system ensures clear distinctions between current, past, and potential future activities where that information is avilable (see <a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_activity.R</code></li>
 <li><strong>Output File(s)</strong>: Rasterized layers stored in <code>workspace/data/analyzed/offshore_petroleum_activity-1.0.0/</code>.</li>
 </ul>
+<div class="cell">
+<div id="tbl-offshore-petroleum-categories" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-offshore-petroleum-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Categorization of Offshore Petroleum Activities
+</figcaption>
+<div aria-describedby="tbl-offshore-petroleum-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Future Scope</td>
+<td style="text-align: left;">Areas designated for future petroleum activities, such as call for bids and sector planning.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Current Oil Production</td>
+<td style="text-align: left;">Active oil production sites, including oil wells, oil producers, and oil and gas wells that are currently operating or under development.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Past Oil Production</td>
+<td style="text-align: left;">Previously active oil production sites that are now abandoned, suspended, closed, or off station.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Current Non-Oil Production</td>
+<td style="text-align: left;">Active non-oil production sites, including gas wells, injectors, and other operations not classified as oil production.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Past Non-Oil Production</td>
+<td style="text-align: left;">Previously active non-oil production sites that are now abandoned, suspended, closed, or off station.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other Production</td>
+<td style="text-align: left;">Other production-related sites where the operational status is unspecified.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Current Discovery</td>
+<td style="text-align: left;">Currently active discovery and delineation sites undergoing exploration drilling or development.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Past Discovery</td>
+<td style="text-align: left;">Past discovery sites that are no longer active.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other Discovery</td>
+<td style="text-align: left;">Other discovery sites with an unspecified operational status.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Current Exploration</td>
+<td style="text-align: left;">Active exploration activities, including drilling and operational exploratory wells.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Past Exploration</td>
+<td style="text-align: left;">Exploration sites that are no longer active (abandoned, suspended, closed, or off station).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other Exploration</td>
+<td style="text-align: left;">Other exploration sites with an unspecified operational status.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="offshore-petroleum-platforms" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="offshore-petroleum-platforms"><span class="header-section-number">4.2.2</span> Offshore Petroleum Platforms</h3>

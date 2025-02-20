@@ -253,29 +253,48 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
   offshore_petroleum_nfl <- dplyr::bind_rows(dat, wells_info) |>
     dplyr::mutate(uid = sprintf("petroleum_nfl_%04d", dplyr::row_number())) |>
     tidyr::separate_rows(classification, sep = " / ") |>
-    dplyr::mutate(status = dplyr::case_when(
-      status %in% c(
-        "Abandoned Oil Well", "Abandoned Gas Well", "Abandoned",
-        "Abandoned Oil and Gas Well", "Abandoned Oil Show",
-        "Abandoned Oil and Gas Show", "Abandoned Gas Show",
-        "Abandoned Gas Injector", "Abandoned Oil Producer",
-        "Abandoned Water Injector"
-      ) ~ "Abandoned",
-      status %in% c(
-        "Suspended Oil Well", "Suspended Oil Show",
-        "Suspended Oil and Gas Well", "Suspended",
-        "Suspended Oil Producer", "Suspended Water Injector"
-      ) ~ "Suspended",
-      status %in% c(
-        "Oil Producer", "Water Injector", "Gas Injector",
-        "Production Operations", "Active"
-      ) ~ "Active Production",
-      status == "Drilling" ~ "Drilling",
-      status == "Disposal Well" ~ "Disposal",
-      status == "Closed" ~ "Closed",
-      status == "Off Station" ~ "Off Station",
-      .default = NA_character_
-    )) |>
+    dplyr::mutate(
+      subtype = dplyr::case_when(
+        status %in% c("Abandoned Oil Well", "Suspended Oil Well", "Oil Well") ~ "Oil Well",
+        status %in% c("Abandoned Oil Show", "Suspended Oil Show", "Oil Show") ~ "Oil Show",
+        status %in% c("Abandoned Oil Producer", "Suspended Oil Producer", "Oil Producer") ~ "Oil Producer",
+        status %in% c("Abandoned Gas Well", "Suspended Gas Well", "Gas Well") ~ "Gas Well",
+        status %in% c("Abandoned Gas Show", "Suspended Gas Show", "Gas Show") ~ "Gas Show",
+        status %in% c("Abandoned Gas Injector", "Suspended Gas Injector", "Gas Injector") ~ "Gas Injector",
+        status %in% c("Abandoned Water Injector", "Suspended Water Injector", "Water Injector") ~ "Water Injector",
+        status %in% c(
+          "Abandoned Oil and Gas Well", "Suspended Oil and Gas Well", "Oil and Gas Well"
+        ) ~ "Oil and Gas Well",
+        status %in% c(
+          "Abandoned Oil and Gas Show", "Suspended Oil and Gas Show", "Oil and Gas Show"
+        ) ~ "Oil and Gas Show",
+        status %in% "Production Operations" ~ "Production Operations",
+        .default = NA_character_
+      ),
+      status = dplyr::case_when(
+        status %in% c(
+          "Abandoned Oil Well", "Abandoned Gas Well", "Abandoned",
+          "Abandoned Oil and Gas Well", "Abandoned Oil Show",
+          "Abandoned Oil and Gas Show", "Abandoned Gas Show",
+          "Abandoned Gas Injector", "Abandoned Oil Producer",
+          "Abandoned Water Injector"
+        ) ~ "Abandoned",
+        status %in% c(
+          "Suspended Oil Well", "Suspended Oil Show",
+          "Suspended Oil and Gas Well", "Suspended",
+          "Suspended Oil Producer", "Suspended Water Injector"
+        ) ~ "Suspended",
+        status %in% c(
+          "Oil Producer", "Water Injector", "Gas Injector",
+          "Production Operations", "Active"
+        ) ~ "Active Production",
+        status == "Drilling" ~ "Drilling",
+        status == "Disposal Well" ~ "Disposal",
+        status == "Closed" ~ "Closed",
+        status == "Off Station" ~ "Off Station",
+        .default = NA_character_
+      )
+    ) |>
     dplyr::relocate(uid)
 
   # Export
