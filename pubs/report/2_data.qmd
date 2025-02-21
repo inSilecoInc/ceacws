@@ -2,10 +2,7 @@
 title: "Data Sources Overview"
 ---
 
-# Data Sources Overview
-
-## Accidental spills
-
+## Marine oil pollution incidents
 
 ### Integrated Satellite Tracking of Pollution (ISTOP) {#sec-istop}
 
@@ -19,7 +16,7 @@ The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/e
 - **Source**: Environment Canada Integrated Satellite Tracking of Pollution (ISTOP) Program
 - **Accessibility**: Restricted
 - **Data Type**: Vectorized Polygons
-- **Coverage**: North American coastal waters, 2006–2023
+- **Coverage**: Canadian coastal waters, 2006–2023
 - **Processing Script**: `prc_istop.R`
 - **Output File**: `istop.gpkg`
 
@@ -30,7 +27,7 @@ The [Integrated Satellite Tracking of Pollution (ISTOP)](https://www.canada.ca/e
 nasp <- sf::st_read("../../workspace/data/harvested/nasp-1.0.0/processed/nasp.gpkg", quiet = TRUE)
 ```
 
-The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a country-wide aerial surveillance initiative designed to detect pollution and protect Canadian waters. The program, covering pollution detections in the Atlantic region from April 2012 to March 2023, aims to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The dataset includes `r nrow(nasp)` incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/programs/national-aerial-surveillance-program) [@tc2024] is a Canada-wide aerial surveillance initiative designed to detect pollution in order to safeguard marine environments, endangered marine life, and promote safe maritime transport along Canada’s coastlines. The program covers pollution detections in the Atlantic region from April 2012 to March 2023, and includes 3578 incidents. Access to the data is restricted and they are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada National Aerial Surveillance Program (NASP)
 - **Accessibility**: Restricted
@@ -46,7 +43,7 @@ The [National Aerial Surveillance Program (NASP)](https://tc.canada.ca/en/progra
 neec <- vroom::vroom("../../workspace/data/harvested/neec-1.0.0/processed/neec.csv")
 ```
 
-The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, provides an inventory of environmental emergency incidents across Canada. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/environment-climate-change/services/environmental-emergencies-program/national-centre.html) [@neec2024], a program under Environment and Climate Change Canada, is the Government of Canada’s coordination hub for scientific support during environmental emergencies. The NEEC records incident information for all notifications it receives which provides an inventory of environmental emergency incidents across Canada. Recorded incident information includes location, substances and quantities involved, environmental context, reported impacts, and the relevant North American Industry Classification System (NAICS) category, to name a few. The NEEC dataset provided to the Canadian Wildlife Service covers incidents impacting waterbodies in the Atlantic region, including Québec, from 2016 to 2023, comprising `r nrow(neec)` recorded incidents. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: National Environmental Emergency Centre (NEEC)
 - **Accessibility**: Restricted
@@ -57,7 +54,7 @@ The [National Environmental Emergency Centre (NEEC)](https://www.canada.ca/en/en
 
 ## Offshore petroleum activities
 
-### Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB) {#sec-offshore_petroleum_nfl}
+### Canada-Newfoundland and Labrador Offshore Energy Regulator (C-NLOER) {#sec-offshore_petroleum_nfl}
 
 ```{r}
 #| message: false
@@ -66,7 +63,7 @@ offshore_petroleum_nfl <- sf::st_read("../../workspace/data/harvested/offshore_p
 types <- table(offshore_petroleum_nfl$type)
 ```
 
-The [Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)](https://www.cnlopb.ca/) [@cnlopb2024] oversees and provides data on offshore petroleum activities in Newfoundland. This dataset includes multiple files covering exploration and production licenses, various well data, call for bids, land tenure sectors of the Scheduled Land Tenure System, and well info summaries (@tbl-offshore-petroleum-nfl), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in @tbl-classifications. Each entry in the integrated dataset was given a unique identifiers. Individual entries with dual classification (e.g. exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries would correspond to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, which are detailed in @tbl-status. How date ranges were established for each entry is detailed in @tbl-offshore-petroleum-nfl. Finally, types of activities such as oil well and oil producers are presented in @tbl-offshore-petroleum-subtypes.
+The [Canada-Newfoundland and Labrador Offshore Energy Regulator (C-NLOER)](https://www.cnlopb.ca/), known prior to January 31, 2025 as the Canada-Newfoundland and Labrador Offshore Petroleum Board [@cnlopb2024],oversees and provides data on offshore energy activities in Newfoundland. The dataset used for this project includes multiple files covering land tenure sectors of the Scheduled Land Tenure System, calls for bids, exploration licenses, significant discovery licenses, production licenses, and well locations and detailed information summaries (@tbl-offshore-petroleum-nfl), providing a comprehensive view of the offshore petroleum landscape in Newfoundland. The dataset includes both spatial and tabular data. Key variables encompass license IDs, well IDs, geographic coordinates, vessel types, exploration phases, and parcel identifiers. Data files are provided in various formats, including shapefiles and Excel files, and have been processed to create spatial representations of offshore petroleum activity sites. For the purpose of this project, we only retained, if available, the classification, status, start and end dates when processing the data. The different categories of offshore petroleum activities are detailed in @tbl-classifications. Each entry in the integrated dataset was given a unique identifier. Individual entries with dual classification (e.g. exploration and delineation) were duplicated, each retaining the same id to avoid overestimating the number of entries in the dataset. As such, the number of unique entries corresponds to the number of unique identifiers rather than the number of rows in the dataset. For data with well status, we simplified status categories for the processed data, as detailed in @tbl-status. How date ranges were established for each entry is detailed in @tbl-offshore-petroleum-nfl. Finally, types of activities such as oil well and oil producers are presented in @tbl-offshore-petroleum-subtypes.
 
 
 - **Source**: Canada-Newfoundland and Labrador Offshore Petroleum Board (C-NLOPB)
@@ -144,7 +141,7 @@ data.frame(
 
 ```{r}
 #| label: tbl-classifications
-#| tbl-cap: "Description of licenses, call for bids and sectors for the petroleum industry in Newfoundland"
+#| tbl-cap: "Description of classifications for the petroleum industry in Newfoundland and Labrador."
 data.frame(
   Classification = c(
     "Sectors",
@@ -170,9 +167,9 @@ data.frame(
 
 ```{r}
 #| label: tbl-status
-#| tbl-cap: "Simplified Status Classifications with Descriptions"
+#| tbl-cap: "Simplified well status classifications with descriptions"
 data.frame(
-  Status = c(
+  `Well Status` = c(
     "Abandoned", "Suspended", "Active Production",
     "Drilling", "Disposal", "Closed", "Off Station", NA
   ),
@@ -192,7 +189,7 @@ data.frame(
 
 ```{r}
 #| label: tbl-offshore-petroleum-subtypes
-#| tbl-cap: "Descriptions of Offshore Petroleum Well Subtypes"
+#| tbl-cap: "Descriptions of offshore petroleum well subtypes"
 data.frame(
   Subtype = c(
     "Oil Well", "Gas Well", "Oil and Gas Well", "Oil Show",
@@ -214,7 +211,7 @@ data.frame(
 ) |> knitr::kable()
 ```
 
-### Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) {#sec-offshore_petroleum_ns}
+### Canada-Nova Scotia Energy Regulator (CNSOER) {#sec-offshore_petroleum_ns}
 
 ```{r}
 #| message: false
@@ -228,7 +225,9 @@ types <- table(offshore_petroleum_ns$type)
 Note that the data used for platforms and exploration licenses come from a manual transfer dating back from 2020 that was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 :::
 
-The [Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)](https://www.cnsopb.ns.ca/) [@cnsopb2024] oversees and provides data relevant to offshore petroleum activities in Nova Scotia. This dataset includes multiple files covering significant discovery areas, significant discovery licenses, exploration licenses, production licenses, platform locations, and the latest call for bids. The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For the purpose of this project, we only retained the classification and status, when available, of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in @tbl-classifications. Contrary to the data for Newfoudland and Labrador (see @sec-offshore_petroleum_nfl), there were no information included on the time period covered and information on status was limited.
+The [Canada-Nova Scotia Energy Regulator (CNSOER)](https://www.cnsopb.ns.ca/), known prior to January 31, 2025 as the Canada-Nova Scotia Offshore Petroleum Board (CNSOPB) [@cnsopb2024], oversees and provides data relevant to offshore energy activities in Nova Scotia, including petroleum development. 
+
+The dataset used for this project includes multiple files covering significant discovery areas, significant discovery licenses, exploration licenses, production licenses, platform locations, and the latest call for bids. The data encompasses information on various petroleum exploration and production activities. Key variables include license IDs, well IDs, geographic coordinates, exploration phases, and parcel identifiers. Data files include both Excel sheets (XLS, XLSX) and shapefiles, and they have been processed to create spatially explicit representations of petroleum activity sites. For this project, we only retained the classification and status, when available, of each entry. The classification of petroleum offshore activities follows the same categories as the one presented in @tbl-classifications. Unlike the data for Newfoudland and Labrador (see @sec-offshore_petroleum_nfl), there was no information included on the time period covered and information on well status was limited.
 
 - **Source**: Canada-Nova Scotia Offshore Petroleum Board (CNSOPB)
 - **Accessibility**: Open
@@ -378,9 +377,11 @@ data.frame(
 ```
 
 
-## Automatic Identification System (AIS) Shipping Data {#sec-shipping_ais}
+## Automatic Identification System (AIS) Vessel Data {#sec-shipping_ais}
 
-The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) [@tc2023] collects dynamic positional data from ships to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. This dataset, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada. The AIS data provides dynamic vessel information, including position, speed, and course, captured through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS data shared includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data shared also contains pre-processed tracklines as a geodatabase. However, we used the raw AIS positional data to recreate tracklines for the purposes of this project to allow for more temporal granularity. The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) is a global transportation safety system that uses satellite- and terrestrial-based ship tracking systems to collect identity and dynamic positional data from vessels. The International Convention for the Safety of Life at Sea (SOLAS), Chapter 5, Regulation 19.2, sets out requirements for the use of AIS on ships, though individual flag states can exempt certain vessels. In Canada, vessels must operate an AIS if they are: a) 500 gross tonnage or more, b) 300 gross tonnage or more engaged on an international voyage (except fishing vessels), c) 150 gross tonnage or more carrying more than 12 passengers and engaged on an international voyage, or c) every vessel engaged on a voyage beyond sheltered waters other than those subject to criteria a-b. These AIS data are used to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. 
+
+The dataset used for this project, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada and adjacent waters [@tc2023]. The AIS data provides dynamic vessel information, including position, date and time, speed, and course over ground, transmitted through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS dataset we received includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data is also accompanied by a table containing vessel static information that provides basic information on each ship (e.g. vessel type and length) based on their Maritime Mobile Service Identity (MMSI; @tbl-ais-shipping-data). The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada
 - **Accessibility**: Restricted
@@ -392,7 +393,7 @@ The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-trans
 
 ```{r}
 #| label: tbl-shipping-ais-attr
-#| tbl-cap: "Columns (attributes) associated with the derived positional AIS parquet files (table from @tc2023)."
+#| tbl-cap: "Columns (attributes) associated with the positional AIS parquet files (table from @tc2023)."
 
 data.frame(
   Column_Name = c("MMSI", "Latitude", "Longitude", "SOG", "COG", "Heading", "YMD_HMS", "Source"),
@@ -423,9 +424,31 @@ data.frame(
   knitr::kable()
 ```
 
+```{r}
+#| label: tbl-ais-shipping-data
+#| tbl-cap: "Description of AIS shipping data attributes"
+data.frame(
+  Column_Name = c(
+    "mmsi", "vess_name", "ntype", "specific_vess_type",
+    "mt_gt", "mt_length", "mt_width", "mt_draught_max", "gt_id_tc"
+  ),
+  Description = c(
+    "Maritime Mobile Service Identity - a unique 9-digit identifier assigned to a vessel.",
+    "Vessel name as reported in AIS transmissions, may be missing for some records.",
+    "General vessel type classification, i.e. cargo, container, dry bulk, ferry/ro-ro, fishing, government/research, others/special ships, passenger, pleasure vessels, tanker, tugs/port",
+    "Specific vessel subtype, providing further detail on the ship's function, such as 'Passenger Ship' or 'Fishing Vessel'.",
+    "Gross tonnage of the vessel, representing its internal volume in metric tons.",
+    "Overall length of the vessel in meters.",
+    "Overall width of the vessel in meters.",
+    "Maximum draught of the vessel in meters, indicating how deep the vessel sits in the water.",
+    "Gross tonnage classification ID, categorizing vessels based on size, e.g., '< 15 GT or unknown (likely small)'."
+  )
+) |> knitr::kable()
+```
 
 ### Data Processing Overview
-To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023:
+
+To create meaningful tracklines representing vessel movements over space and time, we followed the processing steps described in @veinot2023, with additional steps to distinguish vessel activity at night versus during the day:
 
 1. **Data Extraction**
    - AIS data was extracted from compressed archive files and loaded into memory using efficient tools such as the `arrow` (https://CRAN.R-project.org/package=arrow) and `vroom` (https://CRAN.R-project.org/package=vroom) R packages. This ensured scalability given the dataset size, which often exceeds 10GB annually.
@@ -455,9 +478,9 @@ To create meaningful tracklines representing vessel movements over space and tim
      - Extremely short tracks (<100 meters).
      - Unrealistic average speeds (<0.3 knots or >100 km/h).
      - Speeds exceeding vessel-type-specific thresholds:
-      - 30 km/h for pleasure vessels and special ships.
-      - 35 km/h for fishing and tug vessels.
-      - 40 km/h for all other vessel types.
+       - 30 km/h for pleasure vessels and special ships.
+       - 35 km/h for fishing and tug vessels.
+       - 40 km/h for all other vessel types.
    - Tracklines identified as spoofing were excluded from further analyses.
 7. **Output**
    - The cleaned tracklines were exported as monthly parquet files (`.parquet`). Each file contains the processed AIS points with vessel information and the necessary information to differentiate individual tracks and whether tracks are during daytime or nighttime. Each point includes relevant attributes, such as speed, duration, and daytime classification, enabling detailed analyses of vessel movements across Canadian waters (@tbl-shipping-ais-points).
@@ -513,10 +536,10 @@ The Visible Infrared Imaging Radiometer Suite (VIIRS) is a key instrument aboard
 
 ### VIIRS Boat Detection (VBD) Dataset {#sec-viirs_boat_detection}
 
-The [VIIRS Boat Detection (VBD) Dataset](https://eogdata.mines.edu/products/vbd/) [@eog2024] provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes detections with associated radiance, confidence metrics, and spatial coordinates (@tbl-viirs-vbd-attr). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns within the Canadian Exclusive Economic Zone (EEZ). The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.
+The [VIIRS Boat Detection (VBD) Dataset](https://eogdata.mines.edu/products/vbd/) [@eog2024] provides nightly global data on boat detections based on radiance observations captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is widely used for maritime surveillance, tracking vessel activity, and monitoring illegal fishing. The raw data includes lighted boat detections with associated radiance, confidence metrics, and spatial coordinates (@tbl-viirs-vbd-attr). The data was acquired for the years 2020–2023 and pre-processed to facilitate further analysis of vessel patterns in northwestern Atlantic. The processed data is stored as a Geopackage and includes filtered, high-confidence detections with key attributes for radiance intensity and spatial location.
 
 - **Source**: Earth Observation Group, Payne Institute for Public Policy
-- **Accessibility**: Public domain with registration
+- **Accessibility**:  Creative Commons Attribution 4.0 International license with registration required
 - **Data Type**: CSV files
 - **Coverage**: Global, 2020–2023
 - **Processing Script**: `prc_viirs_boat_detection.R`
@@ -554,21 +577,17 @@ To prepare the VBD dataset for further analyses, the following pre-processing st
 - The pre-processed dataset was saved as a Geopackage (`viirs_boat_detection.gpkg`)
 
 
-#### Signal-to-Mean Index (SMI) and Signal-to-High Index (SHI) in VIIRS Boat Detection Data
-
-The **Signal-to-Mean Index (SMI)** and **Signal-to-High Index (SHI)** are metrics included in the VBD dataset that provide additional quality indicators for radiance detections. While these indices were not directly applied in the current processing pipeline, they could be used for further refining data quality and reducing false positives:
+While filters based on the Signal-to-Mean Index (SMI) and Signal-to-High Index (SHI) were not directly applied in the current processing pipeline, future iterations of the pipeline could incorporate these metrics for scenarios requiring stricter detection thresholds, such as high-confidence studies of vessel activity in heavily lit areas.
 
 - **SMI**: Measures the signal strength relative to the mean radiance value in the surrounding area. Higher values indicate stronger, more distinct detections.
 - **SHI**: Measures the signal strength relative to a high radiance threshold, helping to exclude detections influenced by bright land-based lights or other high-radiance sources.
 
-Future iterations of the pipeline could incorporate these metrics for scenarios requiring stricter detection thresholds, such as high-confidence studies of vessel activity in heavily lit areas.
-
 
 ### VIIRS Night Fire (VNF) Dataset {#sec-viirs_night_fire}
 
-The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes for the nightly data that were selected for their relevance to this project.
+The [VIIRS Night Fire (VNF) Dataset](https://eogdata.mines.edu/products/vnf/) [@elvidge2013; @vnf2024] provides nightly and annual global thermal anomaly detections captured by the Visible Infrared Imaging Radiometer Suite (VIIRS). This dataset is commonly used for monitoring gas flares, wildfires, industrial emissions, and other heat sources. The raw nightly data includes processed radiance-derived fields (e.g., temperature and radiant heat indices), quality flags for detection confidence, spatial coordinates, and emitter-specific information. @tbl-viirs-vnf-attr presents a subset of available attributes for the nightly data that were selected for their relevance to this project.
 
-In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, with data specific to Canada. The processed dataset contains fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see @tbl-viirs-vnf-annual-attr). 
+In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 was harvested. This dataset provides aggregated yearly thermal anomaly detections, including gas flares, and includes fields for average temperature, detection frequency, and estimated burnable carbon mass (BCM), among others (see @tbl-viirs-vnf-annual-attr). 
 
 - **Source**: Earth Observation Group, Payne Institute for Public Policy
 - **Accessibility**: Restricted with credentials
@@ -579,7 +598,7 @@ In addition to the nightly VNF dataset, the annual VNF data from 2017 to 2023 wa
 
 ```{r}
 #| label: tbl-viirs-vnf-attr
-#| tbl-cap: "Columns (attributes) associated with the VIIRS Night Fire dataset used for this project."
+#| tbl-cap: "Columns (attributes) associated with the nightly VIIRS Night Fire dataset used for this project."
 
 data.frame(
   Column_Name = c(
@@ -646,14 +665,14 @@ To prepare the VNF dataset for further analyses, the following pre-processing st
    - Raw CSV files were processed using `arrow::read_csv_arrow()` for efficient import. 
    - Only necessary columns were selected during import to minimize memory usage.
 2. Quality Filtering
-   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field. 
+   - Data quality was ensured by applying bitwise filtering to the `QF_Detect` field available in the raw data to identify data quality (see @tbl-viirs-vnf-flags). 
    - Flags corresponding to high-confidence detections and specific radiance thresholds were retained:
      - **High Radiance Thresholds**: Retained flags ensuring significant thermal anomalies in bands M07–M16.
      - **Thermal Anomalies**: Retained detections flagged as local maxima or cluster detections.
 3. Spatial Filtering
-   - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ):
-     - **Longitude**: -141° to -50°.
-     - **Latitude**: 40° to 85°.
+   - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ), which was broader than the bounding box used for this project and intented to limit the quantity of data processed:
+     - **Longitude**: -85° to -35°.
+     - **Latitude**: 38° to 75°.
 4.  Processed Radiance Fields
     - Radiance-derived fields, including `Temp_primary`, `RHI_primary`, and `ESF_primary`, were used for analyzing thermal anomalies.
     - Secondary radiance-derived fields (`Temp_secondary`, `RHI_secondary`, `ESF_secondary`) were retained for comprehensive heat calculations.
@@ -671,7 +690,7 @@ To prepare the VNF dataset for further analyses, the following pre-processing st
 
 ```{r}
 #| label: tbl-viirs-vnf-flags
-#| tbl-cap: "Retained Quality Flags for VIIRS Nightfire Data Processing."
+#| tbl-cap: "Retained quality flags for VIIRS Nightfire data processing."
 
 data.frame(
   Flag = c(1, 2, 4, 8, 16, 32, 64, 128, 65536, 2048, 4096, 8192, 262144, 524288),
@@ -715,11 +734,11 @@ data.frame(
 
 ### VIIRS Nighttime Light (VNL) Dataset {#sec-viirs_nightlight}
 
-The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by te Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
+The [VIIRS Nighttime Light (VNL) Dataset](https://eogdata.mines.edu/products/vnl/) [@vnl2024; @elvidge2013b; @elvidge2024] provides global observations of nighttime light intensity captured by the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi NPP (npp) and NOAA-20 (j01) satellites. This dataset is widely used for analyzing human activity, urbanization, and environmental monitoring. The monthly VNL data includes radiance measures aggregated over time, with options for stray-light corrected data and various file types, including cloud-free composites and coverage metrics. 
 
-For this analysis, the file type `avg_rade9h` was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data was obtained using the `vcm` configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the `j01` platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.
+For this analysis, the file type `avg_rade9h` was selected, which represents the average radiance values over the specified temporal period, expressed in nanowatts per square centimeter per steradian (nW/cm²/sr). This file type is particularly suited for analyzing overall light intensity while excluding temporary anomalies. The data were obtained using the `vcm` configuration, which excludes stray light, ensuring higher data accuracy in regions with minimal artificial light. Additionally, the data was sourced from the `j01` platform, representing the NOAA-20 satellite, part of the VIIRS suite, which provides enhanced coverage and resolution compared to earlier satellites.
 
-The raw raster files were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ). Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (-141, 40, -50, 85), and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.
+The raw raster files from January 2020 to December 2023 were downloaded in GeoTIFF format and processed to focus on the Canadian Exclusive Economic Zone (EEZ) and adjacent waters. Processing involved loading the rasters, cropping them to a bounding box defined by the coordinates (xmin: -85; ymin: 38; xmax: -35; ymax: 75) to minimize the amount of data to process, and exporting each monthly raster as a Cloud Optimized GeoTIFF (COG). This format allows for efficient storage, faster data access, and better interoperability with modern geospatial tools, particularly for web-based or cloud-hosted applications. The processed COGs retain the original resolution and include internal overviews for optimized rendering.
 
 
 #### Data Overview

@@ -40,7 +40,7 @@ process_vnl_file <- function(file, output_path) {
   terra::terraOptions(progress = 0)
   suppressWarnings({
     terra::rast(out) |>
-      terra::crop(terra::ext(-141, -50, 40, 85)) |>
+      terra::crop(terra::ext(-85, -35, 38, 75)) |>
       terra::writeRaster(
         filename = output_file,
         filetype = "COG",

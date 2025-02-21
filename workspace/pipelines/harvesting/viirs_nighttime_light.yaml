@@ -45,6 +45,7 @@ pipeline:
       author = {Elvidge, Christopher D. and Zhizhin, Mikhail and Ghosh, Tathagata and Hsu, Feng-Chi},
       title = {{Annual Time Series of Global VIIRS Nighttime Lights Derived from Monthly Averages: 2012 to 2019}},
       journal = {Remote Sensing},
+      year = {2024},
       status = {In press}
     }"
 
@@ -58,7 +59,7 @@ pipeline:
         urls: NA
         resolution: "monthly"
         dates:
-          - ["2023-01-01", "2024-01-01"]
+          - ["2020-01-01", "2023-12-31"]
         file_type: "avg_rade9h"
         config: "vcm"
         platform: "j01"

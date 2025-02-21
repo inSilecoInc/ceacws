@@ -58,9 +58,8 @@ process_vnf_nightly_file <- function(file) {
   )
   retain_mask <- Reduce(bitwOr, retain_flags)
 
-  # Manually specify a bounding box around Canada
-  # Canadian EEZ roughly as (-141, 40, -50, 85)
-  bbox <- c(-141, 40, -50, 85)
+  # Manually specify a bounding box around AOI
+  bbox <- c(-85, 38, -35, 75)
 
   # Read the file
   dat <- arrow::read_csv_arrow(file, col_select = dplyr::all_of(required_columns)) |>

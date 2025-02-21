@@ -139,20 +139,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#petroleum-pollution-based-on-past-incidents" id="toc-petroleum-pollution-based-on-past-incidents" class="nav-link active" data-scroll-target="#petroleum-pollution-based-on-past-incidents"><span class="header-section-number">4.1</span> Petroleum Pollution Based on Past Incidents</a></li>
-  <li><a href="#offshore-petroleum" id="toc-offshore-petroleum" class="nav-link" data-scroll-target="#offshore-petroleum"><span class="header-section-number">4.2</span> Offshore Petroleum</a>
+  <li><a href="#marine-pollution-incidents" id="toc-marine-pollution-incidents" class="nav-link active" data-scroll-target="#marine-pollution-incidents"><span class="header-section-number">4.1</span> Marine pollution incidents</a></li>
+  <li><a href="#offshore-petroleum-activities" id="toc-offshore-petroleum-activities" class="nav-link" data-scroll-target="#offshore-petroleum-activities"><span class="header-section-number">4.2</span> Offshore petroleum activities</a>
   <ul class="collapse">
-  <li><a href="#offshore-petroleum-activities" id="toc-offshore-petroleum-activities" class="nav-link" data-scroll-target="#offshore-petroleum-activities"><span class="header-section-number">4.2.1</span> Offshore Petroleum Activities</a></li>
-  <li><a href="#offshore-petroleum-platforms" id="toc-offshore-petroleum-platforms" class="nav-link" data-scroll-target="#offshore-petroleum-platforms"><span class="header-section-number">4.2.2</span> Offshore Petroleum Platforms</a></li>
+  <li><a href="#installations-wells-and-lease-areas" id="toc-installations-wells-and-lease-areas" class="nav-link" data-scroll-target="#installations-wells-and-lease-areas"><span class="header-section-number">4.2.1</span> Installations, wells, and lease areas</a></li>
+  <li><a href="#flaring" id="toc-flaring" class="nav-link" data-scroll-target="#flaring"><span class="header-section-number">4.2.2</span> Flaring</a></li>
   <li><a href="#monthly-layers" id="toc-monthly-layers" class="nav-link" data-scroll-target="#monthly-layers"><span class="header-section-number">4.2.3</span> Monthly Layers</a></li>
   </ul></li>
   <li><a href="#offshore-wind-farms" id="toc-offshore-wind-farms" class="nav-link" data-scroll-target="#offshore-wind-farms"><span class="header-section-number">4.3</span> Offshore Wind Farms</a></li>
-  <li><a href="#nighttime-lights" id="toc-nighttime-lights" class="nav-link" data-scroll-target="#nighttime-lights"><span class="header-section-number">4.4</span> Nighttime Lights</a></li>
-  <li><a href="#shipping" id="toc-shipping" class="nav-link" data-scroll-target="#shipping"><span class="header-section-number">4.5</span> Shipping</a>
+  <li><a href="#marine-vessel-traffic" id="toc-marine-vessel-traffic" class="nav-link" data-scroll-target="#marine-vessel-traffic"><span class="header-section-number">4.4</span> Marine vessel traffic</a>
   <ul class="collapse">
-  <li><a href="#sec-shipping_threat" id="toc-sec-shipping_threat" class="nav-link" data-scroll-target="#sec-shipping_threat"><span class="header-section-number">4.5.1</span> Ship-Based Pollution Risk</a></li>
-  <li><a href="#ship-based-night-lights" id="toc-ship-based-night-lights" class="nav-link" data-scroll-target="#ship-based-night-lights"><span class="header-section-number">4.5.2</span> Ship-Based Night Lights</a></li>
+  <li><a href="#sec-shipping_threat" id="toc-sec-shipping_threat" class="nav-link" data-scroll-target="#sec-shipping_threat"><span class="header-section-number">4.4.1</span> Disturbance and pollution</a></li>
+  <li><a href="#ship-based-light-pollution" id="toc-ship-based-light-pollution" class="nav-link" data-scroll-target="#ship-based-light-pollution"><span class="header-section-number">4.4.2</span> Ship-based light pollution</a></li>
   </ul></li>
+  <li><a href="#coastal-light-pollution" id="toc-coastal-light-pollution" class="nav-link" data-scroll-target="#coastal-light-pollution"><span class="header-section-number">4.5</span> Coastal light pollution</a></li>
   </ul>
 </nav>
     </div>
@@ -178,16 +178,16 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="petroleum-pollution-based-on-past-incidents" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="petroleum-pollution-based-on-past-incidents"><span class="header-section-number">4.1</span> Petroleum Pollution Based on Past Incidents</h2>
-<p>The objective was to assess the risk associated with petroleum incidents by evaluating the frequency of past incidents at specific locations over a defined period. Ideally, a more detailed approach would model the diffusion of each spill based on factors such as total volume, substance type, and local or regional currents to estimate the likely spread of each event. However, this level of detail was beyond the scope of the current study. Given the retrospective nature of the dataset and its focus on historical rather than predictive risk, we chose a simplified approach. Each recorded or probable incident was treated as an individual, discrete event in the dataset to characterize exposure to petroleum-related incidents.</p>
+<section id="marine-pollution-incidents" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="marine-pollution-incidents"><span class="header-section-number">4.1</span> Marine pollution incidents</h2>
+<p>The objective was to identify areas with relatively higher frequencies of past petroleum release incidents over a defined period. Such areas may also be at higher risk of future incidents, assuming high incident frequencies may be associated with factors such as high vessel traffic or fueling locations. Ideally, a more detailed approach would be used which incorporates spill diffusion modelling based on factors such as total volume, substance type, and local or regional currents to estimate the likely spread of each event. However, this level of detail was beyond the scope of the current study. Given the retrospective nature of the dataset and its focus on historical rather than predictive risk, we chose a simplified approach. Each recorded or probable incident was treated as an individual, discrete event in the dataset to characterize exposure to petroleum-related incidents.</p>
 <p>This threat layer was constructed using the <a href="@sec-istop">ISTOP</a>, <a href="@sec-neec">NEEC</a>, and <a href="@sec-nasp">NASP</a> datasets. Each dataset was processed to create spatially and temporally explicit threat layers:</p>
 <ul>
 <li><strong>ISTOP</strong>: Categories 1A (possible oil with a clearly associated target), 1B (possible oil with a target within 50 km), and 2 (possible oil without an identifiable source) were retained. The ISTOP data already included polygons representing areas of exposure, which were directly utilized as pollution events in the analysis.</li>
-<li><strong>NASP</strong>: Records with missing coordinates were removed. Each NASP incident, represented as a point with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (<a href="#tbl-spillvolumes" class="quarto-xref">Table&nbsp;<span>4.1</span></a>).</li>
-<li><strong>NEEC</strong>: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity for multi-substance spills, exclusion of irrelevant terms (e.g., “mvi,” “furnace oil”), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points and processed similarly to the NASP dataset, with additional classification by substance type based on chemical state and the presence of an oil sheen.</li>
+<li><strong>NASP</strong>: Records with missing coordinates were removed. We inferred exposure areas for each NASP incident, initially represented as a point with latitude/longitude coordinates and spill volumes in liters, by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (<a href="#tbl-spillvolumes" class="quarto-xref">Table&nbsp;<span>4.1</span></a>).</li>
+<li><strong>NEEC</strong>: This dataset underwent extensive filtering, including the removal of records with empty coordinates, selection of the highest quantity category for multi-substance spills, exclusion of terms irrelevant to the marine environment (e.g., “mvi,” “furnace oil”), and filtering out observations beyond 1 km of the coastline. NEEC incidents were also represented as points with latitude/longitude coordinates and spill volumes in liters, had exposure areas inferred by categorizing spill volumes and applying a variable buffer around each point based on the reported volume (<a href="#tbl-spillvolumes" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), with additional classification by substance type based on chemical state and the presence of an oil sheen.</li>
 </ul>
-<p>Each dataset was clipped to the boundary of the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given temporal period divided by the period covered by each dataset, resulting in an assessment in number of events per year. For the NEEC dataset, additional threat layers were created based on the substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). The ISTOP and NASP datasets were similarly grouped to create monthly raster layers of incident density. We also created monthly rasters combining all the datasets together. The resulting raster layers provide spatially explicit representations of petroleum pollution incidents, highlighting areas of greater historical exposure.</p>
+<p>Each dataset was clipped to the boundary of the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Temporal information was standardized, with incident dates grouped by month. The datasets were rasterized using the study grid, with each grid cell representing the count of overlapping incidents for a given month divided by the number of years covered by each dataset. This resulted in incident density units of number of events per year for each calendar month. For the NEEC dataset, threat layers were created for each substance classification (e.g., liquid with oil sheen, liquid without oil sheen, unknown). We also created monthly rasters combining all the NEEC, ISTOP, and NASP datasets together. The resulting rasters provide spatially explicit representations of petrole</p>
 <ul>
 <li><strong>Processing Scripts</strong>:
 <ul>
@@ -197,7 +197,8 @@ ul.task-list li input[type="checkbox"] {
 <li><code>ana_petroleum_pollution_incidents.R</code></li>
 </ul></li>
 <li><strong>Output Files</strong>: Rasterized layers stored in <code>workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/</code>.</li>
-<li><strong>Units</strong>: number of incidents / month</li>
+<li><strong>Units</strong>: Number of incidents / month</li>
+<li><strong>Temporal</strong>: Monthly</li>
 <li><strong>Years</strong>: 2006-2023</li>
 </ul>
 <div class="cell">
@@ -240,16 +241,17 @@ Table&nbsp;4.1: Volume categories and buffer size selected to transform incident
 </div>
 </div>
 </section>
-<section id="offshore-petroleum" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum"><span class="header-section-number">4.2</span> Offshore Petroleum</h2>
-<section id="offshore-petroleum-activities" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2.1</span> Offshore Petroleum Activities</h3>
-<p>The offshore petroleum activity threat layers were developed to assess spatial exposure to petroleum-related industrial activities within the defined study area. This analysis integrates spatial data on petroleum operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 4.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 4.2.2</span></a>. Data preparation involved processing point and polygon features from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; <a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>4.2</span></a>), operational status (e.g., active, abandoned; <a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>4.3</span></a>), and subtype (e.g., oil producer, gas injector; <a href="2_data.html#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>4.4</span></a>). The classification system ensures clear distinctions between current, past, and potential future activities where that information is available (see <a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
+<section id="offshore-petroleum-activities" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="offshore-petroleum-activities"><span class="header-section-number">4.2</span> Offshore petroleum activities</h2>
+<section id="installations-wells-and-lease-areas" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="installations-wells-and-lease-areas"><span class="header-section-number">4.2.1</span> Installations, wells, and lease areas</h3>
+<p>The offshore petroleum activity threat layers were developed to enable assessment of spatial exposure to exploration, resource delineation, and production activities, as well as potential future activity, within the defined study area. This analysis integrates spatial data on petroleum industry operations from Newfoundland <a href="2_data.html#sec-offshore_petroleum_nfl" class="quarto-xref"><span>Section 3.2.1</span></a> and Nova Scotia <a href="2_data.html#sec-offshore_petroleum_ns" class="quarto-xref"><span>Section 3.2.2</span></a>. Data preparation involved processing point (installations, wells) and polygon features (lease areas, sectors) from the harvested datasets. Point geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. It must be noted that the buffer size was selected only to represent the spatial presence of offshore petroleum activities rather than the risk that they pose in case of accidental oil spills. The combined dataset was clipped to the boundary of the area of interest. Activities were classified into distinct categories based on their classification (e.g., production, exploration, discovery; <a href="2_data.html#tbl-classifications" class="quarto-xref">Table&nbsp;<span>3.2</span></a>), operational status (e.g., active, abandoned; <a href="2_data.html#tbl-status" class="quarto-xref">Table&nbsp;<span>3.3</span></a>), and subtype (e.g., oil producer, gas injector; <a href="2_data.html#tbl-offshore-petroleum-subtypes" class="quarto-xref">Table&nbsp;<span>3.4</span></a>). The classification system ensures clear distinctions between current, past, and potential future activities where that information is available (see <a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). Finally, union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for petroleum activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_activity.R</code></li>
 <li><strong>Output File(s)</strong>: Rasterized layers stored in <code>workspace/data/analyzed/offshore_petroleum_activity-1.0.0/</code>.</li>
-<li><strong>Units</strong>: presence / absence</li>
+<li><strong>Units</strong>: Presence / absence</li>
 <li><strong>Years</strong>: 1966-2032</li>
+<li><strong>Temporal</strong>: No temporality</li>
 </ul>
 <div class="cell">
 <div id="tbl-offshore-petroleum-categories" class="cell quarto-float anchored">
@@ -327,8 +329,8 @@ Table&nbsp;4.2: Categorization of Offshore Petroleum Activities
 </div>
 </div>
 </section>
-<section id="offshore-petroleum-platforms" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="offshore-petroleum-platforms"><span class="header-section-number">4.2.2</span> Offshore Petroleum Platforms</h3>
+<section id="flaring" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="flaring"><span class="header-section-number">4.2.2</span> Flaring</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -345,17 +347,17 @@ Atlantic scale
 </div>
 </div>
 </div>
-<p>The offshore petroleum platform threat layers were created using the VIIRS Night Fire (VNF) dataset (<a href="2_data.html#sec-viirs_night_fire" class="quarto-xref"><span>Section 4.5.2</span></a>), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint.</p>
+<p>The offshore petroleum flaring threat layers were created using the VIIRS Night Fire (VNF) dataset (<a href="2_data.html#sec-viirs_night_fire" class="quarto-xref"><span>Section 3.5.2</span></a>), with separate analyses for monthly and annual data. These layers quantify spatial and temporal variations in flaring activity associated with offshore petroleum platforms, providing insight into their environmental footprint and potential risk to seabirds sensitive to light pollution.</p>
 <section id="annual-layers" class="level4" data-number="4.2.2.1">
 <h4 data-number="4.2.2.1" class="anchored" data-anchor-id="annual-layers"><span class="header-section-number">4.2.2.1</span> Annual Layers</h4>
-<p>The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on platform locations, including the average temperature of flares (<code>avg_temp_k</code>) and the detection frequency (<code>detection_frequency</code>). The following steps were applied to create the annual threat layers:</p>
+<p>The annual VNF dataset was used to generate rasterized layers summarizing flaring activity by year. Each annual dataset contains spatial information on flaring platform locations, including the average temperature of flares (<code>avg_temp_k</code>) and the detection frequency (<code>detection_frequency</code>). The following steps were applied to create the annual threat layers:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: The annual VNF dataset was filtered to retain only records within the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>).</li>
 <li><strong>Aggregation</strong>: Flaring activity was grouped by year to calculate annual summaries of total heat output (<code>total_heat</code>) and total detection frequencies (<code>detection_frequency</code>) at each platform location.</li>
 <li><strong>Rasterization</strong>: The annual flaring data was rasterized using the study grid, with each grid cell containing the sum of <code>total_heat</code> and <code>detection_frequency</code> values for all platforms in that cell for a given year.</li>
 <li><strong>Export</strong>: Rasterized layers were exported as geospatial files, with one raster file generated for each year.</li>
 </ol>
-<p>The resulting layers provide annual snapshots of flaring activity.</p>
+<p>The resulting layers provide annual snapshots of flaring activity for comparison across years.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_platform_annual.R</code></li>
 <li><strong>Output Files</strong>: Rasterized annual layers stored in <code>workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/</code>.</li>
@@ -365,24 +367,26 @@ Atlantic scale
 <li>Detection frequency as sum of percent detection frequency</li>
 </ul></li>
 <li><strong>Years</strong>: 2017-2023</li>
+<li><strong>Temporal</strong>: Annual</li>
 </ul>
 </section>
 </section>
 <section id="monthly-layers" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="monthly-layers"><span class="header-section-number">4.2.3</span> Monthly Layers</h3>
-<p>The monthly VNF dataset was used to generate high-resolution temporal layers, summarizing flaring activity at a monthly level. These layers provide finer granularity in monitoring platform activity. It should be noted that only data for the year 2023 are available. The following steps were applied to create the monthly threat layers:</p>
+<p>The monthly VNF dataset was used to generate high-resolution temporal layers, summarizing flaring activity at a monthly level. These layers provide finer granularity in monitoring platform activity. Only data from November 2023 to September 2024 were are available at the time of this project. The following steps were applied to create the monthly threat layers:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: The monthly VNF dataset was filtered to retain only records flagged as <code>likely_flare</code> and located within the area of interest (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>).</li>
 <li><strong>Temporal Grouping</strong>: Flaring activity was grouped by month, with the <code>total_heat</code> value aggregated for each month.</li>
 <li><strong>Rasterization</strong>: For each month, flaring data was rasterized onto the study grid, with cell values representing the sum of <code>total_heat</code> values for all platforms within that cell.</li>
 <li><strong>Export</strong>: Rasterized layers were exported as geospatial files, with one raster file generated for each month.</li>
 </ol>
-<p>The monthly layers allow for detailed temporal analyses of flaring activity.</p>
+<p>The monthly layers allow for detailed temporal analyses of flaring activity, allowing for seasonal comparisons for species with variable intra-annual distributions such as aerofauna.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_petroleum_platform_monthly.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/</code>.</li>
 <li><strong>Units</strong>: Total heat in Kelvin</li>
 <li><strong>Years</strong>: November 2023 - September 2024</li>
+<li><strong>Temporal</strong>: Monthly</li>
 </ul>
 </section>
 </section>
@@ -404,12 +408,13 @@ Atlantic scale
 </div>
 </div>
 </div>
-<p>The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States. More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 4.3.1</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 4.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. Activities were classified into distinct categories based on the BOEM classification (e.g., leases and turbine locations; <a href="2_data.html#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>4.5</span></a>). We further categorized the BOEM classification to obtain four individual categories, i.e.&nbsp;current wind farms, transmission infrastructure, future development areas, and environmental monitoring (<a href="#tbl-offshore-wind-categories" class="quarto-xref">Table&nbsp;<span>4.3</span></a>). Point and line geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. Union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for wind farm activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
+<p>The offshore wind farm threat layers were developed to assess the spatial footprint of existing and proposed offshore wind farms or area of interest for wind farm projects. This layer integrates data from multiple regional datasets, capturing offshore wind farm activity across Canada and the United States. More precisely, our analysis used offshore wind farm datasets for Canada (<a href="2_data.html#sec-offshore_wind_can" class="quarto-xref"><span>Section 3.3.1</span></a>) and the United-States (<a href="2_data.html#sec-offshore_wind_usa" class="quarto-xref"><span>Section 3.3.4</span></a>). Each dataset contains spatial information on the locations of wind farms represented as polygons. Activities were classified into distinct categories based on the BOEM classification (e.g., leases and turbine locations; <a href="2_data.html#tbl-wind-usa-classification" class="quarto-xref">Table&nbsp;<span>3.5</span></a>). We further categorized the BOEM classification to obtain four individual categories, i.e.&nbsp;current wind farms, transmission infrastructure, future development areas, and environmental monitoring (<a href="#tbl-offshore-wind-categories" class="quarto-xref">Table&nbsp;<span>4.3</span></a>). Point and line geometries were buffered by 500 meters to approximate their spatial influence, while polygon geometries were used as-is. Union operations were applied to consolidate overlapping geometries and identify areas of presence or absence for wind farm activities. To quantify exposure, the threat layers were rasterized using the study grid (<a href="index.html#sec-aoi" class="quarto-xref"><span>Section 1.3</span></a>). Each cell in the raster represents the count of overlapping features for a given combination of the categories presented above (<a href="#tbl-offshore-petroleum-categories" class="quarto-xref">Table&nbsp;<span>4.2</span></a>). This process generated a series of spatially explicit raster layers, which were exported as geospatial files for further use.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_offshore_wind_farm.R</code></li>
 <li><strong>Output File</strong>: Rasterized layers stored in <code>workspace/data/analyzed/offshore_wind_farm-1.0.0/</code>.</li>
 <li><strong>Units</strong>: presence / absence</li>
 <li><strong>Years</strong>: NA</li>
+<li><strong>Temporal</strong>: No temporality</li>
 </ul>
 <div class="cell">
 <div id="tbl-offshore-wind-categories" class="cell quarto-float anchored">
@@ -455,32 +460,10 @@ Table&nbsp;4.3: Categorization of Offshore Wind Farm Activities
 </div>
 </div>
 </section>
-<section id="nighttime-lights" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="nighttime-lights"><span class="header-section-number">4.4</span> Nighttime Lights</h2>
-<p>The night lights threat layer was developed to quantify the spatial and temporal distribution of artificial light pollution. This analysis used the VIIRS Monthly Nighttime Light dataset (<a href="2_data.html#sec-viirs_nightlight" class="quarto-xref"><span>Section 4.5.3</span></a>), which provides high-resolution observations of nighttime light intensity. The data was analyzed using the following steps:</p>
-<ol type="1">
-<li><strong>Data Preparation</strong>: Each monthly VIIRS nighttime light raster file was resampled to the study grid.</li>
-<li><strong>Coastal Masking</strong>: A coastal mask was applied to focus the analysis on regions near the coastline. The mask was created by:
-<ul>
-<li>Downloading and merging coastline data for Canada, the United States, and Greenland.</li>
-<li>Buffering the coastlines by 1 km offshore and 5 km inland.</li>
-<li>Masking the resampled nighttime light data.</li>
-</ul></li>
-<li><strong>Temporal Aggregation</strong>: Each monthly raster file was processed individually to extract nighttime light intensity values.</li>
-<li><strong>Raster Export</strong>: Processed raster files were exported as geospatial files, with one raster generated for each month in the dataset.</li>
-</ol>
-<p>The night lights threat layer provides a spatially explicit representation of artificial light pollution along the coastlines, with monthly granularity.</p>
-<ul>
-<li><strong>Processing Script</strong>: <code>ana_night_light_monthly.R</code></li>
-<li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/night_light_monthly-1.0.0/</code>.</li>
-<li><strong>Units</strong>: average nanowatts per square centimeter per steradian per month (nW/cm²/sr/month)</li>
-<li><strong>Years</strong>: January 2023 - January 2024</li>
-</ul>
-</section>
-<section id="shipping" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="shipping"><span class="header-section-number">4.5</span> Shipping</h2>
-<section id="sec-shipping_threat" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-shipping_threat"><span class="header-section-number">4.5.1</span> Ship-Based Pollution Risk</h3>
+<section id="marine-vessel-traffic" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="marine-vessel-traffic"><span class="header-section-number">4.4</span> Marine vessel traffic</h2>
+<section id="sec-shipping_threat" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="sec-shipping_threat"><span class="header-section-number">4.4.1</span> Disturbance and pollution</h3>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -497,11 +480,11 @@ Atlantic scale
 </div>
 </div>
 </div>
-<p>The ship-based pollution risk layer quantifies the density of ship traffic within the area of interest, providing insight into the spatial and temporal variability of shipping activities and their potential environmental impacts. This analysis utilizes Automatic Identification System (AIS) data (<a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 4.4</span></a>). The following processing steps were used to create this threat layer, but refer to <a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 4.4</span></a> for more information on AIS data processing:</p>
+<p>The vessel traffic threat layers quantify the monthly density of different vessel types within the area of interest, providing insight into the spatial and temporal variability of shipping, fishing, and other vessel activities and their potential environmental impacts. This analysis utilizes Automatic Identification System (AIS) data from 2023 (<a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 3.4</span></a>). The following processing steps were used to create these threat layers, but refer to <a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 3.4</span></a> for more information on AIS data processing:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>:
 <ul>
-<li>AIS data for ship locations and movements were ingested in Parquet format and pre-processed to ensure compatibility with the study grid.</li>
+<li>AIS data for ship locations and movements were ingested in parquet format and pre-processed to ensure compatibility with the study grid.</li>
 <li>Auxiliary information on vessel types was included by merging with a reference dataset containing vessel classification (<code>ntype</code>).</li>
 </ul></li>
 <li><strong>Spatial Filtering</strong>:
@@ -513,48 +496,48 @@ Atlantic scale
 <ul>
 <li>Vessel tracklines were grouped by month, allowing for the calculation of monthly ship traffic densities.</li>
 </ul></li>
-<li><strong>Density Calculation</strong>:
-<ul>
-<li>Ship densities were calculated by rasterizing the trackline data onto the study grid. For each grid cell, the number of unique vessel occurrences was normalized by the number of days in the corresponding month to obtain a density assessment in number of ships per month in each grid cell.</li>
-</ul></li>
 <li><strong>Vessel Type-Specific Analysis</strong>:
 <ul>
 <li>Ship densities were categorized by vessel type (<code>ntype</code>), creating separate layers for different vessel classes.</li>
+</ul></li>
+<li><strong>Density Calculation</strong>:
+<ul>
+<li>Ship densities were calculated by rasterizing the trackline data onto the study grid. For each grid cell, the number of unique vessel occurrences was normalized by the number of days in the corresponding month to obtain a density assessment in number of ships per day in each grid cell.</li>
 </ul></li>
 <li><strong>Export</strong>:
 <ul>
 <li>Rasterized ship density layers were exported as geospatial files, with separate files generated for each month and vessel type.</li>
 </ul></li>
 </ol>
-<p>The ship-based pollution risk layer provides spatially and temporally explicit representations of shipping activity, highlighting areas with higher densities of vessel traffic. These layers can inform risk assessments related to ship-based pollution, such as oil spills and other environmental hazards.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_shipping_intensity_density.R</code></li>
 <li><strong>Output Files</strong>: Monthly ship density layers stored in <code>workspace/data/analyzed/shipping_intensity_density-1.0.0/</code>.</li>
-<li><strong>Units</strong>: number of ships per month</li>
+<li><strong>Units</strong>: number of ships per day</li>
 <li><strong>Years</strong>: 2023</li>
+<li><strong>Temporal</strong>: Monthly</li>
 </ul>
 </section>
-<section id="ship-based-night-lights" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="ship-based-night-lights"><span class="header-section-number">4.5.2</span> Ship-Based Night Lights</h3>
-<p>The ship-based night lights threat layer quantifies the spatial and temporal distribution of artificial light emitted by ships at night. Two distinct data sources were utilized to create this layer: Automatic Identification System (AIS) data filtered for nighttime activities and VIIRS Boat Detection (VBD) data.</p>
-<section id="nighttime-shipping-activities-using-ais-data" class="level4" data-number="4.5.2.1">
-<h4 data-number="4.5.2.1" class="anchored" data-anchor-id="nighttime-shipping-activities-using-ais-data"><span class="header-section-number">4.5.2.1</span> Nighttime Shipping Activities Using AIS Data</h4>
-<p>This layer builds on the methods described in section <a href="#sec-shipping_threat" class="quarto-xref"><span>Section 4.5.1</span></a> but focuses specifically on nighttime shipping activities. The following key differences in processing were applied:</p>
+<section id="ship-based-light-pollution" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="ship-based-light-pollution"><span class="header-section-number">4.4.2</span> Ship-based light pollution</h3>
+<p>The boat-based light pollution threat layers quantify the spatial and temporal distribution of artificial light emitted by boats at night. Two distinct data sources were utilized to create these layers: Automatic Identification System (AIS) data filtered for nighttime activities and VIIRS Boat Detection (VBD) data. These layers highlight areas with intense nighttime activity for a range of vessel types, reflecting potential light pollution from ship-based operations.</p>
+<section id="ship-based-light-pollution-using-ais-data" class="level4" data-number="4.4.2.1">
+<h4 data-number="4.4.2.1" class="anchored" data-anchor-id="ship-based-light-pollution-using-ais-data"><span class="header-section-number">4.4.2.1</span> Ship-based light pollution using AIS data</h4>
+<p>This layer builds on the methods described in section <a href="#sec-shipping_threat" class="quarto-xref"><span>Section 4.4.1</span></a> but focuses specifically on nighttime vessel activities. The following key differences in processing were applied:</p>
 <ol type="1">
-<li><strong>Nighttime Filtering</strong>: AIS data was filtered to retain only ship positions recorded during nighttime, as determined by the <code>day_or_night</code> field in the processed AIS dataset (see <a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 4.4</span></a>).</li>
+<li><strong>Nighttime Filtering</strong>: AIS data were filtered to retain only ship positions recorded during nighttime, as determined by the <code>day_or_night</code> field in the processed AIS dataset (see <a href="2_data.html#sec-shipping_ais" class="quarto-xref"><span>Section 3.4</span></a>).</li>
 <li><strong>Trackline Creation</strong>: Tracklines were constructed using only nighttime data points, maintaining the methodology described previously.</li>
-<li><strong>Density Calculation</strong>: The density of nighttime shipping activities was calculated and normalized by the number of nights in each month, resulting in monthly raster layers providing the number of ships per month in each grid cell.</li>
+<li><strong>Density Calculation</strong>: The density of nighttime shipping activities was calculated and normalized by the number of nights in each month, resulting in monthly raster layers providing the number of ships per day in each grid cell.</li>
 </ol>
-<p>This layer highlights areas with intense nighttime shipping activities, reflecting potential light pollution from ship-based operations.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_shipping_night_light_density.R</code></li>
 <li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/</code>.</li>
-<li><strong>Units</strong>: number of ships per night per month</li>
+<li><strong>Units</strong>: number of ships per night per day</li>
 <li><strong>Years</strong>: 2023</li>
+<li><strong>Temporal</strong>: Monthly</li>
 </ul>
 </section>
-<section id="nighttime-ship-light-detection-using-vbd-data" class="level4" data-number="4.5.2.2">
-<h4 data-number="4.5.2.2" class="anchored" data-anchor-id="nighttime-ship-light-detection-using-vbd-data"><span class="header-section-number">4.5.2.2</span> Nighttime Ship Light Detection Using VBD Data</h4>
+<section id="ship-based-light-pollution-using-vbd-data" class="level4" data-number="4.4.2.2">
+<h4 data-number="4.4.2.2" class="anchored" data-anchor-id="ship-based-light-pollution-using-vbd-data"><span class="header-section-number">4.4.2.2</span> Ship-based light pollution using VBD <strong>data</strong></h4>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -571,24 +554,48 @@ Atlantic scale
 </div>
 </div>
 </div>
-<p>The second approach utilized VIIRS Boat Detection (VBD) data (<a href="2_data.html#sec-viirs_boat_detection" class="quarto-xref"><span>Section 4.5.1</span></a>), which directly measures the radiance of lights detected from boats at night. The following steps were applied:</p>
+<p>The second approach utilized VIIRS Boat Detection (VBD) data (<a href="2_data.html#sec-viirs_boat_detection" class="quarto-xref"><span>Section 3.5.1</span></a>), which directly measures the radiance of lights detected from boats at night. The following steps were applied:</p>
 <ol type="1">
 <li><strong>Data Preparation</strong>: The VBD dataset was filtered to include only observations within the area of interest.</li>
 <li><strong>Temporal Grouping</strong>: Observations were grouped by month, with radiance values aggregated for each month.</li>
-<li><strong>Rasterization</strong>: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell divided by the number of years of data harvested, resulting in total radiance per year in each grid cell.</li>
+<li><strong>Rasterization</strong>: Monthly radiance values were rasterized onto the study grid. Each grid cell contains the sum of radiance values for all detected boats within that cell across all years, divided by the number of years of data harvested, resulting in average total radiance per year in each grid cell.</li>
 <li><strong>Masking and Export</strong>: Rasterized layers were masked to the area of interest and exported as monthly geospatial files.</li>
 </ol>
 <p>This layer provides a direct measurement of ship light emissions, offering a complementary perspective to the AIS-derived night lights layer.</p>
 <ul>
 <li><strong>Processing Script</strong>: <code>ana_ship_light_detection.R</code></li>
-<li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/ship_light_detection-1.0.0/</code>.</li>
+<li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/**analyzed**/ship_light_detection-1.0.0/</code>.</li>
 <li><strong>Units</strong>: average nanowatts per square centimeter per steradian per month (nW/cm²/sr/month)</li>
 <li><strong>Years</strong>: 2020-2023</li>
+<li><strong>Temporal</strong>: Monthly</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="coastal-light-pollution" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="coastal-light-pollution"><span class="header-section-number">4.5</span> Coastal light pollution</h2>
+<p>The coastal light pollution threat layers were developed to quantify the intensity and spatial and temporal distribution of coastal light that may be affecting light-sensitive fauna in the nearshore environment. This analysis used the 2023 VIIRS Monthly Nighttime Light dataset (<a href="2_data.html#sec-viirs_nightlight" class="quarto-xref"><span>Section 3.5.3</span></a>), which provides high-resolution observations of nighttime light intensity. The data was analyzed using the following steps:</p>
+<ol type="1">
+<li><strong>Data Preparation</strong>: Each monthly VIIRS nighttime light raster file was resampled to the study grid.</li>
+<li><strong>Coastal Masking</strong>: A coastal mask was applied to focus the analysis on regions near the coastline. The mask was created by:
+<ul>
+<li>Downloading and merging coastline data for Canada, the United States, and Greenland.</li>
+<li>Buffering the coastlines by 1 km offshore and 5 km inland.</li>
+<li>Masking the resampled nighttime light data.</li>
+</ul></li>
+<li><strong>Temporal Aggregation</strong>: Each monthly raster file was processed individually to extract nighttime light intensity values.</li>
+<li><strong>Raster Export</strong>: Processed raster files were exported as geospatial files, with one raster generated for each month in the dataset.</li>
+</ol>
+<p>The night lights threat layer provides a spatially explicit representation of artificial light pollution along the coastlines, with monthly granularity.</p>
+<ul>
+<li><strong>Processing Script</strong>: <code>ana_night_light_monthly.R</code></li>
+<li><strong>Output Files</strong>: Rasterized monthly layers stored in <code>workspace/data/analyzed/night_light_monthly-1.0.0/</code>.</li>
+<li><strong>Units</strong>: average nanowatts per square centimeter per steradian per month (nW/cm²/sr/month)</li>
+<li><strong>Years</strong>: January 2020 - December 2023</li>
+<li><strong>Temporal</strong>: Monthly</li>
 </ul>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->

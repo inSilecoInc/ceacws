@@ -38,10 +38,10 @@ pipeline:
   # Bibliographic Information
   bibliography:
     - "@TechReport{tc2023,
-        title = {Satellite Navigation Data from Automatic Identification System (AIS) in Atlantic Canada, 2023. Data Provided by Transports Canada.},
-        author = {{Transports Canada}},
+        title = {Satellite Navigation Data from Automatic Identification System (AIS) in Atlantic Canada, 2023. Data Provided by Transport Canada.},
+        author = {{Transport Canada}},
         year = {2023},
-        institution = {{Transports Canada}},
+        institution = {{Transport Canada}},
       }"
     - "@report{veinot2023,
         title = {Vessel {{Density Mapping}} of 2019 {{Automatic Identification System}} ({{AIS}}) {{Data}} in the {{Northwest Atlantic}}. {{Can}}. {{Tech}}. {{Rep}}. {{Fish}}. {{Aquat}}. {{Sci}}. 3520: Vi + 29 p.},
