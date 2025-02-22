@@ -17,16 +17,12 @@ prc_viirs_nighttime_light <- function(input_files, output_path) {
     ~ process_vnl_file(.x, output_path),
     .options = furrr::furrr_options(seed = TRUE)
   )
-
-  # Remove unzipped files
-  tmp <- file.path(output_path, "tmp")
-  fs::dir_delete(tmp)
 }
 
 # Individual File Processing Function
 process_vnl_file <- function(file, output_path) {
   # Decompress file
-  tmp <- file.path(output_path, "tmp")
+  tmp <- file.path(output_path, tools::file_path_sans_ext(basename(file)))
   out <- file.path(tmp, tools::file_path_sans_ext(basename(file)))
   R.utils::gunzip(file, destname = out, overwrite = FALSE, remove = FALSE)
 
@@ -48,4 +44,7 @@ process_vnl_file <- function(file, output_path) {
         overwrite = TRUE
       )
   })
+
+  # Remove unzipped files
+  fs::dir_delete(tmp)
 }
