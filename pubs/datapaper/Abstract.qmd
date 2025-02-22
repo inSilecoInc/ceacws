@@ -1,5 +1,5 @@
 ---
-title: Mapping threats to marine birds to inform conservation and management in Atlantic Canada
+title: Mapping Anthropogenic Oil Spills and Offshore Industrial Activities in the northwest Atlantic to Inform Marine Conservation and Management
 fontsize: 12pt
 format:
   pdf:
@@ -17,42 +17,47 @@ quarto::render('./MetadataS1.qmd')
 rmarkdown::render('./FoodWeb-CumulativeImpact.md', output_format = "word_document")
 -->
 
-David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^, Philippe Muise^4^, Allison Patterson^5^, Robert Ronconi^5^, Katharine Studholme^6^, Sarah Wong^6^
+David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^, Philippe Muise^4^, Allison Patterson^5^, Robert Ronconi^6^, Katharine Studholme^7^, Sarah Wong^6^
 
+^1^inSileco, Québec, Québec, Canada
 
-^1^inSileco, Québec, Canada 
+^2^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Ottawa, Ontario, Canada
 
-^2^Environment and Climate Change Canada, Ottawa, ON, Canada
+^3^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Mount Pearl, Newfoundland and Labrador, Canada
 
-^3^Environment and Climate Change Canada, Mount Pearl, Newfoundland and Labrador, Canada
+^4^Environment and Climate Change Canada, National Environmental Emergencies Centre, Montreal, Québec, Canada
 
-^4^Canada Centre for Mapping and Earth Observation, Canada Centre for Remote Sensing, Ottawa, Ontario, Canada
+^5^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
 
-^5^Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
+^6^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
+
+^7^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
 
 #####
 
 **Abstract**
 
-Coastal and marine birds in Canada face significant threats from anthropogenic activities. Under the Migratory Birds Convention Act (1994) and through the Ocean Protection Plan (OPP) and Marine Spatial Planning (MSP) initiatives, efforts are underway to improve our understanding of the spatiotemporal distribution of these birds and their overlap with threats such as oil spills, vessel traffic, and light pollution. This study presents a comprehensive dataset of spatiotemporal threat layers, integrating a wide range of primary data sources to inform seabird conservation and management within Canada’s Exclusive Economic Zone (EEZ) and beyond.
+Anthropogenic activities pose significant threats to marine ecosystems, with oil pollution, vessel traffic, and artificial light contributing to environmental risks across Canada’s Exclusive Economic Zone (EEZ) and adjacent waters.  This study presents a dataset of spatiotemporal threat layers, integrating a wide range of primary data sources to inform conservation, environmental response planning, and marine spatial management in Atlantic Canada. 
 
-The dataset comprises geospatial threat layers developed from various primary datasets, including open access and proprietary data shared for this project. These layers quantify risks from petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light across the annual cycle of migratory seabirds. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite datasets were used to capture artificial light and flaring activity, complemented by regional assessments of offshore wind development from Canada and the United States.
+The dataset comprises geospatial layers developed from various primary datasets, including open access and proprietary data shared for this project. These layers quantify petroleum pollution events, oil and gas infrastructure, vessel activity, and artificial light exposure across the annual cycle. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite observations are used to capture artificial light and flaring activity.
 
-Spatiotemporal threat layers were created through reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of ship traffic and associated risks. All datasets were processed into a 1-$km^2$ resolution study grid covering Canada’s EEZ, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. The datasets and associated code are openly accessible via Zenodo at https://doi.org/TO/ADD and https://doi.org/TO/ADD, and the codebase is also available on GitHub (https://github.com/inSilecoInc/ceacws).
+These spatiotemporal threat layers were developed using reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of different types of ship traffic and associated risks. All datasets were processed into high resolution 1-km2 study grid covering the northwest Atlantic, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. Openly accessible, this dataset supports diverse applications, including evaluating cumulative environmental impacts, informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species, such as the Leach’s Storm-Petrel, which breeds in Canada but regularly forages beyond Canada’s jurisdiction.
 
-This work integrates diverse datasets together to produce geospatial threat layers, addressing critical gaps in marine bird conservation. Applications of these data include informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species, such as the Leach’s Storm-Petrel, which regularly forages beyond Canada’s jurisdiction. By aligning with Canada’s OPP and MSP frameworks, this dataset contributes to sustainable ocean management and facilitates evidence-based decision-making to safeguard Canada’s coastal and marine bird populations.
+By providing an integrated and high-resolution review of key anthropogenic stressors, this dataset bridges critical knowledge gaps in ocean management. It enables data-driven decision making for conservation practitioners, policymakers and researchers working to mitigate environmental threats and ensure the sustainable ocean management of marine resources within and beyond Canadian waters.
+
 
 #####
 
 *Key words/phrases:* 
+Northwest Atlantic, 
+Atlantic Canada,
 Annual cycle,
 Light,
 Petroleum activities,
 Petroleum pollution,
 Marine birds,
 Marine threats,
-Shipping,
-Wind farms
+Shipping
 
 #####
 
@@ -62,43 +67,3 @@ Code is available in Zenodo at https://doi.org/TO/ADD.
 #####
 
 *Corresponding Author E-mail: david.beauchesne@insileco.io
-
-
-#
-
-##### Affiliations details (*to remove once validated*)
-
-- David Beauchesne
-  - david.beauchesne@insileco.io
-  - inSileco, Québec, Canada
-  - ORCID: 0000-0002-3590-8161
-- Kevin Cazelles
-  - kevin.cazelles@insileco.io  
-  - inSileco, Québec, Canada
-  - ORCID: 0000-0001-6619-9874
-- Stephanie Avery-Gomm
-  - Stephanie.Avery-Gomm@ec.gc.ca
-  - Environment and Climate Change Canada, Ottawa, ON, Canada
-  - ORCID: 0000-0003-2882-0978
-- April Hedd
-  - April.Hedd@ec.gc.ca
-  - Environment and Climate Change Canada, Mount Pearl, Newfoundland and Labrador, Canada
-  - ORCID: 0000-0003-2222-2627
-- Philippe Muise
-  - Philippe.Muise@ec.gc.ca
-  - Canada Centre for Mapping and Earth Observation, Canada Centre for Remote Sensing, Ottawa, Ontario, Canada
-- Allison Patterson
-  - Allison.Patterson@ec.gc.ca
-  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
-  - ORCID: 0000-0001-9931-2693
-- Robert Ronconi
-  - Robert.Ronconi@ec.gc.ca
-  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
-  - ORCID: 0000-0002-3635-7162
-- Katharine Studholme
-  - Katharine.Studholme@ec.gc.ca
-  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
-  - ORCID: 0000-0003-0921-4745
-- Sarah Wong
-  - sarah.wong2@ec.gc.ca
-  - Environment and Climate Change Canada: Dartmouth, Nova Scotia, Canada
