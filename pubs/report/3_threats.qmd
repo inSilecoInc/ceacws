@@ -172,37 +172,51 @@ This layer provides a direct measurement of ship light emissions, offering a com
 
 ## Commercial Fisheries {#sec-fisheries_intensity}
 
-The fisheries intensity threat layer quantifies the spatial and temporal distribution of fishing activities in the study area, using commercial fisheries logbook data (@sec-fisheries_dfo). This analysis focuses on estimating fishing pressure for different gear types, target species, and month-year combinations. The following processing steps were used to create this threat layer:
+The fisheries intensity threat layer quantifies the spatial and temporal distribution of fishing activities in the study area, using commercial fisheries logbook data (@sec-fisheries_dfo). This analysis focuses on estimating fishing pressure for different gear types, target species, and month-year combinations. The dataset contains 8 215 548 observations on 3 174 171 fishing events (multiple observation per fishing event) for 100 species using 57 types of fishing gear between 2000 and 2020. 
+
+The following processing steps were used to create this threat layer:
 
 1. **Data Preparation**:
    - Logbook data (`logbooks.parquet`) was ingested, alongside auxiliary datasets for gear codes (`gear.csv`) and species information (`species.csv`).
-   - Data was cleaned to ensure completeness and compatibility with the study area grid. Missing values in critical fields, such as `nb_engin` (number of gear) and `eff_hre` (effort hours), were addressed with appropriate default values.
+   - Data was cleaned to ensure completeness and compatibility with the study area grid. 
    - Depth was standardized, converting depth classes (`cl_prof`) into mean depths in fathoms, and depth values were further converted into meters.
+   - Missing values in critical fields, such as `nb_engin` (number of gear) and `eff_hre` (effort hours), were addressed with appropriate default values from other fields.
 
 2. **Gear Classification**:
-   - Gear codes were classified into four main types (see @tbl-gear-summary):
-     - **Gillnet**: Includes codes for various gillnet fishing configurations.
-     - **Longline**: Differentiates longline fishing but does not yet distinguish between pelagic and demersal types.
-     - **Trawl**: Covers various trawling techniques.
-     - **Purse Seine**: Identified separately from other seine nets.
-   - This classification allowed for the calculation of fishing intensity per gear type.
+   - This work focused on certain types of fishing gear to allow for the calculation of fishing intensity per gear type. Gear codes were classified into seven main types (see @tbl-gear-summary):
+     - **Gillnet**: Passive nets that entangle fish by their gills.
+     - **Demersal Longline**: Long lines set near the seabed with baited hooks targeting bottom-dwelling species.
+     - **Pelagic Longline**: Long lines deployed in open water with baited hooks for capturing pelagic fish.
+     - **Bottom trawl**: Nets dragged along the seafloor to collect demersal species.
+     - **Midwater trawl**: Nets towed through the water column to capture schooling fish.
+     - **Shrimp trawl**: Specialized trawls designed primarily for catching shrimp.
+     - **Purse Seine**: Large encircling nets that are drawn closed to capture entire schools of fish.
 
 3. **Species Traits and Target Species**:
-   - Species traits related to their environment (e.g., pelagic, demersal) were retrieved and linked to target species in the logbook data. This will support future classification of longline and trawl fishing into pelagic and demersal categories.
-   - Logbook entries without valid target species (`prespvis`) or fishing events (`nb_engin`, `effort_days`) were excluded.
+   - Species traits related to their environment (e.g., pelagic, demersal) were retrieved and linked to target species in the logbook data to support the classification of longline and trawl fishing into pelagic and demersal categories (@tbl-gear-species-summary).
+   
+4. **Fishing effort**:
+   - **Gillnet fishing effort**: Fishing pressure was calculated as the product of the number of nets set (`nb_engin`) and soak time in days (`effort_days`), resulting in an assessment in number of nets per day. For depths greater than 200 m, soak time was limited to 1 hour to account for bird exposure risk.
+   - **Longline fishing effort**: Fishing pressure for demersal and pelagic longlines was estimated based on the number of hooks set (`nb_engin`), resulting in an assessment in number of hooks set. 
+   - **Trawl fishing effort**: Fishing pressure was for bottom, midwater and shrimp trawls estimated based on the number of trawls (`nb_engin`) and fishing effort in days (`effort_days`), resulting in an assessment in number of trawling events per day. Future refinements will incorporate target species to classify longline sets as midwater or demersal.
+   - **Purse Seine fishing effort**: Fishing pressure was calculated as the product of the number of seines set (`nb_engin`) and fishing effort in days (`effort_days`), resulting in an assessment in number of seines set per day.
 
-4. **Intensity Calculation**:
-   - **Gillnet Fishing**: Fishing pressure was calculated as the product of the number of nets set (`nb_engin`) and soak time in days (`effort_days`), resulting in an assessment in number of nets per day. For depths greater than 200 m, soak time was limited to 1 hour to account for bird exposure risk.
-   - **Longline Fishing**: Fishing pressure was estimated based on the number of hooks set (`nb_engin`) and soak time in days (`effort_days`), resulting in an assessment in number of hooks set per day. Future refinements will incorporate target species to classify longline sets as pelagic or demersal.
-   - **Trawl Fishing**: Fishing pressure was estimated based on the number of trawls (`nb_engin`) and fishing effort in days (`effort_days`), resulting in an assessment in number of trawling events per day. Future refinements will incorporate target species to classify longline sets as midwater or demersal.
-   - **Purse Seine Fishing**: Fishing pressure was calculated as the product of the number of seines set (`nb_engin`) and fishing effort in days (`effort_days`), resulting in an assessment in number of seines set per day.
+5. **Fishing landings**:
+   - Landings were measured in the same way for all gear types considered, i.e. as the total weight caught in kg per fishing event. 
+   - This metric was assessed as 1) total landings of target species in kg and 2) total landings of target and bycatch species in kg. 
+
+
+6. **Data filtering**:
+   - Logbook entries without valid target species (`prespvis`) were excluded (<1% of the data)
+   - For the effort metrics, logbook entries without effort data were excluded (<1% of the data)
+   - For the landings metrics, logbook entries without landings data were excluded (<1% of the data)
 
 ```{r}
 #| label: tbl-gear-summary
 #| tbl-cap: "Summary of gear types used for the assessment of fisheries intensity."
 read.csv("../../workspace/data/analyzed/fisheries_intensity-1.0.0/gear_summary.csv") |>
   dplyr::mutate(gear_type = stringr::str_to_sentence(gear_type)) |>
-  knitr::kable(digits = 2, col.names = c("Gear type", "Gear", "Events (n)", "Total Intensity"))
+  knitr::kable(digits = 2, col.names = c("Gear type", "Events (n)", "Effort", "Events (n)", "Landings target", "Events (n)", "Landings bycatch"))
 ```
 
 <br/>
@@ -212,22 +226,55 @@ read.csv("../../workspace/data/analyzed/fisheries_intensity-1.0.0/gear_summary.c
 #| tbl-cap: "Summary of target species per gear0 type used for the assessment of fisheries intensity."
 read.csv("../../workspace/data/analyzed/fisheries_intensity-1.0.0/gear_species_summary.csv") |>
   dplyr::mutate(gear_type = stringr::str_to_sentence(gear_type)) |>
-  knitr::kable(digits = 2, col.names = c("Gear type", "Code", "Species name", "Scientific name", "Events (n)", "Total Intensity"))
+  knitr::kable(digits = 2, col.names = c("Gear type", "Code", "Scientific name", "Events (n)", "Effort", "Events (n)", "Landings target", "Events (n)", "Landings bycatch"))
 ```
 
 
-5. **Rasterization and Export**:
-   - Fishing pressure was grouped by gear type, year, and month. Spatial data points were rasterized onto the study grid to produce spatially explicit layers.
-   - Separate raster layers were generated for each gear type and month-year combination, representing the sum of fishing pressure (e.g., number of nets fished per day) in each grid cell, thus providing a number per month.
-
-### Exported Layers and Outputs
-
-The fisheries intensity threat layer provides detailed spatial and temporal representations of fishing activity. It highlights high-pressure areas and their association with gear types and species.
+5. **Threat layers**:
+   - Fishing pressure was grouped by gear type, annual periods (2000-2005, 2006-2010, 2011-2015, 2016-2020), and month. Spatial data points were rasterized onto the study grid to produce spatially explicit layers.
+   - Separate raster layers were generated for each gear-period-month combination, representing the sum of fishing pressure (e.g., number of nets fished per day) in each grid cell, thus providing a number per month.
+   - For each gear-period-month layer, we also prepared raster layers for the most important target species. The most important species in terms of fishing effort were identified as species with at least 5000 observed fishing events as target species during the time span covered by the fisheries dataset:
+      - Gadus morhua
+      - Melanogrammus aeglefinus
+      - Sebastes sp
+      - Hippoglossus hippoglossus
+      - Pleuronectes ferrugineus
+      - Glyptocephalus cynoglossus
+      - Pleuronectes americanus
+      - Reinhardtius hippoglossoides
+      - Pleuronectiformes
+      - Pollachius virens
+      - Urophycis tenuis
+      - Merluccius bilinearis
+      - Lophius americanus
+      - Cottidae
+      - Clupea harengus
+      - Scomber scombrus
+      - Xiphias gladius
+      - Thunnus obesus
+      - Thunnus thynnus
+      - Mallotus villosus
+      - Pandalus sp
+   - This process resulted in the creation of 6 types of fishing threat layers, for a total of 6170 threat layers:
+     - Effort by gear type
+     - Effort by gear type per target species
+     - Landings in kg of target species by gear type
+     - Landings in kg of target species by gear type per target species
+     - Landings in kg of target & bycatch species by gear type
+     - Landings in kg of target & bycatch species by gear type per target species
 
 - **Processing Script**: `ana_fisheries_intensity.R`
 - **Output Files**:
   - **Gear Summary**: `gear_summary.csv`
   - **Gear-Species Summary**: `gear_species_summary.csv`
   - **Fisheries Intensity Rasters**: Monthly layers stored in `workspace/data/analyzed/fisheries_intensity-1.0.0/`.
+- **Units**:
+  - number of nets per month
+  - number of hooks
+  - number of trawling events per month
+  - number of seines set per month
+  - kg per month
+- **Years**: 2000-2020
+- **Temporal**: Monthly
 
 

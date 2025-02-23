@@ -707,7 +707,7 @@ The raw raster files were downloaded in GeoTIFF format and processed to focus on
 
 ## Commercial Fisheries Logbook Data {#sec-fisheries_dfo}
 
-The intensity and distribution of commercial fisheries were assessed using logbook data from the [Department of Fisheries and Oceans (DFO)](https://www.dfo-mpo.gc.ca/). The dataset, compiled from Zonal Interchange File Format (ZIFF) data between 2000 and 2020, provides a thorough overview of fisheries in eastern Canada [@dfo2021b]. This dataset includes information on vessel identifiers, species caught, landing weights, and fishing effort, making it a valuable resource for fisheries analysis (see @tbl-fisheries-dfo-attr). 
+The intensity and distribution of commercial fisheries were assessed using logbook data from the [Department of Fisheries and Oceans (DFO)](https://www.dfo-mpo.gc.ca/). The dataset, compiled from Zonal Interchange File Format (ZIFF) data between 2000 and 2020, provides a thorough overview of fisheries in eastern Canada [@dfo2021b]. This dataset includes information on vessel identifiers, species caught, landing weights, gear type (@tbl-fisheries-dfo-gear) and fishing effort, making it a valuable resource for fisheries analysis (see @tbl-fisheries-dfo-attr). 
 
 The data, shared under a data-sharing agreement, was retrieved as CSV files and processed into standardized formats for further analysis. Each logbook entry includes spatial and temporal attributes, fishing gear types, and catch details. The processed data includes metadata for species, fishing gear, and combined logbook entries, which are stored in compressed Parquet format for efficient access and analysis. 
 
@@ -779,6 +779,15 @@ data.frame(
   )
 ) |>
   knitr::kable()
+```
+
+```{r}
+#| label: tbl-fisheries-dfo-gear
+#| tbl-cap: "Gear types in the Fisheries DFO dataset."
+read.csv("../../workspace/data/harvested/fisheries_dfo-1.0.0/processed/gear.csv") |>
+  dplyr::select(codes, description_anglais) |>
+  dplyr::mutate(description_anglais = stringr::str_to_sentence(description_anglais)) |>
+  knitr::kable(col.names = c("Gear", "Description"))
 ```
 
 ## References
