@@ -93,25 +93,27 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
   ## Unzip shapefiles
   zip <- input_files[tools::file_ext(input_files) == "zip"]
   tmp <- file.path(output_path, "tmp")
-  lapply(zip, function(x) archive::archive_extract(x, tmp))
+  out <- file.path(tmp, tools::file_path_sans_ext(basename(zip)))
+  dir.create(tmp, showWarnings = FALSE, recursive = TRUE)
+  for (i in seq_len(length(zip))) archive::archive_extract(zip[i], out[i])
 
   # Load shapefiles
   ## bbox to remove erroneous point locations
   bbox <- sf::st_bbox(c(xmin = -100, xmax = -20, ymin = 35, ymax = 85), crs = 4326) |>
     sf::st_as_sfc()
 
-  dat <- dir(tmp, pattern = "\\.shp$", full.names = TRUE, recursive = TRUE) |>
-    lapply(function(x) {
-      x <- sf::st_read(x, quiet = TRUE) |>
-        sf::st_transform(4326) |>
-        sf::st_zm(drop = TRUE, what = "ZM") |>
-        janitor::clean_names()
-      id <- suppressMessages(suppressWarnings(
-        sf::st_within(x, bbox, sparse = FALSE) |>
-          as.logical()
-      ))
-      x[id, ]
-    })
+  dat <- lapply(out, function(x) {
+    x <- dir(x, pattern = "\\.shp$", full.names = TRUE, recursive = TRUE) |>
+      sf::st_read(quiet = TRUE) |>
+      sf::st_transform(4326) |>
+      sf::st_zm(drop = TRUE, what = "ZM") |>
+      janitor::clean_names()
+    id <- suppressMessages(suppressWarnings(
+      sf::st_within(x, bbox, sparse = FALSE) |>
+        as.logical()
+    ))
+    x[id, ]
+  })
   names(dat) <- tools::file_path_sans_ext(basename(zip))
 
   # Data processing
@@ -127,45 +129,60 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
 
   ## active_significant_discovery_licenses
   dat[["active_significant_discovery_licenses"]] <- dat[["active_significant_discovery_licenses"]] |>
-    format_dates1("active_significant_discovery_licenses", "significant discovery")
+    dplyr::mutate(
+      dataset = "active_significant_discovery_licenses",
+      classification = "significant discovery",
+      start_date = lubridate::mdy(effective)
+    ) |>
+    dplyr::select(dataset, classification, start_date)
 
   ## active_production_licenses
   dat[["active_production_licenses"]] <- dat[["active_production_licenses"]] |>
-    format_dates1("active_production_licenses", "production")
+    dplyr::mutate(
+      dataset = "active_production_licenses",
+      classification = "production",
+      start_date = lubridate::mdy(effective)
+    ) |>
+    dplyr::select(dataset, classification, start_date)
+
 
   # production_installations
   dat[["production_installations"]] <- dat[["production_installations"]] |>
-    format_dates1("production_installations", "production")
-
-  # delineation_wells
-  dat[["delineation_wells"]] <- dat[["delineation_wells"]] |>
-    format_dates1("delineation_wells", "delineation")
-
-  # development_wells
-  dat[["development_wells"]] <- dat[["development_wells"]] |>
     dplyr::mutate(
-      dataset = "development_wells",
-      classification = "development",
+      dataset = "production_installations",
+      classification = "production",
       start_date = lubridate::mdy(first_oil)
     ) |>
     dplyr::rename(status = curr_status) |>
     dplyr::select(dataset, classification, start_date, status)
 
+
+  # delineation_wells
+  dat[["delineation_wells"]] <- dat[["delineation_wells"]] |>
+    format_dates1("delineation_wells", "delineation")
+
+
+  # development_wells
+  dat[["development_wells"]] <- dat[["development_wells"]] |>
+    format_dates1("development_wells", "development")
+
   # dual_classified_wells
   dat[["dual_classified_wells"]] <- dat[["dual_classified_wells"]] |>
-    format_dates2("dual_classified_wells", "exploration / delineation")
+    format_dates1("dual_classified_wells", "exploration / delineation")
+
 
   # exploration_wells
   dat[["exploration_wells"]] <- dat[["exploration_wells"]] |>
-    format_dates2("exploration_wells", "exploration")
+    format_dates1("exploration_wells", "exploration")
+
 
   # eastern_newfoundland_nl23_cfb01
   dat[["eastern_newfoundland_nl23_cfb01"]] <- dat[["eastern_newfoundland_nl23_cfb01"]] |>
-    format_dates2("eastern_newfoundland_nl23_cfb01", "call for bids")
+    format_dates3("eastern_newfoundland_nl23_cfb01", "call for bids")
 
   # south_eastern_newfoundland_nl23_cfb02
   dat[["south_eastern_newfoundland_nl23_cfb02"]] <- dat[["south_eastern_newfoundland_nl23_cfb02"]] |>
-    format_dates2("south_eastern_newfoundland_nl23_cfb02", "call for bids")
+    format_dates3("south_eastern_newfoundland_nl23_cfb02", "call for bids")
 
   # eastern_newfoundland_nl24_cfb01
   dat[["eastern_newfoundland_nl24_cfb01"]] <- dat[["eastern_newfoundland_nl24_cfb01"]] |>
@@ -173,29 +190,19 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
 
   # labrador_south_nl02_ls
   dat[["labrador_south_nl02_ls"]] <- dat[["labrador_south_nl02_ls"]] |>
-    format_dates3("labrador_south_nl02_ls", "sector")
+    format_dates2("labrador_south_nl02_ls", "sector")
 
   # eastern_newfoundland_nl06_en
   dat[["eastern_newfoundland_nl06_en"]] <- dat[["eastern_newfoundland_nl06_en"]] |>
-    format_dates3("eastern_newfoundland_nl06_en", "sector")
+    format_dates2("eastern_newfoundland_nl06_en", "sector")
 
   # north_eastern_newfoundland_nl01_nen
   dat[["north_eastern_newfoundland_nl01_nen"]] <- dat[["north_eastern_newfoundland_nl01_nen"]] |>
-    dplyr::mutate(
-      dataset = "north_eastern_newfoundland_nl01_nen",
-      classification = "sector",
-      start_date = lubridate::mdy(effective)
-    ) |>
-    dplyr::select(dataset, classification, start_date)
+    format_dates2("north_eastern_newfoundland_nl01_nen", "sector")
 
   # southern_newfoundland_nl01_sn
   dat[["southern_newfoundland_nl01_sn"]] <- dat[["southern_newfoundland_nl01_sn"]] |>
-    dplyr::mutate(
-      dataset = "southern_newfoundland_nl01_sn",
-      classification = "sector",
-      start_date = lubridate::mdy(effective)
-    ) |>
-    dplyr::select(dataset, classification, start_date)
+    format_dates2("southern_newfoundland_nl01_sn", "sector")
 
   # Bind dat
   dat <- dplyr::bind_rows(dat)

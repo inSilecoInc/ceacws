@@ -57,13 +57,14 @@ ana_offshore_wind_farm <- function(input_files, output_path) {
 
   # Intersect aoi & grid
   dat <- sf::st_intersection(dat, sf::st_geometry(aoi)) |>
+    sf::st_make_valid() |>
     dplyr::group_by(categories)
   nm <- dplyr::group_keys(dat)
   dat <- dplyr::group_split(dat)
   for (i in 1:length(dat)) {
     dat[[i]] <- sf::st_union(dat[[i]]) |>
       sf::st_as_sf()
-    uid <- sf::st_geometry_type(dat[[i]]) %in% c("MULTILINESTRING", "LINESTRING")
+    uid <- sf::st_geometry_type(dat[[i]]) %in% c("MULTILINESTRING", "LINESTRING", "GEOMETRYCOLLECTION")
     dat[[i]] <- dat[[i]][!uid, ]
   }
   dat <- dplyr::bind_rows(dat) |>

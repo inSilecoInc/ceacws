@@ -1,6 +1,6 @@
 prc_aoi <- function(input_files, output_path) {
   # Bounding box
-  bbox <- c(-80, 40, -40, 70)
+  bbox <- c(-75, 35, -35, 65)
   bbox <- sf::st_bbox(c(
     xmin = bbox[1], ymin = bbox[2],
     xmax = bbox[3], ymax = bbox[4]
