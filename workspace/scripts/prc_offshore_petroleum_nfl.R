@@ -121,29 +121,32 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
   dat[["active_exploration_licenses"]] <- dat[["active_exploration_licenses"]] |>
     dplyr::mutate(
       dataset = "active_exploration_licenses",
-      classification = "exploration",
+      classification = "exploration licenses",
       start_date = lubridate::mdy(effective),
-      end_date = lubridate::mdy(period2exp)
+      end_date = lubridate::mdy(period2exp),
+      status = "Active"
     ) |>
-    dplyr::select(dataset, classification, start_date, end_date)
+    dplyr::select(dataset, classification, status, start_date, end_date)
 
   ## active_significant_discovery_licenses
   dat[["active_significant_discovery_licenses"]] <- dat[["active_significant_discovery_licenses"]] |>
     dplyr::mutate(
       dataset = "active_significant_discovery_licenses",
-      classification = "significant discovery",
-      start_date = lubridate::mdy(effective)
+      classification = "significant discovery licenses",
+      start_date = lubridate::mdy(effective),
+      status = "Active"
     ) |>
-    dplyr::select(dataset, classification, start_date)
+    dplyr::select(dataset, classification, status, start_date)
 
   ## active_production_licenses
   dat[["active_production_licenses"]] <- dat[["active_production_licenses"]] |>
     dplyr::mutate(
       dataset = "active_production_licenses",
-      classification = "production",
-      start_date = lubridate::mdy(effective)
+      classification = "production licenses",
+      start_date = lubridate::mdy(effective),
+      status = "Active"
     ) |>
-    dplyr::select(dataset, classification, start_date)
+    dplyr::select(dataset, classification, status, start_date)
 
 
   # production_installations
@@ -154,7 +157,7 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
       start_date = lubridate::mdy(first_oil)
     ) |>
     dplyr::rename(status = curr_status) |>
-    dplyr::select(dataset, classification, start_date, status)
+    dplyr::select(dataset, classification, status, start_date)
 
 
   # delineation_wells
@@ -252,7 +255,8 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
             "development/delineation",
             "development / delineation"
           )
-        )
+        ) |>
+        dplyr::filter(!is.na(status))
     })
   })
 
@@ -294,7 +298,7 @@ prc_offshore_petroleum_nfl <- function(input_files, output_path) {
         status %in% c(
           "Oil Producer", "Water Injector", "Gas Injector",
           "Production Operations", "Active"
-        ) ~ "Active Production",
+        ) ~ "Active",
         status == "Drilling" ~ "Drilling",
         status == "Disposal Well" ~ "Disposal",
         status == "Closed" ~ "Closed",

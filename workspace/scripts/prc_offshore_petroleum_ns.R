@@ -63,7 +63,8 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     janitor::clean_names() |>
     dplyr::mutate(
       dataset = "call_for_bids_ns22_1_parcels",
-      classification = "call for bids"
+      classification = "call for bids",
+      status = "Active"
     ) |>
     sf::st_transform(4326)
 
@@ -72,24 +73,35 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     load_xls() |>
     dplyr::mutate(
       dataset = "production_licenses_july_2024",
-      classification = "production"
-    )
+      classification = "production licenses",
+      status = "Active"
+    ) |>
+    dplyr::group_by(licence_type, licence_number, field_name, dataset, classification, status) |>
+    dplyr::summarise(geometry = sf::st_combine(geometry)) |>
+    dplyr::mutate(geometry = sf::st_convex_hull(geometry)) |>
+    sf::st_as_sf()
 
-  ## Significant discovery areas
-  significant_discovery_areas <- input_files[stringr::str_detect(input_files, "significant_discovery_areas")] |>
-    load_xls() |>
-    dplyr::mutate(
-      dataset = "significant_discovery_areas_sept_2009",
-      classification = "significant discovery"
-    )
+  # ## Significant discovery areas
+  # significant_discovery_areas <- input_files[stringr::str_detect(input_files, "significant_discovery_areas")] |>
+  #   load_xls() |>
+  #   dplyr::mutate(
+  #     dataset = "significant_discovery_areas_sept_2009",
+  #     classification = "significant discovery"
+  #   )
 
   ## Significant discovery licenses
+  ### WARNING: At the moment areas and licenses are combined together by way of classification
   significant_discovery_licenses <- input_files[stringr::str_detect(input_files, "significant_discovery_licenses")] |>
     load_xls() |>
     dplyr::mutate(
       dataset = "significant_discovery_licenses_sept_2022",
-      classification = "significant discovery"
-    )
+      classification = "significant discovery licenses",
+      status = "Active"
+    ) |>
+    dplyr::group_by(licence_type, licence_number, field_name, dataset, classification, status) |>
+    dplyr::summarise(geometry = sf::st_combine(geometry)) |>
+    dplyr::mutate(geometry = sf::st_convex_hull(geometry)) |>
+    sf::st_as_sf()
 
   ## Exploration licenses
   exploration_licenses <- input_files[stringr::str_detect(input_files, "Active_EL_2020")] |>
@@ -97,10 +109,14 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
     janitor::clean_names() |>
     dplyr::mutate(
       dataset = "Active_EL_2020",
-      classification = "exploration",
+      classification = "exploration licenses",
       status = "Suspended"
     ) |>
-    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+    sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+    dplyr::group_by(license_no, company, dataset, classification, status) |>
+    dplyr::summarise(geometry = sf::st_combine(geometry)) |>
+    dplyr::mutate(geometry = sf::st_convex_hull(geometry)) |>
+    sf::st_as_sf()
 
   ## Platform locations
   platform_locations <- input_files[stringr::str_detect(input_files, "platform_locations")] |>
@@ -117,7 +133,7 @@ prc_offshore_petroleum_ns <- function(input_files, output_path) {
   offshore_petroleum_ns <- dplyr::bind_rows(
     bids,
     production_licences,
-    significant_discovery_areas,
+    # significant_discovery_areas,
     significant_discovery_licenses,
     exploration_licenses,
     platform_locations

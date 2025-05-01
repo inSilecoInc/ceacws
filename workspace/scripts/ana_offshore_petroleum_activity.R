@@ -15,14 +15,14 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
   # Data
 
-  # Current Production* - Active production license polygons, active development wells, active production installations
+  # Current Production* - Active license polygons, active development wells, Active installations
   # Current Discovery - Active significant discovery license polygons, active delineation wells
   # Current Exploration - Active exploration license polygons, active exploration wells
   # (Could sum to make a single ‘Current Activity’ layer)
 
   # Future Scope - Recent calls for bids polygons (NS: 2022; NL: 2023, 2024), active sector polygons. Not sure if we should include closed sectors to incorporate Labrador South sector NL-01LS (see notes in Polygon Layers below)
 
-  # Past Production* - Inactive production wells, inactive production license polygons (if available)
+  # Past Production* - InActive wells, inActive license polygons (if available)
   # Past Discovery - Inactive delineation wells, inactive significant discovery license polygons (if available)
   # Past Exploration - Inactive exploration wells, inactive exploration license polygons (if available)
   # (Could sum to make a single ‘Past Activity’ layer)
@@ -38,7 +38,7 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
         # Production - Oil
         classification %in% c("production", "development") &
-          status %in% c("Active Production", "Drilling", "Disposal") &
+          status %in% c("Active", "Drilling", "Disposal") &
           subtype %in% c(
             "Production Operations", "Oil Producer",
             "Oil and Gas Well", "Oil Well", "Oil Well"
@@ -52,7 +52,7 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
         # Production - Non-Oil
         classification %in% c("production", "development") &
-          status %in% c("Active Production", "Drilling", "Disposal") &
+          status %in% c("Active", "Drilling", "Disposal") &
           !subtype %in% c(
             "Production Operations", "Oil Producer",
             "Oil and Gas Well", "Oil Well", "Oil Well"
@@ -69,7 +69,7 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
         # Discovery
         classification %in% c("significant discovery", "delineation") &
-          status %in% c("Active Production", "Drilling", "Disposal") ~ "Current Discovery",
+          status %in% c("Active", "Drilling", "Disposal") ~ "Current Discovery",
         classification %in% c("significant discovery", "delineation") &
           status %in% c("Abandoned", "Suspended", "Closed", "Off Station") ~ "Past Discovery",
         classification %in% c("significant discovery", "delineation") & is.na(status) ~ "Other Discovery",
@@ -77,10 +77,25 @@ ana_offshore_petroleum_activity <- function(input_files, output_path) {
 
         # Exploration
         classification %in% c("exploration") &
-          status %in% c("Active Production", "Drilling", "Disposal") ~ "Current Exploration",
+          status %in% c("Active", "Drilling", "Disposal") ~ "Current Exploration",
         classification %in% c("exploration") &
           status %in% c("Abandoned", "Suspended", "Closed", "Off Station") ~ "Past Exploration",
         classification %in% c("exploration") & is.na(status) ~ "Other Exploration",
+
+
+        # Licenses
+        classification %in% c("exploration licenses") &
+          status %in% c("Active") ~ "Current Exploration Licenses",
+        classification %in% c("significant discovery licenses") &
+          status %in% c("Active") ~ "Current Significant Discovery Licenses",
+        classification %in% c("production licenses") &
+          status %in% c("Active") ~ "Current Production Licenses",
+        classification %in% c("exploration licenses") &
+          status %in% c("Suspended") ~ "Past Exploration Licenses",
+        classification %in% c("significant discovery licenses") &
+          status %in% c("Suspended") ~ "Past Significant Discovery Licenses",
+        classification %in% c("production licenses") &
+          status %in% c("Suspended") ~ "Past Production Licenses",
 
         # Default
         .default = NA_character_
