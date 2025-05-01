@@ -141,7 +141,7 @@ For this project, each dataset identification code (file name) combines:
 
 ### Abstract
 
-Anthropogenic activities such as oil pollution, vessel traffic, and artificial light pose significant threats to marine ecosystems across Canada’s Exclusive Economic Zone (EEZ) and adjacent waters. This dataset integrates secondary-use geospatial layers from multiple primary data sources to support conservation, environmental response planning, and marine spatial management in the northwest Atlantic. The dataset spans the Canadian EEZ and adjacent waters (xmin: -80; ymin: 40; xmax:-40; ymax: 70.9), providing annual and/or monthly threat layers from 2006–2023 at a 1-km² resolution (WGS84, EPSG:4326). It quantifies petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light exposure. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), Automatic Identification System (AIS) shipping data, and VIIRS satellite observations. Proprietary and public datasets were harmonized through reproducible workflows to ensure consistency and accessibility. Threat layers were developed using geospatial modeling and analysis. Petroleum pollution layers highlight oiling event density, vessel disturbance layers quantify ship traffic by type and time of day, and artificial light layers summarize exposure in critical marine habitats. All data products are stored as Cloud Optimized GeoTIFFs (COGs) with comprehensive metadata. This dataset enables assessments of cumulative environmental impacts, supports risk management for at-risk species, and informs marine spatial planning. For example, it provides insight into cumulative stressors affecting vulnerable species like the globally threatened Leach’s Storm-Petrel, a nocturnally active pelagic seabird. By integrating diverse datasets into an accessible format, this dataset enhances data-driven decision-making for conservation practitioners, policymakers, and researchers working toward sustainable ocean management.
+Anthropogenic activities such as oil pollution, vessel traffic, and artificial light pose significant threats to marine ecosystems across Canada’s Exclusive Economic Zone (EEZ) and adjacent waters. This dataset integrates secondary-use geospatial layers from multiple primary data sources to support conservation, environmental response planning, and marine spatial management in the northwest Atlantic. The dataset spans the Canadian EEZ and adjacent waters (xmin: -75; ymin: 35; xmax:-35; ymax: 65), providing annual and/or monthly threat layers from 2006–2023 at a 1-km² resolution (WGS84, EPSG:4326). It quantifies petroleum pollution, oil and gas infrastructure, vessel activity, and artificial light exposure. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), Automatic Identification System (AIS) shipping data, and VIIRS satellite observations. Proprietary and public datasets were harmonized through reproducible workflows to ensure consistency and accessibility. Threat layers were developed using geospatial modeling and analysis. Petroleum pollution layers highlight oiling event density, vessel disturbance layers quantify ship traffic by type and time of day, and artificial light layers summarize exposure in critical marine habitats. All data products are stored as Cloud Optimized GeoTIFFs (COGs) with comprehensive metadata. This dataset enables assessments of cumulative environmental impacts, supports risk management for at-risk species, and informs marine spatial planning. For example, it provides insight into cumulative stressors affecting vulnerable species like the globally threatened Leach’s Storm-Petrel, a nocturnally active pelagic seabird. By integrating diverse datasets into an accessible format, this dataset enhances data-driven decision-making for conservation practitioners, policymakers, and researchers working toward sustainable ocean management.
 
 ## D. Key words/phrases: 
 
@@ -229,17 +229,17 @@ Not applicable
 
 ### 1. Site description 
 
-The study focuses on Canada’s Exclusive Economic Zone (EEZ), including the Atlantic Ocean, the Gulf of St. Lawrence, and adjacent international waters (xmin: -80; ymin: 40; xmax:-40; ymax: 70.9; EPSG:4326). The study area encompasses diverse marine habitats critical to numerous marine species such as migratory seabirds and spans over 5 million km2. The area features high levels of industrial and maritime activity, making it a key region for assessing the cumulative effects of anthropogenic threats on marine ecosystems. Data layers were analyzed within a standardized 1-km2 resolution grid.
+The study focuses on Canada’s Exclusive Economic Zone (EEZ), including the Atlantic Ocean, the Gulf of St. Lawrence, and adjacent international waters (xmin: -75; ymin: 35; xmax:-35; ymax: 65; EPSG:4326). The study area encompasses diverse marine habitats critical to numerous marine species such as migratory seabirds and spans over 5 million km2. The area features high levels of industrial and maritime activity, making it a key region for assessing the cumulative effects of anthropogenic threats on marine ecosystems. Data layers were analyzed within a standardized 1-km2 resolution grid.
 
 ### 2. Experimental or sampling design
 
-This project integrates diverse primary datasets to generate spatiotemporal threat layers for Canada’s Exclusive Economic Zone (EEZ) and adjacent international waters (xmin: -80; ymin: 40; xmax:-40; ymax: 70.9; EPSG:4326). The overarching process involves three key phases: 1) data acquisition, 2) data processing and 3) threat layer preparation:
+This project integrates diverse primary datasets to generate spatiotemporal threat layers for Canada’s Exclusive Economic Zone (EEZ) and adjacent international waters (xmin: -75; ymin: 35; xmax:-35; ymax: 65; EPSG:4326). The overarching process involves three key phases: 1) data acquisition, 2) data processing and 3) threat layer preparation:
 
 
 1. **Data Acquisition:** Primary datasets were sourced from a combination of publicly available repositories and proprietary data shared by collaborating organizations. Sources include Canadian government programs (e.g., ISTOP, NASP, NEEC), satellite observations (e.g., VIIRS for light and flaring data), and Automatic Identification System (AIS) for vessel tracking. Data formats varied widely, encompassing vectorized polygons, raster files, tabular data, and time-series observations. Metadata was documented for each dataset (more in section B3 below).
 
 2. **Data Processing:** All datasets underwent a standardized processing pipeline to harmonize formats, spatial projections, and temporal resolutions. Key steps included:
-   - **Spatial Filtering:** Clipping data to the defined study area using a bounding box (xmin: -80; ymin: 40; xmax:-40; ymax: 70.9) and ensuring alignment with the WGS84 coordinate reference system (EPSG:4326).
+   - **Spatial Filtering:** Clipping data to the defined study area using a bounding box (xmin: -75; ymin: 35; xmax:-35; ymax: 65) and ensuring alignment with the WGS84 coordinate reference system (EPSG:4326).
    - **Temporal Aggregation:** Aggregating data to monthly or annual time steps, depending on the dataset’s temporal resolution and application needs.
    - **Data Cleaning:** Removing invalid or missing entries, applying quality assurance filters, and standardizing attribute fields.
    - **Reformatting:** Converting data into standardized and non-proprietary file formats (e.g., Cloud Optimized GeoTIFFs (COGs) for raster data, GeoPackages for vector data).
@@ -423,13 +423,13 @@ data.frame(
 #| tbl-cap: "Simplified well status classifications with descriptions"
 data.frame(
   `Well Status` = c(
-    "Abandoned", "Suspended", "Active Production",
+    "Abandoned", "Suspended", "Active",
     "Drilling", "Disposal", "Closed", "Off Station", NA
   ),
   Description = c(
     "Wells where activities have been permanently stopped.",
     "Wells with temporarily halted activities that may resume.",
-    "Wells currently involved in production or injection activities.",
+    "Wells currently involved in production or injection activities, or active licenses.",
     "Wells still in the drilling phase.",
     "Wells used for waste or byproduct disposal.",
     "Wells officially closed, possibly for regulatory reasons.",
@@ -917,23 +917,27 @@ data.frame(
   Category = c(
     "Future Scope",
     "Current Oil Production", "Past Oil Production",
-    "Current Non-Oil Production", "Past Non-Oil Production", "Other Production",
-    "Current Discovery", "Past Discovery", "Other Discovery",
-    "Current Exploration", "Past Exploration", "Other Exploration"
+    "Current Non-Oil Production", "Past Non-Oil Production",
+    "Current Production Licenses",
+    "Current Discovery", "Past Discovery",
+    "Current Significant Discovery Licenses",
+    "Current Exploration", "Past Exploration",
+    "Current Exploration Licenses", "Past Exploration Licenses"
   ),
   Description = c(
     "Areas designated for future petroleum activities, such as call for bids and sector planning.",
-    "Active oil production sites, including oil wells, oil producers, and oil and gas wells that are currently operating or under development.",
+    "Active oil production sites, including oil wells, oil producers, and oil and gas wells currently operating or under development.",
     "Previously active oil production sites that are now abandoned, suspended, closed, or off station.",
     "Active non-oil production sites, including gas wells, injectors, and other operations not classified as oil production.",
     "Previously active non-oil production sites that are now abandoned, suspended, closed, or off station.",
-    "Other production-related sites where the operational status is unspecified.",
+    "Licenses granted for current production activities, covering active lease areas.",
     "Currently active discovery and delineation sites undergoing exploration drilling or development.",
     "Past discovery sites that are no longer active.",
-    "Other discovery sites with an unspecified operational status.",
+    "Licenses granted for significant discoveries with current recognized potential.",
     "Active exploration activities, including drilling and operational exploratory wells.",
     "Exploration sites that are no longer active (abandoned, suspended, closed, or off station).",
-    "Other exploration sites with an unspecified operational status."
+    "Licenses granted for current exploration activities.",
+    "Licenses previously granted for exploration activities that are no longer active."
   )
 ) |> knitr::kable()
 ```
@@ -1100,7 +1104,7 @@ The night lights threat layer provides a spatially explicit representation of ar
 4. Proprietary restrictions: 
   - a. Release date: When manuscript is accepted
   - b. Citation: When using the dataset, please cite this article to recognize the effort involved in harvesting the primary data and preparing the threat layers. 
-  - c. Disclaimer(s): The threat layers and methods presented in this project represent the best available data and methodologies known to us at the time of its development. They were specifically designed to align with the scope and objectives of this project, focusing on generating broad, spatiotemporal assessments of anthropogenic threats within Canada’s Exclusive Economic Zone (EEZ) and adjacent waters. The taxa for which these layers constitute threats are primarily marine birds, although threats may be broadly applicable to all marine taxa. While these layers provide valuable insights, they may not be suitable for all applications. Users are advised to critically evaluate their specific objectives and compare them with the scope, resolution, and limitations of this project to determine whether these threat layers meet their needs. Alternative datasets or methods may be more appropriate for generating highly detailed or application-specific threat assessments.
+  - c. Disclaimer(s): The threat layers and methods presented in this project represent the best available data and methodologies known to us at the time of its development. They were specifically designed to align with the scope and objectives of this project, focusing on generating broad, spatiotemporal assessments of anthropogenic threats within Canada’s Exclusive Economic Zone (EEZ) and adjacent waters. The taxa for which these layers constitute threats are primarily marine birds, although threats may be broadly applicable to all marine taxa. While these layers provide valuable insights, they may not be suitable for all applications. Users are advised to critically evaluate their specific objectives and compare them with the scope, resolution, and limitations of this project to determine whether these threat layers meet their needs. Alternative datasets or methods may be more appropriate for generating highly detailed or application-specific threat assessments. Some datasets used to characterize threats have important temporal limitations. For example, night light data may be unreliable at higher latitudes during certain months due to prolonged darkness or atmospheric interference. Users are strongly advised to visualize and critically assess the temporal coverage and data quality of any layers they intend to use before incorporating them into their analyses. 
 5. Costs: Costs associated with acquiring data (may vary by size of data request, desired medium, etc.)
 
 # Class IV. Data Structural Descriptors
@@ -1149,7 +1153,8 @@ Raster: Intensity, density, count or presence-absence values for threat layers (
 
 - Missing Data: Certain datasets (e.g., NEEC incidents) may have incomplete spatial or temporal coverage.  
 - Anomalous Data: Noise in satellite datasets (e.g., VIIRS light pollution) filtered using confidence thresholds.  
-- Calibration Errors: Historical incident records may lack consistent reporting methods.  
+- Calibration Errors: Historical incident records may lack consistent reporting methods. 
+- Temporal coverage: Some datasets used to characterize threats have important temporal limitations. For example, night light data may be unreliable at higher latitudes during certain months due to prolonged darkness or atmospheric interference. Users are strongly advised to visualize and critically assess the temporal coverage and data quality of any layers they intend to use before incorporating them into their analyses. 
 
 # Class V. Supplemental descriptors
 
