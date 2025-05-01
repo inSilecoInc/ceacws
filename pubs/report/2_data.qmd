@@ -170,13 +170,13 @@ data.frame(
 #| tbl-cap: "Simplified well status classifications with descriptions"
 data.frame(
   `Well Status` = c(
-    "Abandoned", "Suspended", "Active Production",
+    "Abandoned", "Suspended", "Active",
     "Drilling", "Disposal", "Closed", "Off Station", NA
   ),
   Description = c(
     "Wells where activities have been permanently stopped.",
     "Wells with temporarily halted activities that may resume.",
-    "Wells currently involved in production or injection activities.",
+    "Wells currently involved in production or injection activities, or active licenses.",
     "Wells still in the drilling phase.",
     "Wells used for waste or byproduct disposal.",
     "Wells officially closed, possibly for regulatory reasons.",

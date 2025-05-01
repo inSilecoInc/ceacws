@@ -56,25 +56,30 @@ data.frame(
   Category = c(
     "Future Scope",
     "Current Oil Production", "Past Oil Production",
-    "Current Non-Oil Production", "Past Non-Oil Production", "Other Production",
-    "Current Discovery", "Past Discovery", "Other Discovery",
-    "Current Exploration", "Past Exploration", "Other Exploration"
+    "Current Non-Oil Production", "Past Non-Oil Production",
+    "Current Production Licenses",
+    "Current Discovery", "Past Discovery",
+    "Current Significant Discovery Licenses",
+    "Current Exploration", "Past Exploration",
+    "Current Exploration Licenses", "Past Exploration Licenses"
   ),
   Description = c(
     "Areas designated for future petroleum activities, such as call for bids and sector planning.",
-    "Active oil production sites, including oil wells, oil producers, and oil and gas wells that are currently operating or under development.",
+    "Active oil production sites, including oil wells, oil producers, and oil and gas wells currently operating or under development.",
     "Previously active oil production sites that are now abandoned, suspended, closed, or off station.",
     "Active non-oil production sites, including gas wells, injectors, and other operations not classified as oil production.",
     "Previously active non-oil production sites that are now abandoned, suspended, closed, or off station.",
-    "Other production-related sites where the operational status is unspecified.",
+    "Licenses granted for current production activities, covering active lease areas.",
     "Currently active discovery and delineation sites undergoing exploration drilling or development.",
     "Past discovery sites that are no longer active.",
-    "Other discovery sites with an unspecified operational status.",
+    "Licenses granted for significant discoveries with current recognized potential.",
     "Active exploration activities, including drilling and operational exploratory wells.",
     "Exploration sites that are no longer active (abandoned, suspended, closed, or off station).",
-    "Other exploration sites with an unspecified operational status."
+    "Licenses granted for current exploration activities.",
+    "Licenses previously granted for exploration activities that are no longer active."
   )
 ) |> knitr::kable()
+
 ```
 
 
