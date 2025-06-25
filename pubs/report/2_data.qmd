@@ -180,7 +180,7 @@ data.frame(
     "Wells still in the drilling phase.",
     "Wells used for waste or byproduct disposal.",
     "Wells officially closed, possibly for regulatory reasons.",
-    "Wells or rigs temporarily off their regular location.",
+    "Floating production storage and offloading installation (FPSO) temporarily off its regular location.",
     "No information available."
   )
 ) |>
@@ -379,9 +379,9 @@ data.frame(
 
 ## Automatic Identification System (AIS) Vessel Data {#sec-shipping_ais}
 
-The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) is a global transportation safety system that uses satellite- and terrestrial-based ship tracking systems to collect identity and dynamic positional data from vessels. The International Convention for the Safety of Life at Sea (SOLAS), Chapter 5, Regulation 19.2, sets out requirements for the use of AIS on ships, though individual flag states can exempt certain vessels. In Canada, vessels must operate an AIS if they are: a) 500 gross tonnage or more, b) 300 gross tonnage or more engaged on an international voyage (except fishing vessels), c) 150 gross tonnage or more carrying more than 12 passengers and engaged on an international voyage, or c) every vessel engaged on a voyage beyond sheltered waters other than those subject to criteria a-b. These AIS data are used to enhance maritime safety, monitor environmental impacts, and facilitate shipping analyses. 
+The [Automatic Identification System (AIS)](https://tc.canada.ca/en/marine-transportation/navigation-aids/automatic-identification-system-ais) is a global transportation safety system that uses satellite- and terrestrial-based vessel tracking systems to collect identity and dynamic positional data from vessels. The International Convention for the Safety of Life at Sea (SOLAS), Chapter 5, Regulation 19.2, sets out requirements for the use of AIS on vessels, though individual flag states can exempt certain vessels. In Canada, vessels must operate an AIS if they are: a) 500 gross tonnage or more, b) 300 gross tonnage or more engaged on an international voyage (except fishing vessels), c) 150 gross tonnage or more carrying more than 12 passengers and engaged on an international voyage, or c) every vessel engaged on a voyage beyond sheltered waters other than those subject to criteria a-b. These AIS data are used to enhance maritime safety, monitor environmental impacts, and facilitate marine traffic analyses. 
 
-The dataset used for this project, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada and adjacent waters [@tc2023]. The AIS data provides dynamic vessel information, including position, date and time, speed, and course over ground, transmitted through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS dataset we received includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data is also accompanied by a table containing vessel static information that provides basic information on each ship (e.g. vessel type and length) based on their Maritime Mobile Service Identity (MMSI; @tbl-ais-shipping-data). The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
+The dataset used for this project, provided by Transport Canada, focuses on 2023 vessel movements across Atlantic Canada and adjacent waters [@tc2023]. The AIS data provides dynamic vessel information, including position, date and time, speed, and course over ground, transmitted through terrestrial, satellite, and tier-based receivers (@tbl-shipping-ais-attr). The AIS dataset we received includes both terrestrial and satellite AIS messages, fused to minimize spatial and temporal gaps and stored as compressed parquet files. The data is also accompanied by a table containing vessel static information that provides basic information on each boat (e.g. vessel type and length) based on their Maritime Mobile Service Identity (MMSI; @tbl-ais-shipping-data). The data was transferred manually to the Canadian Wildlife Service and are currently stored on a secure Google Cloud Storage bucket accessible through an authentication key and maintained by inSileco.
 
 - **Source**: Transport Canada
 - **Accessibility**: Restricted
@@ -408,13 +408,13 @@ data.frame(
     "Data source/message type of AIS message"
   ),
   Information = c(
-    "9-digits (MMSIs with valid ship country codes are from 201000000 to 775999999). All ship MMSIs use the format M1I2D3X4X5X6X7X8X9, the first three digits represent the Maritime Identification Digits (MID) and they represent the flag/nationality of the ship. The following digits (X4-X9) can be any numerical value from 0 to 9.",
+    "9-digits (MMSIs with valid vessel country codes are from 201000000 to 775999999). All MMSIs use the format M1I2D3X4X5X6X7X8X9, the first three digits represent the Maritime Identification Digits (MID) and they represent the flag/nationality of the vessel. The following digits (X4-X9) can be any numerical value from 0 to 9.",
     "Latitude recorded in decimal degrees with an accuracy of approximately 10 metres (-90 to 90).",
     "Longitude recorded in decimal degrees with an accuracy of approximately 10 metres (-180 to 180).",
-    "The speed of the ship with respect to the ground, recorded in knots (0 to 102.2 are valid; 102.3 is invalid).",
-    "The course of the ship, recorded in degrees (0-359.9 are valid; 360 is invalid).",
-    "The true heading of the ship, recorded in degrees (0-359 are valid; 360 is invalid).",
-    "The UTC time stamp of when the positional AIS message was sent from the ship (YYYY-MM-DD hh:mm:ss).",
+    "The speed of the vessel with respect to the ground, recorded in knots (0 to 102.2 are valid; 102.3 is invalid).",
+    "The course of the vessel, recorded in degrees (0-359.9 are valid; 360 is invalid).",
+    "The true heading of the vessel, recorded in degrees (0-359 are valid; 360 is invalid).",
+    "The UTC time stamp of when the positional AIS message was sent from the vessel (YYYY-MM-DD hh:mm:ss).",
     "The source (e.g., terrestrial, dynamic, satellite) and class (A or B) of the AIS message sent (e.g., TAIS_A, TAIS_B, SAIS_A)."
   ),
   Data_Type = c(
@@ -426,7 +426,7 @@ data.frame(
 
 ```{r}
 #| label: tbl-ais-shipping-data
-#| tbl-cap: "Description of AIS shipping data attributes"
+#| tbl-cap: "Description of AIS vessel data attributes"
 data.frame(
   Column_Name = c(
     "mmsi", "vess_name", "ntype", "specific_vess_type",
@@ -436,7 +436,7 @@ data.frame(
     "Maritime Mobile Service Identity - a unique 9-digit identifier assigned to a vessel.",
     "Vessel name as reported in AIS transmissions, may be missing for some records.",
     "General vessel type classification, i.e. cargo, container, dry bulk, ferry/ro-ro, fishing, government/research, others/special ships, passenger, pleasure vessels, tanker, tugs/port",
-    "Specific vessel subtype, providing further detail on the ship's function, such as 'Passenger Ship' or 'Fishing Vessel'.",
+    "Specific vessel subtype, providing further detail on the vessel's function, such as 'Passenger Ship' or 'Fishing Vessel'.",
     "Gross tonnage of the vessel, representing its internal volume in metric tons.",
     "Overall length of the vessel in meters.",
     "Overall width of the vessel in meters.",
@@ -505,7 +505,7 @@ data.frame(
     "Distance (in miles) between consecutive AIS positional points",
     "Time difference (in minutes) between consecutive AIS positional points",
     "Flag indicating whether a new trackline is initiated at the point",
-    "Unique identifier for each trackline within a ship's movement",
+    "Unique identifier for each trackline within a vessel's movement",
     "Unique identifier for segments of tracklines split by day or night"
   ),
   Information = c(
@@ -670,7 +670,7 @@ To prepare the VNF dataset for further analyses, the following pre-processing st
      - **High Radiance Thresholds**: Retained flags ensuring significant thermal anomalies in bands M07–M16.
      - **Thermal Anomalies**: Retained detections flagged as local maxima or cluster detections.
 3. Spatial Filtering
-   - The dataset was filtered to detections within a bounding box approximating the Canadian Exclusive Economic Zone (EEZ), which was broader than the bounding box used for this project and intented to limit the quantity of data processed:
+   - The dataset was filtered to detections within a bounding box including the Canadian Exclusive Economic Zone (EEZ) and adjacent waters to limit the quantity of data processed:
      - **Longitude**: -85° to -35°.
      - **Latitude**: 38° to 75°.
 4.  Processed Radiance Fields
