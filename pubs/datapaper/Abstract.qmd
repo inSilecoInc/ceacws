@@ -1,5 +1,5 @@
 ---
-title: Mapping Anthropogenic Oil Spills and Offshore Industrial Activities in the northwest Atlantic to Inform Marine Conservation and Management
+title: Mapping Oil Spills and Offshore Industrial Activities in the northwest Atlantic for Marine Conservation and Management
 fontsize: 12pt
 format:
   pdf:
@@ -17,7 +17,7 @@ quarto::render('./MetadataS1.qmd')
 rmarkdown::render('./FoodWeb-CumulativeImpact.md', output_format = "word_document")
 -->
 
-David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^, Philippe Muise^4^, Allison Patterson^5^, Robert Ronconi^6^, Katharine Studholme^7^, Sarah Wong^6^
+David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^, Philippe Muise^4^, Allison Patterson^5^, Robert Ronconi^6^, Katharine R. Studholme^6^, Sarah Wong^6^
 
 ^1^inSileco, Québec, Québec, Canada
 
@@ -25,13 +25,11 @@ David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^
 
 ^3^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Mount Pearl, Newfoundland and Labrador, Canada
 
-^4^Environment and Climate Change Canada, National Environmental Emergencies Centre, Montreal, Québec, Canada
+^4^Environment and Climate Change Canada, Environmental Protection Branch, National Environmental Emergencies Centre, Montreal, Québec, Canada
 
 ^5^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
 
-^6^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
-
-^7^Environment and Climate Change Canada, Science and Technology Branch Wildlife and Landscape Science Directorate, Dartmouth, Nova-Scotia, Canada
+^6^Environment and Climate Change Canada, Canadian Wildlife Service, Wildlife Assessment and Protected Areas, Dartmouth, Nova-Scotia, Canada
 
 #####
 
@@ -39,9 +37,9 @@ David Beauchesne^1\*^, Kevin Cazelles^1^, Stephanie Avery-Gomm^2^, April Hedd^3^
 
 Anthropogenic activities pose significant threats to marine ecosystems, with oil pollution, vessel traffic, and artificial light contributing to environmental risks across Canada’s Exclusive Economic Zone (EEZ) and adjacent waters.  This study presents a dataset of spatiotemporal threat layers, integrating a wide range of primary data sources to inform conservation, environmental response planning, and marine spatial management in Atlantic Canada. 
 
-The dataset comprises geospatial layers developed from various primary datasets, including open access and proprietary data shared for this project. These layers quantify petroleum pollution events, oil and gas infrastructure, vessel activity, and artificial light exposure across the annual cycle. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) shipping data. Additionally, VIIRS satellite observations are used to capture artificial light and flaring activity.
+The dataset comprises geospatial layers developed from various primary datasets, including open access and proprietary data shared for this project. These layers quantify petroleum pollution events, oil and gas infrastructure, vessel activity, and artificial light exposure across the annual cycle. Data sources include the Integrated Satellite Tracking of Pollution (ISTOP), National Aerial Surveillance Program (NASP), National Environmental Emergency Centre (NEEC), and Automatic Identification System (AIS) vessel traffic data. Additionally, Visible Infrared Imaging Radiometer Suite (VIIRS) satellite observations are used to capture artificial light and flaring activity.
 
-These spatiotemporal threat layers were developed using reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of different types of ship traffic and associated risks. All datasets were processed into high resolution 1-km2 study grid covering the northwest Atlantic, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. Openly accessible, this dataset supports diverse applications, including evaluating cumulative environmental impacts, informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species, such as the Leach’s Storm-Petrel, which breeds in Canada but regularly forages beyond Canada’s jurisdiction.
+These spatiotemporal threat layers were developed using reproducible workflows that integrate historical incident data and geospatial modeling. Petroleum pollution layers, for instance, evaluate the density of oiling events, while vessel disturbance layers quantify the intensity of different types of vessel traffic and associated risks. All datasets were processed into high resolution 1-km2 study grid covering the northwest Atlantic, using the WGS84 coordinate reference system (EPSG:4326). The resulting data products are stored as Cloud Optimized GeoTIFFs (COGs), with comprehensive metadata documenting workflows and processing details. Openly accessible, this dataset supports diverse applications, including evaluating cumulative environmental impacts, informing environmental response planning, supporting recovery strategies for at-risk species, and enhancing marine spatial planning to mitigate threats. For example, this work provides a foundation for evaluating cumulative effects on vulnerable species, such as the Leach’s Storm-Petrel, which breeds in Canada but regularly forages beyond Canada’s jurisdiction.
 
 By providing an integrated and high-resolution review of key anthropogenic stressors, this dataset bridges critical knowledge gaps in ocean management. It enables data-driven decision making for conservation practitioners, policymakers and researchers working to mitigate environmental threats and ensure the sustainable ocean management of marine resources within and beyond Canadian waters.
 
@@ -57,7 +55,7 @@ Petroleum activities,
 Petroleum pollution,
 Marine birds,
 Marine threats,
-Shipping
+Vessel traffic
 
 #####
 
