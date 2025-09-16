@@ -1,0 +1,14 @@
+default:
+  golem_name: ceacws
+  golem_version: 0.0.0.9000
+  app_prod: no
+  timeout_session_time: 1800  # 30 minutes in seconds
+  timeout_closing_time: 60    # 1 minute in seconds
+production:
+  app_prod: yes
+  timeout_session_time: 3600  # 1 hour in seconds  
+  timeout_closing_time: 300   # 5 minutes in seconds
+dev:
+  golem_wd: !expr here::here()
+  timeout_session_time: 7200  # 2 hours in seconds
+  timeout_closing_time: 120   # 2 minutes in seconds

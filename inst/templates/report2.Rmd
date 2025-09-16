@@ -1,0 +1,16 @@
+---
+title: "{{ title }}"
+author: "{{ author }}"
+date: "{{ date }}"
+---
+
+# Plot 2
+
+```{R plot1}
+library(sf)
+if (length(geom)) {
+    plot(geom |> st_geometry())
+}
+```
+
+Veniam dolor occaecat mollit quis eu. Et enim aliqua anim aliquip nisi nisi ea Lorem dolor veniam. Exercitation sit sint nisi ut. Irure nulla nisi quis aute sunt in ullamco. Incididunt aute aliquip dolore quis consequat pariatur sit adipisicing commodo ullamco eu incididunt deserunt.

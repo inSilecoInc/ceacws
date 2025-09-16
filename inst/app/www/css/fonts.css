@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+.fs-big {
+    font-size: 1.5rem;
+}
+
+.fs-med {
+    font-size: 1.2rem;
+}
+
+
+h1 {
+    padding: 20px 0px;
+}
+
+h2 {
+    padding: 14px 0px;
+}
+
+h3 {
+    padding: 12px 0px;
+}
+

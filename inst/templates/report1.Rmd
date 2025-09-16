@@ -1,0 +1,16 @@
+---
+title: "{{ title }}"
+author: "{{ author }}"
+date: "{{ date }}"
+---
+
+Sit reprehenderit laborum pariatur anim. Do ut non non quis ipsum ad elit adipisicing cupidatat elit. Fugiat aliquip minim id occaecat aute Lorem adipisicing esse reprehenderit dolore aliqua officia.
+
+# Plot 1
+
+```{R plot1}
+library(sf)
+if (length(geom)) {
+    plot(geom)
+}
+```

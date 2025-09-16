@@ -42,3 +42,5 @@ figures/*
 frontpage.svg
 _targets
 pubs/datapaper/*.docx
+CLAUDE.md
+prompt_plan.md
