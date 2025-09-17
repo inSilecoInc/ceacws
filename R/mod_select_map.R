@@ -57,6 +57,6 @@ mod_select_map_server <- function(id, r) {
                     error = function(e) data.frame()
                 )
             })
-        })
+        }, ignoreNULL = TRUE, ignoreInit = TRUE)
     })
 }

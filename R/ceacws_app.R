@@ -16,5 +16,5 @@
 #' ceacws_app()
 #' }
 ceacws_app <- function(...) {
-  run_app(...)
+  run_app(enableBookmarking = "disable", ...)
 }

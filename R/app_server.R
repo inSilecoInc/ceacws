@@ -19,6 +19,54 @@ app_server <- function(input, output, session) {
     
     # threat layers module
     threat_layers_data <- mod_threat_layers_server("threat_layers", r)
+    
+    # Dynamic tabs based on threat layers availability
+    output$dynamic_tabs <- renderUI({
+      has_layers <- length(threat_layers_data$selected_layers()) > 0
+      
+      tabs <- list(
+        # Tab 1: Threat layers (always available)
+        tabPanel(
+          title = tagList(icon("layer-group"), "Threat layers"),
+          value = "threat_layers",
+          mod_threat_layers_ui("threat_layers")
+        )
+      )
+      
+      # Add Map and Report tabs only when threat layers exist
+      if (has_layers) {
+        tabs <- append(tabs, list(
+          # Tab 2: Map
+          tabPanel(
+            title = tagList(icon("map"), "Map"),
+            value = "map",
+            sidebarLayout(
+              sidebarPanel(
+                mod_select_map_ui("map-setting")
+              ),
+              mainPanel(
+                mapedit::editModUI("map-select")
+              )
+            )
+          ),
+          # Tab 3: Report
+          tabPanel(
+            title = tagList(icon("file"), "Report"),
+            value = "report",
+            sidebarLayout(
+              sidebarPanel(
+                mod_render_doc_ui("report")
+              ),
+              mainPanel(
+                htmlOutput("preview_report")
+              )
+            )
+          )
+        ))
+      }
+      
+      do.call(tabsetPanel, c(list(id = "main_tabs", selected = "threat_layers"), tabs))
+    })
 
     # Handle tab switching when visualize is clicked
     observeEvent(threat_layers_data$visualize_triggered(), {
