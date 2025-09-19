@@ -1,0 +1,38 @@
+#' The application server-side
+#'
+#' @param input,output,session Internal parameters for {shiny}.
+#'
+#' @noRd
+app_server2 <- function(input, output, session) {
+  # Active threat layers selection module
+  mod_threat_layers_selection_server("threat_layers")
+
+  r <- reactiveValues(
+    map = base_map(),
+    geom_slc = NULL,
+    disclaimer_agreed = FALSE
+  )
+
+  # disclaimer
+  mod_dialog_disclaimers_server("show_dialog", r)
+
+  # timeout
+  mod_timeout_client_server("session_timeout", r)
+
+  # initiate map
+  mod_select_map_server("map-setting", r)
+
+  # generate map
+  observeEvent(r$map, {
+    r$geom_slc <- callModule(
+      mapedit::editMod,
+      leafmap = r$map,
+      id = "map-select"
+    )
+  })
+
+  onSessionEnded(function() {
+    cli::cli_alert_info("Session ended -- cleaning up")
+    # do what needs to be done!
+  })
+}

@@ -4,7 +4,7 @@
 \alias{\%||\%}
 \title{Get Available Threat Layers}
 \usage{
-lhs \%||\% rhs
+x \%||\% y
 }
 \value{
 A structured list optimized for UI filtering with types, years, months, nighttime, and layers components

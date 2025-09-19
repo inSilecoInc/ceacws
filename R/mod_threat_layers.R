@@ -313,14 +313,11 @@ mod_threat_layers_server <- function(id, r) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Initialize selected layers list
-    selected_layers <- reactiveVal(list())
+    # Initialize stored rasters list (combines display info and raster objects)
+    stored_rasters <- reactiveVal(list())
 
     # Initialize filtered layers (result of Filter button)
     filtered_layers <- reactiveVal(NULL)
-
-    # Initialize processed rasters storage
-    processed_rasters <- reactiveVal(list())
 
     # Control panel visibility
     hide_panel <- reactiveVal(FALSE)
@@ -734,34 +731,25 @@ mod_threat_layers_server <- function(id, r) {
           # Create unique name for this raster using file-safe naming
           file_safe_name <- get_file_safe_name(criteria, nrow(layers))
           raster_name <- paste0(
-            "layer_", length(processed_rasters()) + 1, "_",
+            "layer_", length(stored_rasters()) + 1, "_",
             file_safe_name
           )
 
-          # Store processed raster
-          current_rasters <- processed_rasters()
-          current_rasters[[raster_name]] <- list(
+          # Store raster with all metadata in single structure
+          current_stored <- stored_rasters()
+          new_layer <- list(
             raster = combined_raster,
             display_name = display_name,
             file_safe_name = file_safe_name,
             criteria = criteria,
-            file_count = nrow(layers),
-            combination_method = criteria$combination_method
-          )
-          processed_rasters(current_rasters)
-
-          # Add to selected layers for display
-          current_selected <- selected_layers()
-          new_layer <- list(
-            criteria = criteria,
             layers = layers,
-            display_name = display_name,
             file_count = nrow(layers),
             raster_name = raster_name,
+            combination_method = criteria$combination_method,
             raster_info = capture.output(print(combined_raster))
           )
-          current_selected[[length(current_selected) + 1]] <- new_layer
-          selected_layers(current_selected)
+          current_stored[[raster_name]] <- new_layer
+          stored_rasters(current_stored)
 
           # Remove loading notification and show success
           removeNotification("processing_layers")
@@ -791,20 +779,20 @@ mod_threat_layers_server <- function(id, r) {
 
     # Control visualize button visibility
     output$show_visualize <- reactive({
-      length(selected_layers()) > 0
+      length(stored_rasters()) > 0
     })
     outputOptions(output, "show_visualize", suspendWhenHidden = FALSE)
 
-    # Render selected layers list
+    # Render stored layers list
     output$layers <- renderUI({
-      layers <- selected_layers()
+      layers <- stored_rasters()
 
       if (length(layers) == 0) {
         return(p("No layers selected yet.", style = "color: #999;"))
       }
 
-      layer_items <- lapply(seq_along(layers), function(i) {
-        layer <- layers[[i]]
+      layer_items <- lapply(names(layers), function(raster_name) {
+        layer <- layers[[raster_name]]
         div(
           class = "alert alert-info",
           fluidRow(
@@ -817,7 +805,7 @@ mod_threat_layers_server <- function(id, r) {
             column(
               2,
               actionButton(
-                ns(paste0("remove_", layer$raster_name)),
+                ns(paste0("remove_", raster_name)),
                 icon("trash"),
                 class = "btn-sm btn-danger",
                 style = "float: right;"
@@ -833,46 +821,20 @@ mod_threat_layers_server <- function(id, r) {
     # Handle layer removal (dynamic buttons)
     observe({
       # Get current layers
-      layers <- selected_layers()
+      layers <- stored_rasters()
       
       # Only create observers if there are layers
       if (length(layers) > 0) {
         # Watch for any remove button clicks
-        lapply(layers, function(layer) {
-          # Safely extract raster name
-          raster_name <- tryCatch({
-            layer$raster_name
-          }, error = function(e) {
-            return(NULL)
-          })
-          
-          if (!is.null(raster_name)) {
-            observeEvent(input[[paste0("remove_", raster_name)]], {
-              # Remove from processed rasters
-              current_rasters <- processed_rasters()
-              current_rasters[[raster_name]] <- NULL
-              processed_rasters(current_rasters)
+        lapply(names(layers), function(raster_name) {
+          observeEvent(input[[paste0("remove_", raster_name)]], {
+            # Remove from stored rasters
+            current_stored <- stored_rasters()
+            current_stored[[raster_name]] <- NULL
+            stored_rasters(current_stored)
 
-              # Remove from selected layers
-              current_selected <- selected_layers()
-
-              # Safely remove layer with matching raster_name
-              if (length(current_selected) > 0) {
-                keep_indices <- sapply(current_selected,
-                                      function(x) {
-                                        tryCatch({
-                                          x$raster_name != raster_name
-                                        }, error = function(e) FALSE)
-                                      })
-                current_selected <- current_selected[keep_indices]
-              } else {
-                current_selected <- list()
-              }
-
-              selected_layers(current_selected)
-              showNotification("Layer removed.", type = "warning")
-            }, ignoreInit = TRUE, once = TRUE)
-          }
+            showNotification("Layer removed.", type = "warning")
+          }, ignoreInit = TRUE, once = TRUE)
         })
       }
     })
@@ -884,18 +846,17 @@ mod_threat_layers_server <- function(id, r) {
       # Increment counter to trigger reactive
       visualize_triggered(visualize_triggered() + 1)
 
-      # Store current processed rasters for visualization
-      r$threat_layers_for_map <- processed_rasters()
+      # Store current stored rasters for visualization
+      r$threat_layers_for_map <- stored_rasters()
 
       # Trigger map tab switch (this will be handled by parent module)
       showNotification("Layers ready for visualization on map!",
                        type = "message")
     })
 
-    # Return both selected layers and processed rasters for use by parent module
+    # Return stored rasters and visualization trigger for use by parent module
     list(
-      selected_layers = reactive(selected_layers()),
-      processed_rasters = reactive(processed_rasters()),
+      stored_rasters = reactive(stored_rasters()),
       visualize_triggered = reactive(visualize_triggered())
     )
   })
