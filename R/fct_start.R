@@ -24,17 +24,14 @@ fct_start <- function() {
 
     map_bbox <<- list(lng1 = -75, lat1 = 35, lng2 = -35, lat2 = 67)
 
-    # Initialize threat layers list (TO BE REMOVED ONCE OVERHAUL IS COMPLETED)
-    available_threat_layers <<- get_threat_layers()
-
     # Initialize UI-ready threat layers data
     threat_layers_list <<- prepare_ui_threat_layers_data()
-    
+
     # Validate that threat layers were found
     if (length(threat_layers_list) == 0) {
-      stop("No threat layers found. Check that workspace/data/analyzed/ contains valid .tif files.")
+        stop("No threat layers found. Check that workspace/data/analyzed/ contains valid .tif files.")
     }
-    
+
     # Pre-compute category choices for UI
     category_choices <- names(threat_layers_list)
     category_labels <- gsub("_", " ", category_choices)

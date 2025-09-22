@@ -19,7 +19,7 @@ mod_threat_layers_processing_ui <- function(id) {
             id = ns("processing"),
             accordion_panel(
               title = "Threat layers",
-              uiOutput(ns("layer_checkboxes"))
+              uiOutput(ns("selected_rasters"))
             ),
             accordion_panel(
               title = "Processing",
@@ -35,7 +35,7 @@ mod_threat_layers_processing_ui <- function(id) {
       column(
         width = 8,
         card(
-          mapedit::editModUI("map-select")
+          leaflet::leafletOutput(ns("mapId"), height = 800)
         )
       )
     )
@@ -54,11 +54,17 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
+    # Initialize with base_map()
+    output$mapId <- leaflet::renderLeaflet({
+      base_map()
+    })
+
+
     # Update UI when stored_rasters changes
-    observeEvent(stored_rasters(), {
+    observe({
       rasters <- stored_rasters()
 
-      output$layer_checkboxes <- renderUI({
+      output$selected_rasters <- renderUI({
         if (length(rasters) == 0) {
           return(div(
             p("No threat layers available", style = "color: #999;"),
@@ -83,89 +89,46 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
       })
     })
 
-
-    # # keep track of previous selection
-    # prev_selected <- reactiveVal(character())
-
-    # observeEvent(input$selected_rasters, {
-    #   req(r$map)
-    #   rasters <- stored_rasters()
-
-    #   old <- prev_selected()
-    #   new <- input$selected_rasters
-
-    #   # find differences
-    #   added <- setdiff(new, old)
-    #   removed <- setdiff(old, new)
-
-    #   # add new rasters
-    #   for (id in added) {
-    #     layer <- rasters[[id]]
-
-    #     r$map <- r$map |>
-    #       leaflet::addRasterImage(
-    #         layer$raster,
-    #         layerId = id,
-    #         group   = layer$name,
-    #         opacity = 0.7,
-    #         project = TRUE
-    #       )
-    #   }
-
-    #   # remove deselected rasters
-    #   for (id in removed) {
-    #     r$map <- r$map |>
-    #       leaflet::removeImage(layerId = id)
-    #   }
-
-    #   # update state
-    #   prev_selected(new)
-    # })
-
-
-    # Initial map — render only once
-    # output$mapId <- leaflet::renderLeaflet({
-    #   leaflet() |>
-    #     addTiles() |>
-    #     setView(lng = -75, lat = 45, zoom = 4)
-    # })
-
     # Track previous selection
     prev_selected <- reactiveVal(character())
 
-    observeEvent(input$selected_rasters, {
-      rasters <- stored_rasters()
+    observeEvent(input$selected_rasters,
+      {
+        rasts <- stored_rasters()
+        old <- prev_selected()
+        new <- input$selected_rasters
+        added <- setdiff(new, old)
+        removed <- setdiff(old, new)
 
-      old <- prev_selected()
-      new <- input$selected_rasters
+        # proxy to existing map
+        map_proxy <- leaflet::leafletProxy(ns("mapId"))
 
-      added <- setdiff(new, old)
-      removed <- setdiff(old, new)
+        # add new rasters
+        if (length(input$selected_rasters) == 0) {
+          map_proxy <- map_proxy |> leaflet::clearImages()
+        } else {
+          for (id in added) {
+            layer <- rasts[[id]]
+            map_proxy <- map_proxy |>
+              leaflet::addRasterImage(
+                layer$raster, # terra::SpatRaster
+                layerId = id,
+                group   = layer$name,
+                opacity = 0.7,
+                project = TRUE
+              )
+          }
+        }
 
-      # Work with leafletProxy instead of r$map
-      map_proxy <- leaflet::leafletProxy("mapId")
+        # remove deselected rasters
+        for (id in removed) {
+          map_proxy <- map_proxy |>
+            leaflet::removeImage(layerId = id)
+        }
 
-      # Add newly selected rasters
-      for (id in added) {
-        layer <- rasters[[id]]
-
-        map_proxy <- map_proxy |>
-          leaflet::addRasterImage(
-            layer$raster, # should be SpatRaster from terra
-            layerId = id,
-            group   = layer$name,
-            opacity = 0.7,
-            project = TRUE
-          )
-      }
-
-      # Remove deselected rasters
-      for (id in removed) {
-        map_proxy <- map_proxy |>
-          leaflet::removeImage(layerId = id)
-      }
-
-      prev_selected(new)
-    })
+        prev_selected(new)
+      },
+      ignoreNULL = FALSE
+    )
   })
 }

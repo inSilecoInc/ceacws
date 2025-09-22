@@ -33,23 +33,6 @@ app_ui <- function(request) {
                     )
                 ),
 
-                # Map tab
-                tabPanel(
-                    title = tagList(icon("map"), "Map"),
-                    value = "map_tab",
-                    sidebarLayout(
-                        sidebarPanel(
-                            div(
-                                class = "p-3",
-                                mod_select_map_ui("map")
-                            )
-                        ),
-                        mainPanel(
-                            mapedit::editModUI("map-select")
-                        )
-                    )
-                ),
-
                 # Processing panel
                 tabPanel(
                     title = tagList(icon("map"), "Map"),
@@ -58,7 +41,7 @@ app_ui <- function(request) {
                         class = "p-3",
                         mod_threat_layers_processing_ui("threat_processing")
                     )
-                ),
+                )
             )
         )
     )

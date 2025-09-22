@@ -7,32 +7,32 @@ app_server <- function(input, output, session) {
   # Active threat layers selection module
   stored_rasters <- mod_threat_layers_selection_server("threat_layers")
 
-  r <- reactiveValues(
-    map = base_map(),
-    geom_slc = NULL,
-    disclaimer_agreed = FALSE
-  )
+  # r <- reactiveValues(
+  #   map = base_map(),
+  #   geom_slc = NULL,
+  #   disclaimer_agreed = FALSE
+  # )
 
   # Activate threat layers processing module
-  mod_threat_layers_processing_server("threat_processing", stored_rasters$stored_rasters, r)
+  mod_threat_layers_processing_server("threat_processing", stored_rasters$stored_rasters)
 
   # disclaimer
-  # mod_dialog_disclaimers_server("show_dialog", r)
+  # mod_dialog_disclaimers_server("show_dialog")
 
   # timeout
-  mod_timeout_client_server("session_timeout", r)
+  mod_timeout_client_server("session_timeout")
 
   # initiate map
-  mod_select_map_server("map-setting", r)
+  # mod_select_map_server("map-setting", r)
 
-  # generate map
-  observeEvent(r$map, {
-    r$geom_slc <- callModule(
-      mapedit::editMod,
-      leafmap = r$map,
-      id = "map-select"
-    )
-  })
+  # # generate map
+  # observeEvent(r$map, {
+  #   r$geom_slc <- callModule(
+  #     mapedit::editMod,
+  #     leafmap = r$map,
+  #     id = "mapId"
+  #   )
+  # })
 
 
   onSessionEnded(function() {

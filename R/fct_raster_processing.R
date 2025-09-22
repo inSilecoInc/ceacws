@@ -142,7 +142,9 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
   )
 
   # Apply reduction and convert to stars
-  gdalcubes::reduce_time(cube, reduce_expr) |>
+  res <- gdalcubes::reduce_time(cube, reduce_expr) |>
     stars::st_as_stars() |>
     terra::rast()
+  res[res == 0] <- NA
+  res
 }
