@@ -89,7 +89,7 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
   }
 
   if (length(filepaths) == 1) {
-    return(stars::read_stars(filepaths[1]))
+    return(terra::rast(filepaths[1]))
   }
 
   # gdalcubes options
@@ -142,6 +142,7 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
   )
 
   # Apply reduction and convert to stars
-  result <- gdalcubes::reduce_time(cube, reduce_expr)
-  stars::st_as_stars(result)
+  gdalcubes::reduce_time(cube, reduce_expr) |>
+    stars::st_as_stars() |>
+    terra::rast()
 }

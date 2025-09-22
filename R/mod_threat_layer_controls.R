@@ -11,7 +11,6 @@
 mod_threat_layer_controls_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    # h4("Threat Layers"),
     uiOutput(ns("layer_controls"))
   )
 }

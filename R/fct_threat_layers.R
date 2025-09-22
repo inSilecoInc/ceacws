@@ -1,407 +1,429 @@
-#' Get Available Threat Layers
+#' Scan Available Threat Layer Files
 #'
-#' Scans the workspace/data/analyzed/ directory and returns a structured list
-#' of available threat layers, filtering out Atlantic scale layers.
+#' Scans the workspace/data/analyzed/ directory and returns a simple data.frame
+#' of all available threat layer files with parsed metadata.
 #'
-#' @return A structured list optimized for UI filtering with types, years, months, nighttime, and layers components
+#' @param analyzed_path Path to analyzed data directory. Defaults to "workspace/data/analyzed"
+#' @return A data.frame with columns: filepath, filename, category, subcategory, type, year, month, etc.
 #' @export
 #'
-#' @importFrom fs dir_ls path_file path_dir
-#' @importFrom stringr str_extract str_detect str_replace_all str_match
-#' @importFrom dplyr bind_rows
-
-# Helper operator for NULL coalescing
-`%||%` <- function(lhs, rhs) {
-  if (is.null(lhs)) rhs else lhs
-}
-get_threat_layers <- function() {
-  analyzed_path <- file.path("workspace", "data", "analyzed")
-
+#' @importFrom fs dir_ls path_file
+#' @importFrom stringr str_detect
+get_threat_layers <- function(analyzed_path = file.path("workspace", "data", "analyzed")) {
   # Check if directory exists
   if (!dir.exists(analyzed_path)) {
     warning("Analyzed data directory not found: ", analyzed_path)
-    return(list())
+    return(data.frame())
   }
 
   # Find all .tif files, excluding Atlantic scale layers
-  tif_files <- fs::dir_ls(analyzed_path,
-    recurse = TRUE,
-    glob = "*.tif"
-  ) |>
-    # Filter out Atlantic scale layers
-    {
-      \(x) x[!stringr::str_detect(x, "atlantic")]
-    }()
+  tif_files <- dir(analyzed_path, recursive = TRUE, pattern = "*.tif", full.names = TRUE)
+
+  # Filter out Atlantic scale layers
+  tif_files <- tif_files[!stringr::str_detect(tif_files, "atlantic|fisheries")]
 
   if (length(tif_files) == 0) {
-    return(list())
+    return(data.frame())
   }
 
-  # Parse all files first
-  all_parsed <- list()
-  for (file in tif_files) {
-    filename <- fs::path_file(file)
-    parsed <- parse_filename(filename, file)
+  # Parse all files and build data.frame
+  parsed_data <- list()
+
+  for (filepath in tif_files) {
+    parsed <- parse_threat_layer_filename(filepath)
+
     if (!is.null(parsed)) {
-      all_parsed[[length(all_parsed) + 1]] <- parsed
+      parsed_data[[length(parsed_data) + 1]] <- parsed
     }
   }
 
-  if (length(all_parsed) == 0) {
-    return(list())
+  if (length(parsed_data) == 0) {
+    return(data.frame())
   }
 
-  # Duplicate NEEC petroleum pollution entries for both all_types and specific_type subcategories
-  neec_entries <- list()
-  for (i in seq_along(all_parsed)) {
-    entry <- all_parsed[[i]]
-    if (entry$category == "petroleum_pollution" && 
-        entry$subcategory == "specific_type" && 
-        entry$dataset == "neec") {
-      # Create duplicate entry for all_types subcategory
-      all_types_entry <- entry
-      all_types_entry$subcategory <- "all_types"
-      all_types_entry$type <- NULL  # Remove type field for all_types
-      neec_entries[[length(neec_entries) + 1]] <- all_types_entry
-    }
-  }
-  
-  # Add the duplicated entries to the main list
-  if (length(neec_entries) > 0) {
-    all_parsed <- c(all_parsed, neec_entries)
-  }
+  # Convert to data.frame
+  result_df <- do.call(rbind.data.frame, c(parsed_data, stringsAsFactors = FALSE))
 
-  # Group by categories and create UI-optimized structure
-  categories <- unique(sapply(all_parsed, function(x) x$category))
-  result <- list()
+  # Ensure consistent column types
+  result_df$filepath <- as.character(result_df$filepath)
+  result_df$filename <- as.character(result_df$filename)
+  result_df$category <- as.character(result_df$category)
 
-  for (cat in categories) {
-    cat_data <- all_parsed[sapply(all_parsed, function(x) x$category == cat)]
-
-    # Handle offshore petroleum split
-    if (cat == "offshore_petroleum") {
-      # Split into activity and platforms
-      activity_data <- cat_data[sapply(cat_data, function(x) x$subcategory == "activity")]
-      platform_data <- cat_data[sapply(cat_data, function(x) x$subcategory %in% c("platform_annual", "platform_monthly"))]
-
-      if (length(activity_data) > 0) {
-        result[["offshore_petroleum_activity"]] <- create_category_structure("offshore_petroleum_activity", activity_data)
-      }
-      if (length(platform_data) > 0) {
-        result[["offshore_petroleum_platforms"]] <- create_category_structure("offshore_petroleum_platforms", platform_data)
-      }
-    } else {
-      result[[cat]] <- create_category_structure(cat, cat_data)
-    }
-  }
-
-  return(result)
+  return(result_df)
 }
 
-#' Parse filename according to threat layer patterns
+#' Create Base Result Structure
+#'
+#' Creates a base list structure with all possible fields for threat layer parsing.
+#'
+#' @param filepath The full file path
+#' @param filename The filename
+#' @return A list with all fields initialized
+#' @noRd
+create_base_result <- function(filepath, filename) {
+  list(
+    filepath = filepath,
+    filename = filename,
+    category = NA_character_,
+    subcategory = NA_character_,
+    type = NA_character_,
+    species = NA_character_,
+    year = NA_integer_,
+    year_range = NA_character_,
+    month = NA_integer_,
+    dataset = NA_character_,
+    nighttime = FALSE
+  )
+}
+
+#' Identify Threat Layer Type
+#'
+#' Determines the threat layer type based on filename patterns.
+#'
+#' @param filename The filename to analyze
+#' @return Character string identifying the threat type or NULL if not recognized
+#' @noRd
+#'
+#' @importFrom stringr str_detect
+identify_threat_type <- function(filename) {
+  if (stringr::str_detect(filename, "^fisheries_effort_")) {
+    return("fisheries")
+  }
+  if (stringr::str_detect(filename, "^night_light_")) {
+    return("night_lights")
+  }
+  if (stringr::str_detect(filename, "^offshore_petroleum_activity_")) {
+    return("offshore_petroleum_activity")
+  }
+  if (stringr::str_detect(filename, "^offshore_petroleum_platform_")) {
+    return("offshore_petroleum_platform")
+  }
+  if (stringr::str_detect(filename, "^offshore_wind_farm_")) {
+    return("offshore_wind_farm")
+  }
+  if (stringr::str_detect(filename, "^petroleum_pollution_incidents_")) {
+    return("petroleum_pollution")
+  }
+  if (stringr::str_detect(filename, "^ship_light_detection_")) {
+    return("ship_light_detection")
+  }
+  if (stringr::str_detect(filename, "^shipping_intensity_density_")) {
+    return("shipping_daily")
+  }
+  if (stringr::str_detect(filename, "^shipping_night_light_intensity_density_")) {
+    return("shipping_nighttime")
+  }
+
+  NULL
+}
+
+#' Parse Threat Layer Filename
+#'
+#' Extracts structured metadata from threat layer filenames using specific parsers.
+#'
 #' @param filename The filename to parse
 #' @param filepath The full file path
 #' @return A list with parsed attributes or NULL if not recognized
-parse_filename <- function(filename, filepath) {
-  # Fisheries: fisheries_effort_{type}_{year start-year end}_{month number}.tif
-  # or fisheries_effort_{type}_{species}_{year start-year end}_{month number}.tif
-  if (stringr::str_detect(filename, "^fisheries_effort_")) {
-    # Pattern: fisheries_effort_{type}_{year-year}_{month}.tif or
-    #          fisheries_effort_{type}_{species}_{year-year}_{month}.tif
-    match <- stringr::str_match(filename, "^fisheries_effort_(.+)_(\\d{4}-\\d{4})_ ?(\\d+)\\.tif$")
-    if (!is.na(match[1])) {
-      type_species <- match[2]
-      year_range <- match[3]
-      month <- as.integer(match[4])
+#' @noRd
+parse_threat_layer_filename <- function(filepath) {
+  filename <- fs::path_file(filepath)
+  threat_type <- identify_threat_type(filename)
 
-      # Check if there's a species (more than one underscore in type_species)
-      parts <- strsplit(type_species, "_")[[1]]
-      if (length(parts) > 1) {
-        return(list(
-          category = "fisheries",
-          subcategory = "species_specific",
-          type = parts[1],
-          species = paste(parts[2:length(parts)], collapse = "_"),
-          year_range = year_range,
-          month = month,
-          filepath = filepath,
-          nighttime = FALSE
-        ))
-      } else {
-        return(list(
-          category = "fisheries",
-          subcategory = "gear_only",
-          type = type_species,
-          species = NULL,
-          year_range = year_range,
-          month = month,
-          filepath = filepath,
-          nighttime = FALSE
-        ))
-      }
-    }
+  switch(threat_type,
+    "fisheries" = parse_fisheries_filename(filename, filepath),
+    "night_lights" = parse_night_lights_filename(filename, filepath),
+    "offshore_petroleum_activity" = parse_offshore_petroleum_activity_filename(filename, filepath),
+    "offshore_petroleum_platform" = parse_offshore_petroleum_platform_filename(filename, filepath),
+    "offshore_wind_farm" = parse_offshore_wind_farm_filename(filename, filepath),
+    "petroleum_pollution" = parse_petroleum_pollution_filename(filename, filepath),
+    "ship_light_detection" = parse_ship_light_detection_filename(filename, filepath),
+    "shipping_daily" = parse_shipping_daily_filename(filename, filepath),
+    "shipping_nighttime" = parse_shipping_nighttime_filename(filename, filepath),
+    NULL
+  )
+}
+
+#' Parse Fisheries Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_fisheries_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^fisheries_effort_(.+)_(\\d{4}-\\d{4})_ ?(\\d+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
   }
 
-  # Night lights: night_light_{year}-{month}-01.tif
-  if (stringr::str_detect(filename, "^night_light_")) {
-    match <- stringr::str_match(filename, "^night_light_(\\d{4})-(\\d{2})-01\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "night_lights",
-        year = as.integer(match[2]),
-        month = as.integer(match[3]),
-        filepath = filepath,
-        nighttime = TRUE
-      ))
-    }
+  type_species <- match[2]
+  result$year_range <- match[3]
+  result$month <- as.integer(match[4])
+  result$category <- "fisheries"
+
+  # Check if there's a species (more than one underscore in type_species)
+  parts <- strsplit(type_species, "_")[[1]]
+  if (length(parts) > 1) {
+    result$subcategory <- "species_specific"
+    result$type <- parts[1]
+    result$species <- paste(parts[2:length(parts)], collapse = "_")
+  } else {
+    result$subcategory <- "gear_only"
+    result$type <- type_species
   }
 
-  # Offshore petroleum activity: offshore_petroleum_activity_{type}.tif
-  if (stringr::str_detect(filename, "^offshore_petroleum_activity_")) {
-    match <- stringr::str_match(filename, "^offshore_petroleum_activity_(.+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "offshore_petroleum",
-        subcategory = "activity",
-        type = match[2],
-        filepath = filepath,
-        nighttime = FALSE
-      ))
-    }
+  result
+}
+
+#' Parse Night Lights Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_night_lights_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^night_light_(\\d{4})-(\\d{2})-01\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
   }
 
-  # Offshore petroleum platform annual: offshore_petroleum_platform_{type}_{year}.tif
+  result$category <- "night_lights"
+  result$year <- as.integer(match[2])
+  result$month <- as.integer(match[3])
+  result$nighttime <- TRUE
+
+  result
+}
+
+#' Parse Offshore Petroleum Activity Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_offshore_petroleum_activity_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^offshore_petroleum_activity_(.+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
+  }
+
+  result$category <- "offshore_petroleum"
+  result$subcategory <- "activity"
+  result$type <- match[2]
+
+  result
+}
+
+#' Parse Offshore Petroleum Platform Filename
+#' @noRd
+#' @importFrom stringr str_match str_detect
+parse_offshore_petroleum_platform_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+  result$category <- "offshore_petroleum"
+
+  # Annual pattern: offshore_petroleum_platform_{type}_{year}.tif
   if (stringr::str_detect(filename, "^offshore_petroleum_platform_.+_\\d{4}\\.tif$")) {
     match <- stringr::str_match(filename, "^offshore_petroleum_platform_(.+)_(\\d{4})\\.tif$")
     if (!is.na(match[1])) {
-      return(list(
-        category = "offshore_petroleum",
-        subcategory = "platform_annual",
-        type = match[2],
-        year = as.integer(match[3]),
-        filepath = filepath,
-        nighttime = FALSE
-      ))
+      result$subcategory <- "platform_annual"
+      result$type <- match[2]
+      result$year <- as.integer(match[3])
+      return(result)
     }
   }
 
-  # Offshore petroleum platform monthly: offshore_petroleum_platform_{type}_{year}-{month}-01.tif
+  # Monthly pattern: offshore_petroleum_platform_{type}_{year}-{month}-01.tif
   if (stringr::str_detect(filename, "^offshore_petroleum_platform_.+-\\d{2}-01\\.tif$")) {
     match <- stringr::str_match(filename, "^offshore_petroleum_platform_(.+)_(\\d{4})-(\\d{2})-01\\.tif$")
     if (!is.na(match[1])) {
-      return(list(
-        category = "offshore_petroleum",
-        subcategory = "platform_monthly",
-        type = match[2],
-        year = as.integer(match[3]),
-        month = as.integer(match[4]),
-        filepath = filepath,
-        nighttime = FALSE
-      ))
+      result$subcategory <- "platform_monthly"
+      result$type <- match[2]
+      result$year <- as.integer(match[3])
+      result$month <- as.integer(match[4])
+      return(result)
     }
   }
 
-  # Offshore wind farm: offshore_wind_farm_{type}.tif
-  if (stringr::str_detect(filename, "^offshore_wind_farm_")) {
-    match <- stringr::str_match(filename, "^offshore_wind_farm_(.+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "offshore_wind_farm",
-        type = match[2],
-        filepath = filepath,
-        nighttime = FALSE
-      ))
-    }
-  }
-
-  # Petroleum pollution incidents: petroleum_pollution_incidents_{dataset}_{month}.tif
-  # or petroleum_pollution_incidents_{dataset}_{month}_{type}.tif
-  if (stringr::str_detect(filename, "^petroleum_pollution_incidents_")) {
-    # Try specific type pattern first
-    match <- stringr::str_match(filename, "^petroleum_pollution_incidents_(.+)_ ?(\\d+)_(.+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "petroleum_pollution",
-        subcategory = "specific_type",
-        dataset = match[2],
-        month = as.integer(match[3]),
-        type = match[4],
-        filepath = filepath,
-        nighttime = FALSE
-      ))
-    }
-
-    # Try all types pattern
-    match <- stringr::str_match(filename, "^petroleum_pollution_incidents_(.+)_ ?(\\d+)(?:_(.+))?\\.tif$")
-    if (!is.na(match[1]) && match[1, 2] != "all") {
-      return(list(
-        category = "petroleum_pollution",
-        subcategory = "all_types",
-        dataset = match[2],
-        month = as.integer(match[3]),
-        filepath = filepath,
-        nighttime = FALSE
-      ))
-    }
-  }
-
-  # Ship light detection: ship_light_detection_{month}.tif
-  if (stringr::str_detect(filename, "^ship_light_detection_")) {
-    match <- stringr::str_match(filename, "^ship_light_detection_(\\d+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "ship_light_detection",
-        month = as.integer(match[2]),
-        filepath = filepath,
-        nighttime = TRUE
-      ))
-    }
-  }
-
-  # Shipping daily: shipping_intensity_density_{year}_{month}_{type}.tif
-  if (stringr::str_detect(filename, "^shipping_intensity_density_")) {
-    match <- stringr::str_match(filename, "^shipping_intensity_density_(\\d{4})_(\\d+)_(.+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "shipping",
-        subcategory = "daily",
-        year = as.integer(match[2]),
-        month = as.integer(match[3]),
-        type = match[4],
-        filepath = filepath,
-        nighttime = FALSE
-      ))
-    }
-  }
-
-  # Shipping nighttime: shipping_night_light_intensity_density_{year}_{month}_{type}.tif
-  if (stringr::str_detect(filename, "^shipping_night_light_intensity_density_")) {
-    match <- stringr::str_match(filename, "^shipping_night_light_intensity_density_(\\d{4})_(\\d+)_(.+)\\.tif$")
-    if (!is.na(match[1])) {
-      return(list(
-        category = "shipping",
-        subcategory = "nighttime",
-        year = as.integer(match[2]),
-        month = as.integer(match[3]),
-        type = match[4],
-        filepath = filepath,
-        nighttime = TRUE
-      ))
-    }
-  }
-
-  return(NULL)
+  NULL
 }
 
-#' Create UI-optimized category structure
-#' @param category The category name
-#' @param cat_data List of parsed data for this category
-#' @return List with types, years, months, nighttime, and layers components
-create_category_structure <- function(category, cat_data) {
-  # Convert to data.frame for easier manipulation
-  layers_df <- data.frame(
-    type = sapply(cat_data, function(x) x$type %||% NA_character_),
-    year = sapply(cat_data, function(x) x$year %||% NA_integer_),
-    month = sapply(cat_data, function(x) x$month %||% NA_integer_),
-    year_range = sapply(cat_data, function(x) x$year_range %||% NA_character_),
-    dataset = sapply(cat_data, function(x) x$dataset %||% NA_character_),
-    species = sapply(cat_data, function(x) x$species %||% NA_character_),
-    subcategory = sapply(cat_data, function(x) x$subcategory %||% NA_character_),
-    filepath = sapply(cat_data, function(x) x$filepath),
-    layer_id = sapply(cat_data, function(x) {
-      fs::path_file(x$filepath) |>
-        stringr::str_replace("\\.tif$", "")
-    }),
-    nighttime = sapply(cat_data, function(x) x$nighttime %||% FALSE),
-    stringsAsFactors = FALSE
-  )
+#' Parse Offshore Wind Farm Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_offshore_wind_farm_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
 
-  # Handle special cases for complex categories
-  if (category == "fisheries") {
-    # Separate gear-only vs species-specific
-    gear_only <- layers_df[is.na(layers_df$species), ]
-    species_specific <- layers_df[!is.na(layers_df$species), ]
-
-    result <- list(
-      gear_only = create_simple_structure(gear_only),
-      species_specific = create_simple_structure(species_specific)
-    )
-  } else if (category == "offshore_petroleum_platforms") {
-    # Separate monthly vs annual
-    monthly <- layers_df[layers_df$subcategory == "platform_monthly" & !is.na(layers_df$subcategory), ]
-    annual <- layers_df[layers_df$subcategory == "platform_annual" & !is.na(layers_df$subcategory), ]
-
-    result <- list(
-      monthly = create_simple_structure(monthly),
-      annual = create_simple_structure(annual)
-    )
-  } else if (category == "petroleum_pollution") {
-    # Normalize dataset as type - combine dataset and type into a single type field
-    layers_df$combined_type <- ifelse(
-      !is.na(layers_df$dataset) & !is.na(layers_df$type),
-      paste(layers_df$dataset, layers_df$type, sep = "_"),
-      ifelse(!is.na(layers_df$dataset), layers_df$dataset, layers_df$type)
-    )
-    layers_df$type <- layers_df$combined_type
-
-    # Separate by subcategory but treat as simple structure with normalized types
-    all_types <- layers_df[layers_df$subcategory == "all_types" & !is.na(layers_df$subcategory), ]
-    specific_type <- layers_df[layers_df$subcategory == "specific_type" & !is.na(layers_df$subcategory), ]
-
-    result <- list(
-      all_types = create_simple_structure(all_types),
-      specific_type = create_simple_structure(specific_type)
-    )
-  } else if (category == "shipping") {
-    # Separate daily vs nighttime
-    daily <- layers_df[layers_df$subcategory == "daily" & !is.na(layers_df$subcategory), ]
-    nighttime <- layers_df[layers_df$subcategory == "nighttime" & !is.na(layers_df$subcategory), ]
-
-    result <- list(
-      daily = create_simple_structure(daily),
-      nighttime = create_simple_structure(nighttime)
-    )
-  } else {
-    # Simple categories (including offshore_petroleum_activity)
-    result <- create_simple_structure(layers_df)
+  match <- stringr::str_match(filename, "^offshore_wind_farm_(.+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
   }
 
-  return(result)
+  result$category <- "offshore_wind_farm"
+  result$type <- match[2]
+
+  result
 }
 
-#' Create simple structure for a category
-#' @param df Data frame with layer information
-#' @return List with types, years, months, nighttime, layers
-create_simple_structure <- function(df) {
-  if (nrow(df) == 0) {
-    return(list(
-      types = character(0),
-      years = integer(0),
-      months = integer(0),
-      year_ranges = character(0),
-      datasets = character(0),
-      nighttime = FALSE,
-      layers = data.frame()
-    ))
+#' Parse Petroleum Pollution Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_petroleum_pollution_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+  result$category <- "petroleum_pollution"
+
+  # Try specific type pattern first
+  match <- stringr::str_match(filename, "^petroleum_pollution_incidents_(.+)_ ?(\\d+)_(.+)\\.tif$")
+  if (!is.na(match[1])) {
+    result$subcategory <- "specific_type"
+    result$dataset <- match[2]
+    result$month <- as.integer(match[3])
+    result$type <- match[4]
+    return(result)
   }
 
-  # Extract unique values, removing NAs
-  types <- unique(df$type[!is.na(df$type)])
-  years <- sort(unique(df$year[!is.na(df$year)]))
-  months <- sort(unique(df$month[!is.na(df$month)]))
-  year_ranges <- unique(df$year_range[!is.na(df$year_range)])
-  datasets <- unique(df$dataset[!is.na(df$dataset)])
+  # Try all types pattern
+  match <- stringr::str_match(filename, "^petroleum_pollution_incidents_(.+)_ ?(\\d+)\\.tif$")
+  if (!is.na(match[1]) && match[2] != "all") {
+    result$subcategory <- "all_types"
+    result$dataset <- match[2]
+    result$month <- as.integer(match[3])
+    return(result)
+  }
 
-  # Check if any layer is nighttime
-  has_nighttime <- any(df$nighttime, na.rm = TRUE)
+  NULL
+}
 
+#' Parse Ship Light Detection Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_ship_light_detection_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^ship_light_detection_(\\d+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
+  }
+
+  result$category <- "ship_light_detection"
+  result$month <- as.integer(match[2])
+  result$nighttime <- TRUE
+
+  result
+}
+
+#' Parse Shipping Daily Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_shipping_daily_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^shipping_intensity_density_(\\d{4})_(\\d+)_(.+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
+  }
+
+  result$category <- "shipping"
+  result$subcategory <- "daily"
+  result$year <- as.integer(match[2])
+  result$month <- as.integer(match[3])
+  result$type <- match[4]
+
+  result
+}
+
+#' Parse Shipping Nighttime Filename
+#' @noRd
+#' @importFrom stringr str_match
+parse_shipping_nighttime_filename <- function(filename, filepath) {
+  result <- create_base_result(filepath, filename)
+
+  match <- stringr::str_match(filename, "^shipping_night_light_intensity_density_(\\d{4})_(\\d+)_(.+)\\.tif$")
+  if (is.na(match[1])) {
+    return(NULL)
+  }
+
+  result$category <- "shipping"
+  result$subcategory <- "nighttime"
+  result$year <- as.integer(match[2])
+  result$month <- as.integer(match[3])
+  result$type <- match[4]
+  result$nighttime <- TRUE
+
+  result
+}
+
+#' Prepare UI Filter Data
+#'
+#' Transforms flat threat layer data.frame into a nested structure optimized
+#' for UI filter dropdown population.
+#'
+#' @return Nested list structure with categories and filter options
+#' @export
+prepare_ui_threat_layers_data <- function() {
+  threat_data <- get_threat_layers()
+  if (nrow(threat_data) == 0) {
+    return(list())
+  }
+
+  # Get unique categories
+  categories <- unique(threat_data$category)
+  categories <- categories[!is.na(categories)]
+
+  result <- list()
+
+  for (cat in categories) {
+    cat_data <- threat_data[threat_data$category == cat & !is.na(threat_data$category), ]
+
+    # Check if this category has subcategories
+    subcategories <- unique(cat_data$subcategory)
+    subcategories <- subcategories[!is.na(subcategories)]
+
+    if (length(subcategories) > 0) {
+      # Category with subcategories
+      result[[cat]] <- list(subcategories = subcategories)
+
+      # Add filter options for each subcategory
+      for (subcat in subcategories) {
+        subcat_data <- cat_data[cat_data$subcategory == subcat & !is.na(cat_data$subcategory), ]
+        result[[cat]][[subcat]] <- extract_filter_options(subcat_data)
+      }
+    } else {
+      # Category without subcategories - direct filter options
+      result[[cat]] <- extract_filter_options(cat_data)
+    }
+  }
+
+  result
+}
+
+#' Extract Filter Options
+#'
+#' Extracts unique filter values from a subset of threat layer data.
+#'
+#' @param data data.frame subset for a specific category/subcategory
+#' @return List with filter options (types, species, years, months, etc.)
+#' @noRd
+extract_filter_options <- function(data) {
+  # Extract unique non-NA values for each filter field
   list(
-    types = types,
-    years = years,
-    months = months,
-    year_ranges = year_ranges,
-    datasets = datasets,
-    nighttime = has_nighttime,
-    layers = df
+    types = get_unique_values(data$type),
+    species = get_unique_values(data$species),
+    years = get_unique_values(data$year),
+    year_ranges = get_unique_values(data$year_range),
+    months = sort(get_unique_values(data$month)),
+    datasets = get_unique_values(data$dataset),
+    nighttime = any(data$nighttime, na.rm = TRUE),
+    data = data # Keep the actual data for filtering
   )
+}
+
+#' Get Unique Non-NA Values
+#'
+#' Helper to extract unique non-NA values from a vector.
+#'
+#' @param x Vector to extract unique values from
+#' @return Vector of unique non-NA values, or NULL if none exist
+#' @noRd
+get_unique_values <- function(x) {
+  unique_vals <- unique(x[!is.na(x)])
+  if (length(unique_vals) == 0) {
+    return(NULL)
+  }
+  unique_vals
 }

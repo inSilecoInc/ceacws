@@ -5,7 +5,7 @@
 #' @noRd
 app_server2 <- function(input, output, session) {
   # Active threat layers selection module
-  mod_threat_layers_selection_server("threat_layers")
+  stored_rasters <- mod_threat_layers_selection_server("threat_layers")
 
   r <- reactiveValues(
     map = base_map(),
@@ -13,8 +13,11 @@ app_server2 <- function(input, output, session) {
     disclaimer_agreed = FALSE
   )
 
+  # Activate threat layers processing module
+  mod_threat_layers_processing_server("threat_processing", stored_rasters$stored_rasters, r)
+
   # disclaimer
-  mod_dialog_disclaimers_server("show_dialog", r)
+  # mod_dialog_disclaimers_server("show_dialog", r)
 
   # timeout
   mod_timeout_client_server("session_timeout", r)
@@ -30,6 +33,7 @@ app_server2 <- function(input, output, session) {
       id = "map-select"
     )
   })
+
 
   onSessionEnded(function() {
     cli::cli_alert_info("Session ended -- cleaning up")

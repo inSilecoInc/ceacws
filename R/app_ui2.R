@@ -48,7 +48,17 @@ app_ui2 <- function(request) {
                             mapedit::editModUI("map-select")
                         )
                     )
-                )
+                ),
+
+                # Processing panel
+                tabPanel(
+                    title = tagList(icon("map"), "Map"),
+                    value = "processing_tab",
+                    div(
+                        class = "p-3",
+                        mod_threat_layers_processing_ui("threat_processing")
+                    )
+                ),
             )
         )
     )

@@ -138,7 +138,7 @@ app_server <- function(input, output, session) {
     r$geom_slc <- callModule(
       mapedit::editMod,
       leafmap = r$map,
-      id = "map-select"
+      id = "mapId"
     )
   })
 
