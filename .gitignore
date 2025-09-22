@@ -44,3 +44,6 @@ _targets
 pubs/datapaper/*.docx
 CLAUDE.md
 prompt_plan.md
+
+
+!workspace/data/analyzed/night_light_monthly-1.0.0/*.tif
