@@ -148,3 +148,131 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
   res[res == 0] <- NA
   res
 }
+
+#' Resample Raster Resolution and/or Extent
+#'
+#' Flexible raster resampling function that can change resolution, extent, or both
+#' using terra::resample(). This unified function handles all spatial resampling
+#' needs in a single interface.
+#'
+#' @param raster A terra SpatRaster object to be resampled
+#' @param new_extent Optional. New spatial extent for the raster. Can be:
+#'   - terra SpatExtent object
+#'   - Numeric vector c(xmin, xmax, ymin, ymax)
+#'   - terra SpatRaster (uses its extent)
+#'   - sf/sfc object (uses its bounding box)
+#'   If NULL, uses current extent
+#' @param new_resolution Optional. New resolution in the same units as the
+#'   raster's coordinate system. Can be:
+#'   - Single numeric value (same for x and y)
+#'   - Numeric vector c(x_res, y_res) for different x/y resolutions
+#'   If NULL, uses current resolution
+#' @param method Character string specifying resampling method. One of:
+#'   - "bilinear" (default): bilinear interpolation, good for continuous data
+#'   - "near": nearest neighbor, good for categorical data
+#'   - "cubic": cubic convolution, smooth for continuous data
+#'   - "lanczos": Lanczos windowed sinc resampling
+#' @return A terra SpatRaster object with the new resolution and/or extent
+#'
+#' @examples
+#' \dontrun{
+#' # Load a raster
+#' r <- terra::rast("workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/shipping_night_light_intensity_density_2023_1_container.tif")
+#'
+#' # Resolution only - make coarser
+#' r_coarse <- resample_raster(r, new_resolution = 0.1)
+#'
+#' # Extent only - crop to bounding box
+#' r_crop <- resample_raster(r, new_extent = c(-75, -65, 40, 50))
+#'
+#' # Both resolution and extent
+#' r_both <- resample_raster(r, new_extent = c(-75, -65, 40, 50), new_resolution = 0.05)
+#'
+#' # Match another raster exactly
+#' r_match <- resample_raster(r, new_extent = other_raster, new_resolution = terra::res(other_raster))
+#'
+#' # Use with sf polygon
+#' r_sf <- resample_raster(r, new_extent = study_area_polygon, new_resolution = 0.01)
+#' }
+#'
+#' @export
+resample_raster <- function(raster, new_extent = NULL, new_resolution = NULL, method = "bilinear") {
+  # Validate inputs
+  if (!inherits(raster, "SpatRaster")) {
+    stop("Input must be a terra SpatRaster object")
+  }
+
+  valid_methods <- c("bilinear", "near", "cubic", "lanczos")
+  if (!method %in% valid_methods) {
+    stop("method must be one of: ", paste(valid_methods, collapse = ", "))
+  }
+
+  # Handle extent
+  if (is.null(new_extent)) {
+    ext <- terra::ext(raster)
+  } else {
+    ext <- .parse_extent(new_extent)
+  }
+
+  # Handle resolution
+  if (is.null(new_resolution)) {
+    res <- terra::res(raster)
+  } else {
+    res <- .parse_resolution(new_resolution)
+  }
+
+  # Create template raster
+  template <- terra::rast(
+    extent = ext,
+    resolution = res,
+    crs = terra::crs(raster)
+  )
+
+  # Resample to template
+  resampled <- terra::resample(raster, template, method = method)
+
+  return(resampled)
+}
+
+#' Parse extent from various input types
+#' @param extent_input Various extent input types
+#' @return terra SpatExtent object
+#' @noRd
+.parse_extent <- function(extent_input) {
+  if (inherits(extent_input, "SpatExtent")) {
+    return(extent_input)
+  } else if (is.numeric(extent_input) && length(extent_input) == 4) {
+    return(terra::ext(extent_input))
+  } else if (inherits(extent_input, "SpatRaster")) {
+    return(terra::ext(extent_input))
+  } else if (inherits(extent_input, c("sf", "sfc"))) {
+    bbox <- sf::st_bbox(extent_input)
+    return(terra::ext(bbox[["xmin"]], bbox[["xmax"]], bbox[["ymin"]], bbox[["ymax"]]))
+  } else {
+    stop("new_extent must be a terra SpatExtent, numeric vector c(xmin,xmax,ymin,ymax), SpatRaster, or sf object")
+  }
+}
+
+#' Parse resolution from various input types
+#' @param resolution_input Various resolution input types
+#' @return Numeric vector of length 1 or 2
+#' @noRd
+.parse_resolution <- function(resolution_input) {
+  if (!is.numeric(resolution_input)) {
+    stop("new_resolution must be numeric")
+  }
+
+  if (length(resolution_input) == 1) {
+    if (resolution_input <= 0) {
+      stop("new_resolution must be positive")
+    }
+    return(resolution_input)
+  } else if (length(resolution_input) == 2) {
+    if (any(resolution_input <= 0)) {
+      stop("new_resolution values must be positive")
+    }
+    return(resolution_input)
+  } else {
+    stop("new_resolution must be a single value or vector of length 2")
+  }
+}
