@@ -155,6 +155,12 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
         map_proxy <- leaflet::leafletProxy(ns("mapId"))
 
         # add new rasters
+        shinycssloaders::showPageSpinner(
+          background = "#3FB3B299",
+          type = 6,
+          color = "#333333", 
+          caption = "Rendering"
+        )
         if (length(input$selected_rasters) == 0) {
           map_proxy <- map_proxy |> leaflet::clearImages()
         } else {
@@ -176,6 +182,8 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
           map_proxy <- map_proxy |>
             leaflet::removeImage(layerId = id)
         }
+
+        shinycssloaders::hidePageSpinner()
 
         prev_selected(new)
       },

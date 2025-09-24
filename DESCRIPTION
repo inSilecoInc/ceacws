@@ -1,7 +1,7 @@
 Package: ceacws
 Type: Package
 Title: Threats to seabird in the Northwest Atlantic
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("David", "Beauchesne", email = "david.beauchesne@insileco.io", role = c("aut","cre"),
            comment = c(ORCID = "0000-0001-6619-9874")),
@@ -15,7 +15,7 @@ BugReports: https://github.com/inSilecoInc/ceacws/issues
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 4.0)
 Imports: 
@@ -46,6 +46,7 @@ Imports:
     rmarkdown,
     sf,
     shiny,
+    shinycssloaders,
     shinyjs,
     shinydashboard,
     smoothr,

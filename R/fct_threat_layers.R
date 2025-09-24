@@ -125,7 +125,6 @@ identify_threat_type <- function(filename) {
 parse_threat_layer_filename <- function(filepath) {
   filename <- fs::path_file(filepath)
   threat_type <- identify_threat_type(filename)
-
   switch(threat_type,
     "fisheries" = parse_fisheries_filename(filename, filepath),
     "night_lights" = parse_night_lights_filename(filename, filepath),
