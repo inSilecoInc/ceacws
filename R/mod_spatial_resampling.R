@@ -6,7 +6,6 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList div h5 h6 checkboxInput conditionalPanel numericInput selectInput actionButton
 mod_spatial_resampling_ui <- function(id) {
   ns <- NS(id)
 
@@ -128,7 +127,6 @@ mod_spatial_resampling_ui <- function(id) {
 #' @param stored_rasters Reactive containing the stored_rasters list
 #'
 #' @noRd
-#' @importFrom shiny moduleServer observeEvent reactive req showNotification
 mod_spatial_resampling_server <- function(id, stored_rasters) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns

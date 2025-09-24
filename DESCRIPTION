@@ -28,6 +28,7 @@ Imports:
     DT,
     exactextractr,
     fs,
+    gdalcubes,
     glue,
     golem,
     here,

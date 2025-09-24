@@ -6,9 +6,6 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList fluidRow column h3 div conditionalPanel
-#' @importFrom shiny actionButton icon br
-#' @importFrom shinyjs show hide
 mod_threat_layers_selection_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -88,10 +85,6 @@ mod_threat_layers_selection_ui <- function(id) {
 #' @param id Internal parameter for {shiny}
 #'
 #' @noRd
-#' @importFrom shiny moduleServer reactive reactiveVal outputOptions observe observeEvent
-#' @importFrom shiny showNotification removeNotification renderUI div h5 h6 p actionButton
-#' @importFrom shiny icon strong br tags tagList
-#' @importFrom shinyjs show hide
 mod_threat_layers_selection_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
@@ -261,11 +254,14 @@ mod_threat_layers_selection_server <- function(id) {
 # ============================================================================
 
 #' Generate unique layer ID
+#' @noRd
 generate_layer_id <- function(counter) {
   paste0("layer_", sprintf("%03d", counter + 1))
 }
 
 #' Generate user-friendly layer name from filters
+#' @noRd
+#'
 generate_layer_name <- function(selection) {
   filters <- selection$criteria
   parts <- c()
@@ -307,6 +303,7 @@ generate_layer_name <- function(selection) {
 }
 
 #' Add layer to collection
+#' @noRd
 add_layer_to_collection <- function(raster_object, selection, stored_layers, layer_counter) {
   layer_id <- generate_layer_id(layer_counter)
   layer_name <- generate_layer_name(selection)
@@ -334,6 +331,8 @@ add_layer_to_collection <- function(raster_object, selection, stored_layers, lay
 }
 
 #' Remove layer from collection
+#' @noRd
+#'
 remove_layer_from_collection <- function(layer_id, stored_layers) {
   stored_layers[[layer_id]] <- NULL
   stored_layers

@@ -2,8 +2,6 @@
 #'
 #' @param request Internal parameter for {shiny}.
 #'
-#' @import shiny
-#' @importFrom shinyjs useShinyjs
 #' @noRd
 app_ui <- function(request) {
     tagList(
@@ -16,7 +14,7 @@ app_ui <- function(request) {
         # Main application layout
         fluidPage(
             theme = app_theme(),
-            useShinyjs(),
+            shinyjs::useShinyjs(),
 
             # Tab layout
             tabsetPanel(
@@ -51,17 +49,16 @@ app_ui <- function(request) {
 #' This function is internally used to add external
 #' resources inside the Shiny application.
 #'
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
 #' @noRd
 golem_add_external_resources <- function() {
-    add_resource_path(
+    golem::add_resource_path(
         "www",
         app_sys("app/www")
     )
 
     tags$head(
-        favicon(),
-        bundle_resources(
+        golem::favicon(),
+        golem::bundle_resources(
             path = app_sys("app/www"),
             app_title = "ceacws"
         )

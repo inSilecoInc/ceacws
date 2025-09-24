@@ -1,8 +1,8 @@
 #' helptext
 #'
 #' @description add help text.
-#' 
-#' @param x help message (see [shiny::helpText(]).
+#'
+#' @param x help message (see [shiny::helpText()].
 #'
 #' @return a shiny.tag object.
 #'

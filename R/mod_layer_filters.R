@@ -6,7 +6,6 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_layer_filters_ui <- function(id) {
   ns <- NS(id)
   tagList(

@@ -31,8 +31,6 @@
 #' )
 #' }
 #'
-#' @importFrom terra vect rasterize mask writeRaster
-#' @importFrom dplyr group_split group_by select distinct slice ungroup
 #' @export
 group_rasterize_export <- function(
     sf_object,

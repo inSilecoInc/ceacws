@@ -21,3 +21,9 @@ List with components:
 Functions for loading, combining, and processing raster layers
 in the CEACWS threat layer application.
 }
+\details{
+Load Raster Files
+
+Loads raster files from filepaths with minimal validation and error handling.
+Uses stars::read_stars() to load files and reports any failures.
+}

@@ -7,8 +7,6 @@
 #' @return A data.frame with columns: filepath, filename, category, subcategory, type, year, month, etc.
 #' @export
 #'
-#' @importFrom fs dir_ls path_file
-#' @importFrom stringr str_detect
 get_threat_layers <- function(analyzed_path = file.path("workspace", "data", "analyzed")) {
   # Check if directory exists
   if (!dir.exists(analyzed_path)) {
@@ -84,7 +82,6 @@ create_base_result <- function(filepath, filename) {
 #' @return Character string identifying the threat type or NULL if not recognized
 #' @noRd
 #'
-#' @importFrom stringr str_detect
 identify_threat_type <- function(filename) {
   if (stringr::str_detect(filename, "^fisheries_effort_")) {
     return("fisheries")
@@ -145,7 +142,6 @@ parse_threat_layer_filename <- function(filepath) {
 
 #' Parse Fisheries Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_fisheries_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -175,7 +171,6 @@ parse_fisheries_filename <- function(filename, filepath) {
 
 #' Parse Night Lights Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_night_lights_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -194,7 +189,6 @@ parse_night_lights_filename <- function(filename, filepath) {
 
 #' Parse Offshore Petroleum Activity Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_offshore_petroleum_activity_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -212,7 +206,6 @@ parse_offshore_petroleum_activity_filename <- function(filename, filepath) {
 
 #' Parse Offshore Petroleum Platform Filename
 #' @noRd
-#' @importFrom stringr str_match str_detect
 parse_offshore_petroleum_platform_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
   result$category <- "offshore_petroleum"
@@ -245,7 +238,6 @@ parse_offshore_petroleum_platform_filename <- function(filename, filepath) {
 
 #' Parse Offshore Wind Farm Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_offshore_wind_farm_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -262,7 +254,6 @@ parse_offshore_wind_farm_filename <- function(filename, filepath) {
 
 #' Parse Petroleum Pollution Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_petroleum_pollution_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
   result$category <- "petroleum_pollution"
@@ -291,7 +282,6 @@ parse_petroleum_pollution_filename <- function(filename, filepath) {
 
 #' Parse Ship Light Detection Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_ship_light_detection_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -309,7 +299,6 @@ parse_ship_light_detection_filename <- function(filename, filepath) {
 
 #' Parse Shipping Daily Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_shipping_daily_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 
@@ -329,7 +318,6 @@ parse_shipping_daily_filename <- function(filename, filepath) {
 
 #' Parse Shipping Nighttime Filename
 #' @noRd
-#' @importFrom stringr str_match
 parse_shipping_nighttime_filename <- function(filename, filepath) {
   result <- create_base_result(filepath, filename)
 

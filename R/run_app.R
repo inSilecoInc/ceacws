@@ -5,14 +5,13 @@
 #' @inheritParams shiny::shinyApp
 #'
 #' @export
-#' @importFrom shiny shinyApp
-#' @importFrom golem with_golem_options
+#' @import shiny
 run_app <- function(onStart = NULL,
                     options = list(),
                     enableBookmarking = "url",
                     uiPattern = "/",
                     ...) {
-  with_golem_options(
+  golem::with_golem_options(
     app = shinyApp(
       ui = app_ui,
       server = app_server,
@@ -24,3 +23,12 @@ run_app <- function(onStart = NULL,
     golem_opts = list(...)
   )
 }
+
+
+utils::globalVariables(c(
+  "disc_path_md",
+  "path_docs",
+  "map_bbox",
+  "threat_layers_list",
+  "threat_layer_categories"
+))

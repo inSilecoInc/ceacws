@@ -5,6 +5,8 @@
 #' @importFrom units set_units
 #' @importFrom whisker whisker.render
 #' @importFrom yaml yaml.load_file write_yaml read_yaml
+#' @importFrom graphics box par
+#' @importFrom stats setNames
 NULL
 
 
