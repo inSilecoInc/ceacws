@@ -156,10 +156,12 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
 
         # add new rasters
         shinycssloaders::showPageSpinner(
-          background = "#3FB3B299",
-          type = 6,
+          background = "#cccccccc",
           color = "#333333", 
-          caption = "Rendering"
+          caption = "Rendering",
+          image = "www/img/insil.gif", 
+          image.width = "200", 
+          image.height = "200"
         )
         if (length(input$selected_rasters) == 0) {
           map_proxy <- map_proxy |> leaflet::clearImages()
