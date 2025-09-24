@@ -1,0 +1,32 @@
+# macOS files ----
+.DS_Store
+
+# History files ----
+.Rhistory
+.Rapp.history
+
+# Session Data files ----
+.RData
+.Ruserdata
+
+# RStudio files ----
+*.Rproj
+.Rproj.user
+
+# R Environment Variables ----
+.Renviron
+
+# User-specific files ----
+README.html
+inst/doc
+
+# Specific files & folders
+frontpage.svg
+_targets
+CLAUDE.md
+prompt_plan.md
+
+figures
+pubs
+misc
+docs
