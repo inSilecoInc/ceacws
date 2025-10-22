@@ -47,6 +47,16 @@ get_threat_layers <- function(analyzed_path = file.path("workspace", "data", "an
   result_df$filename <- as.character(result_df$filename)
   result_df$category <- as.character(result_df$category)
 
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  # WARNING
+  # -------
+  # Some manual fuckery to make sure NEEC dataset appears twice in the filtering options
+  neec <- result_df |>
+    dplyr::filter(category == "petroleum_pollution", dataset == "neec") |>
+    dplyr::mutate(subcategory = "all_types", type = NA)
+  result_df <- dplyr::bind_rows(result_df, neec)
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   return(result_df)
 }
 
@@ -220,18 +230,16 @@ parse_offshore_petroleum_platform_filename <- function(filename, filepath) {
     }
   }
 
-  # Monthly pattern: offshore_petroleum_platform_{type}_{year}-{month}-01.tif
-  if (stringr::str_detect(filename, "^offshore_petroleum_platform_.+-\\d{2}-01\\.tif$")) {
-    match <- stringr::str_match(filename, "^offshore_petroleum_platform_(.+)_(\\d{4})-(\\d{2})-01\\.tif$")
+  # Monthly pattern: offshore_petroleum_platform_{year}-{month}-01.tif
+  if (stringr::str_detect(filename, "^offshore_petroleum_platform_\\d{4}-\\d{2}-01\\.tif$")) {
+    match <- stringr::str_match(filename, "^offshore_petroleum_platform_(\\d{4})-(\\d{2})-01\\.tif$")
     if (!is.na(match[1])) {
       result$subcategory <- "platform_monthly"
-      result$type <- match[2]
-      result$year <- as.integer(match[3])
-      result$month <- as.integer(match[4])
+      result$year <- as.integer(match[2])
+      result$month <- as.integer(match[3])
       return(result)
     }
   }
-
   NULL
 }
 

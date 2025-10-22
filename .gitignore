@@ -42,6 +42,7 @@ figures/*
 frontpage.svg
 _targets
 pubs/datapaper/*.docx
+pubs/datapaper/GeoscienceDataJournal/*.docx
 CLAUDE.md
 prompt_plan.md
 
