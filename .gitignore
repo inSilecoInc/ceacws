@@ -50,4 +50,10 @@ prompt_plan.md
 !workspace/data/analyzed/night_light_monthly-1.0.0/*.tif
 !workspace/data/analyzed/shipping_intensity_density-1.0.0/*.tif
 !workspace/data/analyzed/shipping_night_light_intensity_density-1.0.0/*.tif
+!workspace/data/analyzed/offshore_petroleum_activity-1.0.0/*.tif
+!workspace/data/analyzed/offshore_petroleum_platform_annual-1.0.0/*.tif
+!workspace/data/analyzed/offshore_petroleum_platform_monthly-1.0.0/*.tif
+!workspace/data/analyzed/offshore_wind_farm-1.0.0/*.tif
+!workspace/data/analyzed/petroleum_pollution_incidents-1.0.0/*.tif
+!workspace/data/analyzed/ship_light_detection-1.0.0/*.tif
 !manifest.json
