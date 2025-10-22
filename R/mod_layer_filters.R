@@ -64,9 +64,93 @@ mod_layer_filters_server <- function(id) {
     # Filtered results storage
     filtered_layers_info <- reactiveVal(NULL)
 
+    # Filter state tracking (independent of UI inputs)
+    filter_state <- reactiveValues(
+      category = "",
+      subcategory = "",
+      type = NULL,
+      species = NULL,
+      year = NULL,
+      year_range = NULL,
+      month = NULL,
+      dataset = NULL,
+      combination_method = "sum"
+    )
+
+    # Helper function to reset filter state (except category)
+    reset_filter_state <- function() {
+      filter_state$subcategory <- ""
+      filter_state$type <- NULL
+      filter_state$species <- NULL
+      filter_state$year <- NULL
+      filter_state$year_range <- NULL
+      filter_state$month <- NULL
+      filter_state$dataset <- NULL
+      filter_state$combination_method <- "sum"
+    }
+
+    # Sync UI inputs with filter state
+    observeEvent(input$category,
+      {
+        filter_state$category <- input$category %||% ""
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$subcategory,
+      {
+        filter_state$subcategory <- input$subcategory %||% ""
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$type,
+      {
+        filter_state$type <- input$type
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$species,
+      {
+        filter_state$species <- input$species
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$year,
+      {
+        filter_state$year <- input$year
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$year_range,
+      {
+        filter_state$year_range <- input$year_range
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$month,
+      {
+        filter_state$month <- input$month
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$dataset,
+      {
+        filter_state$dataset <- input$dataset
+      },
+      ignoreInit = TRUE
+    )
+    observeEvent(input$combination_method,
+      {
+        filter_state$combination_method <- input$combination_method %||% "sum"
+      },
+      ignoreInit = TRUE
+    )
+
     # Reset filters if category changes
     observeEvent(input$category,
       {
+        # Clear all filter state except category
+        reset_filter_state()
+
         reset_dynamic_inputs(session)
         filtered_layers_info(NULL)
       },
@@ -133,22 +217,23 @@ mod_layer_filters_server <- function(id) {
         current_data <- cat_data
       }
 
-      # Apply filters to the data
-      filtered_layers <- apply_filters(current_data$data, input)
+      # Apply filters to the data using filter state (defensive filtering)
+      available_filters <- names(current_data)
+      filtered_layers <- apply_filters(current_data$data, filter_state, available_filters)
 
-      # Store filtered results
+      # Store filtered results using filter state
       filtered_layers_info(list(
         files = filtered_layers,
         criteria = list(
-          category = input$category,
-          subcategory = input$subcategory,
-          type = input$type,
-          species = input$species,
-          year = input$year,
-          year_range = input$year_range,
-          month = input$month,
-          dataset = input$dataset,
-          combination_method = if (nrow(filtered_layers) > 1) "sum" else NULL
+          category = filter_state$category,
+          subcategory = filter_state$subcategory,
+          type = filter_state$type,
+          species = filter_state$species,
+          year = filter_state$year,
+          year_range = filter_state$year_range,
+          month = filter_state$month,
+          dataset = filter_state$dataset,
+          combination_method = if (nrow(filtered_layers) > 1) filter_state$combination_method else NULL
         ),
         count = nrow(filtered_layers)
       ))
@@ -157,6 +242,11 @@ mod_layer_filters_server <- function(id) {
 
     # Handle clear button click
     observeEvent(input$clear_filter, {
+      # Clear all filter state including category
+      filter_state$category <- ""
+      reset_filter_state()
+
+      # Clear UI elements
       updateSelectInput(session, "category", selected = "")
       reset_dynamic_inputs(session)
       filtered_layers_info(NULL)
@@ -210,12 +300,12 @@ mod_layer_filters_server <- function(id) {
       }
     })
 
-    # Update combination method as required
-    observeEvent(input$combination_method, {
+    # Update combination method in filtered results when it changes
+    observeEvent(filter_state$combination_method, {
       req(filtered_layers_info())
 
       current_info <- filtered_layers_info()
-      current_info$criteria$combination_method <- input$combination_method
+      current_info$criteria$combination_method <- filter_state$combination_method
       filtered_layers_info(current_info)
     })
 
@@ -357,44 +447,46 @@ create_filter_dropdowns <- function(data_options, ns) {
 
 #' Apply Filters to Data
 #'
-#' Filters the data based on user selections.
+#' Filters the data based on filter state, only applying filters that are
+#' relevant to the current category (defensive filtering).
 #'
 #' @param data data.frame to filter
-#' @param input Shiny input object with filter selections
+#' @param filter_state reactive values object with filter selections
+#' @param available_filters character vector of filter types available for current category
 #' @return Filtered data.frame
 #' @noRd
-apply_filters <- function(data, input) {
-  # Apply type filter
-  if (!is.null(input$type) && length(input$type) > 0) {
-    data <- data[data$type %in% input$type, ]
+apply_filters <- function(data, filter_state, available_filters) {
+  # Apply type filter (only if available in current category)
+  if ("types" %in% available_filters && !is.null(filter_state$type) && length(filter_state$type) > 0) {
+    data <- data[data$type %in% filter_state$type, ]
   }
 
-  # Apply species filter
-  if (!is.null(input$species) && length(input$species) > 0) {
-    data <- data[data$species %in% input$species, ]
+  # Apply species filter (only if available in current category)
+  if ("species" %in% available_filters && !is.null(filter_state$species) && length(filter_state$species) > 0) {
+    data <- data[data$species %in% filter_state$species, ]
   }
 
-  # Apply dataset filter
-  if (!is.null(input$dataset) && length(input$dataset) > 0) {
-    data <- data[data$dataset %in% input$dataset, ]
+  # Apply dataset filter (only if available in current category)
+  if ("datasets" %in% available_filters && !is.null(filter_state$dataset) && length(filter_state$dataset) > 0) {
+    data <- data[data$dataset %in% filter_state$dataset, ]
   }
 
-  # Apply year filter
-  if (!is.null(input$year) && length(input$year) > 0) {
-    data <- data[data$year %in% input$year, ]
+  # Apply year filter (only if available in current category)
+  if ("years" %in% available_filters && !is.null(filter_state$year) && length(filter_state$year) > 0) {
+    data <- data[data$year %in% filter_state$year, ]
   }
 
-  # Apply year range filter
-  if (!is.null(input$year_range) && length(input$year_range) > 0) {
-    data <- data[data$year_range %in% input$year_range, ]
+  # Apply year range filter (only if available in current category)
+  if ("year_ranges" %in% available_filters && !is.null(filter_state$year_range) && length(filter_state$year_range) > 0) {
+    data <- data[data$year_range %in% filter_state$year_range, ]
   }
 
-  # Apply month filter
-  if (!is.null(input$month) && length(input$month) > 0) {
-    data <- data[data$month %in% as.numeric(input$month), ]
+  # Apply month filter (only if available in current category)
+  if ("months" %in% available_filters && !is.null(filter_state$month) && length(filter_state$month) > 0) {
+    data <- data[data$month %in% as.numeric(filter_state$month), ]
   }
 
-  filtered_data <- data
+  data
 }
 
 
