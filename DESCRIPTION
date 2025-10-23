@@ -23,7 +23,6 @@ Imports:
     data.table,
     dplyr,
     exactextractr,
-    fasterize,
     fs,
     glue,
     graphicsutils,
