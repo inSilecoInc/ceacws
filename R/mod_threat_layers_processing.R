@@ -157,32 +157,59 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
         # add new rasters
         shinycssloaders::showPageSpinner(
           background = "#cccccccc",
-          color = "#333333", 
+          color = "#333333",
           caption = "Rendering",
-          image = "www/img/insil.gif", 
-          image.width = "200", 
+          image = "www/img/insil.gif",
+          image.width = "200",
           image.height = "200"
         )
         if (length(input$selected_rasters) == 0) {
-          map_proxy <- map_proxy |> leaflet::clearImages()
+          map_proxy <- map_proxy |>
+            leaflet::clearImages() |>
+            leaflet::clearControls() # Clear all legends when no layers
         } else {
           for (id in added) {
             layer <- rasts[[id]]
+
+            # Extract layer metadata for appropriate styling and units
+            layer_category <- layer$metadata$filters_applied$category %||% "default"
+            layer_subcategory <- layer$metadata$filters_applied$subcategory %||% NULL
+            layer_type <- layer$metadata$filters_applied$type %||% NULL
+
+            # Generate color palette for this layer
+            color_palette <- generate_raster_palette(layer$raster, layer_category)
+
+            # Create legend title with proper units
+            legend_title <- create_legend_title(layer$name, layer_category, layer_subcategory, layer_type)
+
+            # Add raster with color palette
             map_proxy <- map_proxy |>
               leaflet::addRasterImage(
                 layer$raster,
+                colors = color_palette,
                 layerId = id,
-                group   = layer$name,
+                group = layer$name,
                 opacity = 0.7,
                 project = TRUE
+              ) |>
+              leaflet::addLegend(
+                position = "bottomright",
+                pal = color_palette,
+                values = terra::values(layer$raster, na.rm = TRUE),
+                title = legend_title,
+                layerId = paste0("legend_", id),
+                group = layer$name,
+                opacity = 1,
+                className = "custom-legend"
               )
           }
         }
 
-        # remove deselected rasters
+        # remove deselected rasters and their legends
         for (id in removed) {
           map_proxy <- map_proxy |>
-            leaflet::removeImage(layerId = id)
+            leaflet::removeImage(layerId = id) |>
+            leaflet::removeControl(layerId = paste0("legend_", id))
         }
 
         shinycssloaders::hidePageSpinner()
@@ -267,4 +294,120 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
       }
     )
   })
+}
+
+#' Generate Color Palette for Raster Data
+#'
+#' Creates appropriate color palettes for threat layer visualization
+#'
+#' @param raster_data Terra SpatRaster object
+#' @param layer_category Character string of layer category for palette selection
+#' @return leaflet colorNumeric palette function
+#' @noRd
+generate_raster_palette <- function(raster_data, layer_category = NULL) {
+  # Extract non-NA values for domain
+  values <- terra::values(raster_data, na.rm = TRUE)
+
+  if (length(values) == 0) {
+    # Return a default palette if no values
+    return(leaflet::colorNumeric("viridis", domain = c(0, 1), na.color = "transparent"))
+  }
+
+  # Choose color palette based on layer category
+  palette_name <- switch(layer_category,
+    "offshore_wind_farm" = "Blues",
+    "offshore_petroleum_platform" = "Oranges",
+    "offshore_petroleum_activity" = "Reds",
+    "shipping_night_light_intensity_density" = "plasma",
+    "shipping_ais" = "viridis",
+    "petroleum_pollution_incidents" = "Reds",
+    "fisheries" = "Greens",
+    "viridis" # default
+  )
+
+  leaflet::colorNumeric(
+    palette = palette_name,
+    domain = range(values, na.rm = TRUE),
+    na.color = "transparent"
+  )
+}
+
+#' Get Layer Units from Metadata
+#'
+#' Extracts appropriate units for a threat layer based on category
+#'
+#' @param layer_category Character string of layer category
+#' @return Character string of units
+#' @noRd
+get_layer_units <- function(layer_category, layer_subcategory = NULL, layer_type = NULL) {
+  # Use global threat_layer_units metadata
+  if (!exists("threat_layer_units")) {
+    return("Intensity")
+  }
+
+  # Navigate the nested structure: category -> subcategory -> type
+  category_data <- threat_layer_units[[layer_category]]
+
+  if (is.null(category_data)) {
+    return(threat_layer_units[["default"]] %||% "Intensity")
+  }
+
+  # If category_data is a string, return it directly
+  if (is.character(category_data)) {
+    return(category_data)
+  }
+
+  # If no subcategory specified, try "default"
+  if (is.null(layer_subcategory) || layer_subcategory == "") {
+    subcategory_data <- category_data[["default"]]
+  } else {
+    subcategory_data <- category_data[[layer_subcategory]]
+  }
+
+  if (is.null(subcategory_data)) {
+    # Try default subcategory if specific one not found
+    subcategory_data <- category_data[["default"]]
+  }
+
+  if (is.null(subcategory_data)) {
+    return(threat_layer_units[["default"]] %||% "Intensity")
+  }
+
+  # If subcategory_data is a string, return it directly
+  if (is.character(subcategory_data)) {
+    return(subcategory_data)
+  }
+
+  # Navigate to type level
+  if (is.null(layer_type) || layer_type == "") {
+    type_data <- subcategory_data[["default"]]
+  } else {
+    type_data <- subcategory_data[[layer_type]]
+  }
+
+  if (is.null(type_data)) {
+    # Try default type if specific one not found
+    type_data <- subcategory_data[["default"]]
+  }
+
+  if (is.null(type_data)) {
+    return(threat_layer_units[["default"]] %||% "Intensity")
+  }
+
+  return(type_data)
+}
+
+#' Create Legend Title for Layer
+#'
+#' Generates descriptive legend titles combining layer name and units
+#'
+#' @param layer_name Character string of layer name
+#' @param layer_category Character string of layer category
+#' @return Character string for legend title
+#' @noRd
+create_legend_title <- function(layer_name, layer_category, layer_subcategory = NULL, layer_type = NULL) {
+  units <- get_layer_units(layer_category, layer_subcategory, layer_type)
+  clean_name <- tools::toTitleCase(gsub("_", " ", layer_name))
+  # Use HTML formatting for multi-line legend with italicized units
+  paste0(clean_name, "<br><i>", units, "</i>")
 }

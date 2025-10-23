@@ -23,8 +23,8 @@ A function to render R Makdown templates found in \code{inst/ templates}.
 \examples{
 \dontrun{
 custom_render("report1",
-    data = list(title = "templex"),
-    envir = list(geom = 1)
+  data = list(title = "templex"),
+  envir = list(geom = 1)
 )
 }
 }

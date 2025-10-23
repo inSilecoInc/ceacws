@@ -37,6 +37,61 @@ fct_start <- function() {
     category_labels <- gsub("_", " ", category_choices)
     names(category_choices) <- tools::toTitleCase(category_labels)
     threat_layer_categories <<- c("Select category..." = "", category_choices)
+    
+    # Initialize layer units metadata based on category, subcategory, and type
+    threat_layer_units <<- list(
+      # Night lights
+      "night_lights" = list(
+        "default" = "nW/cm²/sr/month"
+      ),
+      
+      # Offshore petroleum 
+      "offshore_petroleum" = list(
+        "activity" = list(
+          "default" = "Presence / absence"
+        ),
+        "platform_annual" = list(
+          "total_heat" = "Total heat in Kelvin",
+          "detection_frequency" = "Sum of percent detection frequency"
+        ),
+        "platform_monthly" = list(
+          "default" = "Total heat in Kelvin"
+        )
+      ),
+      
+      # Offshore wind farm
+      "offshore_wind_farm" = list(
+        "default" = "Presence / absence"
+      ),
+      
+      # Petroleum pollution
+      "petroleum_pollution" = list(
+        "all_types" = list(
+          "default" = "Number of incidents / month"
+        ),
+        "specific_type" = list(
+          "default" = "Number of incidents / month"
+        )
+      ),
+      
+      # Ship light detection
+      "ship_light_detection" = list(
+        "default" = "nW/cm²/sr/month"
+      ),
+      
+      # Shipping
+      "shipping" = list(
+        "daily" = list(
+          "default" = "Number of ships per day"
+        ),
+        "nighttime" = list(
+          "default" = "Number of vessels per night per day"
+        )
+      ),
+      
+      # Fallback
+      "default" = "Intensity"
+    )
 
     onStop(clean_up_app)
 }

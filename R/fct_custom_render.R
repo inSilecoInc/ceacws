@@ -13,59 +13,59 @@
 #' @examples
 #' \dontrun{
 #' custom_render("report1",
-#'     data = list(title = "templex"),
-#'     envir = list(geom = 1)
+#'   data = list(title = "templex"),
+#'   envir = list(geom = 1)
 #' )
 #' }
 custom_render <- function(template = "?", data = NULL, ...) {
-    args <- list(...)
+  args <- list(...)
 
-    lst <- list_templates()
-    
-    if (template == "?") {
-        cli::cli_ul()
-        for (i in lst) {
-            cli::cli_li("{i}")
-        }
-        cli::cli_end()
-        return(invisible(lst))
+  lst <- list_templates()
+
+  if (template == "?") {
+    cli::cli_ul()
+    for (i in lst) {
+      cli::cli_li("{i}")
     }
+    cli::cli_end()
+    return(invisible(lst))
+  }
 
-    stopifnot(exprs = {
-        template %in% names(lst)
-        length(template) == 1
-    })
+  stopifnot(exprs = {
+    template %in% names(lst)
+    length(template) == 1
+  })
 
-    fl <- lst[names(lst) == template]
+  fl <- lst[names(lst) == template]
 
-    cli::cli_alert_info(
-        "Whisker rendering {fl}"
-    )
+  cli::cli_alert_info(
+    "Whisker rendering {fl}"
+  )
 
-    tfl <- file.path(tempdir(), fs::path_file(fl))
-    readLines(fl) |>
-        whisker::whisker.render(data = data) |>
-        writeLines(con = tfl)
+  tfl <- file.path(tempdir(), fs::path_file(fl))
+  readLines(fl) |>
+    whisker::whisker.render(data = data) |>
+    writeLines(con = tfl)
 
-    if (!"output_dir" %in% names(args)) {
-        args <- c(output_dir = ".", args)
-    }
+  if (!"output_dir" %in% names(args)) {
+    args <- c(output_dir = ".", args)
+  }
 
-    cli::cli_alert_info(
-        "Rmarkdown rendering {tfl}"
-    )
-    
-    out <- do.call(rmarkdown::render, c(input = tfl, args))
+  cli::cli_alert_info(
+    "Rmarkdown rendering {tfl}"
+  )
 
-    invisible(out)
+  out <- do.call(rmarkdown::render, c(input = tfl, args))
+
+  invisible(out)
 }
 
 
 list_templates <- function() {
-    out <- app_sys("templates") |>
-        list.files(full.names = TRUE)
-    names(out) <- unlist(out) |>
-        fs::path_file() |>
-        fs::path_ext_remove()
-    out
+  out <- app_sys("templates") |>
+    list.files(full.names = TRUE)
+  names(out) <- unlist(out) |>
+    fs::path_file() |>
+    fs::path_ext_remove()
+  out
 }

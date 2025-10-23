@@ -12,6 +12,30 @@
     /* --dt-row-selected: 3, 102, 42 !important;  */
 }
 
+/* Custom legend styling for multi-line titles */
+.custom-legend {
+    min-width: 200px !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+    padding: 6px 8px !important;
+    font: 14px/16px Arial, Helvetica, sans-serif !important;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.custom-legend .info {
+    min-width: 200px !important;
+}
+
+.custom-legend .legend-title,
+.custom-legend h4 {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    min-width: 180px !important;
+    line-height: 1.2 !important;
+    margin: 0 0 5px 0 !important;
+}
+
 
 /* Selected row color */
 /* https: //datatables.net/forums/discussion/75253/selected-row-color-change#Comment_217170 */
