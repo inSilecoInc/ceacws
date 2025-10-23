@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 
 <!-- badges: start -->
-[![License: GPL (>= 2)](https://img.shields.io/badge/License-GPL%20%28%3E%3D%202%29-blue.svg)](https://choosealicense.com/licenses/gpl-2.0/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![LifeCycle](https://img.shields.io/badge/lifecycle-experimental-orange)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Dependencies](https://img.shields.io/badge/dependencies-2/70-green?style=flat)](#)
 ![](https://img.shields.io/badge/status-preliminary-blue.svg)
