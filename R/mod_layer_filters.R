@@ -288,9 +288,10 @@ mod_layer_filters_server <- function(id) {
                   "Sum" = "sum",
                   "Average" = "average",
                   "Maximum" = "maximum",
-                  "Minimum" = "minimum"
+                  "Minimum" = "minimum",
+                  "Standard Deviation" = "sd"
                 ),
-                selected = "sum"
+                selected = filter_state$combination_method
               )
             )
           )

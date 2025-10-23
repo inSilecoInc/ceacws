@@ -54,7 +54,7 @@ load_raster_files <- function(filepaths) {
 #' for large rasters. Handles proper NA removal and supports cloud processing.
 #'
 #' @param filepaths Character vector of file paths to raster files
-#' @param method Character string: "sum", "average", "maximum", "minimum"
+#' @param method Character string: "sum", "average", "maximum", "minimum", "sd"
 #' @return stars object with combined raster
 #'
 #' @examples
@@ -72,6 +72,7 @@ load_raster_files <- function(filepaths) {
 #' result_avg <- combine_rasters_gdalcubes(test_files, "average")
 #' result_max <- combine_rasters_gdalcubes(test_files, "maximum")
 #' result_min <- combine_rasters_gdalcubes(test_files, "minimum")
+#' result_sd <- combine_rasters_gdalcubes(test_files, "sd")
 #'
 #' # View result
 #' plot(result_sum)
@@ -134,7 +135,8 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
     "average" = paste0("mean(", band_name, ")"),
     "maximum" = paste0("max(", band_name, ")"),
     "minimum" = paste0("min(", band_name, ")"),
-    stop("Method must be one of: sum, average, maximum, minimum")
+    "sd" = paste0("sd(", band_name, ")"),
+    stop("Method must be one of: sum, average, maximum, minimum, sd")
   )
 
   # Apply reduction and convert to stars

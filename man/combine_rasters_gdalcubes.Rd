@@ -9,7 +9,7 @@ combine_rasters_gdalcubes(filepaths, method = "sum")
 \arguments{
 \item{filepaths}{Character vector of file paths to raster files}
 
-\item{method}{Character string: "sum", "average", "maximum", "minimum"}
+\item{method}{Character string: "sum", "average", "maximum", "minimum", "sd"}
 }
 \value{
 stars object with combined raster
@@ -33,6 +33,7 @@ result_sum <- combine_rasters_gdalcubes(test_files, "sum")
 result_avg <- combine_rasters_gdalcubes(test_files, "average")
 result_max <- combine_rasters_gdalcubes(test_files, "maximum")
 result_min <- combine_rasters_gdalcubes(test_files, "minimum")
+result_sd <- combine_rasters_gdalcubes(test_files, "sd")
 
 # View result
 plot(result_sum)
