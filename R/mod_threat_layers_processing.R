@@ -53,6 +53,28 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
     # Initialize with base_map()
     output$mapId <- leaflet::renderLeaflet({
       base_map()
+      # # To add a camera icon to export map as PNG, to implement in the future
+      #       leaflet::addControl(
+      #         html = '
+      #   <a id="snapshot-btn"
+      #      title="Download Map Snapshot"
+      #      style="
+      #        background: #ffffff00;
+      #        border: 1px solid #fffff00;
+      #        border-radius: 4px;
+      #        width: 20px;
+      #        height: 20px;
+      #        display: flex;
+      #        align-items: center;
+      #        justify-content: center;
+      #        text-decoration: none;
+      #        padding-bottom: 4px;
+      #        cursor: pointer;">
+      #     <i class="fa fa-camera" style="font-size: 22px; color: #000;"></i>
+      #   </a>
+      # ',
+      #         position = "topright"
+      #       )
     })
 
     # Update UI when stored_rasters changes
@@ -66,20 +88,19 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
           ))
         }
 
-        # Create checkbox for available rasters
-        choices <- setNames(
-          names(rasters),
-          vapply(rasters, function(x) {
-            stringr::str_to_sentence(
-              paste0(x$id, ": ", x$name)
-            )
-          }, character(1))
-        )
-        checkboxGroupInput(
-          inputId = ns("selected_rasters"),
-          label = "Select layers:",
-          choices = choices,
-          selected = NULL
+        # Create layer selection cards
+        div(
+          tags$label("Select layers:", class = "form-label mb-3"),
+          div(
+            class = "row g-2",
+            lapply(names(rasters), function(layer_id) {
+              layer <- rasters[[layer_id]]
+              div(
+                class = "col-6",
+                create_toggle_layer_card(ns, layer)
+              )
+            })
+          )
         )
       })
 
@@ -143,11 +164,28 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
     # Track previous selection
     prev_selected <- reactiveVal(character())
 
-    observeEvent(input$selected_rasters,
+    # Create a reactive to collect all switch states
+    selected_layers <- reactive({
+      rasts <- stored_rasters()
+      if (length(rasts) == 0) {
+        return(character())
+      }
+
+      selected <- character()
+      for (layer_id in names(rasts)) {
+        switch_input <- input[[paste0("layer_", layer_id)]]
+        if (isTRUE(switch_input)) {
+          selected <- c(selected, layer_id)
+        }
+      }
+      selected
+    })
+
+    observeEvent(selected_layers(),
       {
         rasts <- stored_rasters()
         old <- prev_selected()
-        new <- input$selected_rasters
+        new <- selected_layers()
         added <- setdiff(new, old)
         removed <- setdiff(old, new)
 
@@ -163,7 +201,7 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
           image.width = "200",
           image.height = "200"
         )
-        if (length(input$selected_rasters) == 0) {
+        if (length(new) == 0) {
           map_proxy <- map_proxy |>
             leaflet::clearImages() |>
             leaflet::clearControls() # Clear all legends when no layers
@@ -379,7 +417,7 @@ get_layer_units <- function(layer_category, layer_subcategory = NULL, layer_type
   }
 
   # Navigate to type level
-  if (is.null(layer_type) || layer_type == "") {
+  if (is.null(layer_type) || all(layer_type == "") || all(names(subcategory_data) == "default")) {
     type_data <- subcategory_data[["default"]]
   } else {
     type_data <- subcategory_data[[layer_type]]
@@ -410,4 +448,84 @@ create_legend_title <- function(layer_name, layer_category, layer_subcategory = 
   clean_name <- tools::toTitleCase(gsub("_", " ", layer_name))
   # Use HTML formatting for multi-line legend with italicized units
   paste0(clean_name, "<br><i>", units, "</i>")
+}
+
+#' Create Toggle Layer Card
+#'
+#' @description Creates a card for layer selection with toggle switch
+#'
+#' @param ns Namespace function
+#' @param layer Layer object with metadata
+#' @noRd
+create_toggle_layer_card <- function(ns, layer) {
+  # Extract all metadata for display
+  filters_applied <- layer$metadata$filters_applied
+  combination_method <- layer$metadata$filters_applied$combination_method %||% "None"
+
+  # Build detailed filter information
+  filter_details <- list()
+
+  if (!is.null(filters_applied)) {
+    # Subcategory
+    if (!is.null(filters_applied$subcategory) && length(filters_applied$subcategory) > 0 && all(filters_applied$subcategory != "")) {
+      filter_details$Subcategory <- paste(filters_applied$subcategory, collapse = ", ")
+    }
+
+    # Type
+    if (!is.null(filters_applied$type) && length(filters_applied$type) > 0 && all(filters_applied$type != "")) {
+      filter_details$Type <- paste(filters_applied$type, collapse = ", ")
+    }
+
+    # Year
+    if (!is.null(filters_applied$year) && length(filters_applied$year) > 0) {
+      filter_details$Year <- paste(sort(filters_applied$year), collapse = ", ")
+    }
+
+    # Months
+    if (!is.null(filters_applied$month) && length(filters_applied$month) > 0) {
+      if (length(filters_applied$month) == 12) {
+        filter_details$Months <- "All months"
+      } else if (length(filters_applied$month) == 1) {
+        month_name <- month.name[as.numeric(filters_applied$month)]
+        filter_details$Months <- month_name
+      } else {
+        month_names <- month.name[as.numeric(filters_applied$month)]
+        filter_details$Months <- paste(month_names, collapse = ", ")
+      }
+    }
+  }
+
+  div(
+    class = "card mb-3 h-100",
+    div(
+      class = "card-header d-flex justify-content-between align-items-center",
+      h6(class = "mb-1", layer$name),
+      shinyWidgets::prettySwitch(
+        inputId = ns(paste0("layer_", layer$id)),
+        label = NULL,
+        value = FALSE,
+        status = "primary",
+        inline = TRUE
+      )
+    ),
+    div(
+      class = "card-body",
+      tags$small(
+        class = "text-muted",
+        # Display all filter details
+        lapply(names(filter_details), function(detail_name) {
+          tags$div(
+            tags$strong(paste0(detail_name, ": ")),
+            filter_details[[detail_name]]
+          )
+        }),
+        # Show combination method if applicable
+        if (combination_method != "None") {
+          tags$div(
+            tags$strong("Combination: "), combination_method
+          )
+        }
+      )
+    )
+  )
 }

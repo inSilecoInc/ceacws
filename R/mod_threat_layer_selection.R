@@ -271,35 +271,35 @@ generate_layer_name <- function(selection) {
     parts <- c(parts, gsub("_", " ", filters$category))
   }
 
-  # Add subcategory
-  if (!is.null(filters$subcategory)) {
-    parts <- c(parts, gsub("_", " ", filters$subcategory))
-  }
+  # # Add subcategory
+  # if (!is.null(filters$subcategory)) {
+  #   parts <- c(parts, gsub("_", " ", filters$subcategory))
+  # }
 
-  # Add type if available
-  if (!is.null(filters$type) && length(filters$type) > 0) {
-    if (length(filters$type) <= 2) {
-      parts <- c(parts, paste(filters$type, collapse = ", "))
-    } else {
-      parts <- c(parts, paste0(length(filters$type), " types"))
-    }
-  }
+  # # Add type if available
+  # if (!is.null(filters$type) && length(filters$type) > 0) {
+  #   if (length(filters$type) <= 2) {
+  #     parts <- c(parts, paste(filters$type, collapse = ", "))
+  #   } else {
+  #     parts <- c(parts, paste0(length(filters$type), " types"))
+  #   }
+  # }
 
-  # Add year
-  if (!is.null(filters$year) && length(filters$year) > 0) {
-    if (length(filters$year) == 1) {
-      parts <- c(parts, as.character(filters$year))
-    } else {
-      parts <- c(parts, paste0(min(filters$year), "-", max(filters$year)))
-    }
-  }
+  # # Add year
+  # if (!is.null(filters$year) && length(filters$year) > 0) {
+  #   if (length(filters$year) == 1) {
+  #     parts <- c(parts, as.character(filters$year))
+  #   } else {
+  #     parts <- c(parts, paste0(min(filters$year), "-", max(filters$year)))
+  #   }
+  # }
 
   # Fallback name
   if (length(parts) == 0) {
     parts <- "Threat Layer"
   }
 
-  paste(parts, collapse = " ")
+  stringr::str_to_sentence(paste(parts, collapse = " "))
 }
 
 #' Add layer to collection
@@ -319,7 +319,8 @@ add_layer_to_collection <- function(raster_object, selection, stored_layers, lay
       filters_applied = selection$criteria,
       created_at = Sys.time(),
       extent = sf::st_bbox(raster_object),
-      resolution = attr(raster_object, "dimensions")$delta
+      projection = sf::st_crs(raster_object)$epsg,
+      resolution = terra::res(raster_object)
     )
   )
 
@@ -374,11 +375,13 @@ create_layer_card <- function(ns, layer) {
           class = "col-6",
           tags$small(
             class = "text-muted",
-            strong("Method: "),
-            layer$metadata$filters_applied$combination_method %||% "single", br(),
+            strong("Projection: "),
+            paste0("EPSG:", layer$metadata$projection), br(),
+            strong("Extent: "),
+            paste(paste0(names(layer$metadata$extent), ": "), layer$metadata$extent, collapse = "; "), br(),
             strong("Resolution: "),
             if (!is.null(layer$metadata$resolution)) {
-              paste(round(layer$metadata$resolution, 4), collapse = " x ")
+              paste(layer$metadata$resolution, collapse = " x ")
             } else {
               "Unknown"
             }
@@ -392,7 +395,9 @@ create_layer_card <- function(ns, layer) {
           tags$small(
             class = "text-muted",
             strong("Filters: "),
-            render_filter_summary(layer$metadata$filters_applied)
+            render_filter_summary(layer$metadata$filters_applied), br(),
+            strong("Combination: "),
+            layer$metadata$filters_applied$combination_method %||% "none",
           )
         )
       }
