@@ -25,6 +25,10 @@ base_map <- function() {
             lat1 = map_bbox$lat1,
             lng2 = map_bbox$lng2,
             lat2 = map_bbox$lat2
+        ) |>
+        leaflet::addScaleBar(
+            position = "bottomleft",
+            options = leaflet::scaleBarOptions(metric = TRUE, imperial = FALSE)
         )
 }
 

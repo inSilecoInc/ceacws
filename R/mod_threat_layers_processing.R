@@ -88,8 +88,29 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
           ))
         }
 
-        # Create layer selection cards
+        # Map display options (toggles)
         div(
+          # Display options toggles
+          div(
+            class = "row mb-3",
+            div(
+              class = "col-6",
+              shinyWidgets::prettySwitch(
+                inputId = ns("log_transform"),
+                label = "Log transform values",
+                value = FALSE,
+                status = "primary",
+                inline = TRUE
+              )
+            ),
+            div(
+              class = "col-6",
+              # This toggle will be conditionally shown when processed rasters are available
+              uiOutput(ns("processed_layers_toggle"))
+            )
+          ),
+
+          # Layer selection cards
           tags$label("Select layers:", class = "form-label mb-3"),
           div(
             class = "row g-2",
@@ -102,6 +123,20 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
             })
           )
         )
+      })
+
+      # Conditional UI for processed layers toggle
+      output$processed_layers_toggle <- renderUI({
+        # Only show toggle if processed rasters are available
+        if (length(processed_rasters()) > 0) {
+          shinyWidgets::prettySwitch(
+            inputId = ns("show_processed"),
+            label = "Show processed layers",
+            value = FALSE,
+            status = "success",
+            inline = TRUE
+          )
+        }
       })
 
       # Spatial processing UI
@@ -164,9 +199,39 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
     # Track previous selection
     prev_selected <- reactiveVal(character())
 
+    # Create reactive for log-transformed rasters
+    transformed_rasters <- reactive({
+      rasters <- stored_rasters()
+      if (length(rasters) == 0) {
+        return(list())
+      }
+
+      # Check if log transform is enabled
+      log_enabled <- isTRUE(input$log_transform)
+
+      if (!log_enabled) {
+        return(rasters) # Return original rasters
+      }
+
+      # Apply log transformation to each raster
+      lapply(rasters, function(layer) {
+        tryCatch(
+          {
+            transformed_layer <- log_transform_layer(layer)
+            return(transformed_layer)
+          },
+          error = function(e) {
+            # If transformation fails, return original layer
+            warning(paste("Log transformation failed for layer:", layer$name))
+            return(layer)
+          }
+        )
+      })
+    })
+
     # Create a reactive to collect all switch states
     selected_layers <- reactive({
-      rasts <- stored_rasters()
+      rasts <- transformed_rasters() # Use transformed rasters for selection
       if (length(rasts) == 0) {
         return(character())
       }
@@ -181,13 +246,28 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
       selected
     })
 
-    observeEvent(selected_layers(),
+    observeEvent(
       {
-        rasts <- stored_rasters()
+        list(selected_layers(), input$log_transform)
+      },
+      {
+        rasts <- transformed_rasters() # Use transformed rasters for map rendering
         old <- prev_selected()
         new <- selected_layers()
-        added <- setdiff(new, old)
+
+        # When log transform changes, we need to re-render all selected layers
+        # So we treat all current selections as "added" and remove existing versions
+        added <- new
         removed <- setdiff(old, new)
+
+        # If layers are currently selected, remove them first to re-render with new transform
+        if (length(new) > 0) {
+          for (id in new) {
+            map_proxy <- leaflet::leafletProxy(ns("mapId")) |>
+              leaflet::removeImage(layerId = id) |>
+              leaflet::removeControl(layerId = paste0("legend_", id))
+          }
+        }
 
         # proxy to existing map
         map_proxy <- leaflet::leafletProxy(ns("mapId"))
@@ -217,8 +297,14 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
             # Generate color palette for this layer
             color_palette <- generate_raster_palette(layer$raster, layer_category)
 
-            # Create legend title with proper units
-            legend_title <- create_legend_title(layer$name, layer_category, layer_subcategory, layer_type)
+            # Create legend title with proper units (adjust for log transformation)
+            base_title <- create_legend_title(layer$name, layer_category, layer_subcategory, layer_type)
+            legend_title <- if (isTRUE(layer$metadata$log_transformed)) {
+              # Add "Log " prefix to units for transformed data
+              gsub("<br><i>", "<br><i>Log ", base_title)
+            } else {
+              base_title
+            }
 
             # Add raster with color palette
             map_proxy <- map_proxy |>
@@ -528,4 +614,28 @@ create_toggle_layer_card <- function(ns, layer) {
       )
     )
   )
+}
+
+
+
+log_transform_layer <- function(layer) {
+  # Create a copy of the layer
+  transformed_layer <- layer
+
+  # Apply log transformation to the raster data
+  raster_values <- terra::values(layer$raster)
+
+  # Handle zeros and negative values (add small constant if needed)
+  raster_values[raster_values <= 0] <- NA
+
+  # Apply log transformation
+  log_values <- log(raster_values + 1)
+
+  # Update the raster with transformed values
+  terra::values(transformed_layer$raster) <- log_values
+
+  # Update metadata to indicate transformation
+  transformed_layer$metadata$log_transformed <- TRUE
+  transformed_layer$name <- paste0(layer$name, " (Log+1)")
+  return(transformed_layer)
 }

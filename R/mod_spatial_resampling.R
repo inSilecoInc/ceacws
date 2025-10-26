@@ -127,17 +127,12 @@ mod_spatial_resampling_ui <- function(id) {
 #' @param stored_rasters Reactive containing the stored_rasters list
 #'
 #' @noRd
-mod_spatial_resampling_server <- function(id, stored_rasters) {
+mod_spatial_resampling_server <- function(id, stored_rasters, processed_available = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Store processed rasters separately
-    processed_rasters <- reactiveVal()
-
-    # Initialize with original rasters
-    observe({
-      processed_rasters(stored_rasters())
-    })
+    # Store processed rasters separately - only populated after processing
+    processed_rasters <- reactiveVal(list())
 
 
     observeEvent(input$apply_processing, {
@@ -146,7 +141,7 @@ mod_spatial_resampling_server <- function(id, stored_rasters) {
         return()
       }
 
-      rasters <- processed_rasters()
+      rasters <- stored_rasters()
       if (length(rasters) == 0) {
         showNotification("No rasters available", type = "warning")
         return(NULL)
@@ -209,6 +204,11 @@ mod_spatial_resampling_server <- function(id, stored_rasters) {
 
       # assign back to the reactiveValues
       processed_rasters(processed)
+      
+      # Update availability flag if provided
+      if (!is.null(processed_available)) {
+        processed_available(length(processed) > 0)
+      }
     })
 
     # Return processed rasters
