@@ -32,18 +32,18 @@ mod_spatial_resampling_ui <- function(id) {
             min = 0.001,
             max = 1,
             step = 0.001
-          ),
-          selectInput(
-            inputId = ns("resolution_method"),
-            label = "Resampling method",
-            choices = list(
-              "Bilinear (continuous data)" = "bilinear",
-              "Nearest neighbor (categorical data)" = "near",
-              "Cubic convolution" = "cubic",
-              "Lanczos" = "lanczos"
-            ),
-            selected = "bilinear"
-          )
+          ) # ,
+          # selectInput(
+          #   inputId = ns("resolution_method"),
+          #   label = "Resampling method",
+          #   choices = list(
+          #     "Bilinear (continuous data)" = "bilinear",
+          #     "Nearest neighbor (categorical data)" = "near",
+          #     "Cubic convolution" = "cubic",
+          #     "Lanczos" = "lanczos"
+          #   ),
+          #   selected = "bilinear"
+          # )
         )
       ),
 
@@ -204,7 +204,7 @@ mod_spatial_resampling_server <- function(id, stored_rasters, processed_availabl
 
       # assign back to the reactiveValues
       processed_rasters(processed)
-      
+
       # Update availability flag if provided
       if (!is.null(processed_available)) {
         processed_available(length(processed) > 0)
