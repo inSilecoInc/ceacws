@@ -132,8 +132,8 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
           shinyWidgets::prettySwitch(
             inputId = ns("show_processed"),
             label = "Show processed layers",
-            value = FALSE,
-            status = "success",
+            value = TRUE,
+            status = "primary",
             inline = TRUE
           )
         }
@@ -202,9 +202,12 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
     # Create reactive for log-transformed rasters
     transformed_rasters <- reactive({
       rasters <- stored_rasters()
+
       if (length(rasters) == 0) {
         return(list())
       }
+
+      if (isTRUE(input$show_processed)) rasters <- processed_rasters()
 
       # Check if log transform is enabled
       log_enabled <- isTRUE(input$log_transform)
