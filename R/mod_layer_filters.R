@@ -432,6 +432,16 @@ create_filter_dropdowns <- function(data_options, ns) {
     )
   }
 
+  # Add info text about multiple selections
+  if (length(dropdowns) > 0) {
+    dropdowns <- c(
+      list(
+        myhelptxt("Multiple selections are allowed in all dropdown menus below.")
+      ),
+      dropdowns
+    )
+  }
+
   # Wrap dropdowns in fluidRow(s)
   if (length(dropdowns) > 0) {
     # Group dropdowns into rows of 4

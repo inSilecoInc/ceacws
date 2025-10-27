@@ -125,20 +125,6 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
         )
       })
 
-      # Conditional UI for processed layers toggle
-      output$processed_layers_toggle <- renderUI({
-        # Only show toggle if processed rasters are available
-        if (length(processed_rasters()) > 0) {
-          shinyWidgets::prettySwitch(
-            inputId = ns("show_processed"),
-            label = "Show processed layers",
-            value = TRUE,
-            status = "primary",
-            inline = TRUE
-          )
-        }
-      })
-
       # Spatial processing UI
       output$spatial_processing_ui <- renderUI({
         if (length(rasters) == 0) {
@@ -158,8 +144,6 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
         }
 
         div(
-          h5("Export Rasters"),
-
           # Summary section
           div(
             class = "mb-3",
@@ -167,20 +151,25 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
             verbatimTextOutput(ns("export_summary"))
           ),
 
-          # Export options
+          # Display options toggles
           div(
             class = "mb-3",
             h6("Export Options"),
-            checkboxInput(
+            shinyWidgets::prettySwitch(
               inputId = ns("export_stored"),
-              label = "Export stored rasters (original)",
-              value = TRUE
+              label = "Stored layers",
+              value = TRUE,
+              status = "primary",
+              inline = TRUE
             ),
-            checkboxInput(
-              inputId = ns("export_processed"),
-              label = "Export processed rasters",
-              value = FALSE
-            )
+            # shinyWidgets::prettySwitch(
+            #   inputId = ns("export_processed"),
+            #   label = "Processed layers",
+            #   value = FALSE,
+            #   status = "primary",
+            #   inline = TRUE
+            # )
+            uiOutput(ns("export_processed"))
           ),
 
           # Download button
@@ -196,6 +185,33 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
       })
     })
 
+    # Conditional UI for processed layers toggle
+    output$processed_layers_toggle <- renderUI({
+      # Only show toggle if processed rasters are available
+      if (length(processed_rasters()) > 0) {
+        shinyWidgets::prettySwitch(
+          inputId = ns("show_processed"),
+          label = "Show processed layers",
+          value = TRUE,
+          status = "primary",
+          inline = TRUE
+        )
+      }
+    })
+
+    # Conditional UI for processed layers toggle
+    output$export_processed <- renderUI({
+      # Only show toggle if processed rasters are available
+      if (length(processed_rasters()) > 0) {
+        shinyWidgets::prettySwitch(
+          inputId = ns("export_processed"),
+          label = "Processed layers",
+          value = TRUE,
+          status = "primary",
+          inline = TRUE
+        )
+      }
+    })
     # Track previous selection
     prev_selected <- reactiveVal(character())
 
@@ -355,15 +371,15 @@ mod_threat_layers_processing_server <- function(id, stored_rasters, r) {
       processed_count <- length(processed_rasters())
 
       paste0(
-        "Stored rasters: ", stored_count, "\n",
-        "Processed rasters: ", processed_count
+        "Stored layers: ", stored_count, "\n",
+        "Processed layers: ", processed_count
       )
     })
 
     # Download handler for raster export
     output$download_rasters <- downloadHandler(
       filename = function() {
-        paste0("ceacws_threat_layers_", Sys.Date(), ".zip")
+        paste0("ceacws_threat_layers_", format(Sys.time(), "%Y%m%dT%H%M%S"), ".zip")
       },
       content = function(file) {
         # Validate export selections
