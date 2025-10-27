@@ -10,36 +10,63 @@ app_ui <- function(request) {
 
         # Session timeout module (kept outside main layout so it doesn't affect spacing)
         mod_timeout_client_ui("session_timeout"),
+        tags$style(HTML("
+            .nav-tabs {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+
+            .nav-tabs .nav-icons {
+                display: flex;
+                gap: 0.75rem;
+                margin-left: auto;
+                padding-right: 1rem;
+                align-items: center;
+            }
+
+            .nav-tabs .nav-icons a {
+                color: inherit;
+                text-decoration: none;
+            }
+        ")),
 
         # Main application layout
         fluidPage(
             theme = app_theme(),
             shinyjs::useShinyjs(),
-
-            # Tab layout
-            tabsetPanel(
+            bslib::navset_tab(
                 id = "main_tabs",
-                type = "tabs",
-
-                # Threat layers tab
-                tabPanel(
+                title = NULL,
+                bslib::nav_panel(
                     title = tagList(icon("layer-group"), "Threat layers"),
                     value = "threat_layers_tab",
-                    div(
-                        class = "p-3",
-                        mod_threat_layers_selection_ui("threat_layers")
-                    )
+                    div(class = "p-3", mod_threat_layers_selection_ui("threat_layers"))
                 ),
-
-                # Processing panel
-                tabPanel(
+                bslib::nav_panel(
                     title = tagList(icon("map"), "Map"),
                     value = "processing_tab",
-                    div(
-                        class = "p-3",
-                        mod_threat_layers_processing_ui("threat_processing")
+                    div(class = "p-3", mod_threat_layers_processing_ui("threat_processing"))
+                ),
+                bslib::nav_spacer(),
+                bslib::nav_item(
+                    tags$span(
+                        class = "nav-icons",
+                        style = "display: flex; gap: 0.75rem; align-items: center;",
+                        tags$a(
+                            href = "https://insileco.io/ceacws/3_threats.html",
+                            target = "_blank",
+                            title = "Project Report",
+                            icon("book")
+                        ),
+                        tags$a(
+                            href = "https://github.com/inSilecoInc/ceacws",
+                            target = "_blank",
+                            title = "GitHub Repository",
+                            icon("github")
+                        )
                     )
-                )
+                ),
+                bslib::nav_item()
             )
         )
     )

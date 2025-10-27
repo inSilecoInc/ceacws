@@ -7,17 +7,15 @@ app_server <- function(input, output, session) {
   # Active threat layers selection module
   stored_rasters <- mod_threat_layers_selection_server("threat_layers")
 
-  # r <- reactiveValues(
-  #   map = base_map(),
-  #   geom_slc = NULL,
-  #   disclaimer_agreed = FALSE
-  # )
+  r <- reactiveValues(
+    disclaimer_agreed = FALSE
+  )
 
   # Activate threat layers processing module
   mod_threat_layers_processing_server("threat_processing", stored_rasters$stored_rasters)
 
   # disclaimer
-  # mod_dialog_disclaimers_server("show_dialog")
+  mod_dialog_disclaimers_server("show_dialog", r)
 
   # timeout
   mod_timeout_client_server("session_timeout")

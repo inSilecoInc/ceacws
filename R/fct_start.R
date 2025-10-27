@@ -50,9 +50,11 @@ fct_start <- function() {
         "activity" = list(
           "default" = "Presence / absence"
         ),
-        "platform_annual" = list(
-          "total_heat" = "Total heat in Kelvin",
-          "detection_frequency" = "Sum of percent detection frequency"
+        "platform_annual_detection_frequency" = list(
+          "default" = "Sum of percent detection frequency"
+        ),
+        "platform_annual_total_heat" = list(
+          "default" = "Total heat in Kelvin"
         ),
         "platform_monthly" = list(
           "default" = "Total heat in Kelvin"

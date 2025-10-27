@@ -223,9 +223,18 @@ parse_offshore_petroleum_platform_filename <- function(filename, filepath) {
   if (stringr::str_detect(filename, "^offshore_petroleum_platform_.+_\\d{4}\\.tif$")) {
     match <- stringr::str_match(filename, "^offshore_petroleum_platform_(.+)_(\\d{4})\\.tif$")
     if (!is.na(match[1])) {
-      result$subcategory <- "platform_annual"
-      result$type <- match[2]
+      type <- match[2]
       result$year <- as.integer(match[3])
+      
+      # Create separate subcategories for detection_frequency and total_heat
+      if (type == "detection_frequency") {
+        result$subcategory <- "platform_annual_detection_frequency"
+      } else if (type == "total_heat") {
+        result$subcategory <- "platform_annual_total_heat"
+      } else {
+        # Fallback for any other types
+        result$subcategory <- paste0("platform_annual_", type)
+      }
       return(result)
     }
   }

@@ -13,16 +13,6 @@ mod_threat_layers_selection_ui <- function(id) {
     fluidRow(
       column(2),
       column(6, h3("Threat layers")),
-      column(
-        2,
-        div(
-          style = "text-align: right; margin-top: 10px;",
-          conditionalPanel(
-            condition = paste0("output['", ns("show_visualize"), "']"),
-            actionButton(ns("visualize_map"), "Visualize layers on map", class = "btn-success")
-          )
-        )
-      ),
       column(2)
     ),
 
