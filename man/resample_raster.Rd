@@ -8,7 +8,7 @@ resample_raster(
   raster,
   new_extent = NULL,
   new_resolution = NULL,
-  method = "bilinear"
+  method = "sum"
 )
 }
 \arguments{
@@ -37,6 +37,7 @@ If NULL, uses current resolution
 \item "near": nearest neighbor, good for categorical data
 \item "cubic": cubic convolution, smooth for continuous data
 \item "lanczos": Lanczos windowed sinc resampling
+\item "sum": Sum, see details of function
 }}
 }
 \value{

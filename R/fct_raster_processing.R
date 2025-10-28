@@ -170,6 +170,7 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
 #'   - "near": nearest neighbor, good for categorical data
 #'   - "cubic": cubic convolution, smooth for continuous data
 #'   - "lanczos": Lanczos windowed sinc resampling
+#'    - "sum": Sum, see details of function
 #' @return A terra SpatRaster object with the new resolution and/or extent
 #'
 #' @examples
@@ -194,13 +195,13 @@ combine_rasters_gdalcubes <- function(filepaths, method = "sum") {
 #' }
 #'
 #' @export
-resample_raster <- function(raster, new_extent = NULL, new_resolution = NULL, method = "bilinear") {
+resample_raster <- function(raster, new_extent = NULL, new_resolution = NULL, method = "sum") {
   # Validate inputs
   if (!inherits(raster, "SpatRaster")) {
     stop("Input must be a terra SpatRaster object")
   }
 
-  valid_methods <- c("bilinear", "near", "cubic", "lanczos")
+  valid_methods <- c("bilinear", "near", "cubic", "lanczos", "sum")
   if (!method %in% valid_methods) {
     stop("method must be one of: ", paste(valid_methods, collapse = ", "))
   }

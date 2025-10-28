@@ -161,7 +161,7 @@ mod_spatial_resampling_server <- function(id, stored_rasters, processed_availabl
         NULL
       }
 
-      method <- input$resolution_method %||% "bilinear"
+      method <- input$resolution_method %||% "sum"
 
       processed <- list()
       errors <- character(0)
