@@ -32,18 +32,40 @@ mod_spatial_resampling_ui <- function(id) {
             min = 0.001,
             max = 1,
             step = 0.001
-          ) # ,
-          # selectInput(
-          #   inputId = ns("resolution_method"),
-          #   label = "Resampling method",
-          #   choices = list(
-          #     "Bilinear (continuous data)" = "bilinear",
-          #     "Nearest neighbor (categorical data)" = "near",
-          #     "Cubic convolution" = "cubic",
-          #     "Lanczos" = "lanczos"
-          #   ),
-          #   selected = "bilinear"
-          # )
+          ),
+          helpText(
+            tags$span(
+              icon("info-circle"),
+              " See ",
+              tags$a(
+                href = "https://rdrr.io/cran/terra/man/resample.html",
+                target = "_blank",
+                "method documentation"
+              ),
+              " for details."
+            )
+          ),
+          selectInput(
+            inputId = ns("resolution_method"),
+            label = "Resampling method",
+            choices = list(
+              "Bilinear (continuous, default)" = "bilinear",
+              "Average (mean of overlapping cells)" = "average",
+              "Nearest neighbor (categorical, default)" = "near",
+              "Mode (most frequent value)" = "mode",
+              "Cubic convolution (5x5 window)" = "cubic",
+              "Cubic spline (5x5 window)" = "cubicspline",
+              "Lanczos (7x7 windowed sinc)" = "lanczos",
+              "Sum (weighted sum of contributors)" = "sum",
+              "Minimum value" = "min",
+              "First quartile (Q1)" = "q1",
+              "Median" = "median",
+              "Third quartile (Q3)" = "q3",
+              "Maximum value" = "max",
+              "Root mean square (RMS)" = "rms"
+            ),
+            selected = "sum"
+          )
         )
       ),
 

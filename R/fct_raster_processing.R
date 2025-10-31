@@ -201,7 +201,10 @@ resample_raster <- function(raster, new_extent = NULL, new_resolution = NULL, me
     stop("Input must be a terra SpatRaster object")
   }
 
-  valid_methods <- c("bilinear", "near", "cubic", "lanczos", "sum")
+  valid_methods <- c(
+    "bilinear", "average", "near", "mode", "cubic", "cubicspline",
+    "lanczos", "sum", "min", "q1", "median", "q3", "max", "rms"
+  )
   if (!method %in% valid_methods) {
     stop("method must be one of: ", paste(valid_methods, collapse = ", "))
   }

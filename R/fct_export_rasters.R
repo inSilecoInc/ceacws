@@ -211,9 +211,9 @@ export_rasters_archive <- function(stored_rasters, processed_rasters,
         layer_lines <- c(layer_lines, paste("  New Resolution:", resolution_str, "degrees"))
       }
 
-      # if (!is.null(params$method)) {
-      #   layer_lines <- c(layer_lines, paste("  Resampling Method:", params$method))
-      # }
+      if (!is.null(params$method)) {
+        layer_lines <- c(layer_lines, paste("  Resampling Method:", params$method))
+      }
     } else if (layer_type == "processed") {
       layer_lines <- c(layer_lines, "", "Spatial Processing Applied: None")
     }
